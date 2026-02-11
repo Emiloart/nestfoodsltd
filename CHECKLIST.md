@@ -17,6 +17,7 @@ Last updated: 2026-02-11
 - [x] Add motion foundations (micro-interactions + skeleton loaders)
 
 ## 2) CMS/Admin Core (Dynamic Everything)
+- Progress: dynamic page CMS + secured admin editor (`/admin/content`) is live.
 - [ ] Set up secure admin app/domain strategy
 - [ ] Implement RBAC (Super Admin, Content Editor, Sales Manager)
 - [ ] Build content models (pages, banners, products, recipes, media)

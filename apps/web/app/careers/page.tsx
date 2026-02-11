@@ -1,11 +1,15 @@
 import { PageShell } from "@/components/page-shell";
+import { getCmsPage } from "@/lib/cms/service";
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const page = await getCmsPage("careers");
+
   return (
     <PageShell
-      title="Careers"
-      description="CMS-driven careers area for openings, culture highlights, and candidate applications."
-      nextStep="Add jobs collection + application pipeline"
+      title={page.title}
+      headline={page.headline}
+      description={page.description}
+      nextStep={`Last updated: ${new Date(page.updatedAt).toLocaleDateString("en-NG")}`}
     />
   );
 }

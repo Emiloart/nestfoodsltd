@@ -1,11 +1,15 @@
 import { PageShell } from "@/components/page-shell";
+import { getCmsPage } from "@/lib/cms/service";
 
-export default function VisionPage() {
+export default async function VisionPage() {
+  const page = await getCmsPage("vision");
+
   return (
     <PageShell
-      title="Vision & Mission"
-      description="Scaffold for dynamic mission statements, strategic pillars, and expansion roadmap highlights."
-      nextStep="Connect scheduled content publishing"
+      title={page.title}
+      headline={page.headline}
+      description={page.description}
+      nextStep={`Last updated: ${new Date(page.updatedAt).toLocaleDateString("en-NG")}`}
     />
   );
 }

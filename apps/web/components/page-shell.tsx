@@ -2,15 +2,19 @@ import Link from "next/link";
 
 type PageShellProps = {
   title: string;
+  headline?: string;
   description: string;
   nextStep?: string;
 };
 
-export function PageShell({ title, description, nextStep }: PageShellProps) {
+export function PageShell({ title, headline, description, nextStep }: PageShellProps) {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-16 md:px-6">
       <div className="max-w-2xl rounded-3xl border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900">
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">{title}</h1>
+        {headline ? (
+          <p className="mt-3 text-sm font-medium text-neutral-800 dark:text-neutral-200">{headline}</p>
+        ) : null}
         <p className="mt-3 text-sm text-neutral-600 dark:text-neutral-300">{description}</p>
         {nextStep ? <p className="mt-4 text-xs uppercase tracking-[0.2em] text-neutral-500">{nextStep}</p> : null}
         <div className="mt-6 flex gap-3">

@@ -32,6 +32,8 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
    - `pnpm install`
 3. Run dev server:
    - `pnpm dev`
+4. Enable admin edits:
+   - copy `.env.example` to `.env.local` and set `ADMIN_API_TOKEN`
 
 ## Current Progress
 
@@ -40,14 +42,15 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - Next.js app shell created with responsive dark/light mode support.
 - Design system baseline completed (tokens + UI primitives + motion foundations).
 - Core route placeholders added for all major product areas.
+- Dynamic CMS core added for key pages with secured admin editing API.
 
 ## Next Build Steps
 
-1. Stand up CMS/admin and role-based access.
-2. Implement product catalog domain schema and API.
-3. Build cart + checkout + payment provider adapters.
-4. Add B2B portal and traceability workflows.
-5. Add traceability data ingestion + consumer lookup.
+1. Expand CMS into PostgreSQL with revisions and scheduling.
+2. Implement role-based access control for admin and B2B users.
+3. Build product catalog domain schema and API.
+4. Build cart + checkout + payment provider adapters.
+5. Add B2B + traceability data workflows.
 
 ## GitHub Setup
 

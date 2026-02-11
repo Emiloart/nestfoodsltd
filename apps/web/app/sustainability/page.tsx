@@ -1,11 +1,15 @@
 import { PageShell } from "@/components/page-shell";
+import { getCmsPage } from "@/lib/cms/service";
 
-export default function SustainabilityPage() {
+export default async function SustainabilityPage() {
+  const page = await getCmsPage("sustainability");
+
   return (
     <PageShell
-      title="Sustainability"
-      description="Ready for impact metrics, sourcing standards, and certification storytelling."
-      nextStep="Add auditable sustainability data model"
+      title={page.title}
+      headline={page.headline}
+      description={page.description}
+      nextStep={`Last updated: ${new Date(page.updatedAt).toLocaleDateString("en-NG")}`}
     />
   );
 }

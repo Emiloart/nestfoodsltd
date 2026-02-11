@@ -1,11 +1,15 @@
 import { PageShell } from "@/components/page-shell";
+import { getCmsPage } from "@/lib/cms/service";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const page = await getCmsPage("contact");
+
   return (
     <PageShell
-      title="Contact & Locations"
-      description="Ready for admin-managed contacts, maps, inquiry routing, and regional office details."
-      nextStep="Attach validated lead forms + routing rules"
+      title={page.title}
+      headline={page.headline}
+      description={page.description}
+      nextStep={`Last updated: ${new Date(page.updatedAt).toLocaleDateString("en-NG")}`}
     />
   );
 }

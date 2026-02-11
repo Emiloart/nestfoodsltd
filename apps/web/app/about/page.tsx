@@ -1,11 +1,15 @@
 import { PageShell } from "@/components/page-shell";
+import { getCmsPage } from "@/lib/cms/service";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const page = await getCmsPage("about");
+
   return (
     <PageShell
-      title="About Nest Foods Ltd"
-      description="This page is scaffolded for CMS-driven about content, brand story, leadership, and trust signals."
-      nextStep="Wire to CMS global content model"
+      title={page.title}
+      headline={page.headline}
+      description={page.description}
+      nextStep={`Last updated: ${new Date(page.updatedAt).toLocaleDateString("en-NG")}`}
     />
   );
 }

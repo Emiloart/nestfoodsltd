@@ -13,7 +13,7 @@
 
 - Frontend: Next.js App Router with server-first rendering.
 - Data: PostgreSQL + Prisma.
-- Content: headless CMS integration (Payload recommended).
+- Content: dynamic CMS layer (current JSON-backed store, Payload/DB migration path).
 - Payments: adapter layer for Paystack and Flutterwave.
 - Media: Cloudinary or equivalent CDN-backed optimizer.
 

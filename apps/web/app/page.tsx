@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { getCmsPage } from "@/lib/cms/service";
 
 const quickLinks = [
   { href: "/shop", title: "Shop", description: "Premium catalog, filters, and subscriptions." },
@@ -11,7 +12,9 @@ const quickLinks = [
   { href: "/admin", title: "Admin", description: "Dynamic control over all business content." },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const page = await getCmsPage("home");
+
   return (
     <div className="grain-background">
       <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-20 md:px-6 md:pt-28">
@@ -19,24 +22,23 @@ export default function HomePage() {
           <div className="max-w-3xl space-y-6">
             <Badge>Enterprise Platform Scaffold</Badge>
             <h1 className="text-4xl font-semibold leading-tight tracking-tight text-neutral-900 dark:text-neutral-50 md:text-6xl">
-              Nest Foods Ltd digital platform for 2026 expansion.
+              {page.headline}
             </h1>
             <p className="text-base text-neutral-600 dark:text-neutral-300 md:text-lg">
-              Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and
-              operational scalability.
+              {page.description}
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/shop"
+                href={page.ctaPrimaryHref ?? "/shop"}
                 className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
               >
-                Browse Products
+                {page.ctaPrimaryLabel ?? "Browse Products"}
               </Link>
               <Link
-                href="/admin"
+                href={page.ctaSecondaryHref ?? "/admin"}
                 className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-5 text-sm font-medium text-neutral-900 transition hover:-translate-y-0.5 hover:bg-white dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
               >
-                Open Admin
+                {page.ctaSecondaryLabel ?? "Open Admin"}
               </Link>
             </div>
           </div>

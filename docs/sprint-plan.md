@@ -9,8 +9,8 @@
 ## Day 1 — Premium UI + Dynamic CMS Core (In Progress)
 
 - Implement design tokens and shared components.
-- Connect CMS models for pages, banners, products, recipes, media.
-- Wire dynamic home, about, vision, contact content.
+- Connect CMS models for pages, banners, products, recipes, media. (Pages completed)
+- Wire dynamic home, about, vision, contact content. (Completed)
 
 ## Day 2 — Commerce MVP
 
