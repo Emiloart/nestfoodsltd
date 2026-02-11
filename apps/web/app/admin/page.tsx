@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ADMIN_SESSION_COOKIE_NAME, resolveAdminRoleFromToken } from "@/lib/admin/auth";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const cookieStore = await cookies();
+  const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
+
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-3">
@@ -12,7 +17,8 @@ export default function AdminPage() {
           Operations Dashboard
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Secure control plane for dynamic content, catalog management, media, and operations.
+          Secure control plane for dynamic content, catalog management, media, and operations. Active role:{" "}
+          <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-3">

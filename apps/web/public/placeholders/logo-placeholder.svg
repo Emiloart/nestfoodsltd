@@ -1,0 +1,7 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" rx="36" fill="#111827"/>
+  <rect x="14" y="14" width="132" height="132" rx="28" stroke="#4F46E5" stroke-width="2"/>
+  <path d="M52 47H65V91C65 98.18 69.82 103 77 103H108V116H77C62.64 116 52 105.36 52 91V47Z" fill="#F9FAFB"/>
+  <path d="M101 45C93.6 45 87.5 50.95 87.3 58.35H99.8C100.2 57 101.5 56 103 56C105 56 106.6 57.6 106.6 59.6C106.6 61.6 105 63.2 103 63.2H87.3V75.2H103C111.1 75.2 117.6 68.7 117.6 60.6C117.6 52.5 111.1 45 103 45Z" fill="#A5B4FC"/>
+  <text x="80" y="136" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter, Arial, sans-serif" letter-spacing="1.2">LOGO PLACEHOLDER</text>
+</svg>

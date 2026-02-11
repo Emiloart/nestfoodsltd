@@ -21,6 +21,7 @@
 ## Business/Admin
 
 - `/admin` Admin entry
+- `/admin/login` Admin login
 - `/admin/content` Content manager
 - `/b2b` Distributor portal
 
@@ -32,5 +33,6 @@
 - `/careers`
 - `/design-system`
 - `/api/health`
+- `/api/admin/session`
 - `/api/cms/pages`
 - `/api/cms/pages/[slug]`

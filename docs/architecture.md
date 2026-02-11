@@ -13,13 +13,14 @@
 
 - Frontend: Next.js App Router with server-first rendering.
 - Data: PostgreSQL + Prisma.
-- Content: dynamic CMS layer (current JSON-backed store, Payload/DB migration path).
+- Content: dynamic CMS layer with JSON storage driver and PostgreSQL migration path.
 - Payments: adapter layer for Paystack and Flutterwave.
 - Media: Cloudinary or equivalent CDN-backed optimizer.
 
 ## Security Baseline
 
 - RBAC across admin actions.
+- Role-token session model for admin routes (`/admin/login` + protected `/admin/*`).
 - Audit logs for sensitive events.
 - Webhook signature validation for payment providers.
 - Rate limiting for auth, checkout, and traceability endpoints.

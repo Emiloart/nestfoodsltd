@@ -10,11 +10,21 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "Nest Foods Ltd digital platform for 2026 expansion.",
       description:
         "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
+      status: "published",
+      publishAt: now,
       ctaPrimaryLabel: "Browse Products",
       ctaPrimaryHref: "/shop",
       ctaSecondaryLabel: "Open Admin",
       ctaSecondaryHref: "/admin",
+      heroImageUrl: "/placeholders/hero-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "Nest Foods Ltd | Premium Food Brand",
+        description: "Premium food products and distribution platform for growth across Africa.",
+        ogImageUrl: "/placeholders/hero-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
     about: {
       slug: "about",
@@ -22,7 +32,17 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "A premium food brand building trusted nutrition at scale.",
       description:
         "This page is CMS-driven for brand story, leadership, trust signals, and operational milestones.",
+      status: "published",
+      publishAt: now,
+      heroImageUrl: "/placeholders/section-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "About Nest Foods Ltd",
+        description: "Learn about Nest Foods Ltd mission, values, and growth strategy.",
+        ogImageUrl: "/placeholders/section-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
     vision: {
       slug: "vision",
@@ -30,7 +50,17 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "Deliver world-class food products across Africa and beyond.",
       description:
         "This section is fully dynamic for mission statements, strategic pillars, and expansion roadmap content.",
+      status: "published",
+      publishAt: now,
+      heroImageUrl: "/placeholders/section-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "Vision & Mission | Nest Foods Ltd",
+        description: "Explore the long-term vision and strategic mission behind Nest Foods Ltd.",
+        ogImageUrl: "/placeholders/section-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
     contact: {
       slug: "contact",
@@ -38,7 +68,17 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "Speak with Nest Foods Ltd teams across regions.",
       description:
         "Manage support channels, office details, map embeds, and inquiry routing from the admin workspace.",
+      status: "published",
+      publishAt: now,
+      heroImageUrl: "/placeholders/section-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "Contact Nest Foods Ltd",
+        description: "Reach Nest Foods Ltd teams and offices for sales, support, and partnerships.",
+        ogImageUrl: "/placeholders/section-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
     careers: {
       slug: "careers",
@@ -46,7 +86,17 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "Join the team shaping premium food experiences.",
       description:
         "This page supports dynamic openings, culture highlights, and role-specific application links.",
+      status: "published",
+      publishAt: now,
+      heroImageUrl: "/placeholders/section-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "Careers at Nest Foods Ltd",
+        description: "Build your career with an ambitious food and commerce platform.",
+        ogImageUrl: "/placeholders/section-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
     sustainability: {
       slug: "sustainability",
@@ -54,7 +104,74 @@ export const CMS_SEED_DATA: CmsData = {
       headline: "Responsible sourcing, production, and distribution.",
       description:
         "Publish transparent impact metrics, sourcing standards, and certification milestones.",
+      status: "published",
+      publishAt: now,
+      heroImageUrl: "/placeholders/section-image-placeholder.svg",
+      logoImageUrl: "/placeholders/logo-placeholder.svg",
+      seo: {
+        title: "Sustainability | Nest Foods Ltd",
+        description: "Track sustainability commitments and measurable impact initiatives.",
+        ogImageUrl: "/placeholders/section-image-placeholder.svg",
+      },
       updatedAt: now,
+      revisions: [],
     },
   },
+  banners: [
+    {
+      id: "banner-home-1",
+      label: "Launch Banner",
+      headline: "Fresh premium products with nationwide delivery.",
+      ctaLabel: "Shop now",
+      ctaHref: "/shop",
+      imageUrl: "/placeholders/hero-image-placeholder.svg",
+      status: "published",
+      publishAt: now,
+      order: 1,
+      updatedAt: now,
+    },
+  ],
+  media: [
+    {
+      id: "media-logo-primary",
+      label: "Primary Logo Placeholder",
+      kind: "image",
+      url: "/placeholders/logo-placeholder.svg",
+      altText: "Nest Foods Ltd logo placeholder",
+      folder: "branding",
+      updatedAt: now,
+    },
+    {
+      id: "media-hero-default",
+      label: "Hero Image Placeholder",
+      kind: "image",
+      url: "/placeholders/hero-image-placeholder.svg",
+      altText: "Hero image placeholder",
+      folder: "homepage",
+      updatedAt: now,
+    },
+  ],
+  products: [
+    {
+      id: "prod-placeholder-1",
+      name: "Signature Blend Placeholder",
+      slug: "signature-blend-placeholder",
+      status: "published",
+      imageUrl: "/placeholders/product-image-placeholder.svg",
+      nutritionSummary: "Nutritional values will be configured in catalog manager.",
+      allergens: ["None configured"],
+      updatedAt: now,
+    },
+  ],
+  recipes: [
+    {
+      id: "recipe-placeholder-1",
+      title: "Recipe Placeholder",
+      slug: "recipe-placeholder",
+      status: "draft",
+      imageUrl: "/placeholders/section-image-placeholder.svg",
+      ingredients: ["Ingredient data will be configured in admin."],
+      updatedAt: now,
+    },
+  ],
 };

@@ -17,12 +17,12 @@ Last updated: 2026-02-11
 - [x] Add motion foundations (micro-interactions + skeleton loaders)
 
 ## 2) CMS/Admin Core (Dynamic Everything)
-- Progress: dynamic page CMS + secured admin editor (`/admin/content`) is live.
-- [ ] Set up secure admin app/domain strategy
-- [ ] Implement RBAC (Super Admin, Content Editor, Sales Manager)
-- [ ] Build content models (pages, banners, products, recipes, media)
-- [ ] Add draft/preview, scheduling, and revision history
-- [ ] Add SEO controls per page + sitemap metadata fields
+- Progress: secured admin login + RBAC + dynamic CMS editor is live.
+- [x] Set up secure admin app/domain strategy
+- [x] Implement RBAC (Super Admin, Content Editor, Sales Manager)
+- [x] Build content models (pages, banners, products, recipes, media)
+- [x] Add draft/preview, scheduling, and revision history
+- [x] Add SEO controls per page + sitemap metadata fields
 
 ## 3) Commerce Core (Food Business)
 - [ ] Product catalog with variants, nutrition, allergens, ingredients

@@ -6,13 +6,15 @@
 - Public route skeleton and premium base layout.
 - Checklist and architecture docs.
 
-## Day 1 — Premium UI + Dynamic CMS Core (In Progress)
+## Day 1 — Premium UI + Dynamic CMS Core (Completed)
 
 - Implement design tokens and shared components.
 - Connect CMS models for pages, banners, products, recipes, media. (Pages completed)
 - Wire dynamic home, about, vision, contact content. (Completed)
+- Add RBAC admin login and protected admin routes. (Completed)
+- Add scheduling/revision/SEO controls for CMS pages. (Completed)
 
-## Day 2 — Commerce MVP
+## Day 2 — Commerce MVP (In Progress)
 
 - Catalog listing + detail pages (dynamic data).
 - Cart + checkout flow foundations.

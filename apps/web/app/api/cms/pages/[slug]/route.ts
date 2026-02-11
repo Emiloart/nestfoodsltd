@@ -1,17 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { hasAdminPermission, resolveAdminRoleFromRequest } from "@/lib/admin/auth";
 import { getCmsPage, updateCmsPage } from "@/lib/cms/service";
-import { CMS_PAGE_SLUGS, type CmsPageSlug } from "@/lib/cms/types";
+import { CMS_PAGE_SLUGS, type CmsPageSlug, type CmsPublicationStatus } from "@/lib/cms/types";
 
 const updatePageSchema = z.object({
   title: z.string().trim().min(2).max(120),
   headline: z.string().trim().min(2).max(220),
   description: z.string().trim().min(2).max(1200),
+  status: z.enum(["draft", "published", "scheduled"]),
+  publishAt: z.string().trim().optional(),
   ctaPrimaryLabel: z.string().trim().max(50).optional(),
   ctaPrimaryHref: z.string().trim().max(200).optional(),
   ctaSecondaryLabel: z.string().trim().max(50).optional(),
   ctaSecondaryHref: z.string().trim().max(200).optional(),
+  heroImageUrl: z.string().trim().max(200).optional(),
+  logoImageUrl: z.string().trim().max(200).optional(),
+  seoTitle: z.string().trim().max(160).optional(),
+  seoDescription: z.string().trim().max(220).optional(),
+  seoOgImageUrl: z.string().trim().max(200).optional(),
 });
 
 function parseSlug(value: string): CmsPageSlug | null {
@@ -22,41 +30,44 @@ function parseSlug(value: string): CmsPageSlug | null {
 }
 
 function normalizeOptional(value?: string) {
-  if (!value) {
+  const trimmed = value?.trim();
+  if (!trimmed) {
     return undefined;
   }
-  return value;
+  return trimmed;
 }
 
-function authorizeAdminRequest(request: NextRequest) {
-  const configuredToken = process.env.ADMIN_API_TOKEN;
-  if (!configuredToken) {
-    return NextResponse.json(
-      { error: "ADMIN_API_TOKEN is not configured. Add it to .env.local for admin updates." },
-      { status: 503 },
-    );
+function normalizePublishAt(status: CmsPublicationStatus, value?: string) {
+  if (status !== "scheduled") {
+    return undefined;
   }
-
-  const receivedToken = request.headers.get("x-admin-token");
-  if (receivedToken !== configuredToken) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const parsedDate = value ? new Date(value) : null;
+  if (!parsedDate || Number.isNaN(parsedDate.getTime())) {
+    return new Date(Date.now() + 15 * 60 * 1000).toISOString();
   }
-
-  return null;
+  return parsedDate.toISOString();
 }
 
 type RouteContext = {
   params: Promise<{ slug: string }> | { slug: string };
 };
 
-export async function GET(_request: NextRequest, context: RouteContext) {
+export async function GET(request: NextRequest, context: RouteContext) {
   const { slug: rawSlug } = await Promise.resolve(context.params);
   const slug = parseSlug(rawSlug);
   if (!slug) {
     return NextResponse.json({ error: "Invalid page slug" }, { status: 400 });
   }
 
-  const page = await getCmsPage(slug);
+  const preview = request.nextUrl.searchParams.get("preview") === "1";
+  if (preview) {
+    const role = resolveAdminRoleFromRequest(request);
+    if (!role || !hasAdminPermission(role, "cms.pages.read")) {
+      return NextResponse.json({ error: "Unauthorized preview request" }, { status: 401 });
+    }
+  }
+
+  const page = await getCmsPage(slug, { preview });
   if (!page) {
     return NextResponse.json({ error: "Page not found" }, { status: 404 });
   }
@@ -64,9 +75,13 @@ export async function GET(_request: NextRequest, context: RouteContext) {
 }
 
 export async function PUT(request: NextRequest, context: RouteContext) {
-  const authErrorResponse = authorizeAdminRequest(request);
-  if (authErrorResponse) {
-    return authErrorResponse;
+  const role = resolveAdminRoleFromRequest(request);
+  if (!role) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!hasAdminPermission(role, "cms.pages.write")) {
+    return NextResponse.json({ error: "Forbidden: missing cms.pages.write" }, { status: 403 });
   }
 
   const { slug: rawSlug } = await Promise.resolve(context.params);
@@ -81,13 +96,35 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     return NextResponse.json({ error: "Invalid payload", details: validated.error.flatten() }, { status: 400 });
   }
 
-  const updated = await updateCmsPage(slug, {
-    ...validated.data,
-    ctaPrimaryLabel: normalizeOptional(validated.data.ctaPrimaryLabel),
-    ctaPrimaryHref: normalizeOptional(validated.data.ctaPrimaryHref),
-    ctaSecondaryLabel: normalizeOptional(validated.data.ctaSecondaryLabel),
-    ctaSecondaryHref: normalizeOptional(validated.data.ctaSecondaryHref),
-  });
+  if (
+    (validated.data.status === "published" || validated.data.status === "scheduled") &&
+    !hasAdminPermission(role, "cms.pages.publish")
+  ) {
+    return NextResponse.json({ error: "Forbidden: missing cms.pages.publish" }, { status: 403 });
+  }
 
-  return NextResponse.json({ page: updated });
+  const updated = await updateCmsPage(
+    slug,
+    {
+      title: validated.data.title,
+      headline: validated.data.headline,
+      description: validated.data.description,
+      status: validated.data.status,
+      publishAt: normalizePublishAt(validated.data.status, validated.data.publishAt),
+      ctaPrimaryLabel: normalizeOptional(validated.data.ctaPrimaryLabel),
+      ctaPrimaryHref: normalizeOptional(validated.data.ctaPrimaryHref),
+      ctaSecondaryLabel: normalizeOptional(validated.data.ctaSecondaryLabel),
+      ctaSecondaryHref: normalizeOptional(validated.data.ctaSecondaryHref),
+      heroImageUrl: normalizeOptional(validated.data.heroImageUrl),
+      logoImageUrl: normalizeOptional(validated.data.logoImageUrl),
+      seo: {
+        title: normalizeOptional(validated.data.seoTitle),
+        description: normalizeOptional(validated.data.seoDescription),
+        ogImageUrl: normalizeOptional(validated.data.seoOgImageUrl),
+      },
+    },
+    role,
+  );
+
+  return NextResponse.json({ page: updated, role });
 }

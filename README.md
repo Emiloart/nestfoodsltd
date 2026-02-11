@@ -30,10 +30,15 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
    - pnpm `10.x`
 2. Install dependencies:
    - `pnpm install`
+   - if your network is unstable, retry with `pnpm install --registry=https://registry.npmmirror.com --no-optional`
 3. Run dev server:
    - `pnpm dev`
 4. Enable admin edits:
-   - copy `.env.example` to `.env.local` and set `ADMIN_API_TOKEN`
+   - copy `.env.example` to `.env.local`
+   - set at least `ADMIN_TOKEN_SUPER_ADMIN`
+5. Sign in to admin:
+   - open `/admin/login`
+   - use one configured role token
 
 ## Current Progress
 
@@ -43,14 +48,17 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - Design system baseline completed (tokens + UI primitives + motion foundations).
 - Core route placeholders added for all major product areas.
 - Dynamic CMS core added for key pages with secured admin editing API.
+- RBAC session login and protected admin routes are active.
+- CMS model now includes publication status, scheduling, SEO fields, and revisions.
+- Logo and image placeholders are wired in homepage and product sections.
 
 ## Next Build Steps
 
-1. Expand CMS into PostgreSQL with revisions and scheduling.
-2. Implement role-based access control for admin and B2B users.
-3. Build product catalog domain schema and API.
-4. Build cart + checkout + payment provider adapters.
-5. Add B2B + traceability data workflows.
+1. Switch CMS storage driver from JSON to PostgreSQL adapter.
+2. Add full catalog manager APIs (products, recipes, banners, media).
+3. Build cart + checkout + payment provider adapters.
+4. Add B2B + traceability data workflows.
+5. Add audit logs and admin activity reporting.
 
 ## GitHub Setup
 

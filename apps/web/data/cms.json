@@ -5,46 +5,167 @@
       "title": "Nest Foods Ltd",
       "headline": "Nest Foods Ltd digital platform for 2026 expansion.",
       "description": "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
       "ctaPrimaryLabel": "Browse Products",
       "ctaPrimaryHref": "/shop",
       "ctaSecondaryLabel": "Open Admin",
       "ctaSecondaryHref": "/admin",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "Nest Foods Ltd | Premium Food Brand",
+        "description": "Premium food products and distribution platform for growth across Africa.",
+        "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
     },
     "about": {
       "slug": "about",
       "title": "About Nest Foods Ltd",
       "headline": "A premium food brand building trusted nutrition at scale.",
       "description": "This page is CMS-driven for brand story, leadership, trust signals, and operational milestones.",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "heroImageUrl": "/placeholders/section-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "About Nest Foods Ltd",
+        "description": "Learn about Nest Foods Ltd mission, values, and growth strategy.",
+        "ogImageUrl": "/placeholders/section-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
     },
     "vision": {
       "slug": "vision",
       "title": "Vision & Mission",
       "headline": "Deliver world-class food products across Africa and beyond.",
       "description": "This section is fully dynamic for mission statements, strategic pillars, and expansion roadmap content.",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "heroImageUrl": "/placeholders/section-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "Vision & Mission | Nest Foods Ltd",
+        "description": "Explore the long-term vision and strategic mission behind Nest Foods Ltd.",
+        "ogImageUrl": "/placeholders/section-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
     },
     "contact": {
       "slug": "contact",
       "title": "Contact & Locations",
       "headline": "Speak with Nest Foods Ltd teams across regions.",
       "description": "Manage support channels, office details, map embeds, and inquiry routing from the admin workspace.",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "heroImageUrl": "/placeholders/section-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "Contact Nest Foods Ltd",
+        "description": "Reach Nest Foods Ltd teams and offices for sales, support, and partnerships.",
+        "ogImageUrl": "/placeholders/section-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
     },
     "careers": {
       "slug": "careers",
       "title": "Careers",
       "headline": "Join the team shaping premium food experiences.",
       "description": "This page supports dynamic openings, culture highlights, and role-specific application links.",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "heroImageUrl": "/placeholders/section-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "Careers at Nest Foods Ltd",
+        "description": "Build your career with an ambitious food and commerce platform.",
+        "ogImageUrl": "/placeholders/section-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
     },
     "sustainability": {
       "slug": "sustainability",
       "title": "Sustainability",
       "headline": "Responsible sourcing, production, and distribution.",
       "description": "Publish transparent impact metrics, sourcing standards, and certification milestones.",
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "heroImageUrl": "/placeholders/section-image-placeholder.svg",
+      "logoImageUrl": "/placeholders/logo-placeholder.svg",
+      "seo": {
+        "title": "Sustainability | Nest Foods Ltd",
+        "description": "Track sustainability commitments and measurable impact initiatives.",
+        "ogImageUrl": "/placeholders/section-image-placeholder.svg"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "revisions": []
+    }
+  },
+  "banners": [
+    {
+      "id": "banner-home-1",
+      "label": "Launch Banner",
+      "headline": "Fresh premium products with nationwide delivery.",
+      "ctaLabel": "Shop now",
+      "ctaHref": "/shop",
+      "imageUrl": "/placeholders/hero-image-placeholder.svg",
+      "status": "published",
+      "publishAt": "2026-02-11T00:00:00.000Z",
+      "order": 1,
       "updatedAt": "2026-02-11T00:00:00.000Z"
     }
-  }
+  ],
+  "media": [
+    {
+      "id": "media-logo-primary",
+      "label": "Primary Logo Placeholder",
+      "kind": "image",
+      "url": "/placeholders/logo-placeholder.svg",
+      "altText": "Nest Foods Ltd logo placeholder",
+      "folder": "branding",
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    },
+    {
+      "id": "media-hero-default",
+      "label": "Hero Image Placeholder",
+      "kind": "image",
+      "url": "/placeholders/hero-image-placeholder.svg",
+      "altText": "Hero image placeholder",
+      "folder": "homepage",
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-placeholder-1",
+      "name": "Signature Blend Placeholder",
+      "slug": "signature-blend-placeholder",
+      "status": "published",
+      "imageUrl": "/placeholders/product-image-placeholder.svg",
+      "nutritionSummary": "Nutritional values will be configured in catalog manager.",
+      "allergens": [
+        "None configured"
+      ],
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe-placeholder-1",
+      "title": "Recipe Placeholder",
+      "slug": "recipe-placeholder",
+      "status": "draft",
+      "imageUrl": "/placeholders/section-image-placeholder.svg",
+      "ingredients": [
+        "Ingredient data will be configured in admin."
+      ],
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ]
 }
