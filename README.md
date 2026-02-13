@@ -51,12 +51,13 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - RBAC session login and protected admin routes are active.
 - CMS model now includes publication status, scheduling, SEO fields, and revisions.
 - Logo and image placeholders are wired in homepage and product sections.
+- Commerce core foundations are live (catalog, cart, checkout, orders, subscriptions, payment adapters).
 
 ## Next Build Steps
 
-1. Switch CMS storage driver from JSON to PostgreSQL adapter.
-2. Add full catalog manager APIs (products, recipes, banners, media).
-3. Build cart + checkout + payment provider adapters.
+1. Move CMS + commerce storage drivers from JSON to PostgreSQL adapters.
+2. Add customer authentication and secure order ownership.
+3. Implement inventory locking and transactional checkout.
 4. Add B2B + traceability data workflows.
 5. Add audit logs and admin activity reporting.
 

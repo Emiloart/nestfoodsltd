@@ -16,6 +16,7 @@
 - Content: dynamic CMS layer with JSON storage driver and PostgreSQL migration path.
 - Payments: adapter layer for Paystack and Flutterwave.
 - Media: Cloudinary or equivalent CDN-backed optimizer.
+- Commerce: cart quote engine + checkout + order timeline + subscriptions foundation.
 
 ## Security Baseline
 

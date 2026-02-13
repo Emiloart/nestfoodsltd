@@ -25,11 +25,12 @@ Last updated: 2026-02-11
 - [x] Add SEO controls per page + sitemap metadata fields
 
 ## 3) Commerce Core (Food Business)
-- [ ] Product catalog with variants, nutrition, allergens, ingredients
-- [ ] Cart + checkout (guest + account), promo codes, delivery slots
-- [ ] Integrate Paystack + Flutterwave (webhooks + retries)
-- [ ] Order lifecycle + status timeline + reorder flow
-- [ ] Subscriptions/recurring delivery foundations
+- Progress: commerce APIs + shop/cart/checkout/account foundations are live.
+- [x] Product catalog with variants, nutrition, allergens, ingredients
+- [x] Cart + checkout (guest + account), promo codes, delivery slots
+- [x] Integrate Paystack + Flutterwave (webhooks + retries)
+- [x] Order lifecycle + status timeline + reorder flow
+- [x] Subscriptions/recurring delivery foundations
 
 ## 4) Customer Platform Features
 - [ ] Auth + profile + addresses + wishlist + order history

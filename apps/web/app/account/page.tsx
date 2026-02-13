@@ -1,11 +1,5 @@
-import { PageShell } from "@/components/page-shell";
+import { AccountPageClient } from "@/components/account/account-page-client";
 
 export default function AccountPage() {
-  return (
-    <PageShell
-      title="Account Dashboard"
-      description="Scaffold for profile, addresses, order history, subscriptions, and saved preferences."
-      nextStep="Connect auth + customer domain services"
-    />
-  );
+  return <AccountPageClient />;
 }

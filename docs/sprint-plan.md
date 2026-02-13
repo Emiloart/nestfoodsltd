@@ -14,7 +14,7 @@
 - Add RBAC admin login and protected admin routes. (Completed)
 - Add scheduling/revision/SEO controls for CMS pages. (Completed)
 
-## Day 2 — Commerce MVP (In Progress)
+## Day 2 — Commerce MVP (Completed)
 
 - Catalog listing + detail pages (dynamic data).
 - Cart + checkout flow foundations.

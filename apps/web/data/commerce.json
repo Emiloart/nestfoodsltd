@@ -1,0 +1,328 @@
+{
+  "products": [
+    {
+      "id": "prod-signature-rice",
+      "slug": "signature-jollof-rice-mix",
+      "status": "published",
+      "name": "Signature Jollof Rice Mix",
+      "category": "Ready Mixes",
+      "shortDescription": "Premium spice and grain blend for consistent jollof outcomes.",
+      "longDescription": "A calibrated blend designed for households, restaurants, and distributors requiring predictable flavor, aroma, and nutrition labeling at scale.",
+      "imageUrl": "/placeholders/product-image-placeholder.svg",
+      "galleryUrls": [
+        "/placeholders/product-image-placeholder.svg",
+        "/placeholders/section-image-placeholder.svg"
+      ],
+      "tags": [
+        "best-seller",
+        "family-pack"
+      ],
+      "allergens": [
+        "May contain traces of soy"
+      ],
+      "ingredients": [
+        "Parboiled rice",
+        "Tomato powder",
+        "Pepper blend",
+        "Sea salt",
+        "Herbs"
+      ],
+      "shelfLifeDays": 365,
+      "nutritionTable": [
+        {
+          "label": "Energy",
+          "amount": 367,
+          "unit": "kcal"
+        },
+        {
+          "label": "Protein",
+          "amount": 8.2,
+          "unit": "g"
+        },
+        {
+          "label": "Carbohydrates",
+          "amount": 74,
+          "unit": "g"
+        },
+        {
+          "label": "Fat",
+          "amount": 3.1,
+          "unit": "g"
+        }
+      ],
+      "variants": [
+        {
+          "id": "var-signature-rice-1kg",
+          "name": "1kg Pack",
+          "sku": "NFL-RICE-1KG",
+          "sizeLabel": "1kg",
+          "stockStatus": "in_stock",
+          "priceMinor": 850000,
+          "currency": "NGN",
+          "subscriptionEligible": true
+        },
+        {
+          "id": "var-signature-rice-500g",
+          "name": "500g Pack",
+          "sku": "NFL-RICE-500G",
+          "sizeLabel": "500g",
+          "stockStatus": "in_stock",
+          "priceMinor": 450000,
+          "currency": "NGN",
+          "subscriptionEligible": true
+        }
+      ],
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    },
+    {
+      "id": "prod-protein-granules",
+      "slug": "plant-protein-granules",
+      "status": "published",
+      "name": "Plant Protein Granules",
+      "category": "Protein",
+      "shortDescription": "High-protein granules optimized for quick food preparation.",
+      "longDescription": "Versatile protein granules for home and commercial kitchens with clear nutrition, allergen, and storage guidance.",
+      "imageUrl": "/placeholders/product-image-placeholder.svg",
+      "galleryUrls": [
+        "/placeholders/product-image-placeholder.svg"
+      ],
+      "tags": [
+        "high-protein",
+        "b2b-ready"
+      ],
+      "allergens": [
+        "Contains soy"
+      ],
+      "ingredients": [
+        "Textured soy protein",
+        "Natural flavor",
+        "Sea salt"
+      ],
+      "shelfLifeDays": 270,
+      "nutritionTable": [
+        {
+          "label": "Energy",
+          "amount": 320,
+          "unit": "kcal"
+        },
+        {
+          "label": "Protein",
+          "amount": 52,
+          "unit": "g"
+        },
+        {
+          "label": "Carbohydrates",
+          "amount": 18,
+          "unit": "g"
+        },
+        {
+          "label": "Fat",
+          "amount": 4.8,
+          "unit": "g"
+        }
+      ],
+      "variants": [
+        {
+          "id": "var-protein-2kg",
+          "name": "2kg Bulk",
+          "sku": "NFL-PTN-2KG",
+          "sizeLabel": "2kg",
+          "stockStatus": "in_stock",
+          "priceMinor": 2500000,
+          "currency": "NGN",
+          "subscriptionEligible": true
+        },
+        {
+          "id": "var-protein-500g",
+          "name": "500g Retail",
+          "sku": "NFL-PTN-500G",
+          "sizeLabel": "500g",
+          "stockStatus": "low_stock",
+          "priceMinor": 720000,
+          "currency": "NGN",
+          "subscriptionEligible": false
+        }
+      ],
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    },
+    {
+      "id": "prod-super-cereal",
+      "slug": "super-breakfast-cereal",
+      "status": "published",
+      "name": "Super Breakfast Cereal",
+      "category": "Cereals",
+      "shortDescription": "Balanced breakfast cereal with fortified vitamins and minerals.",
+      "longDescription": "Engineered for high repeat purchases with strong shelf visibility, stable nutrition labels, and family-friendly flavor.",
+      "imageUrl": "/placeholders/product-image-placeholder.svg",
+      "galleryUrls": [
+        "/placeholders/product-image-placeholder.svg",
+        "/placeholders/section-image-placeholder.svg"
+      ],
+      "tags": [
+        "kids-friendly",
+        "fortified"
+      ],
+      "allergens": [
+        "Contains gluten"
+      ],
+      "ingredients": [
+        "Whole grain oats",
+        "Corn grits",
+        "Vitamin premix",
+        "Natural sweetener"
+      ],
+      "shelfLifeDays": 300,
+      "nutritionTable": [
+        {
+          "label": "Energy",
+          "amount": 390,
+          "unit": "kcal"
+        },
+        {
+          "label": "Protein",
+          "amount": 11,
+          "unit": "g"
+        },
+        {
+          "label": "Carbohydrates",
+          "amount": 68,
+          "unit": "g"
+        },
+        {
+          "label": "Fat",
+          "amount": 6.2,
+          "unit": "g"
+        }
+      ],
+      "variants": [
+        {
+          "id": "var-cereal-750g",
+          "name": "750g Pack",
+          "sku": "NFL-CER-750G",
+          "sizeLabel": "750g",
+          "stockStatus": "in_stock",
+          "priceMinor": 980000,
+          "currency": "NGN",
+          "subscriptionEligible": true
+        }
+      ],
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "promos": [
+    {
+      "code": "WELCOME10",
+      "label": "10% off first order",
+      "type": "percent",
+      "value": 10,
+      "currency": "NGN",
+      "minSubtotalMinor": 500000,
+      "active": true
+    },
+    {
+      "code": "BULK2500",
+      "label": "₦2,500 bulk discount",
+      "type": "fixed",
+      "value": 250000,
+      "currency": "NGN",
+      "minSubtotalMinor": 3000000,
+      "active": true
+    }
+  ],
+  "deliverySlots": [
+    {
+      "id": "slot-morning-lagos",
+      "label": "Morning Slot",
+      "startsAt": "2026-02-12T09:00:00.000Z",
+      "endsAt": "2026-02-12T12:00:00.000Z",
+      "region": "Lagos",
+      "feeMinor": 150000,
+      "currency": "NGN",
+      "active": true
+    },
+    {
+      "id": "slot-evening-lagos",
+      "label": "Evening Slot",
+      "startsAt": "2026-02-12T17:00:00.000Z",
+      "endsAt": "2026-02-12T20:00:00.000Z",
+      "region": "Lagos",
+      "feeMinor": 200000,
+      "currency": "NGN",
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-2026-0001",
+      "orderNumber": "NFL-2026-0001",
+      "customerEmail": "customer@example.com",
+      "customerName": "Demo Customer",
+      "shippingAddress": "Lekki Phase 1, Lagos, Nigeria",
+      "items": [
+        {
+          "productId": "prod-signature-rice",
+          "productName": "Signature Jollof Rice Mix",
+          "productSlug": "signature-jollof-rice-mix",
+          "variantId": "var-signature-rice-1kg",
+          "variantName": "1kg Pack",
+          "quantity": 2,
+          "unitPriceMinor": 850000,
+          "lineTotalMinor": 1700000,
+          "currency": "NGN",
+          "imageUrl": "/placeholders/product-image-placeholder.svg"
+        }
+      ],
+      "summary": {
+        "currency": "NGN",
+        "subtotalMinor": 1700000,
+        "discountMinor": 170000,
+        "deliveryFeeMinor": 150000,
+        "totalMinor": 1680000,
+        "promoCodeApplied": "WELCOME10"
+      },
+      "deliverySlotId": "slot-morning-lagos",
+      "paymentProvider": "paystack",
+      "paymentReference": "PAYSTACK-DEMO-2026-0001",
+      "status": "processing",
+      "timeline": [
+        {
+          "status": "created",
+          "at": "2026-02-11T00:00:00.000Z",
+          "note": "Order created."
+        },
+        {
+          "status": "payment_pending",
+          "at": "2026-02-11T00:00:00.000Z",
+          "note": "Awaiting payment confirmation."
+        },
+        {
+          "status": "paid",
+          "at": "2026-02-11T00:00:00.000Z",
+          "note": "Payment confirmed."
+        },
+        {
+          "status": "processing",
+          "at": "2026-02-11T00:00:00.000Z",
+          "note": "Order is being packed."
+        }
+      ],
+      "createdAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "sub-2026-0001",
+      "customerEmail": "customer@example.com",
+      "variantId": "var-signature-rice-1kg",
+      "quantity": 1,
+      "frequency": "monthly",
+      "status": "active",
+      "nextChargeAt": "2026-03-10T10:00:00.000Z",
+      "provider": "paystack",
+      "createdAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "webhookEvents": []
+}

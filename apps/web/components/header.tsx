@@ -1,12 +1,14 @@
 import Link from "next/link";
 
 import { BrandLogo } from "./brand-logo";
+import { CartLink } from "./cart/cart-link";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
+  { href: "/account", label: "Account" },
   { href: "/about", label: "About" },
   { href: "/recipes", label: "Recipes" },
   { href: "/contact", label: "Contact" },
@@ -32,6 +34,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <MobileNav />
+          <CartLink />
           <Link
             href="/admin"
             className="hidden rounded-full border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:-translate-y-0.5 hover:bg-neutral-100 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900 md:inline-flex"
