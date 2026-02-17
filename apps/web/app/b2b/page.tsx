@@ -1,11 +1,5 @@
-import { PageShell } from "@/components/page-shell";
+import { B2BPageClient } from "@/components/b2b/b2b-page-client";
 
 export default function B2BPage() {
-  return (
-    <PageShell
-      title="Distributor Portal"
-      description="Portal scaffold for approved wholesale buyers, custom pricing, and bulk order workflows."
-      nextStep="Create B2B auth + pricing policies"
-    />
-  );
+  return <B2BPageClient />;
 }

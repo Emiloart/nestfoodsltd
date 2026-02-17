@@ -1,6 +1,6 @@
 # Nest Foods Ltd — Enterprise Build Checklist
 
-Last updated: 2026-02-11
+Last updated: 2026-02-17
 
 ## 0) Foundation (Start Here)
 - [x] Initialize clean monorepo (`pnpm` workspaces + strict TypeScript)
@@ -41,10 +41,11 @@ Last updated: 2026-02-11
 - [x] Multi-language + multi-currency architecture
 
 ## 5) B2B / Distributor Portal
-- [ ] Separate B2B auth + approval flow
-- [ ] Bulk order UX + tiered pricing + quote requests
-- [ ] Invoices/statements download
-- [ ] B2B order tracking + account manager support hooks
+- Progress: distributor portal foundations with approval, bulk quote-to-order, invoicing, and support are live.
+- [x] Separate B2B auth + approval flow
+- [x] Bulk order UX + tiered pricing + quote requests
+- [x] Invoices/statements download
+- [x] B2B order tracking + account manager support hooks
 
 ## 6) Traceability + Food-Specific Tools
 - [ ] Batch/QR lookup page

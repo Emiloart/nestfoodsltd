@@ -29,9 +29,15 @@
 - Personalization rails (recommendations + recently viewed).
 - Search autocomplete and faceted shop filters.
 
-## Post Day 3 — Enterprise Rollout
+## Day 4 — B2B Distributor Portal (Completed)
 
-- B2B portal workflows.
+- B2B session and distributor approval-state flow.
+- Tiered pricing catalog and bulk quote builder.
+- Quote lifecycle with admin status controls and conversion to orders.
+- Invoice/statement download hooks and support ticket channel.
+
+## Post Day 4 — Enterprise Rollout
+
 - Full order management and notifications.
 - Traceability ingestion and consumer lookup timeline.
 - Analytics, audit logging, and compliance hardening.

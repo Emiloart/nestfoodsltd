@@ -18,6 +18,7 @@
 - Media: Cloudinary or equivalent CDN-backed optimizer.
 - Commerce: cart quote engine + checkout + order timeline + subscriptions foundation.
 - Customer: session-based profile, wishlist, preferences, personalization, and autocomplete APIs.
+- B2B: distributor account approval flow, tiered pricing catalog, quote-to-order conversion, and invoice/statement APIs.
 
 ## Security Baseline
 
