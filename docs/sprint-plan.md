@@ -21,7 +21,15 @@
 - Payment initiation with Paystack + Flutterwave stubs.
 - Customer auth and account shell.
 
-## Post Day 2 — Enterprise Rollout
+## Day 3 — Customer Platform (Completed)
+
+- Cookie-based customer session + authenticated profile APIs.
+- Wishlist, customer order history, and authenticated reorder flow.
+- Preferences center with locale/currency + newsletter/notification controls.
+- Personalization rails (recommendations + recently viewed).
+- Search autocomplete and faceted shop filters.
+
+## Post Day 3 — Enterprise Rollout
 
 - B2B portal workflows.
 - Full order management and notifications.

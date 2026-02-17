@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { AddToWishlistButton } from "@/components/customer/add-to-wishlist-button";
+import { RecentlyViewedTracker } from "@/components/customer/recently-viewed-tracker";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -21,6 +23,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
+      <RecentlyViewedTracker productSlug={product.slug} />
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-4">
           <ImagePlaceholder
@@ -49,6 +52,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               {product.name}
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-300">{product.longDescription}</p>
+            <AddToWishlistButton productSlug={product.slug} />
           </div>
 
           <Card className="space-y-3">

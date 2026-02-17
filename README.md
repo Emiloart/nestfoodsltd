@@ -52,11 +52,12 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - CMS model now includes publication status, scheduling, SEO fields, and revisions.
 - Logo and image placeholders are wired in homepage and product sections.
 - Commerce core foundations are live (catalog, cart, checkout, orders, subscriptions, payment adapters).
+- Customer platform foundations are live (session auth, profile/preferences, wishlist, order history, personalization, search autocomplete).
 
 ## Next Build Steps
 
-1. Move CMS + commerce storage drivers from JSON to PostgreSQL adapters.
-2. Add customer authentication and secure order ownership.
+1. Move CMS + commerce + customer storage drivers from JSON to PostgreSQL adapters.
+2. Harden customer auth to user-id based session provider (NextAuth/Clerk).
 3. Implement inventory locking and transactional checkout.
 4. Add B2B + traceability data workflows.
 5. Add audit logs and admin activity reporting.

@@ -15,6 +15,9 @@ type ProductFilters = {
   search?: string;
   category?: string;
   allergenExclude?: string;
+  tag?: string;
+  inStockOnly?: boolean;
+  sort?: "relevance" | "price_asc" | "price_desc";
 };
 
 function normalizeSearchValue(value?: string) {
@@ -24,6 +27,10 @@ function normalizeSearchValue(value?: string) {
 function generateOrderNumber(orderCount: number) {
   const numericPart = String(orderCount + 1).padStart(4, "0");
   return `NFL-${new Date().getFullYear()}-${numericPart}`;
+}
+
+function minimumVariantPrice(product: CommerceProduct) {
+  return Math.min(...product.variants.map((variant) => variant.priceMinor));
 }
 
 function mapPaymentEventToOrderStatus(event: string): OrderStatus {
@@ -69,6 +76,24 @@ export async function listCommerceProducts(filters?: ProductFilters) {
     );
   }
 
+  if (filters?.tag) {
+    const normalizedTag = filters.tag.toLowerCase();
+    products = products.filter((product) => product.tags.some((entry) => entry.toLowerCase() === normalizedTag));
+  }
+
+  if (filters?.inStockOnly) {
+    products = products.filter((product) =>
+      product.variants.some((variant) => variant.stockStatus !== "out_of_stock"),
+    );
+  }
+
+  if (filters?.sort === "price_asc") {
+    products = [...products].sort((a, b) => minimumVariantPrice(a) - minimumVariantPrice(b));
+  }
+  if (filters?.sort === "price_desc") {
+    products = [...products].sort((a, b) => minimumVariantPrice(b) - minimumVariantPrice(a));
+  }
+
   return products;
 }
 
@@ -76,6 +101,17 @@ export async function listCommerceCategories() {
   noStore();
   const products = await listCommerceProducts();
   return [...new Set(products.map((product) => product.category))];
+}
+
+export async function listCommerceFacets() {
+  noStore();
+  const data = await readCommerceData();
+  const products = data.products.filter((product) => product.status === "published");
+  const categories = [...new Set(products.map((product) => product.category))];
+  const allergens = [...new Set(products.flatMap((product) => product.allergens))];
+  const tags = [...new Set(products.flatMap((product) => product.tags))];
+
+  return { categories, allergens, tags };
 }
 
 export async function getCommerceProductBySlug(slug: string) {

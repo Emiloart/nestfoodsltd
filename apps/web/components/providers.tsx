@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { type ReactNode } from "react";
 
 import { CartProvider } from "@/components/cart/cart-provider";
+import { ExperienceProvider } from "@/components/customer/experience-provider";
 
 type ProvidersProps = {
   children: ReactNode;
@@ -12,7 +13,9 @@ type ProvidersProps = {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <CartProvider>{children}</CartProvider>
+      <ExperienceProvider>
+        <CartProvider>{children}</CartProvider>
+      </ExperienceProvider>
     </ThemeProvider>
   );
 }

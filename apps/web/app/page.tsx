@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { PersonalizedRail } from "@/components/customer/personalized-rail";
 import { FadeIn } from "@/components/motion/fade-in";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
@@ -82,6 +83,7 @@ export default async function HomePage() {
           </FadeIn>
         ))}
       </section>
+      <PersonalizedRail />
     </div>
   );
 }

@@ -17,6 +17,7 @@
 - Payments: adapter layer for Paystack and Flutterwave.
 - Media: Cloudinary or equivalent CDN-backed optimizer.
 - Commerce: cart quote engine + checkout + order timeline + subscriptions foundation.
+- Customer: session-based profile, wishlist, preferences, personalization, and autocomplete APIs.
 
 ## Security Baseline
 
@@ -31,3 +32,4 @@
 - Default locale: `en-NG`.
 - Locale-aware route strategy prepared for Hausa/Yoruba/Igbo and French expansion.
 - Currency model centered on `NGN` with exchange-ready adapter.
+- Client-side locale/currency switcher with persistent cookies/local storage.

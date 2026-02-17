@@ -33,11 +33,12 @@ Last updated: 2026-02-11
 - [x] Subscriptions/recurring delivery foundations
 
 ## 4) Customer Platform Features
-- [ ] Auth + profile + addresses + wishlist + order history
-- [ ] Search/autocomplete + faceted filters
-- [ ] Personalization blocks (recently viewed, recommendations)
-- [ ] Newsletter preferences + notification preferences
-- [ ] Multi-language + multi-currency architecture
+- Progress: customer account, personalization, and locale/currency foundations are live.
+- [x] Auth + profile + addresses + wishlist + order history
+- [x] Search/autocomplete + faceted filters
+- [x] Personalization blocks (recently viewed, recommendations)
+- [x] Newsletter preferences + notification preferences
+- [x] Multi-language + multi-currency architecture
 
 ## 5) B2B / Distributor Portal
 - [ ] Separate B2B auth + approval flow

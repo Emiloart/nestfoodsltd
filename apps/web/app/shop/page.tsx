@@ -1,17 +1,22 @@
 import Link from "next/link";
 
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { AddToWishlistButton } from "@/components/customer/add-to-wishlist-button";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/commerce/format";
-import { listCommerceCategories, listCommerceProducts } from "@/lib/commerce/service";
+import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
 
 type ShopPageProps = {
   searchParams: Promise<{
     search?: string;
     category?: string;
     allergenExclude?: string;
+    tag?: string;
+    inStockOnly?: string;
+    sort?: string;
   }>;
 };
 
@@ -20,10 +25,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const search = params.search?.trim() || undefined;
   const category = params.category?.trim() || undefined;
   const allergenExclude = params.allergenExclude?.trim() || undefined;
+  const tag = params.tag?.trim() || undefined;
+  const inStockOnly = params.inStockOnly === "1";
+  const sort = params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : undefined;
 
-  const [products, categories] = await Promise.all([
-    listCommerceProducts({ search, category, allergenExclude }),
-    listCommerceCategories(),
+  const [products, facets] = await Promise.all([
+    listCommerceProducts({ search, category, allergenExclude, tag, inStockOnly, sort }),
+    listCommerceFacets(),
   ]);
 
   return (
@@ -32,37 +40,106 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         <Badge>Commerce Catalog</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Shop</h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Filter by category and allergens, then add variants directly to cart.
+          Faceted search with categories, tags, allergen exclusion, and stock filters.
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <Link
-          href="/shop"
-          className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
-        >
-          All
-        </Link>
-        {categories.map((entry) => (
-          <Link
-            key={entry}
-            href={`/shop?category=${encodeURIComponent(entry)}`}
-            className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
-          >
-            {entry}
-          </Link>
-        ))}
-        <Link
-          href="/shop?allergenExclude=soy"
-          className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
-        >
-          Soy-Free
-        </Link>
-      </div>
+      <Card className="space-y-4">
+        <form className="grid gap-3 md:grid-cols-2 lg:grid-cols-3" method="GET">
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Search</span>
+            <Input name="search" defaultValue={search ?? ""} placeholder="Search products, tags, categories..." />
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Category</span>
+            <select
+              name="category"
+              defaultValue={category ?? ""}
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            >
+              <option value="">All categories</option>
+              {facets.categories.map((entry) => (
+                <option key={entry} value={entry}>
+                  {entry}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Tag</span>
+            <select
+              name="tag"
+              defaultValue={tag ?? ""}
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            >
+              <option value="">All tags</option>
+              {facets.tags.map((entry) => (
+                <option key={entry} value={entry}>
+                  {entry}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Exclude allergen</span>
+            <select
+              name="allergenExclude"
+              defaultValue={allergenExclude ?? ""}
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            >
+              <option value="">None</option>
+              {facets.allergens.map((entry) => (
+                <option key={entry} value={entry}>
+                  {entry}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Sort</span>
+            <select
+              name="sort"
+              defaultValue={sort ?? ""}
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            >
+              <option value="">Relevance</option>
+              <option value="price_asc">Price: low to high</option>
+              <option value="price_desc">Price: high to low</option>
+            </select>
+          </label>
+          <div className="flex items-end gap-3">
+            <label className="flex h-11 items-center gap-2 rounded-xl border border-neutral-300 px-3 text-sm dark:border-neutral-700">
+              <input
+                type="checkbox"
+                name="inStockOnly"
+                value="1"
+                defaultChecked={inStockOnly}
+                className="h-4 w-4 rounded border-neutral-300"
+              />
+              In stock only
+            </label>
+            <button
+              type="submit"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+            >
+              Apply
+            </button>
+            <Link
+              href="/shop"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-300 px-5 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+            >
+              Reset
+            </Link>
+          </div>
+        </form>
+      </Card>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => {
           const defaultVariant = product.variants[0];
+          if (!defaultVariant) {
+            return null;
+          }
           return (
             <Card key={product.id} className="space-y-4">
               <Link href={`/products/${product.slug}`} className="block">
@@ -85,7 +162,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <AddToCartButton variantId={defaultVariant.id} />
+                <div className="flex items-center gap-2">
+                  <AddToCartButton variantId={defaultVariant.id} />
+                  <AddToWishlistButton productSlug={product.slug} />
+                </div>
                 <Link
                   href={`/products/${product.slug}`}
                   className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
@@ -101,7 +181,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       {products.length === 0 ? (
         <Card className="p-6">
           <p className="text-sm text-neutral-600 dark:text-neutral-300">
-            No products matched your filter. Try a different category or search.
+            No products matched your filters. Try relaxing one filter or reset.
           </p>
         </Card>
       ) : null}

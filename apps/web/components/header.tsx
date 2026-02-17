@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { BrandLogo } from "./brand-logo";
 import { CartLink } from "./cart/cart-link";
+import { GlobalSearch } from "./customer/global-search";
+import { LocaleCurrencySwitcher } from "./customer/locale-currency-switcher";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -33,6 +35,8 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <GlobalSearch />
+          <LocaleCurrencySwitcher />
           <MobileNav />
           <CartLink />
           <Link

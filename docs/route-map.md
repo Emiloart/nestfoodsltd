@@ -49,3 +49,13 @@
 - `/api/commerce/payments/paystack/initiate`
 - `/api/commerce/payments/flutterwave/initiate`
 - `/api/commerce/payments/webhook/[provider]`
+- `/api/customer/session`
+- `/api/customer/profile`
+- `/api/customer/preferences`
+- `/api/customer/orders`
+- `/api/customer/orders/[id]/reorder`
+- `/api/customer/subscriptions`
+- `/api/customer/wishlist`
+- `/api/customer/search`
+- `/api/customer/recommendations`
+- `/api/customer/recently-viewed`

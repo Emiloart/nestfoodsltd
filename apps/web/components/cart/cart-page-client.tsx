@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
+import { useExperience } from "@/components/customer/experience-provider";
 import { useCart } from "./cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { formatCurrency } from "@/lib/commerce/format";
 import { type DeliverySlot, type QuoteResult } from "@/lib/commerce/types";
 
 type QuoteResponse = {
@@ -19,6 +19,7 @@ type DeliverySlotsResponse = {
 };
 
 export function CartPageClient() {
+  const { formatMinorAmount } = useExperience();
   const { items, setQuantity, removeItem, clear } = useCart();
   const [deliverySlots, setDeliverySlots] = useState<DeliverySlot[]>([]);
   const [deliverySlotId, setDeliverySlotId] = useState<string>("");
@@ -83,8 +84,6 @@ export function CartPageClient() {
   }, [deliverySlotId, hasItems, items, promoCode]);
 
   const summary = quote?.summary;
-  const currency = summary?.currency ?? "NGN";
-
   const checkoutHref = useMemo(() => {
     if (!summary || !hasItems) {
       return "/checkout";
@@ -131,7 +130,7 @@ export function CartPageClient() {
                         {line.productName} · {line.variantName}
                       </p>
                       <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                        {formatCurrency(line.currency, line.unitPriceMinor)} each
+                        {formatMinorAmount(line.unitPriceMinor, line.currency)} each
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -153,7 +152,7 @@ export function CartPageClient() {
                     </div>
                     <div className="flex items-center justify-between gap-2 md:min-w-40 md:justify-end">
                       <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                        {formatCurrency(line.currency, line.lineTotalMinor)}
+                        {formatMinorAmount(line.lineTotalMinor, line.currency)}
                       </p>
                       <Button variant="ghost" size="sm" onClick={() => removeItem(line.variantId)}>
                         Remove
@@ -180,7 +179,7 @@ export function CartPageClient() {
                 >
                   {deliverySlots.map((slot) => (
                     <option key={slot.id} value={slot.id}>
-                      {slot.label} ({slot.region}) · {formatCurrency(slot.currency, slot.feeMinor)}
+                      {slot.label} ({slot.region}) · {formatMinorAmount(slot.feeMinor, slot.currency)}
                     </option>
                   ))}
                 </select>
@@ -203,19 +202,19 @@ export function CartPageClient() {
               <div className="space-y-2 text-sm text-neutral-700 dark:text-neutral-200">
                 <div className="flex items-center justify-between">
                   <span>Subtotal</span>
-                  <span>{formatCurrency(currency, summary?.subtotalMinor ?? 0)}</span>
+                  <span>{formatMinorAmount(summary?.subtotalMinor ?? 0, summary?.currency ?? "NGN")}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>Discount</span>
-                  <span>-{formatCurrency(currency, summary?.discountMinor ?? 0)}</span>
+                  <span>-{formatMinorAmount(summary?.discountMinor ?? 0, summary?.currency ?? "NGN")}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>Delivery</span>
-                  <span>{formatCurrency(currency, summary?.deliveryFeeMinor ?? 0)}</span>
+                  <span>{formatMinorAmount(summary?.deliveryFeeMinor ?? 0, summary?.currency ?? "NGN")}</span>
                 </div>
                 <div className="flex items-center justify-between border-t border-neutral-200 pt-2 text-base font-semibold dark:border-neutral-800">
                   <span>Total</span>
-                  <span>{formatCurrency(currency, summary?.totalMinor ?? 0)}</span>
+                  <span>{formatMinorAmount(summary?.totalMinor ?? 0, summary?.currency ?? "NGN")}</span>
                 </div>
               </div>
               <Link

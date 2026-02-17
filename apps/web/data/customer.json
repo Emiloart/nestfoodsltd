@@ -1,0 +1,71 @@
+{
+  "profiles": [
+    {
+      "id": "cust-0001",
+      "email": "customer@example.com",
+      "fullName": "Demo Customer",
+      "phone": "+2348000000000",
+      "addresses": [
+        "Lekki Phase 1, Lagos, Nigeria"
+      ],
+      "wishlistSlugs": [
+        "super-breakfast-cereal"
+      ],
+      "createdAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "preferences": [
+    {
+      "customerEmail": "customer@example.com",
+      "locale": "en-NG",
+      "currency": "NGN",
+      "dietaryTags": [
+        "high-protein"
+      ],
+      "interests": [
+        "new-products",
+        "recipes",
+        "bulk-offers"
+      ],
+      "notifications": {
+        "orderUpdates": true,
+        "marketingEmails": true,
+        "smsAlerts": false
+      },
+      "newsletter": {
+        "subscribed": true,
+        "topics": [
+          "new-products",
+          "recipes"
+        ],
+        "frequency": "weekly"
+      },
+      "updatedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec-0001",
+      "type": "top_pick",
+      "productSlug": "signature-jollof-rice-mix",
+      "title": "Signature Jollof Rice Mix",
+      "reason": "Popular among repeat customers in Lagos."
+    },
+    {
+      "id": "rec-0002",
+      "type": "top_pick",
+      "productSlug": "plant-protein-granules",
+      "title": "Plant Protein Granules",
+      "reason": "High-protein staple for home and B2B buyers."
+    }
+  ],
+  "recentlyViewed": [
+    {
+      "id": "rv-0001",
+      "customerEmail": "customer@example.com",
+      "productSlug": "signature-jollof-rice-mix",
+      "viewedAt": "2026-02-11T00:00:00.000Z"
+    }
+  ]
+}

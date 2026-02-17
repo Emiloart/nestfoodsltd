@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useExperience } from "@/components/customer/experience-provider";
 import { useCart } from "./cart-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { formatCurrency } from "@/lib/commerce/format";
 import { type DeliverySlot, type PaymentProvider, type QuoteResult } from "@/lib/commerce/types";
+import { type CustomerPreferences, type CustomerProfile } from "@/lib/customer/types";
 
 type QuoteResponse = {
   quote: QuoteResult;
@@ -34,9 +35,18 @@ type CheckoutResponse = {
   };
 };
 
+type ProfileResponse = {
+  profile: CustomerProfile;
+};
+
+type PreferencesResponse = {
+  preferences: CustomerPreferences;
+};
+
 export function CheckoutPageClient() {
   const searchParams = useSearchParams();
   const { items, clear } = useCart();
+  const { formatMinorAmount, setCurrency, setLocale } = useExperience();
 
   const [promoCode, setPromoCode] = useState(searchParams.get("promoCode") ?? "");
   const [deliverySlotId, setDeliverySlotId] = useState(searchParams.get("deliverySlotId") ?? "");
@@ -67,6 +77,30 @@ export function CheckoutPageClient() {
 
     void loadSlots();
   }, [deliverySlotId]);
+
+  useEffect(() => {
+    async function hydrateCustomerDefaults() {
+      const [profileResponse, preferencesResponse] = await Promise.all([
+        fetch("/api/customer/profile"),
+        fetch("/api/customer/preferences"),
+      ]);
+
+      if (profileResponse.ok) {
+        const profileData = (await profileResponse.json()) as ProfileResponse;
+        setCustomerEmail(profileData.profile.email);
+        setCustomerName(profileData.profile.fullName ?? "");
+        setShippingAddress(profileData.profile.addresses[0] ?? "");
+      }
+
+      if (preferencesResponse.ok) {
+        const preferencesData = (await preferencesResponse.json()) as PreferencesResponse;
+        setLocale(preferencesData.preferences.locale);
+        setCurrency(preferencesData.preferences.currency);
+      }
+    }
+
+    void hydrateCustomerDefaults();
+  }, [setCurrency, setLocale]);
 
   useEffect(() => {
     async function refreshQuote() {
@@ -130,8 +164,6 @@ export function CheckoutPageClient() {
     setSubmitting(false);
   }
 
-  const currency = quote?.summary.currency ?? "NGN";
-
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
@@ -149,7 +181,7 @@ export function CheckoutPageClient() {
           <p className="text-sm text-neutral-700 dark:text-neutral-200">
             Amount:{" "}
             <span className="font-semibold">
-              {formatCurrency(checkoutResult.payment.currency, checkoutResult.payment.amountMinor)}
+              {formatMinorAmount(checkoutResult.payment.amountMinor, checkoutResult.payment.currency)}
             </span>
           </p>
           <a
@@ -233,26 +265,28 @@ export function CheckoutPageClient() {
                   {line.productName} × {line.quantity}
                 </span>
                 <span className="font-medium text-neutral-900 dark:text-neutral-100">
-                  {formatCurrency(line.currency, line.lineTotalMinor)}
+                  {formatMinorAmount(line.lineTotalMinor, line.currency)}
                 </span>
               </div>
             ))}
             <div className="space-y-2 border-t border-neutral-200 pt-3 text-sm dark:border-neutral-800">
               <div className="flex items-center justify-between">
                 <span>Subtotal</span>
-                <span>{formatCurrency(currency, quote?.summary.subtotalMinor ?? 0)}</span>
+                <span>{formatMinorAmount(quote?.summary.subtotalMinor ?? 0, quote?.summary.currency ?? "NGN")}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span>Discount</span>
-                <span>-{formatCurrency(currency, quote?.summary.discountMinor ?? 0)}</span>
+                <span>-{formatMinorAmount(quote?.summary.discountMinor ?? 0, quote?.summary.currency ?? "NGN")}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span>Delivery</span>
-                <span>{formatCurrency(currency, quote?.summary.deliveryFeeMinor ?? 0)}</span>
+                <span>
+                  {formatMinorAmount(quote?.summary.deliveryFeeMinor ?? 0, quote?.summary.currency ?? "NGN")}
+                </span>
               </div>
               <div className="flex items-center justify-between text-base font-semibold">
                 <span>Total</span>
-                <span>{formatCurrency(currency, quote?.summary.totalMinor ?? 0)}</span>
+                <span>{formatMinorAmount(quote?.summary.totalMinor ?? 0, quote?.summary.currency ?? "NGN")}</span>
               </div>
             </div>
           </Card>
