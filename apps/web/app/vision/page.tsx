@@ -17,5 +17,5 @@ export default async function VisionPage() {
 
 export async function generateMetadata() {
   const page = await getCmsPage("vision", { preview: true });
-  return cmsPageMetadata(page);
+  return cmsPageMetadata(page, { path: "/vision" });
 }

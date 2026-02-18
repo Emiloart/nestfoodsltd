@@ -17,5 +17,5 @@ export default async function ContactPage() {
 
 export async function generateMetadata() {
   const page = await getCmsPage("contact", { preview: true });
-  return cmsPageMetadata(page);
+  return cmsPageMetadata(page, { path: "/contact" });
 }

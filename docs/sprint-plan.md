@@ -51,7 +51,15 @@
 - NDPR consent manager and data-subject request intake APIs.
 - Backup/restore and incident-response runbook documentation.
 
-## Post Day 6 — Enterprise Rollout
+## Day 7 — Performance, Accessibility, SEO (Completed)
+
+- WCAG hardening on critical flows (skip links, nav semantics, focus states, combobox/listbox search semantics).
+- Core Web Vitals budget model (LCP, INP, CLS) with client reporter and telemetry ingestion endpoint.
+- Image optimization baseline upgraded to `next/image` responsive behavior for placeholder media and brand surfaces.
+- Structured data coverage expanded across Organization, Product, Article, and FAQ schemas.
+- Canonical metadata strategy, expanded sitemap, and hardened robots policy for sensitive routes.
+
+## Post Day 7 — Enterprise Rollout
 
 - Full order management and notifications.
-- Performance, accessibility, and SEO hardening.
+- DevOps release automation, observability, and SLA operations.

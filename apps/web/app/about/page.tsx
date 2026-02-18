@@ -17,5 +17,5 @@ export default async function AboutPage() {
 
 export async function generateMetadata() {
   const page = await getCmsPage("about", { preview: true });
-  return cmsPageMetadata(page);
+  return cmsPageMetadata(page, { path: "/about" });
 }

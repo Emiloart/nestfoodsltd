@@ -8,6 +8,14 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/commerce/format";
 import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata = buildPageMetadata({
+  title: "Shop",
+  description:
+    "Browse Nest Foods products with filters for category, allergens, tags, and availability.",
+  path: "/shop",
+});
 
 type ShopPageProps = {
   searchParams: Promise<{
@@ -27,7 +35,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const allergenExclude = params.allergenExclude?.trim() || undefined;
   const tag = params.tag?.trim() || undefined;
   const inStockOnly = params.inStockOnly === "1";
-  const sort = params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : undefined;
+  const sort =
+    params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : undefined;
 
   const [products, facets] = await Promise.all([
     listCommerceProducts({ search, category, allergenExclude, tag, inStockOnly, sort }),
@@ -38,7 +47,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>Commerce Catalog</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Shop</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          Shop
+        </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
           Faceted search with categories, tags, allergen exclusion, and stock filters.
         </p>
@@ -48,7 +59,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         <form className="grid gap-3 md:grid-cols-2 lg:grid-cols-3" method="GET">
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Search</span>
-            <Input name="search" defaultValue={search ?? ""} placeholder="Search products, tags, categories..." />
+            <Input
+              name="search"
+              defaultValue={search ?? ""}
+              placeholder="Search products, tags, categories..."
+            />
           </label>
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Category</span>
@@ -81,7 +96,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             </select>
           </label>
           <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Exclude allergen</span>
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+              Exclude allergen
+            </span>
             <select
               name="allergenExclude"
               defaultValue={allergenExclude ?? ""}
@@ -151,9 +168,15 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 />
               </Link>
               <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">{product.category}</p>
-                <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{product.name}</h2>
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">{product.shortDescription}</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
+                  {product.category}
+                </p>
+                <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                  {product.name}
+                </h2>
+                <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                  {product.shortDescription}
+                </p>
                 <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                   {formatCurrency(defaultVariant.currency, defaultVariant.priceMinor)}
                 </p>

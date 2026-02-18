@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, type MotionProps } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { type ReactNode } from "react";
 
-type FadeInProps = MotionProps & {
+type FadeInProps = HTMLMotionProps<"div"> & {
   children: ReactNode;
   delay?: number;
 };

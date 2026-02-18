@@ -14,7 +14,9 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <span className="h-9 w-9 rounded-full border border-neutral-200 dark:border-neutral-800" />;
+    return (
+      <span className="h-9 w-9 rounded-full border border-neutral-200 dark:border-neutral-800" />
+    );
   }
 
   const isDark = resolvedTheme === "dark";
@@ -23,7 +25,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-900 transition hover:-translate-y-0.5 hover:shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-900 transition hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100"
       aria-label="Toggle theme"
     >
       <AnimatePresence initial={false} mode="wait">

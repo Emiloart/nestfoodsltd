@@ -21,6 +21,8 @@
 - B2B: distributor account approval flow, tiered pricing catalog, quote-to-order conversion, and invoice/statement APIs.
 - Traceability: batch ingestion, QR/code lookup, and timeline journey APIs with JSON storage driver.
 - Recipes: ingredient search and nutrition bundle calculator APIs backed by recipe + catalog data.
+- SEO: canonical metadata helpers, dynamic sitemap, and robots hardening for sensitive paths.
+- Performance telemetry: Core Web Vitals budget reporting (`LCP`, `INP`, `CLS`) via client reporter + API ingestion.
 
 ## Security Baseline
 
@@ -38,3 +40,9 @@
 - Locale-aware route strategy prepared for Hausa/Yoruba/Igbo and French expansion.
 - Currency model centered on `NGN` with exchange-ready adapter.
 - Client-side locale/currency switcher with persistent cookies/local storage.
+
+## Experience Quality Baseline
+
+- Accessibility: skip-to-content, keyboard focus rings, semantic nav labels, improved mobile nav dialog semantics.
+- Media: responsive `next/image` usage for primary placeholders and logo surfaces.
+- Structured data: Organization (global), FAQ (home), Product (detail), Article (blog list/detail).

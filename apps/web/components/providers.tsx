@@ -5,6 +5,7 @@ import { type ReactNode } from "react";
 
 import { CartProvider } from "@/components/cart/cart-provider";
 import { ExperienceProvider } from "@/components/customer/experience-provider";
+import { WebVitalsReporter } from "@/components/performance/web-vitals-reporter";
 import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
 
 type ProvidersProps = {
@@ -17,6 +18,7 @@ export function Providers({ children }: ProvidersProps) {
       <ExperienceProvider>
         <CartProvider>
           {children}
+          <WebVitalsReporter />
           <PrivacyConsentBanner />
         </CartProvider>
       </ExperienceProvider>

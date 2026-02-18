@@ -73,11 +73,12 @@ Last updated: 2026-02-18
 
 ## 8) Performance + Accessibility + SEO
 
-- [ ] WCAG 2.2 AA pass on critical flows
-- [ ] Core Web Vitals budget (LCP, INP, CLS)
-- [ ] Image optimization pipeline + responsive media
-- [ ] Structured data (Organization, Product, Article, FAQ)
-- [ ] Technical SEO hardening (canonical, robots, sitemap)
+- Progress: WCAG-focused UX hardening, Core Web Vitals budgets + telemetry intake, image optimization baselines, structured data coverage, and technical SEO hardening are live.
+- [x] WCAG 2.2 AA pass on critical flows
+- [x] Core Web Vitals budget (LCP, INP, CLS)
+- [x] Image optimization pipeline + responsive media
+- [x] Structured data (Organization, Product, Article, FAQ)
+- [x] Technical SEO hardening (canonical, robots, sitemap)
 
 ## 9) DevOps + Release
 

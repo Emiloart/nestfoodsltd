@@ -9,6 +9,7 @@
 - `/products/[slug]` Product details
 - `/recipes` Recipes
 - `/blog` Blog
+- `/blog/[slug]` Blog article detail
 - `/contact` Contact and locations
 - `/traceability` Batch lookup
 
@@ -72,6 +73,7 @@
 - `/api/admin/traceability/batches/[id]`
 - `/api/privacy/consent`
 - `/api/privacy/data-requests`
+- `/api/telemetry/web-vitals`
 - `/api/b2b/session`
 - `/api/b2b/account`
 - `/api/b2b/catalog`

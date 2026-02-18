@@ -17,5 +17,5 @@ export default async function SustainabilityPage() {
 
 export async function generateMetadata() {
   const page = await getCmsPage("sustainability", { preview: true });
-  return cmsPageMetadata(page);
+  return cmsPageMetadata(page, { path: "/sustainability" });
 }

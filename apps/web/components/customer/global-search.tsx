@@ -21,6 +21,7 @@ type SearchResponse = {
 
 export function GlobalSearch() {
   const router = useRouter();
+  const resultsId = "global-search-results";
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,10 @@ export function GlobalSearch() {
     return () => window.clearTimeout(timeoutId);
   }, [query]);
 
-  const showResults = useMemo(() => focused && (loading || suggestions.length > 0), [focused, loading, suggestions.length]);
+  const showResults = useMemo(
+    () => focused && (loading || suggestions.length > 0),
+    [focused, loading, suggestions.length],
+  );
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,6 +76,10 @@ export function GlobalSearch() {
           placeholder="Search products, categories, recipes..."
           className="pl-10"
           aria-label="Search products"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={showResults}
+          aria-controls={resultsId}
         />
         <Search
           size={16}
@@ -80,16 +88,24 @@ export function GlobalSearch() {
       </form>
 
       {showResults ? (
-        <div className="absolute z-50 mt-2 w-full rounded-2xl border border-neutral-200 bg-white p-2 shadow-2xl dark:border-neutral-800 dark:bg-neutral-950">
+        <div
+          id={resultsId}
+          role="listbox"
+          className="absolute z-50 mt-2 w-full rounded-2xl border border-neutral-200 bg-white p-2 shadow-2xl dark:border-neutral-800 dark:bg-neutral-950"
+        >
           {loading ? (
-            <p className="px-2 py-2 text-xs text-neutral-500 dark:text-neutral-400">Searching...</p>
+            <p role="status" className="px-2 py-2 text-xs text-neutral-500 dark:text-neutral-400">
+              Searching...
+            </p>
           ) : (
             <div className="space-y-1">
               {suggestions.map((entry) => (
                 <Link
                   key={entry.id}
                   href={entry.href}
-                  className="block rounded-xl px-2 py-2 transition hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                  role="option"
+                  aria-selected="false"
+                  className="block rounded-xl px-2 py-2 transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:hover:bg-neutral-900"
                 >
                   <p className="text-sm text-neutral-900 dark:text-neutral-100">{entry.title}</p>
                   <p className="text-xs uppercase tracking-[0.12em] text-neutral-500 dark:text-neutral-400">

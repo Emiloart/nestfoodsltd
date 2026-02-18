@@ -3,11 +3,13 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 import { PersonalizedRail } from "@/components/customer/personalized-rail";
 import { FadeIn } from "@/components/motion/fade-in";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
+import { buildFaqStructuredData } from "@/lib/seo/structured-data";
 
 const quickLinks = [
   { href: "/shop", title: "Shop", description: "Premium catalog, filters, and subscriptions." },
@@ -25,11 +27,31 @@ const quickLinks = [
   { href: "/admin", title: "Admin", description: "Dynamic control over all business content." },
 ];
 
+const homeFaqEntries = [
+  {
+    question: "Does Nest Foods support distributor and bulk orders?",
+    answer:
+      "Yes. Approved distributor accounts can request quotes, access tiered pricing, and track B2B order workflows.",
+  },
+  {
+    question: "Can customers verify product traceability?",
+    answer:
+      "Yes. The traceability portal provides batch-level sourcing, processing milestones, and certification history.",
+  },
+  {
+    question: "How are nutrition and allergen details managed?",
+    answer:
+      "Each product includes structured nutrition tables, ingredient details, and allergen disclosures managed through the admin system.",
+  },
+];
+
 export default async function HomePage() {
   const page = await getCmsPage("home");
+  const faqStructuredData = buildFaqStructuredData(homeFaqEntries);
 
   return (
     <div className="grain-background">
+      <JsonLd id="home-faq-ld" data={faqStructuredData} />
       <section className="mx-auto w-full max-w-7xl px-4 pb-16 pt-20 md:px-6 md:pt-28">
         <FadeIn className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="max-w-3xl space-y-6">
@@ -103,5 +125,5 @@ export default async function HomePage() {
 
 export async function generateMetadata() {
   const page = await getCmsPage("home", { preview: true });
-  return cmsPageMetadata(page);
+  return cmsPageMetadata(page, { path: "/" });
 }

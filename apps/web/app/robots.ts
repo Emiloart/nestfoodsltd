@@ -1,11 +1,16 @@
 import type { MetadataRoute } from "next";
 
+import { absoluteUrl } from "@/lib/seo/site";
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: "https://nestfoodsltd.com/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin/", "/api/", "/account/", "/cart/", "/checkout/"],
+      },
+    ],
+    sitemap: absoluteUrl("/sitemap.xml"),
   };
 }
