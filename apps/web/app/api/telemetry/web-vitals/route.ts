@@ -6,6 +6,7 @@ import {
   evaluateCoreWebVital,
   isCoreWebVitalName,
 } from "@/lib/performance/core-web-vitals";
+import { recordWebVitalEvent } from "@/lib/observability/service";
 import {
   applyRateLimitHeaders,
   createRateLimitErrorResponse,
@@ -55,6 +56,18 @@ export async function POST(request: NextRequest) {
 
   const { name, value, route } = validated.data;
   const status = evaluateCoreWebVital(name, value);
+  await recordWebVitalEvent({
+    metricId: validated.data.id,
+    metricName: name,
+    value,
+    status,
+    rating: validated.data.rating,
+    navigationType: validated.data.navigationType,
+    route,
+    ipAddress,
+    userAgent: resolveUserAgent(request),
+  });
+
   if (status === "over_budget" && isCoreWebVitalName(name)) {
     console.warn(
       `[web-vitals] ${name} over budget value=${value} route=${route ?? "unknown"} ip=${ipAddress} ua=${resolveUserAgent(request)}`,

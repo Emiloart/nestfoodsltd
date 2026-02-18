@@ -23,6 +23,7 @@
 - Recipes: ingredient search and nutrition bundle calculator APIs backed by recipe + catalog data.
 - SEO: canonical metadata helpers, dynamic sitemap, and robots hardening for sensitive paths.
 - Performance telemetry: Core Web Vitals budget reporting (`LCP`, `INP`, `CLS`) via client reporter + API ingestion.
+- Observability: JSON-driver event ingestion for web-vitals and runtime errors, plus SUPER_ADMIN operations summary endpoint.
 
 ## Security Baseline
 
@@ -46,3 +47,11 @@
 - Accessibility: skip-to-content, keyboard focus rings, semantic nav labels, improved mobile nav dialog semantics.
 - Media: responsive `next/image` usage for primary placeholders and logo surfaces.
 - Structured data: Organization (global), FAQ (home), Product (detail), Article (blog list/detail).
+
+## DevOps Baseline
+
+- CI workflow validates format, lint, typecheck, and build.
+- Preview deployment workflow for pull requests (Vercel-backed when secrets are configured).
+- Dedicated staging (`staging` branch) and production (`main` branch) deploy workflows.
+- Environment templates for development, staging, and production.
+- Release and launch operations documented with rollback and SLA guidance.

@@ -10,6 +10,7 @@ export default async function AdminPage() {
   const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
   const canManageTraceability = role === "SUPER_ADMIN" || role === "SALES_MANAGER";
   const canViewAudit = role === "SUPER_ADMIN";
+  const canViewOps = role === "SUPER_ADMIN";
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
@@ -23,7 +24,7 @@ export default async function AdminPage() {
           Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
         <Link href="/admin/content" className="block transition hover:-translate-y-1">
           <Card className="space-y-2">
             <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
@@ -86,6 +87,27 @@ export default async function AdminPage() {
           <Card className="space-y-2">
             <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
               Audit Events
+            </h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              Requires `SUPER_ADMIN` role.
+            </p>
+          </Card>
+        )}
+        {canViewOps ? (
+          <Link href="/admin/ops" className="block transition hover:-translate-y-1">
+            <Card className="space-y-2">
+              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                Operations
+              </h2>
+              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                Monitor runtime health, Core Web Vitals budget, and captured app errors.
+              </p>
+            </Card>
+          </Link>
+        ) : (
+          <Card className="space-y-2">
+            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              Operations
             </h2>
             <p className="text-sm text-neutral-600 dark:text-neutral-300">
               Requires `SUPER_ADMIN` role.

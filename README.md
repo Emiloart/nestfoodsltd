@@ -59,14 +59,16 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - Security operations runbook is documented in `docs/security-operations.md`.
 - Performance/accessibility/SEO hardening is live (WCAG-focused critical flow upgrades, Core Web Vitals budgets + telemetry endpoint, canonical metadata, robots/sitemap expansion, and structured data).
 - Blog editorial foundation now includes index/detail routes with metadata and Article schema coverage.
+- DevOps/release operations foundations are live (CI quality gates, preview/staging/production deploy workflows, environment templates, release + launch runbooks).
+- SUPER_ADMIN operations dashboard is live (`/admin/ops`) with web-vitals and runtime error telemetry summaries.
 
 ## Next Build Steps
 
 1. Move CMS + commerce + customer storage drivers from JSON to PostgreSQL adapters.
 2. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
 3. Implement inventory locking and transactional checkout.
-4. Build CI/CD environments (`dev`, `staging`, `prod`) with release gates.
-5. Add production monitoring/alerting dashboards and SLA runbooks.
+4. Add persistent analytics/error sinks (Sentry + GA4/Plausible) and alert routing.
+5. Finalize launch sign-off against `docs/launch-checklist.md`.
 
 ## GitHub Setup
 

@@ -27,6 +27,7 @@
 - `/admin/content` Content manager
 - `/admin/traceability` Traceability manager
 - `/admin/audit` Security audit viewer
+- `/admin/ops` Operations dashboard
 - `/b2b` Distributor portal
 
 ## Utility
@@ -39,6 +40,7 @@
 - `/api/health`
 - `/api/admin/session`
 - `/api/admin/audit/events`
+- `/api/admin/ops/summary`
 - `/api/cms/pages`
 - `/api/cms/pages/[slug]`
 - `/api/commerce/products`
@@ -74,6 +76,7 @@
 - `/api/privacy/consent`
 - `/api/privacy/data-requests`
 - `/api/telemetry/web-vitals`
+- `/api/telemetry/errors`
 - `/api/b2b/session`
 - `/api/b2b/account`
 - `/api/b2b/catalog`

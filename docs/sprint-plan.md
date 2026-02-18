@@ -59,7 +59,15 @@
 - Structured data coverage expanded across Organization, Product, Article, and FAQ schemas.
 - Canonical metadata strategy, expanded sitemap, and hardened robots policy for sensitive routes.
 
-## Post Day 7 — Enterprise Rollout
+## Day 8 — DevOps, Release, Operations (Completed)
+
+- CI quality workflow expanded (format, lint, typecheck, build) with concurrency controls.
+- Added preview, staging, and production deploy workflows for branch-aligned release flow.
+- Added observability ingestion for client errors and web-vitals with SUPER_ADMIN operations dashboard.
+- Defined environment strategy templates for `development`, `staging`, and `production`.
+- Added release runbook and launch checklist with SLA monitoring baseline.
+
+## Post Day 8 — Enterprise Rollout
 
 - Full order management and notifications.
-- DevOps release automation, observability, and SLA operations.
+- PostgreSQL storage migration and transactional inventory controls.

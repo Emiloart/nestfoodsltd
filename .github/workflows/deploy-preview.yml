@@ -1,0 +1,74 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: deploy-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Build
+        run: pnpm build
+
+      - name: Check deploy secrets
+        id: deploy_secrets
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Pull Vercel preview config
+        if: steps.deploy_secrets.outputs.enabled == 'true'
+        run: pnpm dlx vercel@latest pull --yes --environment=preview --token="$VERCEL_TOKEN"
+
+      - name: Build preview artifact
+        if: steps.deploy_secrets.outputs.enabled == 'true'
+        run: pnpm dlx vercel@latest build --token="$VERCEL_TOKEN"
+
+      - name: Deploy preview
+        id: deploy_preview
+        if: steps.deploy_secrets.outputs.enabled == 'true'
+        run: |
+          preview_url="$(pnpm dlx vercel@latest deploy --prebuilt --token="$VERCEL_TOKEN")"
+          echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+
+      - name: Add summary
+        run: |
+          if [ "${{ steps.deploy_secrets.outputs.enabled }}" = "true" ]; then
+            echo "### Preview deployed" >> "$GITHUB_STEP_SUMMARY"
+            echo "${{ steps.deploy_preview.outputs.preview_url }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Preview deployment skipped" >> "$GITHUB_STEP_SUMMARY"
+            echo "Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID to enable preview deploys." >> "$GITHUB_STEP_SUMMARY"
+          fi

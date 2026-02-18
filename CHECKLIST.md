@@ -82,11 +82,12 @@ Last updated: 2026-02-18
 
 ## 9) DevOps + Release
 
-- [ ] CI/CD pipelines (preview + production)
-- [ ] Environment strategy (`dev`, `staging`, `prod`)
-- [ ] Error monitoring + analytics dashboards
-- [ ] Runbooks + handover docs
-- [ ] Launch checklist + post-launch SLA monitoring
+- Progress: CI/CD deploy pipelines, environment strategy templates, observability dashboarding, and release/launch operations docs are live.
+- [x] CI/CD pipelines (preview + production)
+- [x] Environment strategy (`dev`, `staging`, `prod`)
+- [x] Error monitoring + analytics dashboards
+- [x] Runbooks + handover docs
+- [x] Launch checklist + post-launch SLA monitoring
 
 ## Immediate execution order
 
