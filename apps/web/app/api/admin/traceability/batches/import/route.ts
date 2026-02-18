@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { logAuditEvent } from "@/lib/audit/service";
+import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 import { resolveTraceabilityAdminRole } from "@/lib/traceability/admin";
 import { importTraceabilityBatches } from "@/lib/traceability/service";
 
@@ -61,14 +63,46 @@ const importSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  if (!isTrustedOrigin(request)) {
+    void logAuditEvent({
+      actorType: "admin",
+      action: "admin.traceability.batch.import",
+      outcome: "blocked",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "untrusted_origin" },
+    }).catch(() => null);
+    return NextResponse.json({ error: "Untrusted request origin." }, { status: 403 });
+  }
+
   const role = resolveTraceabilityAdminRole(request);
   if (!role) {
+    void logAuditEvent({
+      actorType: "admin",
+      action: "admin.traceability.batch.import",
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "unauthorized" },
+    }).catch(() => null);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json().catch(() => null);
   const validated = importSchema.safeParse(body);
   if (!validated.success) {
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.import",
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "invalid_payload" },
+    }).catch(() => null);
     return NextResponse.json(
       { error: "Invalid import payload.", details: validated.error.flatten() },
       { status: 400 },
@@ -77,6 +111,16 @@ export async function POST(request: NextRequest) {
 
   try {
     const batches = await importTraceabilityBatches(validated.data.items);
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.import",
+      outcome: "success",
+      severity: "info",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { imported: batches.length },
+    }).catch(() => null);
     return NextResponse.json(
       {
         role,
@@ -86,6 +130,16 @@ export async function POST(request: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.import",
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: error instanceof Error ? error.message : "import_failed" },
+    }).catch(() => null);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to import batches." },
       { status: 400 },

@@ -9,6 +9,7 @@
 - Preferences center for locale, currency, newsletter, and notifications.
 - Personalization rails (recently viewed + recommendations).
 - Autocomplete search API (products, categories, recipes).
+- NDPR privacy controls (consent preferences + data request intake).
 
 ## Data Sources
 
@@ -33,6 +34,9 @@
   - `GET /api/customer/search`
   - `GET /api/customer/recommendations`
   - `GET|POST /api/customer/recently-viewed`
+- Privacy and consent:
+  - `GET|POST /api/privacy/consent`
+  - `POST /api/privacy/data-requests`
 
 ## UI Surfaces
 

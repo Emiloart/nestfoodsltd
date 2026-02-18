@@ -1,5 +1,7 @@
 import { type NextRequest } from "next/server";
 
+import { createSignedSessionToken, verifySignedSessionToken } from "@/lib/security/session-token";
+
 export type AdminRole = "SUPER_ADMIN" | "CONTENT_EDITOR" | "SALES_MANAGER";
 
 export type AdminPermission =
@@ -11,6 +13,7 @@ export type AdminPermission =
   | "orders.read";
 
 export const ADMIN_SESSION_COOKIE_NAME = "nest_admin_token";
+const ADMIN_SESSION_TOKEN_TYPE = "admin";
 
 const rolePermissions: Record<AdminRole, AdminPermission[]> = {
   SUPER_ADMIN: [
@@ -44,13 +47,48 @@ function getConfiguredTokenMap() {
   return mapping;
 }
 
-export function resolveAdminRoleFromToken(token?: string | null): AdminRole | null {
+function isAdminRole(value: string): value is AdminRole {
+  return value === "SUPER_ADMIN" || value === "CONTENT_EDITOR" || value === "SALES_MANAGER";
+}
+
+export function resolveAdminRoleFromAuthToken(token?: string | null): AdminRole | null {
   if (!token) {
     return null;
   }
 
   const tokenMap = getConfiguredTokenMap();
   return tokenMap.get(token) ?? null;
+}
+
+export function createAdminSessionToken(role: AdminRole) {
+  return createSignedSessionToken(
+    {
+      type: ADMIN_SESSION_TOKEN_TYPE,
+      sub: role,
+      role,
+    },
+    { ttlSeconds: 60 * 60 * 8 },
+  );
+}
+
+function resolveAdminRoleFromSessionToken(token?: string | null): AdminRole | null {
+  if (!token) {
+    return null;
+  }
+  const payload = verifySignedSessionToken(token, ADMIN_SESSION_TOKEN_TYPE);
+  if (!payload) {
+    return null;
+  }
+
+  const roleFromPayload = typeof payload.role === "string" ? payload.role : payload.sub;
+  if (!isAdminRole(roleFromPayload)) {
+    return null;
+  }
+  return roleFromPayload;
+}
+
+export function resolveAdminRoleFromToken(token?: string | null): AdminRole | null {
+  return resolveAdminRoleFromSessionToken(token) ?? resolveAdminRoleFromAuthToken(token);
 }
 
 export function resolveAdminRoleFromRequest(request: NextRequest): AdminRole | null {

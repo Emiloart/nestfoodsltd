@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { logAuditEvent } from "@/lib/audit/service";
+import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 import { resolveTraceabilityAdminRole } from "@/lib/traceability/admin";
 import { getTraceabilityBatchById, updateTraceabilityBatch } from "@/lib/traceability/service";
 
@@ -81,14 +83,46 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 export async function PUT(request: NextRequest, context: RouteContext) {
+  if (!isTrustedOrigin(request)) {
+    void logAuditEvent({
+      actorType: "admin",
+      action: "admin.traceability.batch.update",
+      outcome: "blocked",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "untrusted_origin" },
+    }).catch(() => null);
+    return NextResponse.json({ error: "Untrusted request origin." }, { status: 403 });
+  }
+
   const role = resolveTraceabilityAdminRole(request);
   if (!role) {
+    void logAuditEvent({
+      actorType: "admin",
+      action: "admin.traceability.batch.update",
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "unauthorized" },
+    }).catch(() => null);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json().catch(() => null);
   const validated = updateSchema.safeParse(body);
   if (!validated.success) {
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.update",
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: "invalid_payload" },
+    }).catch(() => null);
     return NextResponse.json(
       { error: "Invalid update payload.", details: validated.error.flatten() },
       { status: 400 },
@@ -98,8 +132,32 @@ export async function PUT(request: NextRequest, context: RouteContext) {
   const { id } = await Promise.resolve(context.params);
   try {
     const batch = await updateTraceabilityBatch(id, validated.data);
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.update",
+      resourceType: "traceability.batch",
+      resourceId: id,
+      outcome: "success",
+      severity: "info",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { batchCode: batch.batchCode, status: batch.status },
+    }).catch(() => null);
     return NextResponse.json({ role, batch });
   } catch (error) {
+    void logAuditEvent({
+      actorType: "admin",
+      actorRole: role,
+      action: "admin.traceability.batch.update",
+      resourceType: "traceability.batch",
+      resourceId: id,
+      outcome: "failure",
+      severity: "warning",
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+      details: { reason: error instanceof Error ? error.message : "update_failed" },
+    }).catch(() => null);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to update batch." },
       { status: 400 },

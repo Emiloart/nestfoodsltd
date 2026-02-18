@@ -1,11 +1,5 @@
-import { PageShell } from "@/components/page-shell";
+import { PrivacyPageClient } from "@/components/privacy/privacy-page-client";
 
 export default function PrivacyPage() {
-  return (
-    <PageShell
-      title="Privacy Policy"
-      description="Policy page scaffold for NDPR-aligned data handling and consent governance."
-      nextStep="Populate legal copy from admin policy manager"
-    />
-  );
+  return <PrivacyPageClient />;
 }

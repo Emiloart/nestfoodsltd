@@ -1,6 +1,6 @@
 # Nest Foods Ltd — Enterprise Build Checklist
 
-Last updated: 2026-02-17
+Last updated: 2026-02-18
 
 ## 0) Foundation (Start Here)
 
@@ -64,11 +64,12 @@ Last updated: 2026-02-17
 
 ## 7) Security, Compliance, Reliability
 
-- [ ] OWASP ASVS-aligned auth/session controls
-- [ ] Rate limits, bot protection, abuse monitoring
-- [ ] Audit logs for admin-sensitive actions
-- [ ] NDPR privacy controls + consent management
-- [ ] Backups + restore playbook + incident checklist
+- Progress: signed session tokens, origin checks, abuse/rate controls, NDPR consent/data-request APIs, and security runbook are live.
+- [x] OWASP ASVS-aligned auth/session controls
+- [x] Rate limits, bot protection, abuse monitoring
+- [x] Audit logs for admin-sensitive actions
+- [x] NDPR privacy controls + consent management
+- [x] Backups + restore playbook + incident checklist
 
 ## 8) Performance + Accessibility + SEO
 

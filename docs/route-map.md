@@ -25,6 +25,7 @@
 - `/admin/login` Admin login
 - `/admin/content` Content manager
 - `/admin/traceability` Traceability manager
+- `/admin/audit` Security audit viewer
 - `/b2b` Distributor portal
 
 ## Utility
@@ -36,6 +37,7 @@
 - `/design-system`
 - `/api/health`
 - `/api/admin/session`
+- `/api/admin/audit/events`
 - `/api/cms/pages`
 - `/api/cms/pages/[slug]`
 - `/api/commerce/products`
@@ -68,6 +70,8 @@
 - `/api/admin/traceability/batches`
 - `/api/admin/traceability/batches/import`
 - `/api/admin/traceability/batches/[id]`
+- `/api/privacy/consent`
+- `/api/privacy/data-requests`
 - `/api/b2b/session`
 - `/api/b2b/account`
 - `/api/b2b/catalog`

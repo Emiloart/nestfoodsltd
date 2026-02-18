@@ -9,6 +9,7 @@ export default async function AdminPage() {
   const cookieStore = await cookies();
   const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
   const canManageTraceability = role === "SUPER_ADMIN" || role === "SALES_MANAGER";
+  const canViewAudit = role === "SUPER_ADMIN";
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
@@ -22,7 +23,7 @@ export default async function AdminPage() {
           Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Link href="/admin/content" className="block transition hover:-translate-y-1">
           <Card className="space-y-2">
             <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
@@ -70,6 +71,27 @@ export default async function AdminPage() {
             Next milestone: order states, payment events, and customer support workflows.
           </p>
         </Card>
+        {canViewAudit ? (
+          <Link href="/admin/audit" className="block transition hover:-translate-y-1">
+            <Card className="space-y-2">
+              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                Audit Events
+              </h2>
+              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                Review security-sensitive actions, failures, and blocked requests.
+              </p>
+            </Card>
+          </Link>
+        ) : (
+          <Card className="space-y-2">
+            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              Audit Events
+            </h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              Requires `SUPER_ADMIN` role.
+            </p>
+          </Card>
+        )}
       </div>
     </section>
   );

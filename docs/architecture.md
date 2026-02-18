@@ -25,10 +25,12 @@
 ## Security Baseline
 
 - RBAC across admin actions.
-- Role-token session model for admin routes (`/admin/login` + protected `/admin/*`).
-- Audit logs for sensitive events.
+- Signed session-token model for admin/customer/B2B cookies with expiry and server-side verification.
+- Trusted-origin enforcement on sensitive state-changing routes.
+- In-memory rate limits on auth, checkout, and traceability lookup routes.
+- Audit logs for sensitive events with role, IP, user-agent, and outcome metadata.
+- NDPR consent and data-request APIs with consent persistence and request intake workflow.
 - Webhook signature validation for payment providers.
-- Rate limiting for auth, checkout, and traceability endpoints.
 
 ## Internationalization Baseline
 

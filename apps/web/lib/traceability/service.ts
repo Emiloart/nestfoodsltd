@@ -7,6 +7,55 @@ import {
   type TraceabilityTimelineEvent,
 } from "./types";
 
+type TraceabilityBatchCreateInput = {
+  batchCode: string;
+  qrCode: string;
+  productSlug: string;
+  productName: string;
+  variantId?: string;
+  status?: TraceabilityBatchStatus;
+  productionDate: string;
+  expiryDate: string;
+  source: {
+    farmName: string;
+    region: string;
+    country: string;
+    lotReference: string;
+    harvestedAt?: string;
+  };
+  processing: {
+    facilityName: string;
+    lineName: string;
+    packagedAt: string;
+    qaLead: string;
+  };
+  certifications: Array<{
+    id?: string;
+    name: string;
+    issuer: string;
+    certificateCode: string;
+    validUntil?: string;
+  }>;
+  timeline?: Partial<TraceabilityTimelineEvent>[];
+  adminNotes?: string;
+};
+
+type TraceabilityBatchUpdateInput = Partial<{
+  batchCode: string;
+  qrCode: string;
+  productSlug: string;
+  productName: string;
+  variantId?: string;
+  status: TraceabilityBatchStatus;
+  productionDate: string;
+  expiryDate: string;
+  source: Partial<TraceabilityBatch["source"]>;
+  processing: Partial<TraceabilityBatch["processing"]>;
+  certifications: Array<Partial<TraceabilityBatch["certifications"][number]>>;
+  timeline: Partial<TraceabilityTimelineEvent>[];
+  adminNotes: string;
+}>;
+
 function normalizeCode(value: string) {
   return value.trim().toLowerCase();
 }
@@ -114,11 +163,7 @@ export async function getTraceabilityBatchById(batchId: string) {
   return data.batches.find((entry) => entry.id === batchId) ?? null;
 }
 
-export async function createTraceabilityBatch(
-  input: Omit<TraceabilityBatch, "id" | "createdAt" | "updatedAt" | "timeline"> & {
-    timeline?: Partial<TraceabilityTimelineEvent>[];
-  },
-) {
+export async function createTraceabilityBatch(input: TraceabilityBatchCreateInput) {
   const data = await readTraceabilityData();
   const now = new Date().toISOString();
 
@@ -167,11 +212,7 @@ export async function createTraceabilityBatch(
 
 export async function updateTraceabilityBatch(
   batchId: string,
-  input: Partial<
-    Omit<TraceabilityBatch, "id" | "createdAt" | "updatedAt" | "timeline"> & {
-      timeline: Partial<TraceabilityTimelineEvent>[];
-    }
-  >,
+  input: TraceabilityBatchUpdateInput,
 ) {
   const data = await readTraceabilityData();
   const batch = data.batches.find((entry) => entry.id === batchId);
@@ -247,13 +288,7 @@ export async function updateTraceabilityBatch(
   return batch;
 }
 
-export async function importTraceabilityBatches(
-  items: Array<
-    Omit<TraceabilityBatch, "id" | "createdAt" | "updatedAt" | "timeline"> & {
-      timeline?: Partial<TraceabilityTimelineEvent>[];
-    }
-  >,
-) {
+export async function importTraceabilityBatches(items: TraceabilityBatchCreateInput[]) {
   const created: TraceabilityBatch[] = [];
   for (const item of items) {
     const batch = await createTraceabilityBatch(item);

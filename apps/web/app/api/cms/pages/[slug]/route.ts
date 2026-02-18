@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { hasAdminPermission, resolveAdminRoleFromRequest } from "@/lib/admin/auth";
+import { logAuditEvent } from "@/lib/audit/service";
 import { getCmsPage, updateCmsPage } from "@/lib/cms/service";
+import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 import { CMS_PAGE_SLUGS, type CmsPageSlug, type CmsPublicationStatus } from "@/lib/cms/types";
 
 const updatePageSchema = z.object({
@@ -48,6 +50,31 @@ function normalizePublishAt(status: CmsPublicationStatus, value?: string) {
   return parsedDate.toISOString();
 }
 
+function logCmsAuditEvent(
+  request: NextRequest,
+  input: {
+    actorRole?: string;
+    action: string;
+    outcome: "success" | "failure" | "blocked";
+    severity: "info" | "warning" | "critical";
+    resourceId?: string;
+    details?: Record<string, unknown>;
+  },
+) {
+  void logAuditEvent({
+    actorType: "admin",
+    actorRole: input.actorRole,
+    action: input.action,
+    resourceType: "cms.page",
+    resourceId: input.resourceId,
+    outcome: input.outcome,
+    severity: input.severity,
+    ipAddress: resolveClientIp(request),
+    userAgent: resolveUserAgent(request),
+    details: input.details,
+  }).catch(() => null);
+}
+
 type RouteContext = {
   params: Promise<{ slug: string }> | { slug: string };
 };
@@ -75,31 +102,80 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 export async function PUT(request: NextRequest, context: RouteContext) {
+  if (!isTrustedOrigin(request)) {
+    logCmsAuditEvent(request, {
+      action: "admin.cms.page.update",
+      outcome: "blocked",
+      severity: "warning",
+      details: { reason: "untrusted_origin" },
+    });
+    return NextResponse.json({ error: "Untrusted request origin." }, { status: 403 });
+  }
+
   const role = resolveAdminRoleFromRequest(request);
   if (!role) {
+    logCmsAuditEvent(request, {
+      action: "admin.cms.page.update",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: "unauthorized" },
+    });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   if (!hasAdminPermission(role, "cms.pages.write")) {
+    logCmsAuditEvent(request, {
+      actorRole: role,
+      action: "admin.cms.page.update",
+      outcome: "blocked",
+      severity: "warning",
+      details: { reason: "missing_permission", permission: "cms.pages.write" },
+    });
     return NextResponse.json({ error: "Forbidden: missing cms.pages.write" }, { status: 403 });
   }
 
   const { slug: rawSlug } = await Promise.resolve(context.params);
   const slug = parseSlug(rawSlug);
   if (!slug) {
+    logCmsAuditEvent(request, {
+      actorRole: role,
+      action: "admin.cms.page.update",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: "invalid_slug", slug: rawSlug },
+    });
     return NextResponse.json({ error: "Invalid page slug" }, { status: 400 });
   }
 
   const body = await request.json().catch(() => null);
   const validated = updatePageSchema.safeParse(body);
   if (!validated.success) {
-    return NextResponse.json({ error: "Invalid payload", details: validated.error.flatten() }, { status: 400 });
+    logCmsAuditEvent(request, {
+      actorRole: role,
+      action: "admin.cms.page.update",
+      outcome: "failure",
+      severity: "warning",
+      resourceId: slug,
+      details: { reason: "invalid_payload" },
+    });
+    return NextResponse.json(
+      { error: "Invalid payload", details: validated.error.flatten() },
+      { status: 400 },
+    );
   }
 
   if (
     (validated.data.status === "published" || validated.data.status === "scheduled") &&
     !hasAdminPermission(role, "cms.pages.publish")
   ) {
+    logCmsAuditEvent(request, {
+      actorRole: role,
+      action: "admin.cms.page.update",
+      outcome: "blocked",
+      severity: "warning",
+      resourceId: slug,
+      details: { reason: "missing_permission", permission: "cms.pages.publish" },
+    });
     return NextResponse.json({ error: "Forbidden: missing cms.pages.publish" }, { status: 403 });
   }
 
@@ -125,6 +201,15 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     },
     role,
   );
+
+  logCmsAuditEvent(request, {
+    actorRole: role,
+    action: "admin.cms.page.update",
+    outcome: "success",
+    severity: "info",
+    resourceId: slug,
+    details: { status: updated.status },
+  });
 
   return NextResponse.json({ page: updated, role });
 }

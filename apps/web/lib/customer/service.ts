@@ -3,6 +3,17 @@ import { unstable_noStore as noStore } from "next/cache";
 import { readCustomerData, writeCustomerData } from "./store";
 import { type CustomerPreferences, type CustomerProfile } from "./types";
 
+type CustomerPreferencesUpdateInput = {
+  locale?: CustomerPreferences["locale"];
+  currency?: CustomerPreferences["currency"];
+  dietaryTags?: string[];
+  interests?: string[];
+  notifications?: Partial<CustomerPreferences["notifications"]>;
+  newsletter?: Partial<CustomerPreferences["newsletter"]> & {
+    topics?: string[];
+  };
+};
+
 export const CUSTOMER_SESSION_COOKIE_NAME = "nest_customer_email";
 
 function normalizeEmail(email: string) {
@@ -70,7 +81,10 @@ export async function createOrGetCustomerProfile(email: string, fullName?: strin
   return profile;
 }
 
-export async function updateCustomerProfile(email: string, input: { fullName?: string; phone?: string; addresses?: string[] }) {
+export async function updateCustomerProfile(
+  email: string,
+  input: { fullName?: string; phone?: string; addresses?: string[] },
+) {
   const data = await readCustomerData();
   const normalized = normalizeEmail(email);
   const profile = data.profiles.find((entry) => entry.email === normalized);
@@ -92,12 +106,15 @@ export async function getCustomerPreferences(email: string) {
   noStore();
   const normalized = normalizeEmail(email);
   const data = await readCustomerData();
-  return data.preferences.find((entry) => entry.customerEmail === normalized) ?? defaultCustomerPreferences(normalized);
+  return (
+    data.preferences.find((entry) => entry.customerEmail === normalized) ??
+    defaultCustomerPreferences(normalized)
+  );
 }
 
 export async function updateCustomerPreferences(
   email: string,
-  input: Partial<Omit<CustomerPreferences, "customerEmail" | "updatedAt">>,
+  input: CustomerPreferencesUpdateInput,
 ) {
   const data = await readCustomerData();
   const normalized = normalizeEmail(email);
@@ -130,7 +147,9 @@ export async function updateCustomerPreferences(
     prefs.newsletter = {
       ...prefs.newsletter,
       ...input.newsletter,
-      topics: input.newsletter.topics ? uniqueStrings(input.newsletter.topics) : prefs.newsletter.topics,
+      topics: input.newsletter.topics
+        ? uniqueStrings(input.newsletter.topics)
+        : prefs.newsletter.topics,
     };
   }
 
@@ -251,7 +270,10 @@ export async function getCustomerRecommendations(email?: string) {
 
   let boosted = [...recentlyViewed, ...wishlistBoost, ...data.recommendations];
   if (prefs?.interests.includes("bulk-offers")) {
-    boosted = boosted.sort((a, b) => Number(b.productSlug.includes("protein")) - Number(a.productSlug.includes("protein")));
+    boosted = boosted.sort(
+      (a, b) =>
+        Number(b.productSlug.includes("protein")) - Number(a.productSlug.includes("protein")),
+    );
   }
 
   const seen = new Set<string>();

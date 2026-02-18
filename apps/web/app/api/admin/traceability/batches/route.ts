@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { logAuditEvent } from "@/lib/audit/service";
+import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 import { resolveTraceabilityAdminRole } from "@/lib/traceability/admin";
 import { createTraceabilityBatch, listTraceabilityBatches } from "@/lib/traceability/service";
 
@@ -49,6 +51,31 @@ const batchSchema = z.object({
   adminNotes: z.string().trim().max(800).optional(),
 });
 
+function logTraceabilityAuditEvent(
+  request: NextRequest,
+  input: {
+    actorRole?: string;
+    action: string;
+    resourceId?: string;
+    outcome: "success" | "failure" | "blocked";
+    severity: "info" | "warning" | "critical";
+    details?: Record<string, unknown>;
+  },
+) {
+  void logAuditEvent({
+    actorType: "admin",
+    actorRole: input.actorRole,
+    action: input.action,
+    resourceType: "traceability.batch",
+    resourceId: input.resourceId,
+    outcome: input.outcome,
+    severity: input.severity,
+    ipAddress: resolveClientIp(request),
+    userAgent: resolveUserAgent(request),
+    details: input.details,
+  }).catch(() => null);
+}
+
 export async function GET(request: NextRequest) {
   const role = resolveTraceabilityAdminRole(request);
   if (!role) {
@@ -70,14 +97,37 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (!isTrustedOrigin(request)) {
+    logTraceabilityAuditEvent(request, {
+      action: "admin.traceability.batch.create",
+      outcome: "blocked",
+      severity: "warning",
+      details: { reason: "untrusted_origin" },
+    });
+    return NextResponse.json({ error: "Untrusted request origin." }, { status: 403 });
+  }
+
   const role = resolveTraceabilityAdminRole(request);
   if (!role) {
+    logTraceabilityAuditEvent(request, {
+      action: "admin.traceability.batch.create",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: "unauthorized" },
+    });
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json().catch(() => null);
   const validated = batchSchema.safeParse(body);
   if (!validated.success) {
+    logTraceabilityAuditEvent(request, {
+      actorRole: role,
+      action: "admin.traceability.batch.create",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: "invalid_payload" },
+    });
     return NextResponse.json(
       { error: "Invalid batch payload.", details: validated.error.flatten() },
       { status: 400 },
@@ -86,8 +136,23 @@ export async function POST(request: NextRequest) {
 
   try {
     const batch = await createTraceabilityBatch(validated.data);
+    logTraceabilityAuditEvent(request, {
+      actorRole: role,
+      action: "admin.traceability.batch.create",
+      resourceId: batch.id,
+      outcome: "success",
+      severity: "info",
+      details: { batchCode: batch.batchCode },
+    });
     return NextResponse.json({ role, batch }, { status: 201 });
   } catch (error) {
+    logTraceabilityAuditEvent(request, {
+      actorRole: role,
+      action: "admin.traceability.batch.create",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: error instanceof Error ? error.message : "create_failed" },
+    });
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to create batch." },
       { status: 400 },
