@@ -24,6 +24,7 @@
 - `/admin` Admin entry
 - `/admin/login` Admin login
 - `/admin/content` Content manager
+- `/admin/traceability` Traceability manager
 - `/b2b` Distributor portal
 
 ## Utility
@@ -59,6 +60,14 @@
 - `/api/customer/search`
 - `/api/customer/recommendations`
 - `/api/customer/recently-viewed`
+- `/api/traceability/lookup`
+- `/api/traceability/batches`
+- `/api/recipes/search`
+- `/api/recipes/ingredients`
+- `/api/recipes/nutrition-calculator`
+- `/api/admin/traceability/batches`
+- `/api/admin/traceability/batches/import`
+- `/api/admin/traceability/batches/[id]`
 - `/api/b2b/session`
 - `/api/b2b/account`
 - `/api/b2b/catalog`

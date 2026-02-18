@@ -36,8 +36,14 @@
 - Quote lifecycle with admin status controls and conversion to orders.
 - Invoice/statement download hooks and support ticket channel.
 
-## Post Day 4 — Enterprise Rollout
+## Day 5 — Traceability + Food Tools (Completed)
+
+- Public batch/QR lookup page with source, processing, certification, and timeline view.
+- Admin traceability manager with create, update, and bulk import workflows.
+- Recipe finder powered by ingredient-based matching and search.
+- Nutrition bundle calculator using live catalog nutrition tables.
+
+## Post Day 5 — Enterprise Rollout
 
 - Full order management and notifications.
-- Traceability ingestion and consumer lookup timeline.
 - Analytics, audit logging, and compliance hardening.

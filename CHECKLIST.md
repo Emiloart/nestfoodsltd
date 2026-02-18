@@ -3,6 +3,7 @@
 Last updated: 2026-02-17
 
 ## 0) Foundation (Start Here)
+
 - [x] Initialize clean monorepo (`pnpm` workspaces + strict TypeScript)
 - [x] Scaffold `apps/web` with Next.js App Router + Tailwind + ESLint
 - [x] Create shared configs (`tsconfig`, ESLint, Prettier, env template)
@@ -10,6 +11,7 @@ Last updated: 2026-02-17
 - [x] Define core information architecture + route map
 
 ## 1) Design System (Solana-Standard Feel)
+
 - [x] Add design tokens (colors, spacing, typography, radii, shadows)
 - [x] Implement light/dark theme with smooth transitions
 - [x] Build reusable UI primitives (Button, Input, Card, Modal, Badge)
@@ -17,6 +19,7 @@ Last updated: 2026-02-17
 - [x] Add motion foundations (micro-interactions + skeleton loaders)
 
 ## 2) CMS/Admin Core (Dynamic Everything)
+
 - Progress: secured admin login + RBAC + dynamic CMS editor is live.
 - [x] Set up secure admin app/domain strategy
 - [x] Implement RBAC (Super Admin, Content Editor, Sales Manager)
@@ -25,6 +28,7 @@ Last updated: 2026-02-17
 - [x] Add SEO controls per page + sitemap metadata fields
 
 ## 3) Commerce Core (Food Business)
+
 - Progress: commerce APIs + shop/cart/checkout/account foundations are live.
 - [x] Product catalog with variants, nutrition, allergens, ingredients
 - [x] Cart + checkout (guest + account), promo codes, delivery slots
@@ -33,6 +37,7 @@ Last updated: 2026-02-17
 - [x] Subscriptions/recurring delivery foundations
 
 ## 4) Customer Platform Features
+
 - Progress: customer account, personalization, and locale/currency foundations are live.
 - [x] Auth + profile + addresses + wishlist + order history
 - [x] Search/autocomplete + faceted filters
@@ -41,6 +46,7 @@ Last updated: 2026-02-17
 - [x] Multi-language + multi-currency architecture
 
 ## 5) B2B / Distributor Portal
+
 - Progress: distributor portal foundations with approval, bulk quote-to-order, invoicing, and support are live.
 - [x] Separate B2B auth + approval flow
 - [x] Bulk order UX + tiered pricing + quote requests
@@ -48,13 +54,16 @@ Last updated: 2026-02-17
 - [x] B2B order tracking + account manager support hooks
 
 ## 6) Traceability + Food-Specific Tools
-- [ ] Batch/QR lookup page
-- [ ] Admin batch data ingestion/editing
-- [ ] Product journey view (source/process/certification)
-- [ ] Recipe finder by ingredient
-- [ ] Nutrition calculator for bundles
+
+- Progress: public traceability lookup, admin batch ingestion, recipe finder, and nutrition calculator are live.
+- [x] Batch/QR lookup page
+- [x] Admin batch data ingestion/editing
+- [x] Product journey view (source/process/certification)
+- [x] Recipe finder by ingredient
+- [x] Nutrition calculator for bundles
 
 ## 7) Security, Compliance, Reliability
+
 - [ ] OWASP ASVS-aligned auth/session controls
 - [ ] Rate limits, bot protection, abuse monitoring
 - [ ] Audit logs for admin-sensitive actions
@@ -62,6 +71,7 @@ Last updated: 2026-02-17
 - [ ] Backups + restore playbook + incident checklist
 
 ## 8) Performance + Accessibility + SEO
+
 - [ ] WCAG 2.2 AA pass on critical flows
 - [ ] Core Web Vitals budget (LCP, INP, CLS)
 - [ ] Image optimization pipeline + responsive media
@@ -69,6 +79,7 @@ Last updated: 2026-02-17
 - [ ] Technical SEO hardening (canonical, robots, sitemap)
 
 ## 9) DevOps + Release
+
 - [ ] CI/CD pipelines (preview + production)
 - [ ] Environment strategy (`dev`, `staging`, `prod`)
 - [ ] Error monitoring + analytics dashboards
@@ -76,6 +87,7 @@ Last updated: 2026-02-17
 - [ ] Launch checklist + post-launch SLA monitoring
 
 ## Immediate execution order
+
 1. Foundation scaffold
 2. Design system baseline
 3. Public site skeleton pages

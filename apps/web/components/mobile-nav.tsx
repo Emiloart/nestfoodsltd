@@ -14,6 +14,7 @@ const navItems = [
   { href: "/account", label: "Account" },
   { href: "/about", label: "About" },
   { href: "/recipes", label: "Recipes" },
+  { href: "/traceability", label: "Traceability" },
   { href: "/contact", label: "Contact" },
   { href: "/b2b", label: "B2B" },
   { href: "/design-system", label: "System" },

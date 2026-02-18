@@ -19,6 +19,8 @@
 - Commerce: cart quote engine + checkout + order timeline + subscriptions foundation.
 - Customer: session-based profile, wishlist, preferences, personalization, and autocomplete APIs.
 - B2B: distributor account approval flow, tiered pricing catalog, quote-to-order conversion, and invoice/statement APIs.
+- Traceability: batch ingestion, QR/code lookup, and timeline journey APIs with JSON storage driver.
+- Recipes: ingredient search and nutrition bundle calculator APIs backed by recipe + catalog data.
 
 ## Security Baseline
 

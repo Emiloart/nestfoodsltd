@@ -54,14 +54,15 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - Commerce core foundations are live (catalog, cart, checkout, orders, subscriptions, payment adapters).
 - Customer platform foundations are live (session auth, profile/preferences, wishlist, order history, personalization, search autocomplete).
 - B2B distributor portal foundations are live (approval flow, tiered pricing catalog, bulk quotes, quote-to-order conversion, invoices/statements, support tickets).
+- Traceability and food-tooling foundations are live (batch lookup timeline, admin batch ingestion, recipe finder, nutrition calculator).
 
 ## Next Build Steps
 
 1. Move CMS + commerce + customer storage drivers from JSON to PostgreSQL adapters.
 2. Harden customer auth to user-id based session provider (NextAuth/Clerk).
 3. Implement inventory locking and transactional checkout.
-4. Add traceability data workflows and consumer lookup timeline.
-5. Add audit logs and admin activity reporting.
+4. Add audit logs and admin activity reporting.
+5. Harden security controls (rate limiting, abuse protection, NDPR privacy controls).
 
 ## GitHub Setup
 

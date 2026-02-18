@@ -12,7 +12,16 @@ import { getCmsPage } from "@/lib/cms/service";
 const quickLinks = [
   { href: "/shop", title: "Shop", description: "Premium catalog, filters, and subscriptions." },
   { href: "/recipes", title: "Recipes", description: "Editorial and ingredient-based discovery." },
-  { href: "/b2b", title: "Distributor Portal", description: "Bulk orders, pricing tiers, and quotes." },
+  {
+    href: "/traceability",
+    title: "Traceability",
+    description: "Batch lookup timeline with source, processing, and certifications.",
+  },
+  {
+    href: "/b2b",
+    title: "Distributor Portal",
+    description: "Bulk orders, pricing tiers, and quotes.",
+  },
   { href: "/admin", title: "Admin", description: "Dynamic control over all business content." },
 ];
 
@@ -76,8 +85,12 @@ export default async function HomePage() {
           <FadeIn key={item.href} delay={(index + 1) * 0.06}>
             <Link href={item.href} className="block transition hover:-translate-y-1">
               <Card className="h-full border-neutral-200/80 bg-white/70 backdrop-blur dark:bg-neutral-900/80">
-                <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{item.title}</h2>
-                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{item.description}</p>
+                <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                  {item.title}
+                </h2>
+                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+                  {item.description}
+                </p>
               </Card>
             </Link>
           </FadeIn>
