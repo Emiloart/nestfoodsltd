@@ -182,7 +182,18 @@ export async function POST(request: NextRequest) {
     return response;
   }
 
-  const credentialResult = await authenticateAdminDirectoryUser(credentialLogin.data);
+  if (!credentialLogin.success) {
+    logAdminAuditEvent(request, {
+      action: "admin.session.login",
+      outcome: "failure",
+      severity: "warning",
+      details: { reason: "invalid_payload", mode: "credentials" },
+    });
+    return NextResponse.json({ error: "Invalid login payload" }, { status: 400 });
+  }
+
+  const credentialPayload = credentialLogin.data;
+  const credentialResult = await authenticateAdminDirectoryUser(credentialPayload);
   if (!credentialResult.authenticated) {
     const failure = resolveCredentialFailureResponse(credentialResult.reason);
     logAdminAuditEvent(request, {
@@ -192,7 +203,7 @@ export async function POST(request: NextRequest) {
       details: {
         reason: credentialResult.reason,
         mode: "credentials",
-        email: credentialLogin.data.email,
+        email: credentialPayload.email,
       },
     });
     return NextResponse.json(
@@ -227,7 +238,7 @@ export async function POST(request: NextRequest) {
     severity: "info",
     details: {
       mode: "credentials",
-      email: credentialResult.user.email,
+      email: credentialPayload.email,
     },
   });
   return response;

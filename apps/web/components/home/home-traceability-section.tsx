@@ -4,9 +4,9 @@ import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
 
 const traceabilityPoints = [
-  "Source and lot details are visible immediately.",
-  "QA status and certifications stay grouped together.",
-  "Dispatch status is readable without extra clicks.",
+  "Source and lot details appear first.",
+  "QA checks and certifications stay grouped.",
+  "Dispatch status is visible without extra steps.",
 ];
 
 export function HomeTraceabilitySection() {
@@ -15,7 +15,7 @@ export function HomeTraceabilitySection() {
       <div className="section-frame hidden px-5 py-6 sm:px-6 sm:py-7 md:block">
         <SectionHeading
           eyebrow="Quality & Traceability"
-          title="Check quality before purchase or enquiry."
+          title="Check batch quality before purchase or enquiry."
           description="The traceability flow stays simple on mobile and deeper on the dedicated page."
           descriptionClassName="hidden md:block"
           actionsClassName="w-full sm:w-auto"
@@ -138,7 +138,7 @@ export function HomeTraceabilitySection() {
             <div>
               <p className="section-kicker">Quality & Traceability</p>
               <h2 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                Verify a batch before you enquire.
+                Verify a batch in one short flow.
               </h2>
             </div>
             <Link
@@ -151,18 +151,19 @@ export function HomeTraceabilitySection() {
 
           <div className="mt-5 grid gap-3">
             <div className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
-                    Batch code
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                    NFL-BREAD-260301-A
-                  </p>
+              <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+                Batch code or QR value
+              </p>
+              <div className="mt-3 flex items-center gap-2">
+                <div className="min-w-0 flex-1 rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-3 text-sm font-medium text-neutral-900 dark:bg-[color:var(--surface-elevated)] dark:text-neutral-100">
+                  NFL-BREAD-260301-A
                 </div>
-                <span className="rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                  Ready
-                </span>
+                <Link
+                  href="/traceability"
+                  className="inline-flex shrink-0 rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-4 py-3 text-[11px] font-medium uppercase tracking-[0.14em] text-white"
+                >
+                  Verify
+                </Link>
               </div>
             </div>
 
@@ -170,7 +171,7 @@ export function HomeTraceabilitySection() {
               {[
                 { label: "Source", value: "Tracked" },
                 { label: "QA", value: "Passed" },
-                { label: "Dispatch", value: "Visible" },
+                { label: "Release", value: "Ready" },
               ].map((step) => (
                 <div
                   key={step.label}
@@ -187,7 +188,7 @@ export function HomeTraceabilitySection() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {["NAFDAC", "ISO 22000", "QA Release"].map((item) => (
+              {["NAFDAC", "ISO 22000"].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-300"

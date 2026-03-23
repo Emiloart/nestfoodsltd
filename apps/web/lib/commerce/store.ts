@@ -1,24 +1,15 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { COMMERCE_SEED_DATA } from "./seed";
 import { type CommerceData } from "./types";
 
 const relativeDataFilePath = path.join("data", "commerce.json");
 
-function resolveDataFilePath() {
-  const candidates = [
-    path.join(process.cwd(), relativeDataFilePath),
-    path.join(process.cwd(), "apps", "web", relativeDataFilePath),
-  ];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? candidates[0];
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.COMMERCE_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "commerce";
 
@@ -47,7 +38,9 @@ export async function readCommerceData(): Promise<CommerceData> {
   }
 
   if (storageDriver !== "json") {
-    throw new Error("COMMERCE_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
+    throw new Error(
+      "COMMERCE_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
+    );
   }
 
   try {
@@ -66,7 +59,9 @@ export async function writeCommerceData(data: CommerceData) {
   }
 
   if (storageDriver !== "json") {
-    throw new Error("COMMERCE_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
+    throw new Error(
+      "COMMERCE_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
+    );
   }
 
   await mkdir(path.dirname(dataFilePath), { recursive: true });

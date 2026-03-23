@@ -19,8 +19,11 @@ const navItems = [
 const quickActions = [
   { href: "/b2b", label: "Distributor Portal" },
   { href: "/contact", label: "Make Enquiry" },
+];
+
+const resourceLinks = [
   { href: "/recipes", label: "Ingredients" },
-  { href: "/blog", label: "Read Insights" },
+  { href: "/blog", label: "Insights" },
 ];
 
 export function MobileNav() {
@@ -108,13 +111,15 @@ export function MobileNav() {
                     onClick={() => setOpen(false)}
                   >
                     <span>{item.label}</span>
-                    <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">Open</span>
+                    <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
+                      Open
+                    </span>
                   </Link>
                 ))}
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Utility links</p>
+                <p className="section-kicker">Partner access</p>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {quickActions.map((item) => (
                     <Link
@@ -124,6 +129,25 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                     >
                       {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <p className="section-kicker">Resources</p>
+                <div className="mt-3 grid gap-2">
+                  {resourceLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-200"
+                      onClick={() => setOpen(false)}
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
+                        Open
+                      </span>
                     </Link>
                   ))}
                 </div>

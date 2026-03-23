@@ -2,6 +2,8 @@
 
 :root {
   color-scheme: light;
+  --font-body: "Aptos", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --surface: #f2eee8;
   --surface-elevated: #faf6ef;
   --surface-overlay: rgba(250, 246, 239, 0.9);
@@ -26,22 +28,22 @@
 
 .dark {
   color-scheme: dark;
-  --surface: #0e100f;
-  --surface-elevated: #161816;
-  --surface-overlay: rgba(22, 24, 22, 0.92);
-  --surface-strong: rgba(31, 33, 30, 0.98);
-  --foreground: #f5efe4;
-  --muted-foreground: #c9beaf;
-  --border: rgba(188, 173, 150, 0.15);
+  --surface: #111312;
+  --surface-elevated: #171917;
+  --surface-overlay: rgba(23, 25, 23, 0.92);
+  --surface-strong: rgba(31, 34, 31, 0.98);
+  --foreground: #f6f0e6;
+  --muted-foreground: #cfc4b4;
+  --border: rgba(207, 191, 166, 0.14);
   --brand-1: #b7835d;
   --brand-2: #7b9068;
   --brand-3: #d0b27d;
-  --grain-dot: rgba(244, 236, 223, 0.015);
-  --bg-accent-warm: rgba(183, 131, 93, 0.1);
-  --bg-accent-fresh: rgba(123, 144, 104, 0.1);
-  --bg-accent-cool: rgba(208, 178, 125, 0.08);
-  --shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.34);
-  --shadow-strong: 0 30px 78px rgba(0, 0, 0, 0.42);
+  --grain-dot: rgba(244, 236, 223, 0.018);
+  --bg-accent-warm: rgba(183, 131, 93, 0.08);
+  --bg-accent-fresh: rgba(123, 144, 104, 0.08);
+  --bg-accent-cool: rgba(208, 178, 125, 0.06);
+  --shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.28);
+  --shadow-strong: 0 30px 78px rgba(0, 0, 0, 0.36);
 }
 
 html {
@@ -51,17 +53,17 @@ html {
 body {
   position: relative;
   overflow-x: hidden;
-  font-family:
-    var(--font-body),
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
   background-color: var(--surface);
   background-image:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, white) 0%, var(--surface) 42%, color-mix(in srgb, var(--surface) 96%, white) 100%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface) 92%, white) 0%,
+      var(--surface) 42%,
+      color-mix(in srgb, var(--surface) 96%, white) 100%
+    ),
     radial-gradient(80% 56% at 50% 0%, var(--bg-accent-warm), transparent 78%);
-  background-size:
-    auto,
-    auto;
+  background-size: auto, auto;
   color: var(--foreground);
   line-height: 1.5;
   text-rendering: optimizeLegibility;
@@ -74,8 +76,9 @@ body {
 
 .dark body {
   background-image:
-    linear-gradient(180deg, #121412 0%, #0d0f0e 46%, #121411 100%),
-    radial-gradient(82% 58% at 50% 0%, var(--bg-accent-warm), transparent 72%);
+    linear-gradient(180deg, #171916 0%, #111312 42%, #151714 100%),
+    radial-gradient(82% 58% at 50% 0%, var(--bg-accent-warm), transparent 70%),
+    radial-gradient(56% 40% at 82% 18%, var(--bg-accent-fresh), transparent 72%);
 }
 
 body::before {
@@ -133,13 +136,20 @@ img {
 
 .grain-background {
   background-image:
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--surface-elevated) 72%, transparent)),
+    linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in srgb, var(--surface-elevated) 72%, transparent)
+    ),
     radial-gradient(circle at 84% 10%, var(--bg-accent-cool), transparent 34%);
 }
 
 .card-surface {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 98%, transparent), color-mix(in srgb, var(--surface-overlay) 94%, transparent));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-elevated) 98%, transparent),
+    color-mix(in srgb, var(--surface-overlay) 94%, transparent)
+  );
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
@@ -157,12 +167,11 @@ img {
 .dark .section-frame,
 .dark .shell-surface,
 .dark .placeholder-panel {
-  background:
-    linear-gradient(180deg, rgba(31, 33, 30, 0.98), rgba(20, 22, 20, 0.98));
+  background: linear-gradient(180deg, rgba(31, 33, 30, 0.98), rgba(20, 22, 20, 0.98));
 }
 
 .dark .shell-surface {
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.3);
 }
 
 .hero-ripple {
@@ -187,11 +196,7 @@ img {
       color-mix(in srgb, var(--brand-2) 12%, transparent),
       transparent 74%
     ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--brand-3) 8%, transparent) 0%,
-      transparent 48%
-    );
+    linear-gradient(180deg, color-mix(in srgb, var(--brand-3) 8%, transparent) 0%, transparent 48%);
   opacity: 0.58;
   filter: blur(6px);
 }
@@ -201,10 +206,7 @@ img {
 }
 
 .display-heading {
-  font-family:
-    var(--font-display),
-    Georgia,
-    serif;
+  font-family: var(--font-display), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 0.96;
@@ -224,8 +226,11 @@ img {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: clamp(1.4rem, 1rem + 1vw, 2rem);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 98%, transparent), color-mix(in srgb, var(--surface-overlay) 94%, transparent));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-elevated) 98%, transparent),
+    color-mix(in srgb, var(--surface-overlay) 94%, transparent)
+  );
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
 }
@@ -260,23 +265,34 @@ img {
   overflow: hidden;
   border: 1px dashed color-mix(in srgb, var(--border) 88%, transparent);
   border-radius: 1.5rem;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 100%, transparent), color-mix(in srgb, var(--surface-overlay) 90%, transparent));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-strong) 100%, transparent),
+    color-mix(in srgb, var(--surface-overlay) 90%, transparent)
+  );
 }
 
 .placeholder-panel::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.24) 48%, transparent 100%);
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.24) 48%,
+    transparent 100%
+  );
   opacity: 0.4;
   pointer-events: none;
 }
 
 .dark .placeholder-panel::before {
-  background:
-    linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.08) 48%, transparent 100%);
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 48%,
+    transparent 100%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -290,5 +306,13 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body::after {
+    inset: auto 4vw -14vh;
+    height: 22vh;
+    filter: blur(60px);
   }
 }

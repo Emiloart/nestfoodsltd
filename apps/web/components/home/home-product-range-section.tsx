@@ -27,7 +27,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
         <h3 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
           {product.name}
         </h3>
-        <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+        <p className="pretty-text mt-3 line-clamp-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:line-clamp-none">
           {product.shortDescription}
         </p>
       </div>
@@ -79,8 +79,8 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
     <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
       <SectionHeading
         eyebrow="Bread Product Range"
-        title="Bread products that read quickly on mobile and desktop."
-        description="The public catalog leads with clear product cues first. Ordering detail stays available without dominating the first view."
+        title="Bread products for retail and partner supply."
+        description="The public catalog leads with clear product cues first, while deeper ordering detail stays out of the opening scroll."
         descriptionClassName="hidden md:block"
         actions={
           <Link

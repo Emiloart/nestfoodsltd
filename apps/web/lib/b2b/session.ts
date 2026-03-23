@@ -23,5 +23,5 @@ export function getB2BSessionAccountId(request: NextRequest) {
     return parsed.sub.trim() || null;
   }
 
-  return value.trim() || null;
+  return null;
 }

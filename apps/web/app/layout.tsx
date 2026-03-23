@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -10,18 +9,6 @@ import { resolveSiteUrl } from "@/lib/seo/site";
 import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
 import "./globals.css";
-
-const bodyFont = Manrope({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const displayFont = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(resolveSiteUrl()),
@@ -47,9 +34,7 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${bodyFont.variable} ${displayFont.variable} min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased`}
-      >
+      <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a
           href="#main-content"

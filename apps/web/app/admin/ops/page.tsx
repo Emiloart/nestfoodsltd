@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
-
 import { OpsOverviewClient } from "@/components/admin/ops-overview-client";
 import { PageShell } from "@/components/page-shell";
-import { ADMIN_SESSION_COOKIE_NAME, resolveAdminRoleFromToken } from "@/lib/admin/auth";
+import { requireAdminPageRole } from "@/lib/admin/page-auth";
 
 export default async function AdminOpsPage() {
-  const cookieStore = await cookies();
-  const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
+  const role = await requireAdminPageRole("/admin/ops");
 
   if (role !== "SUPER_ADMIN") {
     return (

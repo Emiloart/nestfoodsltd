@@ -135,8 +135,8 @@ function includesAny(haystack: string, needles: string[]) {
   return needles.some((needle) => haystack.includes(needle));
 }
 
-function formatIntentLabel(intent: ChatIntent) {
-  return intent.replace(/_/g, " ");
+function formatLabel(value: string) {
+  return value.replace(/_/g, " ");
 }
 
 function formatOrderStatus(status: string) {
@@ -669,7 +669,7 @@ async function buildTraceabilityReply(message: string): Promise<ChatReply> {
   }
 
   const latestTimeline = batch.timeline[batch.timeline.length - 1];
-  const stage = latestTimeline?.stage ? formatIntentLabel(latestTimeline.stage) : "processing";
+  const stage = latestTimeline?.stage ? formatLabel(latestTimeline.stage) : "processing";
 
   return {
     intent: "traceability_lookup",

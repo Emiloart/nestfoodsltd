@@ -36,7 +36,7 @@ export function HomeProductionStandardsSection() {
         <SectionHeading
           eyebrow="Production Standards"
           title="Production standards buyers can scan quickly."
-          description="Clean mobile flow for process, quality, and packaging signals."
+          description="Process, hygiene, and packaging signals in one tighter mobile block."
           descriptionClassName="hidden"
         />
 
@@ -66,9 +66,7 @@ export function HomeProductionStandardsSection() {
             descriptionClassName="hidden lg:block"
           />
 
-          <div className="mt-6 grid gap-3">
-            {standardCards}
-          </div>
+          <div className="mt-6 grid gap-3">{standardCards}</div>
         </div>
 
         <div className="section-frame p-4 sm:p-5">

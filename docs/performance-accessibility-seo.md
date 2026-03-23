@@ -7,6 +7,7 @@
   - stronger keyboard focus states for primary nav actions
   - semantic labels for header/footer/mobile navigation
   - improved search combobox/listbox semantics
+  - mobile-first homepage density reduction (carousel sections, compressed traceability entry, and simplified footer)
 - Core Web Vitals budget model with telemetry intake:
   - budgets: `LCP <= 2500`, `INP <= 200`, `CLS <= 0.1`
   - client reporter: `apps/web/components/performance/web-vitals-reporter.tsx`
@@ -29,3 +30,4 @@
 
 - Current telemetry endpoint is ingestion-first (JSON response + over-budget logging).
 - Budget history persistence can be added in the observability phase (Section 9).
+- Mobile UI cleanup reduced first-scroll density, but runtime CLS/LCP telemetry should continue to be reviewed in `/admin/ops`.

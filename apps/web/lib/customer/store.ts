@@ -1,8 +1,9 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { type CurrencyCode } from "@/lib/commerce/types";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { CUSTOMER_SEED_DATA } from "./seed";
 import {
@@ -11,22 +12,16 @@ import {
   type CustomerNotificationPreferences,
   type CustomerPreferences,
   type CustomerProfile,
+  type LocaleCode,
 } from "./types";
 
 const relativeDataFilePath = path.join("data", "customer.json");
 
-function resolveDataFilePath() {
-  const candidates = [
-    path.join(process.cwd(), relativeDataFilePath),
-    path.join(process.cwd(), "apps", "web", relativeDataFilePath),
-  ];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? candidates[0];
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.CUSTOMER_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "customer";
+const localeOptions: LocaleCode[] = ["en-NG", "ha-NG", "yo-NG", "ig-NG", "fr-FR"];
+const currencyOptions: CurrencyCode[] = ["NGN", "USD"];
 
 function uniqueStrings(values: unknown): string[] {
   if (!Array.isArray(values)) {
@@ -110,10 +105,15 @@ function normalizePreferences(input: unknown): CustomerPreferences | null {
     return null;
   }
 
-  const localeOptions = new Set(["en-NG", "ha-NG", "yo-NG", "ig-NG", "fr-FR"]);
-  const currencyOptions = new Set(["NGN", "USD"]);
-  const locale = localeOptions.has(String(candidate.locale)) ? candidate.locale : "en-NG";
-  const currency = currencyOptions.has(String(candidate.currency)) ? candidate.currency : "NGN";
+  const locale =
+    typeof candidate.locale === "string" && localeOptions.includes(candidate.locale as LocaleCode)
+      ? (candidate.locale as LocaleCode)
+      : "en-NG";
+  const currency =
+    typeof candidate.currency === "string" &&
+    currencyOptions.includes(candidate.currency as CurrencyCode)
+      ? (candidate.currency as CurrencyCode)
+      : "NGN";
 
   return {
     customerEmail,
@@ -139,7 +139,7 @@ function mergeCustomerData(input: Partial<CustomerData> | null | undefined): Cus
     .map((entry) => normalizePreferences(entry))
     .filter((entry): entry is CustomerPreferences => Boolean(entry));
   const recommendations = Array.isArray(input.recommendations)
-    ? input.recommendations.map((entry) => ({
+    ? input.recommendations.map((entry): CustomerData["recommendations"][number] => ({
         id: String(entry.id),
         type: entry.type === "recently_viewed" ? "recently_viewed" : "top_pick",
         productSlug: String(entry.productSlug),
@@ -172,7 +172,8 @@ function mergeCustomerData(input: Partial<CustomerData> | null | undefined): Cus
   const merged: CustomerData = {
     profiles: profiles.length > 0 ? profiles : CUSTOMER_SEED_DATA.profiles,
     preferences: preferences.length > 0 ? preferences : CUSTOMER_SEED_DATA.preferences,
-    recommendations: recommendations.length > 0 ? recommendations : CUSTOMER_SEED_DATA.recommendations,
+    recommendations:
+      recommendations.length > 0 ? recommendations : CUSTOMER_SEED_DATA.recommendations,
     recentlyViewed,
   };
 
@@ -212,7 +213,9 @@ export async function readCustomerData(): Promise<CustomerData> {
   }
 
   if (storageDriver !== "json") {
-    throw new Error("CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
+    throw new Error(
+      "CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
+    );
   }
 
   try {
@@ -231,7 +234,9 @@ export async function writeCustomerData(data: CustomerData) {
   }
 
   if (storageDriver !== "json") {
-    throw new Error("CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
+    throw new Error(
+      "CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
+    );
   }
 
   await mkdir(path.dirname(dataFilePath), { recursive: true });

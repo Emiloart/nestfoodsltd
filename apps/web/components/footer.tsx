@@ -4,20 +4,27 @@ const footerGroups = [
   {
     title: "Company",
     links: [
+      { href: "/", label: "Home" },
       { href: "/about", label: "About" },
       { href: "/vision", label: "Vision" },
       { href: "/careers", label: "Careers" },
       { href: "/contact", label: "Contact" },
-      { href: "/blog", label: "Insights" },
     ],
   },
   {
-    title: "Products",
+    title: "Explore",
     links: [
       { href: "/shop", label: "Products" },
       { href: "/traceability", label: "Quality & Traceability" },
-      { href: "/recipes", label: "Ingredients" },
       { href: "/b2b", label: "Distributor Portal" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { href: "/recipes", label: "Ingredients" },
+      { href: "/blog", label: "Insights" },
+      { href: "/contact", label: "Make Enquiry" },
     ],
   },
   {
@@ -38,10 +45,11 @@ export function Footer() {
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100">
-              Bread quality you can verify quickly.
+              Bread quality with a cleaner mobile finish.
             </h2>
             <p className="pretty-text mt-3 max-w-md text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-              Products, traceability, partner access, and direct enquiry paths without a crowded footer.
+              Products, traceability, partner access, and direct enquiry paths without a crowded
+              footer.
             </p>
           </div>
 
@@ -51,8 +59,6 @@ export function Footer() {
               { href: "/traceability", label: "Traceability" },
               { href: "/contact", label: "Enquiry" },
               { href: "/b2b", label: "Distributor" },
-              { href: "/about", label: "About" },
-              { href: "/blog", label: "Insights" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -64,23 +70,47 @@ export function Footer() {
             ))}
           </div>
 
+          <div className="grid gap-2">
+            {[
+              { href: "/about", label: "About Nest Foods" },
+              { href: "/recipes", label: "Ingredients" },
+              { href: "/blog", label: "Insights" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:brightness-105 dark:text-neutral-200"
+              >
+                <span>{item.label}</span>
+                <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">Open</span>
+              </Link>
+            ))}
+          </div>
+
           <div className="flex flex-wrap gap-2">
-            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
-              Registered Manufacturer
-            </span>
-            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
-              Hygienic Production
-            </span>
-            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
-              Batch Traceability
-            </span>
+            {["Registered Manufacturer", "Hygienic Production", "Batch Traceability"].map(
+              (item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-[11px] text-neutral-700 dark:text-neutral-200"
+                >
+                  {item}
+                </span>
+              ),
+            )}
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-500 dark:text-neutral-400">
-            <Link href="/privacy" className="transition hover:text-neutral-900 dark:hover:text-neutral-100">
+            <Link
+              href="/privacy"
+              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+            >
               Privacy
             </Link>
-            <Link href="/terms" className="transition hover:text-neutral-900 dark:hover:text-neutral-100">
+            <Link
+              href="/terms"
+              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+            >
               Terms
             </Link>
             <Link
@@ -115,11 +145,14 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {footerGroups.map((group) => (
               <div key={group.title}>
                 <p className="section-kicker">{group.title}</p>
-                <nav aria-label={`${group.title} footer links`} className="mt-4 flex flex-col gap-3">
+                <nav
+                  aria-label={`${group.title} footer links`}
+                  className="mt-4 flex flex-col gap-3"
+                >
                   {group.links.map((item) => (
                     <Link
                       key={item.href}

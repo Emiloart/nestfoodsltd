@@ -1,21 +1,14 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { type ObservabilityData } from "./types";
 
 const relativeDataFilePath = path.join("data", "observability.json");
 
-function resolveDataFilePath() {
-  const fallbackPath = path.join(process.cwd(), relativeDataFilePath);
-  const candidates = [fallbackPath, path.join(process.cwd(), "apps", "web", relativeDataFilePath)];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? fallbackPath;
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "observability";
 

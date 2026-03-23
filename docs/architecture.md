@@ -12,7 +12,7 @@
 ## Runtime Model
 
 - Frontend: Next.js App Router with server-first rendering.
-- Data: PostgreSQL + Prisma.
+- Data: JSON storage drivers today with PostgreSQL JSON adapters available for admin-critical modules.
 - Content: dynamic CMS layer with JSON storage driver and PostgreSQL migration path.
 - Payments: adapter layer for Paystack and Flutterwave.
 - Media: Cloudinary or equivalent CDN-backed optimizer.
@@ -28,6 +28,8 @@
 ## Security Baseline
 
 - RBAC across admin actions.
+- Host-gated admin protection enforced at the Next.js edge proxy layer.
+- Server-side admin page guards redirect unauthenticated access before admin UI renders.
 - Signed session-token model for admin/customer/B2B cookies with expiry and server-side verification.
 - Trusted-origin enforcement on sensitive state-changing routes.
 - In-memory rate limits on auth, checkout, and traceability lookup routes.

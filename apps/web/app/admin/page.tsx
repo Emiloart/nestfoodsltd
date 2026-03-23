@@ -1,17 +1,12 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import {
-  ADMIN_SESSION_COOKIE_NAME,
-  hasAdminPermission,
-  resolveAdminRoleFromToken,
-} from "@/lib/admin/auth";
+import { hasAdminPermission } from "@/lib/admin/auth";
+import { requireAdminPageRole } from "@/lib/admin/page-auth";
 
 export default async function AdminPage() {
-  const cookieStore = await cookies();
-  const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
+  const role = await requireAdminPageRole("/admin");
   const canManageBanners = role ? hasAdminPermission(role, "cms.pages.read") : false;
   const canManageMedia = role ? hasAdminPermission(role, "cms.media.read") : false;
   const canManageRecipes = role ? hasAdminPermission(role, "cms.recipes.read") : false;

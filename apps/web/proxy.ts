@@ -4,7 +4,7 @@ import { isAdminHost, isAdminSurfacePath } from "./lib/security/admin-surface";
 
 const ADMIN_SESSION_COOKIE_NAME = "nest_admin_token";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (!isAdminSurfacePath(pathname)) {
     return NextResponse.next();
@@ -25,9 +25,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value;
-  const tokenFromHeader = request.headers.get("x-admin-token");
-  if ((tokenFromHeader ?? tokenFromCookie)?.trim()) {
+  const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value?.trim();
+  const tokenFromHeader = request.headers.get("x-admin-token")?.trim();
+
+  if (pathname.startsWith("/admin")) {
+    if (tokenFromCookie) {
+      return NextResponse.next();
+    }
+  } else if (tokenFromHeader || tokenFromCookie) {
     return NextResponse.next();
   }
 

@@ -23,8 +23,7 @@ export function Header() {
           <div className="flex min-w-0 items-center gap-3">
             <BrandLogo className="min-w-0" />
             <p className="pretty-text hidden max-w-sm text-xs leading-6 text-neutral-600 dark:text-neutral-300 xl:block">
-              Premium bread manufacturing, quality traceability, and reliable partner supply in one
-              public surface.
+              Bread manufacturing, traceability, and partner supply in one clear public surface.
             </p>
           </div>
 

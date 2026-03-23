@@ -21,7 +21,7 @@ Move admin operations from `apps/web` into a dedicated `apps/admin` application 
 2. Route migration
    - Move `/admin/*` UI routes to `apps/admin`.
    - Keep admin API endpoints reachable from admin host.
-   - Update middleware to enforce host split cleanly.
+   - Update proxy enforcement to preserve the host split cleanly.
 
 3. Auth and session continuity
    - Preserve admin session cookie contract and RBAC checks.

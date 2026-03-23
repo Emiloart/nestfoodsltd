@@ -27,5 +27,5 @@ export function getCustomerSessionEmail(request: NextRequest) {
     return normalizeEmail(parsed.sub);
   }
 
-  return normalizeEmail(value) || null;
+  return null;
 }

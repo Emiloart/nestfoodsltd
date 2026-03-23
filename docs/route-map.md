@@ -1,17 +1,21 @@
-# Route Map (Initial)
+# Route Map (Current)
 
-## Public
+## Primary Public IA
 
 - `/` Home
+- `/shop` Products
+- `/traceability` Quality & Traceability
 - `/about` About
 - `/vision` Vision and mission
-- `/shop` Product listing
-- `/products/[slug]` Product details
-- `/recipes` Recipes
-- `/blog` Blog
-- `/blog/[slug]` Blog article detail
+- `/careers` Careers
 - `/contact` Contact and locations
-- `/traceability` Batch lookup
+
+## Secondary Public Routes
+
+- `/products/[slug]` Product details
+- `/recipes` Ingredients
+- `/blog` Insights
+- `/blog/[slug]` Blog article detail
 
 ## Commerce
 
@@ -41,7 +45,6 @@
 - `/privacy`
 - `/terms`
 - `/sustainability`
-- `/careers`
 - `/design-system`
 - `/api/health`
 - `https://admin.<domain>/api/admin/session`

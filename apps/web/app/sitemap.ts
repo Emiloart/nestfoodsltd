@@ -46,8 +46,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...productEntries, ...articleEntries].map((entry) => ({
-    ...entry,
-    lastModified: Number.isNaN(entry.lastModified.getTime()) ? now : entry.lastModified,
-  }));
+  return [...staticEntries, ...productEntries, ...articleEntries].map((entry) => {
+    const normalizedLastModified =
+      entry.lastModified instanceof Date
+        ? entry.lastModified
+        : entry.lastModified
+          ? new Date(entry.lastModified)
+          : now;
+
+    return {
+      ...entry,
+      lastModified: Number.isNaN(normalizedLastModified.getTime()) ? now : normalizedLastModified,
+    };
+  });
 }

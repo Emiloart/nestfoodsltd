@@ -65,7 +65,7 @@ Last updated: 2026-02-20
 
 ## 7) Security, Compliance, Reliability
 
-- Progress: signed session tokens, origin checks, abuse/rate controls, NDPR consent/data-request APIs, and security runbook are live.
+- Progress: signed session tokens, origin checks, abuse/rate controls, server-side admin page guards, NDPR consent/data-request APIs, and security runbook are live.
 - [x] OWASP ASVS-aligned auth/session controls
 - [x] Rate limits, bot protection, abuse monitoring
 - [x] Audit logs for admin-sensitive actions

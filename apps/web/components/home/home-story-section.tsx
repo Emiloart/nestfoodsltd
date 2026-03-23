@@ -18,7 +18,7 @@ function StoryCard({ page }: { page: CmsPage }) {
         <h3 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
           {page.headline}
         </h3>
-        <p className="pretty-text mt-4 hidden text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:block">
+        <p className="pretty-text mt-4 line-clamp-4 text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:line-clamp-none">
           {page.description}
         </p>
       </div>

@@ -1,8 +1,8 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { ADMIN_DIRECTORY_SEED_DATA } from "./seed";
 import {
@@ -16,16 +16,7 @@ import { type AdminRole, isAdminRole } from "./auth";
 
 const relativeDataFilePath = path.join("data", "admin-users.json");
 
-function resolveDataFilePath() {
-  const candidates = [
-    path.join(process.cwd(), relativeDataFilePath),
-    path.join(process.cwd(), "apps", "web", relativeDataFilePath),
-  ];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? candidates[0];
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.ADMIN_USERS_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "admin_users";
 

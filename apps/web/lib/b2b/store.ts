@@ -1,24 +1,15 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { B2B_SEED_DATA } from "./seed";
 import { type B2BData } from "./types";
 
 const relativeDataFilePath = path.join("data", "b2b.json");
 
-function resolveDataFilePath() {
-  const candidates = [
-    path.join(process.cwd(), relativeDataFilePath),
-    path.join(process.cwd(), "apps", "web", relativeDataFilePath),
-  ];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? candidates[0];
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.B2B_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "b2b";
 

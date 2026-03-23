@@ -118,10 +118,10 @@ export function AdminUsersClient() {
     setUsers(data.users);
     setInvites(data.invites);
 
-    const target =
-      (preferredUserId && data.users.find((entry) => entry.id === preferredUserId)) ??
-      data.users[0];
-    setSelectedUserId(target?.id ?? "");
+    const target = preferredUserId
+      ? (data.users.find((entry) => entry.id === preferredUserId) ?? data.users[0] ?? null)
+      : (data.users[0] ?? null);
+    setSelectedUserId(target ? target.id : "");
     setStatus("Admin user directory ready.");
   }
 

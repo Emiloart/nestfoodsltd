@@ -285,13 +285,13 @@ export function ChatAgentWidget() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-4 right-3 z-[70] flex w-[min(92vw,380px)] flex-col items-end gap-3 md:bottom-8 md:right-4 md:w-[min(95vw,380px)]">
+    <div className="pointer-events-none fixed bottom-4 right-3 z-[70] flex w-[min(92vw,360px)] flex-col items-end gap-3 md:bottom-8 md:right-4 md:w-[min(95vw,380px)]">
       {open ? (
         <Card className="pointer-events-auto w-full overflow-hidden p-0">
           <div className="shell-surface flex items-center justify-between border-b px-4 py-3">
             <div className="space-y-1">
               <Badge>Nest Agent</Badge>
-              <p className="text-xs text-neutral-600 dark:text-neutral-300">
+              <p className="hidden text-xs text-neutral-600 dark:text-neutral-300 md:block">
                 Fast product and support assistant
               </p>
             </div>
@@ -307,7 +307,7 @@ export function ChatAgentWidget() {
 
           <div
             ref={messagesViewportRef}
-            className="max-h-[52vh] min-h-56 space-y-3 overflow-y-auto px-4 py-4"
+            className="max-h-[48vh] min-h-52 space-y-3 overflow-y-auto px-4 py-4 md:max-h-[52vh] md:min-h-56"
           >
             {messages.map((entry) => (
               <div key={entry.id} className={entry.role === "user" ? "ml-12" : "mr-12"}>

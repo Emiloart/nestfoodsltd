@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
-
 import { AuditEventsClient } from "@/components/admin/audit-events-client";
 import { PageShell } from "@/components/page-shell";
-import { ADMIN_SESSION_COOKIE_NAME, resolveAdminRoleFromToken } from "@/lib/admin/auth";
+import { requireAdminPageRole } from "@/lib/admin/page-auth";
 
 export default async function AdminAuditPage() {
-  const cookieStore = await cookies();
-  const role = resolveAdminRoleFromToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value);
+  const role = await requireAdminPageRole("/admin/audit");
 
   if (role !== "SUPER_ADMIN") {
     return (

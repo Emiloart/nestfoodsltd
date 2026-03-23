@@ -1,6 +1,6 @@
 # Nest Foods Ltd Platform
 
-Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premium UX baseline and scalable architecture.
+Build-ready manufacturer platform for Nest Foods Ltd with a bread-first public experience, secured admin tooling, commerce workflows, B2B distributor support, and traceability.
 
 ## Stack (Foundation)
 
@@ -26,7 +26,7 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 ## Quick Start
 
 1. Install prerequisites:
-   - Node.js `24.x` (Active LTS)
+   - Node.js `22.14+`
    - pnpm `10.x`
 2. Install dependencies:
    - `pnpm install`
@@ -68,14 +68,24 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - SUPER_ADMIN operations dashboard is live (`/admin/ops`) with web-vitals and runtime error telemetry summaries.
 - Chat Agent v1 is live as a floating assistant widget (grounded intent responses + lead handoff).
 - Admin user management v1 is live (`/admin/users`) with invite activation, managed credentials, MFA policy, and break-glass token fallback.
+- Public IA now presents Nest Foods as a premium bread manufacturer first, with mobile-first homepage flows, lighter footer density, and traceability surfaced as a public trust layer.
+- Production build cleanup now includes local-safe typography, server-side admin page guards, and signed-session-only customer/B2B cookie reads.
+
+## Build Hygiene
+
+- Production build has been validated on Node.js `22.14+`.
+- Full TypeScript validation passes on Node.js `22.14+`.
+- Generated runtime artifacts such as `.next-dev*.log` and `apps/web/tsconfig.tsbuildinfo` should remain local-only.
+- Telemetry state in `apps/web/data/observability.json` is runtime data, not release content.
+- `AUTH_SECRET` is required in production; the development fallback secret is no longer accepted there.
 
 ## Next Build Steps
 
 1. Execute `apps/admin` split migration (`docs/admin-app-split-plan.md`).
 2. Upgrade admin MFA from static code to authenticator TOTP.
-3. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
-4. Implement inventory locking and transactional checkout.
-5. Add admin-side chat lead triage and intent analytics dashboard.
+3. Add browser security headers (CSP, HSTS, Referrer-Policy, Permissions-Policy).
+4. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
+5. Implement inventory locking and transactional checkout.
 
 ## GitHub Setup
 

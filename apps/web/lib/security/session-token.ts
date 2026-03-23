@@ -13,7 +13,16 @@ type SessionTokenPayloadBase = {
 };
 
 function getSessionSecret() {
-  return process.env.AUTH_SECRET?.trim() || DEV_SESSION_SECRET;
+  const configuredSecret = process.env.AUTH_SECRET?.trim();
+  if (configuredSecret) {
+    return configuredSecret;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("AUTH_SECRET must be configured in production.");
+  }
+
+  return DEV_SESSION_SECRET;
 }
 
 function toBase64Url(value: string) {

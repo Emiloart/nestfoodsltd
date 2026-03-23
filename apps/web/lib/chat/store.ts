@@ -1,8 +1,8 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
 import { CHAT_SEED_DATA } from "./seed";
 import {
@@ -15,16 +15,7 @@ import {
 
 const relativeDataFilePath = path.join("data", "chat.json");
 
-function resolveDataFilePath() {
-  const candidates = [
-    path.join(process.cwd(), relativeDataFilePath),
-    path.join(process.cwd(), "apps", "web", relativeDataFilePath),
-  ];
-  const existingPath = candidates.find((candidatePath) => existsSync(candidatePath));
-  return existingPath ?? candidates[0];
-}
-
-const dataFilePath = resolveDataFilePath();
+const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.CHAT_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "chat";
 const chatIntentSet = new Set(chatIntentValues);
@@ -125,17 +116,14 @@ function mergeChatData(input: Partial<ChatData> | null | undefined): ChatData {
     .filter((entry): entry is ChatConversation => Boolean(entry));
 
   const conversationIdSet = new Set(conversations.map((entry) => entry.id));
-  const messages = (input.messages ?? [])
-    .map((entry) => normalizeMessage(entry))
-    .filter(
-      (entry): entry is ChatMessage =>
-        Boolean(entry) && conversationIdSet.has(entry.conversationId),
-    );
-  const leads = (input.leads ?? [])
-    .map((entry) => normalizeLead(entry))
-    .filter(
-      (entry): entry is ChatLead => Boolean(entry) && conversationIdSet.has(entry.conversationId),
-    );
+  const normalizedMessages = (input.messages ?? []).map((entry) => normalizeMessage(entry));
+  const messages = normalizedMessages.filter(
+    (entry): entry is ChatMessage => entry !== null && conversationIdSet.has(entry.conversationId),
+  );
+  const normalizedLeads = (input.leads ?? []).map((entry) => normalizeLead(entry));
+  const leads = normalizedLeads.filter(
+    (entry): entry is ChatLead => entry !== null && conversationIdSet.has(entry.conversationId),
+  );
 
   return {
     conversations,
