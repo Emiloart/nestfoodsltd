@@ -10,9 +10,9 @@ import { buildArticleStructuredData } from "@/lib/seo/structured-data";
 const articles = listBlogArticles();
 
 export const metadata = buildPageMetadata({
-  title: "Blog",
+  title: "Insights",
   description:
-    "Enterprise insights on food commerce operations, UX quality, and traceability standards.",
+    "Corporate insights on bread production, quality systems, traceability discipline, and partner supply readiness.",
   path: "/blog",
   openGraphType: "website",
 });
@@ -33,13 +33,13 @@ export default function BlogPage() {
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <JsonLd id="blog-articles-ld" data={articleStructuredData} />
       <div className="space-y-3">
-        <Badge>Editorial</Badge>
+        <Badge>Insights</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Blog
+          Operational Insights
         </h1>
         <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
-          News, operations updates, and growth strategy content for Nest Foods Ltd customers and
-          distributors.
+          Updates from Nest Foods on manufacturing quality, bread category development,
+          traceability, and distributor readiness.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -72,7 +72,7 @@ export default function BlogPage() {
               href={`/blog/${article.slug}`}
               className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
             >
-              Read Article
+              Read Insight
             </Link>
           </Card>
         ))}

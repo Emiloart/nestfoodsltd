@@ -32,7 +32,7 @@ export function BrandLogo({ href = "/", compact = false, className }: BrandLogoP
             compact && "text-sm",
           )}
         >
-          Trusted nutrition.
+          Premium bread production.
         </span>
       </span>
     </span>

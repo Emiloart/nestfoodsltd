@@ -11,9 +11,9 @@ import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Wholesale Catalog",
+  title: "Products",
   description:
-    "Bulk-focused Nest Foods catalog with region availability and minimum/maximum order controls.",
+    "Browse Nest Foods bread products with production specs, region availability, and distributor-ready order controls.",
   path: "/shop",
 });
 
@@ -47,14 +47,32 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
-      <div className="space-y-3">
-        <Badge>Wholesale Catalog</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Bulk Product Catalog
-        </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Filter by region, category, tags, allergens, and stock for distributor-ready ordering.
-        </p>
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
+        <div className="space-y-3">
+          <Badge>Product Range</Badge>
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+            Bread Products Built For Consistency
+          </h1>
+          <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
+            Review the Nest Foods bread range by category, ingredient profile, service region, and
+            production availability. The catalog stays product-first, while ordering controls remain
+            available for approved commercial flows.
+          </p>
+        </div>
+        <Card className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Quality access
+          </p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            Need batch verification before procurement or review?
+          </p>
+          <Link
+            href="/traceability"
+            className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+          >
+            Open Traceability
+          </Link>
+        </Card>
       </div>
 
       <Card className="space-y-4">
@@ -204,10 +222,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   Status: {product.availabilityStatus}
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Bulk range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+                  Production range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Regions: {product.availableRegions.join(", ")}
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Shelf life: {product.shelfLifeDays} days
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Allergens: {product.allergens.join(", ")}
@@ -231,7 +252,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   href={`/products/${product.slug}`}
                   className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
                 >
-                  Details
+                  View Product
                 </Link>
               </div>
             </Card>
@@ -242,7 +263,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       {products.length === 0 ? (
         <Card className="p-6">
           <p className="text-sm text-neutral-600 dark:text-neutral-300">
-            No products matched your filters. Try another region or reset the filters.
+            No products matched your filters. Try another region, tag, or allergen setting.
           </p>
         </Card>
       ) : null}

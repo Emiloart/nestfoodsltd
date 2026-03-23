@@ -2,9 +2,9 @@ import { TraceabilityPageClient } from "@/components/traceability/traceability-p
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Traceability",
+  title: "Quality & Traceability",
   description:
-    "Verify product batch journey details including sourcing, processing, and certifications.",
+    "Verify Nest Foods bread batch history across sourcing, production, packaging, and certification checkpoints.",
   path: "/traceability",
 });
 

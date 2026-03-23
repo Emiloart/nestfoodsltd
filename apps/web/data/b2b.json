@@ -38,8 +38,8 @@
       "accountManagerName": "Kemi Williams",
       "accountManagerEmail": "kemi.williams@nestfoodsltd.com",
       "accountManagerPhone": "+2348001230001",
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.100Z",
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     },
     {
       "id": "b2b-acct-0002",
@@ -52,8 +52,8 @@
       "regions": [
         "Port Harcourt"
       ],
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.100Z",
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     }
   ],
   "quoteRequests": [
@@ -63,43 +63,43 @@
       "accountId": "b2b-acct-0001",
       "items": [
         {
-          "variantId": "var-protein-2kg",
+          "variantId": "var-butter-loaf-700g",
           "quantity": 20
         },
         {
-          "variantId": "var-signature-rice-1kg",
+          "variantId": "var-classic-loaf-800g",
           "quantity": 30
         }
       ],
       "quotedLines": [
         {
-          "productSlug": "plant-protein-granules",
-          "productName": "Plant Protein Granules",
-          "variantId": "var-protein-2kg",
-          "variantName": "2kg Bulk",
+          "productSlug": "butter-top-loaf",
+          "productName": "Butter Top Loaf",
+          "variantId": "var-butter-loaf-700g",
+          "variantName": "700g Family Loaf",
           "quantity": 20,
-          "listPriceMinor": 2500000,
-          "unitPriceMinor": 2200000,
-          "lineTotalMinor": 44000000,
+          "listPriceMinor": 420000,
+          "unitPriceMinor": 369600,
+          "lineTotalMinor": 7392000,
           "currency": "NGN"
         },
         {
-          "productSlug": "signature-jollof-rice-mix",
-          "productName": "Signature Jollof Rice Mix",
-          "variantId": "var-signature-rice-1kg",
-          "variantName": "1kg Pack",
+          "productSlug": "classic-sandwich-loaf",
+          "productName": "Classic Sandwich Loaf",
+          "variantId": "var-classic-loaf-800g",
+          "variantName": "800g Family Loaf",
           "quantity": 30,
-          "listPriceMinor": 850000,
-          "unitPriceMinor": 748000,
-          "lineTotalMinor": 22440000,
+          "listPriceMinor": 320000,
+          "unitPriceMinor": 281600,
+          "lineTotalMinor": 8448000,
           "currency": "NGN"
         }
       ],
       "summary": {
         "currency": "NGN",
-        "subtotalMinor": 69500000,
-        "discountMinor": 3076000,
-        "totalMinor": 66440000,
+        "subtotalMinor": 18000000,
+        "discountMinor": 2160000,
+        "totalMinor": 15840000,
         "estimatedFulfillmentDays": 3
       },
       "notes": "Need split delivery across two warehouses.",
@@ -108,26 +108,26 @@
       "timeline": [
         {
           "status": "submitted",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Quote submitted by distributor.",
           "by": "buyer"
         },
         {
           "status": "reviewing",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Sales manager reviewing stock and logistics.",
           "by": "manager"
         },
         {
           "status": "quoted",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Commercial quote shared with distributor.",
           "by": "manager"
         }
       ],
       "reviewedByRole": "SALES_MANAGER",
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.100Z",
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     }
   ],
   "orders": [
@@ -138,22 +138,22 @@
       "quoteRequestId": "b2b-quote-0001",
       "items": [
         {
-          "productSlug": "plant-protein-granules",
-          "productName": "Plant Protein Granules",
-          "variantId": "var-protein-2kg",
-          "variantName": "2kg Bulk",
+          "productSlug": "butter-top-loaf",
+          "productName": "Butter Top Loaf",
+          "variantId": "var-butter-loaf-700g",
+          "variantName": "700g Family Loaf",
           "quantity": 20,
-          "listPriceMinor": 2500000,
-          "unitPriceMinor": 2200000,
-          "lineTotalMinor": 44000000,
+          "listPriceMinor": 420000,
+          "unitPriceMinor": 378000,
+          "lineTotalMinor": 7560000,
           "currency": "NGN"
         }
       ],
       "summary": {
         "currency": "NGN",
-        "subtotalMinor": 50000000,
-        "discountMinor": 6000000,
-        "totalMinor": 44000000,
+        "subtotalMinor": 8400000,
+        "discountMinor": 1008000,
+        "totalMinor": 7392000,
         "estimatedFulfillmentDays": 3
       },
       "status": "in_transit",
@@ -162,22 +162,22 @@
       "timeline": [
         {
           "status": "received",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Order received from approved quote."
         },
         {
           "status": "processing",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Warehouse picking in progress."
         },
         {
           "status": "in_transit",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.100Z",
           "note": "Shipment dispatched."
         }
       ],
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.100Z",
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     }
   ],
   "invoices": [
@@ -186,29 +186,29 @@
       "invoiceNumber": "NFL-INV-B2B-0001",
       "accountId": "b2b-acct-0001",
       "orderId": "b2b-order-0001",
-      "amountMinor": 44000000,
-      "paidMinor": 22000000,
-      "balanceMinor": 22000000,
+      "amountMinor": 7392000,
+      "paidMinor": 3696000,
+      "balanceMinor": 3696000,
       "currency": "NGN",
       "status": "partially_paid",
       "issuedAt": "2026-02-12T08:00:00.000Z",
       "dueAt": "2026-02-26T08:00:00.000Z",
       "fileUrl": "/placeholders/section-image-placeholder.svg",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     }
   ],
   "statements": [
     {
       "id": "b2b-statement-2026-01-0001",
       "accountId": "b2b-acct-0001",
-      "periodLabel": "January 2026",
-      "periodStart": "2026-01-01",
-      "periodEnd": "2026-01-31",
-      "totalBilledMinor": 80000000,
-      "totalPaidMinor": 60000000,
-      "balanceMinor": 20000000,
+      "periodLabel": "February 2026",
+      "periodStart": "2026-02-01",
+      "periodEnd": "2026-02-29",
+      "totalBilledMinor": 7392000,
+      "totalPaidMinor": 3696000,
+      "balanceMinor": 3696000,
       "currency": "NGN",
-      "generatedAt": "2026-02-01T10:00:00.000Z",
+      "generatedAt": "2026-03-01T10:00:00.000Z",
       "fileUrl": "/placeholders/section-image-placeholder.svg"
     }
   ],
@@ -222,8 +222,8 @@
       "priority": "normal",
       "status": "in_progress",
       "assignedTo": "kemi.williams@nestfoodsltd.com",
-      "openedAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "openedAt": "2026-03-23T14:02:46.100Z",
+      "updatedAt": "2026-03-23T14:02:46.100Z"
     }
   ]
 }

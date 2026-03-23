@@ -24,7 +24,7 @@ export function TraceabilityPageClient() {
   const [batch, setBatch] = useState<TraceabilityBatch | null>(null);
   const [recentBatches, setRecentBatches] = useState<TraceabilityBatch[]>([]);
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("Enter a batch code or scan QR.");
+  const [status, setStatus] = useState("Enter a batch code or scan the QR value.");
 
   useEffect(() => {
     async function loadRecent() {
@@ -73,27 +73,39 @@ export function TraceabilityPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Batch Traceability
+          Quality & Traceability
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Enter batch code (or QR value) to see sourcing, processing, certifications, and logistics
-          timeline.
+          Verify bread batch sourcing, production, packaging, certification, and dispatch
+          milestones from a single lookup.
         </p>
       </div>
 
-      <Card className="space-y-3">
-        <div className="flex flex-wrap gap-2">
-          <Input
-            value={code}
-            onChange={(event) => setCode(event.target.value)}
-            placeholder="e.g. NFL-JOLLOF-260201-A"
-          />
-          <Button onClick={() => lookup()} disabled={loading || !code.trim()}>
-            {loading ? "Looking up..." : "Lookup Batch"}
-          </Button>
-        </div>
-        <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
-      </Card>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <Card className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Input
+              value={code}
+              onChange={(event) => setCode(event.target.value)}
+              placeholder="e.g. NFL-BREAD-260301-A"
+            />
+            <Button onClick={() => lookup()} disabled={loading || !code.trim()}>
+              {loading ? "Looking up..." : "Lookup Batch"}
+            </Button>
+          </div>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+        </Card>
+
+        <Card className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Verification scope
+          </p>
+          <p className="text-sm text-neutral-700 dark:text-neutral-200">
+            Confirm supplier origin, line production details, QA sign-off, packaging timestamps, and
+            active certifications before release or delivery.
+          </p>
+        </Card>
+      </div>
 
       {batch ? (
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">

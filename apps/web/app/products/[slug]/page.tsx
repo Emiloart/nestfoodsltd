@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
@@ -87,7 +88,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               Availability: {product.availabilityStatus}
             </p>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              Bulk range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+              Production range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
             </p>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
               Regions: {product.availableRegions.join(", ")}
@@ -133,29 +134,66 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <div className="grid gap-4 md:grid-cols-2">
             <Card className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                Ingredients
+                Product specifications
               </p>
-              <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
-                {product.ingredients.map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
+              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                Category: {product.category}
+              </p>
+              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                Shelf life: {product.shelfLifeDays} days
+              </p>
+              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                Regions: {product.availableRegions.join(", ")}
+              </p>
             </Card>
             <Card className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                Allergens
+                Quality access
               </p>
-              <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
-                {product.allergens.map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                Shelf life: {product.shelfLifeDays} days
+              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                Review batch traceability, production checkpoints, and certification context before
+                distributor ordering.
               </p>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  href="/traceability"
+                  className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+                >
+                  Quality & Traceability
+                </Link>
+                <Link
+                  href="/b2b"
+                  className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                >
+                  Distributor Portal
+                </Link>
+              </div>
             </Card>
           </div>
         </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Ingredients
+          </p>
+          <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
+            {product.ingredients.map((item) => (
+              <li key={item}>• {item}</li>
+            ))}
+          </ul>
+        </Card>
+        <Card className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Allergens
+          </p>
+          <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
+            {product.allergens.map((item) => (
+              <li key={item}>• {item}</li>
+            ))}
+          </ul>
+        </Card>
       </div>
 
       <Card className="space-y-3">

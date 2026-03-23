@@ -7,20 +7,21 @@ export const CMS_SEED_DATA: CmsData = {
     home: {
       slug: "home",
       title: "Nest Foods Ltd",
-      headline: "Nest Foods Ltd digital platform for 2026 expansion.",
+      headline: "Premium bread production built on quality, consistency, and trust.",
       description:
-        "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
+        "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, disciplined production, traceability, and reliable distributor supply.",
       status: "published",
       publishAt: now,
-      ctaPrimaryLabel: "Explore Wholesale Catalog",
+      ctaPrimaryLabel: "Explore Products",
       ctaPrimaryHref: "/shop",
-      ctaSecondaryLabel: "Explore Brand Story",
-      ctaSecondaryHref: "/about",
+      ctaSecondaryLabel: "Our Standards",
+      ctaSecondaryHref: "/traceability",
       heroImageUrl: "/placeholders/hero-image-placeholder.svg",
       logoImageUrl: "/placeholders/logo-placeholder.svg",
       seo: {
-        title: "Nest Foods Ltd | Premium Food Brand",
-        description: "Premium food products and distribution platform for growth across Africa.",
+        title: "Nest Foods Ltd | Premium Bread Manufacturer",
+        description:
+          "Premium bread manufacturing, traceability, and distributor supply infrastructure for growth across Africa.",
         ogImageUrl: "/placeholders/hero-image-placeholder.svg",
       },
       updatedAt: now,
@@ -29,9 +30,9 @@ export const CMS_SEED_DATA: CmsData = {
     about: {
       slug: "about",
       title: "About Nest Foods Ltd",
-      headline: "A premium food brand building trusted nutrition at scale.",
+      headline: "A bread manufacturer built to earn trust through daily consistency.",
       description:
-        "This page is CMS-driven for brand story, leadership, trust signals, and operational milestones.",
+        "This CMS-driven page supports brand story, manufacturing credibility, leadership narrative, and the operational milestones behind trusted bread supply.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
@@ -47,9 +48,9 @@ export const CMS_SEED_DATA: CmsData = {
     vision: {
       slug: "vision",
       title: "Vision & Mission",
-      headline: "Deliver world-class food products across Africa and beyond.",
+      headline: "Build a trusted African bread brand rooted in safe production and reliable distribution.",
       description:
-        "This section is fully dynamic for mission statements, strategic pillars, and expansion roadmap content.",
+        "This section remains fully dynamic for mission statements, strategic pillars, expansion planning, and long-term quality commitments.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
@@ -65,9 +66,9 @@ export const CMS_SEED_DATA: CmsData = {
     contact: {
       slug: "contact",
       title: "Contact & Locations",
-      headline: "Speak with Nest Foods Ltd teams across regions.",
+      headline: "Speak with Nest Foods teams about products, partnerships, and supply planning.",
       description:
-        "Manage support channels, office details, map embeds, and inquiry routing from the admin workspace.",
+        "Use this page for office details, partner inquiries, public contact routing, and future map/location content managed through the admin workspace.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
@@ -83,9 +84,9 @@ export const CMS_SEED_DATA: CmsData = {
     careers: {
       slug: "careers",
       title: "Careers",
-      headline: "Join the team shaping premium food experiences.",
+      headline: "Join the teams shaping production, quality, and reliable distribution.",
       description:
-        "This page supports dynamic openings, culture highlights, and role-specific application links.",
+        "This page supports dynamic openings across production, quality assurance, operations, commercial, and support roles.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
@@ -101,9 +102,9 @@ export const CMS_SEED_DATA: CmsData = {
     sustainability: {
       slug: "sustainability",
       title: "Sustainability",
-      headline: "Responsible sourcing, production, and distribution.",
+      headline: "Responsible sourcing, efficient baking, and accountable distribution.",
       description:
-        "Publish transparent impact metrics, sourcing standards, and certification milestones.",
+        "Publish transparent impact metrics, sourcing standards, packaging improvements, and certification milestones.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
@@ -120,10 +121,11 @@ export const CMS_SEED_DATA: CmsData = {
   banners: [
     {
       id: "banner-home-1",
-      label: "Launch Banner",
-      headline: "Bulk-ready premium products with region-based availability.",
-      ctaLabel: "View wholesale catalog",
-      ctaHref: "/shop",
+      label: "Partner Access",
+      headline:
+        "Approved distributors can request bulk supply, pricing review, and delivery coordination through the portal.",
+      ctaLabel: "Distributor Portal",
+      ctaHref: "/b2b",
       imageUrl: "/placeholders/hero-image-placeholder.svg",
       status: "published",
       publishAt: now,

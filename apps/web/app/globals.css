@@ -2,20 +2,20 @@
 
 :root {
   color-scheme: light;
-  --surface: #f3ede3;
-  --surface-elevated: #fffaf2;
-  --surface-overlay: rgba(255, 250, 242, 0.78);
-  --surface-strong: rgba(255, 255, 255, 0.72);
+  --surface: #f2eee8;
+  --surface-elevated: #faf6ef;
+  --surface-overlay: rgba(250, 246, 239, 0.9);
+  --surface-strong: rgba(255, 252, 247, 0.96);
   --foreground: #1c1711;
   --muted-foreground: #6e655a;
-  --border: rgba(113, 95, 72, 0.2);
-  --brand-1: #b86b3b;
-  --brand-2: #6f8759;
-  --brand-3: #d5ab63;
-  --grain-dot: rgba(54, 40, 24, 0.035);
-  --bg-accent-warm: rgba(184, 107, 59, 0.18);
-  --bg-accent-fresh: rgba(111, 135, 89, 0.14);
-  --bg-accent-cool: rgba(213, 171, 99, 0.12);
+  --border: rgba(113, 95, 72, 0.16);
+  --brand-1: #8d5d3b;
+  --brand-2: #6d7d55;
+  --brand-3: #cda463;
+  --grain-dot: rgba(54, 40, 24, 0.028);
+  --bg-accent-warm: rgba(141, 93, 59, 0.09);
+  --bg-accent-fresh: rgba(109, 125, 85, 0.08);
+  --bg-accent-cool: rgba(205, 164, 99, 0.08);
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
@@ -26,20 +26,20 @@
 
 .dark {
   color-scheme: dark;
-  --surface: #151514;
-  --surface-elevated: #1b1c1a;
-  --surface-overlay: rgba(28, 29, 27, 0.8);
-  --surface-strong: rgba(40, 42, 38, 0.76);
+  --surface: #141311;
+  --surface-elevated: #1b1916;
+  --surface-overlay: rgba(27, 25, 22, 0.9);
+  --surface-strong: rgba(35, 33, 30, 0.96);
   --foreground: #ede7dc;
   --muted-foreground: #b8afa3;
-  --border: rgba(151, 138, 118, 0.22);
-  --brand-1: #cb8456;
-  --brand-2: #7e9a68;
-  --brand-3: #d9ba82;
+  --border: rgba(151, 138, 118, 0.18);
+  --brand-1: #bb7d52;
+  --brand-2: #7b8f67;
+  --brand-3: #cfaf78;
   --grain-dot: rgba(240, 232, 220, 0.02);
-  --bg-accent-warm: rgba(203, 132, 86, 0.16);
-  --bg-accent-fresh: rgba(126, 154, 104, 0.16);
-  --bg-accent-cool: rgba(217, 186, 130, 0.12);
+  --bg-accent-warm: rgba(187, 125, 82, 0.08);
+  --bg-accent-fresh: rgba(123, 143, 103, 0.08);
+  --bg-accent-cool: rgba(207, 175, 120, 0.08);
   --shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.26);
   --shadow-strong: 0 28px 72px rgba(0, 0, 0, 0.34);
 }
@@ -57,13 +57,9 @@ body {
     sans-serif;
   background-color: var(--surface);
   background-image:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 94%, white) 0%, var(--surface) 100%),
-    radial-gradient(90% 78% at 12% 0%, var(--bg-accent-warm), transparent 68%),
-    radial-gradient(80% 70% at 100% 6%, var(--bg-accent-fresh), transparent 72%),
-    radial-gradient(72% 66% at 50% 100%, var(--bg-accent-cool), transparent 70%);
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, white) 0%, var(--surface) 42%, color-mix(in srgb, var(--surface) 96%, white) 100%),
+    radial-gradient(80% 56% at 50% 0%, var(--bg-accent-warm), transparent 78%);
   background-size:
-    auto,
-    auto,
     auto,
     auto;
   color: var(--foreground);
@@ -83,30 +79,32 @@ body::before {
   pointer-events: none;
   z-index: -2;
   background-image:
-    linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.18) 48%, transparent 100%),
-    radial-gradient(circle at 1px 1px, var(--grain-dot) 0.75px, transparent 0.75px);
+    linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%),
+    linear-gradient(var(--grain-dot) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grain-dot) 1px, transparent 1px);
   background-size:
     auto,
-    7px 7px;
-  opacity: 0.5;
+    140px 140px,
+    140px 140px;
+  opacity: 0.32;
 }
 
 body::after {
   content: "";
   position: fixed;
-  inset: auto -10vw -18vh;
-  height: 42vh;
+  inset: auto 8vw -16vh;
+  height: 26vh;
   pointer-events: none;
   z-index: -1;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--brand-1) 30%, transparent),
-    color-mix(in srgb, var(--brand-2) 28%, transparent),
-    color-mix(in srgb, var(--brand-3) 34%, transparent)
+    color-mix(in srgb, var(--brand-1) 20%, transparent),
+    color-mix(in srgb, var(--brand-2) 18%, transparent),
+    color-mix(in srgb, var(--brand-3) 18%, transparent)
   );
-  filter: blur(68px);
-  opacity: 0.22;
+  filter: blur(72px);
+  opacity: 0.14;
 }
 
 ::selection {
@@ -120,25 +118,24 @@ img {
 
 .grain-background {
   background-image:
-    radial-gradient(circle at 16% 16%, var(--bg-accent-warm), transparent 32%),
-    radial-gradient(circle at 88% 4%, var(--bg-accent-fresh), transparent 38%),
-    radial-gradient(circle at 52% 100%, var(--bg-accent-cool), transparent 44%);
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--surface-elevated) 72%, transparent)),
+    radial-gradient(circle at 84% 10%, var(--bg-accent-cool), transparent 34%);
 }
 
 .card-surface {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 92%, transparent), color-mix(in srgb, var(--surface-overlay) 86%, transparent));
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 98%, transparent), color-mix(in srgb, var(--surface-overlay) 94%, transparent));
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
 }
 
 .shell-surface {
-  background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated) 94%, transparent);
   border-color: color-mix(in srgb, var(--border) 92%, transparent);
-  box-shadow: 0 12px 32px rgba(51, 34, 15, 0.07);
-  backdrop-filter: blur(18px);
+  box-shadow: 0 16px 40px rgba(51, 34, 15, 0.06);
+  backdrop-filter: blur(12px);
 }
 
 .hero-ripple {
@@ -149,31 +146,31 @@ img {
 .hero-ripple::before {
   content: "";
   position: absolute;
-  inset: -10% -6% -16%;
+  inset: -6% -3% -10%;
   z-index: -1;
   pointer-events: none;
   background-image:
     radial-gradient(
-      44% 34% at 22% 24%,
-      color-mix(in srgb, var(--brand-1) 26%, transparent),
+      34% 24% at 20% 16%,
+      color-mix(in srgb, var(--brand-1) 14%, transparent),
       transparent 72%
     ),
     radial-gradient(
-      42% 34% at 82% 18%,
-      color-mix(in srgb, var(--brand-2) 24%, transparent),
+      30% 20% at 84% 18%,
+      color-mix(in srgb, var(--brand-2) 12%, transparent),
       transparent 74%
     ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--brand-3) 12%, transparent) 0%,
-      transparent 55%
+      color-mix(in srgb, var(--brand-3) 8%, transparent) 0%,
+      transparent 48%
     );
-  opacity: 0.7;
-  filter: blur(4px);
+  opacity: 0.58;
+  filter: blur(6px);
 }
 
 .dark .hero-ripple::before {
-  opacity: 0.56;
+  opacity: 0.42;
 }
 
 .display-heading {
@@ -201,9 +198,9 @@ img {
   border: 1px solid var(--border);
   border-radius: clamp(1.4rem, 1rem + 1vw, 2rem);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 92%, transparent), color-mix(in srgb, var(--surface-overlay) 88%, transparent));
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated) 98%, transparent), color-mix(in srgb, var(--surface-overlay) 94%, transparent));
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
 }
 
 .section-frame::before {
@@ -229,6 +226,25 @@ img {
 
 .pretty-text {
   text-wrap: pretty;
+}
+
+.placeholder-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px dashed color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 100%, transparent), color-mix(in srgb, var(--surface-overlay) 90%, transparent));
+}
+
+.placeholder-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.24) 48%, transparent 100%);
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -8,17 +8,11 @@
       "addresses": [
         "Lekki Phase 1, Lagos, Nigeria"
       ],
-      "wishlistSlugs": [],
-      "createdAt": "2026-03-02T11:22:38.897Z",
-      "updatedAt": "2026-03-03T07:06:21.852Z"
-    },
-    {
-      "id": "a4a55d3e-c22c-44c8-9573-aa72b7ebd805",
-      "email": "ilodubahemeka@gmail.com",
-      "addresses": [],
-      "wishlistSlugs": [],
-      "createdAt": "2026-03-02T11:58:44.556Z",
-      "updatedAt": "2026-03-02T11:58:44.556Z"
+      "wishlistSlugs": [
+        "whole-wheat-loaf"
+      ],
+      "createdAt": "2026-03-23T14:02:46.095Z",
+      "updatedAt": "2026-03-23T14:02:46.095Z"
     }
   ],
   "preferences": [
@@ -47,59 +41,31 @@
         ],
         "frequency": "weekly"
       },
-      "updatedAt": "2026-03-02T11:22:38.897Z"
-    },
-    {
-      "customerEmail": "ilodubahemeka@gmail.com",
-      "locale": "en-NG",
-      "currency": "NGN",
-      "dietaryTags": [],
-      "interests": [
-        "new-products"
-      ],
-      "notifications": {
-        "orderUpdates": true,
-        "marketingEmails": true,
-        "smsAlerts": false
-      },
-      "newsletter": {
-        "subscribed": true,
-        "topics": [
-          "new-products"
-        ],
-        "frequency": "weekly"
-      },
-      "updatedAt": "2026-03-02T11:58:44.557Z"
+      "updatedAt": "2026-03-23T14:02:46.095Z"
     }
   ],
   "recommendations": [
     {
       "id": "rec-0001",
       "type": "top_pick",
-      "productSlug": "signature-jollof-rice-mix",
-      "title": "Signature Jollof Rice Mix",
-      "reason": "Popular among repeat customers in Lagos."
+      "productSlug": "classic-sandwich-loaf",
+      "title": "Classic Sandwich Loaf",
+      "reason": "Popular among repeat bread buyers in Lagos."
     },
     {
       "id": "rec-0002",
       "type": "top_pick",
-      "productSlug": "plant-protein-granules",
-      "title": "Plant Protein Granules",
-      "reason": "High-protein staple for home and B2B buyers."
+      "productSlug": "butter-top-loaf",
+      "title": "Butter Top Loaf",
+      "reason": "Premium shelf presentation for households and retail partners."
     }
   ],
   "recentlyViewed": [
     {
-      "id": "ce7c17b5-a890-4c43-b535-bf37ab0954c6",
-      "customerEmail": "ilodubahemeka@gmail.com",
-      "productSlug": "signature-jollof-rice-mix",
-      "viewedAt": "2026-03-02T11:23:11.240Z"
-    },
-    {
       "id": "rv-0001",
       "customerEmail": "customer@example.com",
-      "productSlug": "signature-jollof-rice-mix",
-      "viewedAt": "2026-03-02T11:22:38.897Z"
+      "productSlug": "classic-sandwich-loaf",
+      "viewedAt": "2026-03-23T14:02:46.095Z"
     }
   ]
 }

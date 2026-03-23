@@ -74,7 +74,7 @@ export function GlobalSearch() {
   }
 
   return (
-    <div className="relative hidden min-w-72 xl:block">
+    <div className="relative hidden min-w-72 lg:block">
       <form onSubmit={onSubmit}>
         <Input
           value={query}
@@ -90,9 +90,9 @@ export function GlobalSearch() {
           }}
           onFocus={() => setFocused(true)}
           onBlur={() => window.setTimeout(() => setFocused(false), 120)}
-          placeholder="Search products, categories, recipes..."
+          placeholder="Search bread products, ingredients, and insights..."
           className="h-10 rounded-full pl-10"
-          aria-label="Search products"
+          aria-label="Search Nest Foods products and insights"
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={showResults}

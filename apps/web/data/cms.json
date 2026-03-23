@@ -3,157 +3,31 @@
     "home": {
       "slug": "home",
       "title": "Nest Foods Ltd",
-      "headline": "Nest Foods Ltd.",
-      "description": "Globally best.",
+      "headline": "Premium bread production built on quality, consistency, and trust.",
+      "description": "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, disciplined production, traceability, and reliable distributor supply.",
       "status": "published",
-      "publishAt": "2026-03-02T11:30:36.527Z",
-      "ctaPrimaryLabel": "Browse Products",
+      "publishAt": "2026-03-23T14:02:46.068Z",
+      "ctaPrimaryLabel": "Explore Products",
       "ctaPrimaryHref": "/shop",
-      "ctaSecondaryLabel": "Explore Brand Story",
-      "ctaSecondaryHref": "/about",
+      "ctaSecondaryLabel": "Our Standards",
+      "ctaSecondaryHref": "/traceability",
       "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
-        "title": "Nest Foods Ltd | Premium Food Brand",
-        "description": "Globally best.",
+        "title": "Nest Foods Ltd | Premium Bread Manufacturer",
+        "description": "Premium bread manufacturing, traceability, and distributor supply infrastructure for growth across Africa.",
         "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
       },
-      "updatedAt": "2026-03-02T11:34:25.947Z",
-      "revisions": [
-        {
-          "id": "4aebcc95-061d-4421-bb13-9b0af6ef415f",
-          "updatedAt": "2026-03-02T11:34:25.947Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "home",
-            "title": "Nest Foods Ltd",
-            "headline": "Nest Foods Ltd.",
-            "description": "Globally best.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "ctaPrimaryLabel": "Browse Products",
-            "ctaPrimaryHref": "/shop",
-            "ctaSecondaryLabel": "Explore Brand Story",
-            "ctaSecondaryHref": "/about",
-            "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Nest Foods Ltd | Premium Food Brand",
-              "description": "Globally best.",
-              "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T11:34:20.613Z"
-          }
-        },
-        {
-          "id": "db72ca92-cc60-4f96-9556-cc23bb55ca8c",
-          "updatedAt": "2026-03-02T11:34:20.613Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "home",
-            "title": "Nest Foods Ltd",
-            "headline": "Nest Foods Ltd.",
-            "description": "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "ctaPrimaryLabel": "Browse Products",
-            "ctaPrimaryHref": "/shop",
-            "ctaSecondaryLabel": "Explore Brand Story",
-            "ctaSecondaryHref": "/about",
-            "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Nest Foods Ltd | Premium Food Brand",
-              "description": "Globally best.",
-              "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T11:32:48.595Z"
-          }
-        },
-        {
-          "id": "4ba6560d-ead1-4dcd-b10e-6df9ebd3dc5b",
-          "updatedAt": "2026-03-02T11:32:48.595Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "home",
-            "title": "Nest Foods Ltd",
-            "headline": "Nest Foods Ltd.",
-            "description": "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "ctaPrimaryLabel": "Browse Products",
-            "ctaPrimaryHref": "/shop",
-            "ctaSecondaryLabel": "Explore Brand Story",
-            "ctaSecondaryHref": "/about",
-            "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Nest Foods Ltd | Premium Food Brand",
-              "description": "Globally best.",
-              "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T11:32:27.907Z"
-          }
-        },
-        {
-          "id": "309370a2-4b98-4b0f-8fcc-58e7ea1f1c8a",
-          "updatedAt": "2026-03-02T11:32:27.906Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "home",
-            "title": "Nest Foods Ltd",
-            "headline": "Nest Foods Ltd.",
-            "description": "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "ctaPrimaryLabel": "Browse Products",
-            "ctaPrimaryHref": "/shop",
-            "ctaSecondaryLabel": "Explore Brand Story",
-            "ctaSecondaryHref": "/about",
-            "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Nest Foods Ltd | Premium Food Brand",
-              "description": "Premium food products and distribution platform for growth across Africa.",
-              "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T11:31:13.262Z"
-          }
-        },
-        {
-          "id": "ccd23278-b36b-44a8-8a72-8a26da26bde9",
-          "updatedAt": "2026-03-02T11:31:13.262Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "home",
-            "title": "Nest Foods Ltd",
-            "headline": "Nest Foods Ltd digital platform for 2026 expansion.",
-            "description": "Modern, dynamic, and enterprise-ready foundation with clean architecture, premium UX, and operational scalability.",
-            "status": "published",
-            "publishAt": "2026-02-11T00:00:00.000Z",
-            "ctaPrimaryLabel": "Browse Products",
-            "ctaPrimaryHref": "/shop",
-            "ctaSecondaryLabel": "Explore Brand Story",
-            "ctaSecondaryHref": "/about",
-            "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Nest Foods Ltd | Premium Food Brand",
-              "description": "Premium food products and distribution platform for growth across Africa.",
-              "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
-            },
-            "updatedAt": "2026-02-11T00:00:00.000Z"
-          }
-        }
-      ]
+      "updatedAt": "2026-03-23T14:02:46.068Z",
+      "revisions": []
     },
     "about": {
       "slug": "about",
       "title": "About Nest Foods Ltd",
-      "headline": "A premium food brand building trusted nutrition at scale.",
-      "description": "This page is CMS-driven for brand story, leadership, trust signals, and operational milestones.",
+      "headline": "A bread manufacturer built to earn trust through daily consistency.",
+      "description": "This CMS-driven page supports brand story, manufacturing credibility, leadership narrative, and the operational milestones behind trusted bread supply.",
       "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
@@ -161,16 +35,16 @@
         "description": "Learn about Nest Foods Ltd mission, values, and growth strategy.",
         "ogImageUrl": "/placeholders/section-image-placeholder.svg"
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-03-23T14:02:46.068Z",
       "revisions": []
     },
     "vision": {
       "slug": "vision",
       "title": "Vision & Mission",
-      "headline": "Deliver world-class food products across Africa and beyond.",
-      "description": "This section is fully dynamic for mission statements, strategic pillars, and expansion roadmap content.",
+      "headline": "Build a trusted African bread brand rooted in safe production and reliable distribution.",
+      "description": "This section remains fully dynamic for mission statements, strategic pillars, expansion planning, and long-term quality commitments.",
       "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
@@ -178,16 +52,16 @@
         "description": "Explore the long-term vision and strategic mission behind Nest Foods Ltd.",
         "ogImageUrl": "/placeholders/section-image-placeholder.svg"
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-03-23T14:02:46.068Z",
       "revisions": []
     },
     "contact": {
       "slug": "contact",
       "title": "Contact & Locations",
-      "headline": "Speak with Nest Foods Ltd teams across regions.",
-      "description": "Manage support channels, office details, map embeds, and inquiry routing from the admin workspace.",
+      "headline": "Speak with Nest Foods teams about products, partnerships, and supply planning.",
+      "description": "Use this page for office details, partner inquiries, public contact routing, and future map/location content managed through the admin workspace.",
       "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
@@ -195,15 +69,16 @@
         "description": "Reach Nest Foods Ltd teams and offices for sales, support, and partnerships.",
         "ogImageUrl": "/placeholders/section-image-placeholder.svg"
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-03-23T14:02:46.068Z",
       "revisions": []
     },
     "careers": {
       "slug": "careers",
       "title": "Careers",
-      "headline": "Join the team shaping premium food experiences.",
-      "description": "This page supports dynamic openings, culture highlights, and role-specific application links.\n\napply for driver role in person\n\napply for chelf role in person",
+      "headline": "Join the teams shaping production, quality, and reliable distribution.",
+      "description": "This page supports dynamic openings across production, quality assurance, operations, commercial, and support roles.",
       "status": "published",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
@@ -211,88 +86,16 @@
         "description": "Build your career with an ambitious food and commerce platform.",
         "ogImageUrl": "/placeholders/section-image-placeholder.svg"
       },
-      "updatedAt": "2026-03-02T12:04:57.533Z",
-      "revisions": [
-        {
-          "id": "ebf82828-5954-4d4e-b86d-a43df9e582ec",
-          "updatedAt": "2026-03-02T12:04:57.533Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "careers",
-            "title": "Careers",
-            "headline": "Join the team shaping premium food experiences.",
-            "description": "This page supports dynamic openings, culture highlights, and role-specific application links.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "heroImageUrl": "/placeholders/section-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Careers at Nest Foods Ltd",
-              "description": "Build your career with an ambitious food and commerce platform.",
-              "ogImageUrl": "/placeholders/section-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T12:03:06.871Z",
-            "ctaPrimaryLabel": "apply for driver role in person",
-            "ctaPrimaryHref": "/careers",
-            "ctaSecondaryLabel": "apply for chelf role in person",
-            "ctaSecondaryHref": "/careers"
-          }
-        },
-        {
-          "id": "5dce5c47-e0b7-4b94-80ca-a043a4ac9f57",
-          "updatedAt": "2026-03-02T12:03:06.871Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "careers",
-            "title": "Careers",
-            "headline": "Join the team shaping premium food experiences.",
-            "description": "This page supports dynamic openings, culture highlights, and role-specific application links.",
-            "status": "published",
-            "publishAt": "2026-03-02T11:30:36.527Z",
-            "heroImageUrl": "/placeholders/section-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Careers at Nest Foods Ltd",
-              "description": "Build your career with an ambitious food and commerce platform.",
-              "ogImageUrl": "/placeholders/section-image-placeholder.svg"
-            },
-            "updatedAt": "2026-03-02T12:02:37.862Z",
-            "ctaPrimaryLabel": "apply for driver role in person",
-            "ctaPrimaryHref": "/careers",
-            "ctaSecondaryLabel": "apply for chelf role in person",
-            "ctaSecondaryHref": "/careers"
-          }
-        },
-        {
-          "id": "97897347-b1a7-4730-a49b-5573f4d02bba",
-          "updatedAt": "2026-03-02T12:02:37.862Z",
-          "updatedByRole": "SUPER_ADMIN",
-          "snapshot": {
-            "slug": "careers",
-            "title": "Careers",
-            "headline": "Join the team shaping premium food experiences.",
-            "description": "This page supports dynamic openings, culture highlights, and role-specific application links.",
-            "status": "published",
-            "publishAt": "2026-02-11T00:00:00.000Z",
-            "heroImageUrl": "/placeholders/section-image-placeholder.svg",
-            "logoImageUrl": "/placeholders/logo-placeholder.svg",
-            "seo": {
-              "title": "Careers at Nest Foods Ltd",
-              "description": "Build your career with an ambitious food and commerce platform.",
-              "ogImageUrl": "/placeholders/section-image-placeholder.svg"
-            },
-            "updatedAt": "2026-02-11T00:00:00.000Z"
-          }
-        }
-      ]
+      "updatedAt": "2026-03-23T14:02:46.068Z",
+      "revisions": []
     },
     "sustainability": {
       "slug": "sustainability",
       "title": "Sustainability",
-      "headline": "Responsible sourcing, production, and distribution.",
-      "description": "Publish transparent impact metrics, sourcing standards, and certification milestones.",
+      "headline": "Responsible sourcing, efficient baking, and accountable distribution.",
+      "description": "Publish transparent impact metrics, sourcing standards, packaging improvements, and certification milestones.",
       "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
@@ -300,34 +103,22 @@
         "description": "Track sustainability commitments and measurable impact initiatives.",
         "ogImageUrl": "/placeholders/section-image-placeholder.svg"
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-03-23T14:02:46.068Z",
       "revisions": []
     }
   },
   "banners": [
     {
       "id": "banner-home-1",
-      "label": "Launch Banner",
-      "headline": "Fresh premium products with nationwide delivery.",
-      "ctaLabel": "Shop now",
-      "ctaHref": "/shop",
+      "label": "Partner Access",
+      "headline": "Approved distributors can request bulk supply, pricing review, and delivery coordination through the portal.",
+      "ctaLabel": "Distributor Portal",
+      "ctaHref": "/b2b",
       "imageUrl": "/placeholders/hero-image-placeholder.svg",
       "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
+      "publishAt": "2026-03-23T14:02:46.068Z",
       "order": 1,
-      "updatedAt": "2026-02-11T00:00:00.000Z"
-    },
-    {
-      "id": "banner-launch-banner-7806b03c",
-      "label": "Launch Banner",
-      "headline": "Fresh premium products with nationwide delivery.",
-      "ctaLabel": "Shop now",
-      "ctaHref": "/shop",
-      "imageUrl": "/placeholders/hero-image-placeholder.svg",
-      "status": "published",
-      "publishAt": "2026-02-11T00:00:00.000Z",
-      "order": 2,
-      "updatedAt": "2026-03-02T11:35:46.791Z"
+      "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ],
   "media": [
@@ -338,7 +129,7 @@
       "url": "/placeholders/logo-placeholder.svg",
       "altText": "Nest Foods Ltd logo placeholder",
       "folder": "branding",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.068Z"
     },
     {
       "id": "media-hero-default",
@@ -347,7 +138,7 @@
       "url": "/placeholders/hero-image-placeholder.svg",
       "altText": "Hero image placeholder",
       "folder": "homepage",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ],
   "products": [
@@ -361,7 +152,7 @@
       "allergens": [
         "None configured"
       ],
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ],
   "recipes": [
@@ -374,7 +165,7 @@
       "ingredients": [
         "Ingredient data will be configured in admin."
       ],
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ]
 }

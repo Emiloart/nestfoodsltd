@@ -1,13 +1,22 @@
 {
   "products": [
     {
-      "id": "prod-signature-rice",
-      "slug": "signature-jollof-rice-mix",
+      "id": "prod-classic-sandwich-loaf",
+      "slug": "classic-sandwich-loaf",
       "status": "published",
-      "name": "Signature Jollof Rice Mix",
-      "category": "Ready Mixes",
-      "shortDescription": "Premium spice and grain blend for consistent jollof outcomes.",
-      "longDescription": "A calibrated blend designed for households, restaurants, and distributors requiring predictable flavor, aroma, and nutrition labeling at scale.",
+      "availabilityStatus": "available",
+      "availableRegions": [
+        "Lagos",
+        "Abuja",
+        "Port Harcourt",
+        "Kano"
+      ],
+      "minimumOrderQuantity": 40,
+      "maximumOrderQuantity": 6000,
+      "name": "Classic Sandwich Loaf",
+      "category": "Sliced Bread",
+      "shortDescription": "Soft, evenly sliced bread for everyday retail, school, and household use.",
+      "longDescription": "A dependable family loaf baked for consistent crumb structure, clean slicing, and shelf-ready presentation across supermarkets, distributors, and institutional buyers.",
       "imageUrl": "/placeholders/product-image-placeholder.svg",
       "galleryUrls": [
         "/placeholders/product-image-placeholder.svg",
@@ -15,206 +24,233 @@
       ],
       "tags": [
         "best-seller",
-        "family-pack"
+        "daily-staple",
+        "retail-ready"
       ],
       "allergens": [
-        "May contain traces of soy"
+        "Contains wheat gluten"
       ],
       "ingredients": [
-        "Parboiled rice",
-        "Tomato powder",
-        "Pepper blend",
-        "Sea salt",
-        "Herbs"
+        "Wheat flour",
+        "Water",
+        "Sugar",
+        "Yeast",
+        "Vegetable oil",
+        "Iodized salt"
       ],
-      "shelfLifeDays": 365,
+      "shelfLifeDays": 7,
       "nutritionTable": [
         {
           "label": "Energy",
-          "amount": 367,
+          "amount": 252,
           "unit": "kcal"
         },
         {
           "label": "Protein",
-          "amount": 8.2,
+          "amount": 8.1,
           "unit": "g"
         },
         {
           "label": "Carbohydrates",
-          "amount": 74,
+          "amount": 47,
           "unit": "g"
         },
         {
           "label": "Fat",
-          "amount": 3.1,
+          "amount": 3.6,
           "unit": "g"
         }
       ],
       "variants": [
         {
-          "id": "var-signature-rice-1kg",
-          "name": "1kg Pack",
-          "sku": "NFL-RICE-1KG",
-          "sizeLabel": "1kg",
+          "id": "var-classic-loaf-800g",
+          "name": "800g Family Loaf",
+          "sku": "NFL-BRD-800G",
+          "sizeLabel": "800g",
           "stockStatus": "in_stock",
-          "priceMinor": 850000,
+          "priceMinor": 320000,
           "currency": "NGN",
           "subscriptionEligible": true
         },
         {
-          "id": "var-signature-rice-500g",
-          "name": "500g Pack",
-          "sku": "NFL-RICE-500G",
-          "sizeLabel": "500g",
+          "id": "var-classic-loaf-400g",
+          "name": "400g Compact Loaf",
+          "sku": "NFL-BRD-400G",
+          "sizeLabel": "400g",
           "stockStatus": "in_stock",
-          "priceMinor": 450000,
+          "priceMinor": 180000,
           "currency": "NGN",
           "subscriptionEligible": true
         }
       ],
-      "updatedAt": "2026-03-02T11:51:21.092Z",
-      "availabilityStatus": "available",
-      "availableRegions": [
-        "Lagos",
-        "Anambra",
-        "Enugu"
-      ],
-      "minimumOrderQuantity": 10,
-      "maximumOrderQuantity": 10000
+      "updatedAt": "2026-03-23T14:02:46.080Z"
     },
     {
-      "id": "prod-protein-granules",
-      "slug": "plant-protein-granules",
+      "id": "prod-butter-top-loaf",
+      "slug": "butter-top-loaf",
       "status": "published",
-      "name": "Plant Protein Granules",
-      "category": "Protein",
-      "shortDescription": "High-protein granules optimized for quick food preparation.",
-      "longDescription": "Versatile protein granules for home and commercial kitchens with clear nutrition, allergen, and storage guidance.",
+      "availabilityStatus": "limited",
+      "availableRegions": [
+        "Lagos",
+        "Abuja"
+      ],
+      "minimumOrderQuantity": 50,
+      "maximumOrderQuantity": 4500,
+      "name": "Butter Top Loaf",
+      "category": "Premium Bread",
+      "shortDescription": "Golden-finished loaf with a softer crumb and richer premium positioning.",
+      "longDescription": "A richer bread line designed for shelves that need a more premium presentation, smooth slicing performance, and dependable repeat quality.",
       "imageUrl": "/placeholders/product-image-placeholder.svg",
       "galleryUrls": [
         "/placeholders/product-image-placeholder.svg"
       ],
       "tags": [
-        "high-protein",
+        "premium",
         "b2b-ready"
       ],
       "allergens": [
-        "Contains soy"
+        "Contains wheat gluten",
+        "Contains milk"
       ],
       "ingredients": [
-        "Textured soy protein",
-        "Natural flavor",
-        "Sea salt"
+        "Wheat flour",
+        "Water",
+        "Milk solids",
+        "Sugar",
+        "Yeast",
+        "Butter flavor"
       ],
-      "shelfLifeDays": 270,
+      "shelfLifeDays": 6,
       "nutritionTable": [
         {
           "label": "Energy",
-          "amount": 320,
+          "amount": 286,
           "unit": "kcal"
         },
         {
           "label": "Protein",
-          "amount": 52,
+          "amount": 8.4,
           "unit": "g"
         },
         {
           "label": "Carbohydrates",
-          "amount": 18,
+          "amount": 49,
           "unit": "g"
         },
         {
           "label": "Fat",
-          "amount": 4.8,
+          "amount": 5.7,
           "unit": "g"
         }
       ],
       "variants": [
         {
-          "id": "var-protein-2kg",
-          "name": "2kg Bulk",
-          "sku": "NFL-PTN-2KG",
-          "sizeLabel": "2kg",
+          "id": "var-butter-loaf-700g",
+          "name": "700g Family Loaf",
+          "sku": "NFL-BTR-700G",
+          "sizeLabel": "700g",
           "stockStatus": "in_stock",
-          "priceMinor": 2500000,
+          "priceMinor": 420000,
           "currency": "NGN",
           "subscriptionEligible": true
         },
         {
-          "id": "var-protein-500g",
-          "name": "500g Retail",
-          "sku": "NFL-PTN-500G",
-          "sizeLabel": "500g",
+          "id": "var-butter-loaf-350g",
+          "name": "350g Compact Loaf",
+          "sku": "NFL-BTR-350G",
+          "sizeLabel": "350g",
           "stockStatus": "low_stock",
-          "priceMinor": 720000,
+          "priceMinor": 240000,
           "currency": "NGN",
           "subscriptionEligible": false
         }
       ],
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.080Z"
     },
     {
-      "id": "prod-super-cereal",
-      "slug": "super-breakfast-cereal",
+      "id": "prod-whole-wheat-loaf",
+      "slug": "whole-wheat-loaf",
       "status": "published",
-      "name": "Super Breakfast Cereal",
-      "category": "Cereals",
-      "shortDescription": "Balanced breakfast cereal with fortified vitamins and minerals.",
-      "longDescription": "Engineered for high repeat purchases with strong shelf visibility, stable nutrition labels, and family-friendly flavor.",
+      "availabilityStatus": "available",
+      "availableRegions": [
+        "Lagos",
+        "Abuja",
+        "Port Harcourt"
+      ],
+      "minimumOrderQuantity": 30,
+      "maximumOrderQuantity": 3500,
+      "name": "Whole Wheat Loaf",
+      "category": "Health Range",
+      "shortDescription": "High-fibre loaf built for nutrition-conscious households and modern retail shelves.",
+      "longDescription": "A whole-wheat bread line developed for buyers who need a better-for-you option with dependable shelf presentation, clean labeling, and consistent texture.",
       "imageUrl": "/placeholders/product-image-placeholder.svg",
       "galleryUrls": [
         "/placeholders/product-image-placeholder.svg",
         "/placeholders/section-image-placeholder.svg"
       ],
       "tags": [
-        "kids-friendly",
-        "fortified"
+        "high-fibre",
+        "fortified",
+        "family-pack"
       ],
       "allergens": [
-        "Contains gluten"
+        "Contains wheat gluten",
+        "May contain sesame"
       ],
       "ingredients": [
-        "Whole grain oats",
-        "Corn grits",
-        "Vitamin premix",
-        "Natural sweetener"
+        "Whole wheat flour",
+        "Water",
+        "Bran",
+        "Yeast",
+        "Sugar",
+        "Salt"
       ],
-      "shelfLifeDays": 300,
+      "shelfLifeDays": 6,
       "nutritionTable": [
         {
           "label": "Energy",
-          "amount": 390,
+          "amount": 241,
           "unit": "kcal"
         },
         {
           "label": "Protein",
-          "amount": 11,
+          "amount": 9.3,
           "unit": "g"
         },
         {
           "label": "Carbohydrates",
-          "amount": 68,
+          "amount": 42,
           "unit": "g"
         },
         {
           "label": "Fat",
-          "amount": 6.2,
+          "amount": 3.8,
           "unit": "g"
         }
       ],
       "variants": [
         {
-          "id": "var-cereal-750g",
-          "name": "750g Pack",
-          "sku": "NFL-CER-750G",
+          "id": "var-wholewheat-loaf-750g",
+          "name": "750g Family Loaf",
+          "sku": "NFL-WWL-750G",
           "sizeLabel": "750g",
           "stockStatus": "in_stock",
-          "priceMinor": 980000,
+          "priceMinor": 390000,
+          "currency": "NGN",
+          "subscriptionEligible": true
+        },
+        {
+          "id": "var-wholewheat-loaf-375g",
+          "name": "375g Compact Loaf",
+          "sku": "NFL-WWL-375G",
+          "sizeLabel": "375g",
+          "stockStatus": "in_stock",
+          "priceMinor": 220000,
           "currency": "NGN",
           "subscriptionEligible": true
         }
       ],
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.080Z"
     }
   ],
   "promos": [
@@ -268,24 +304,33 @@
       "shippingAddress": "Lekki Phase 1, Lagos, Nigeria",
       "items": [
         {
-          "productId": "prod-signature-rice",
-          "productName": "Signature Jollof Rice Mix",
-          "productSlug": "signature-jollof-rice-mix",
-          "variantId": "var-signature-rice-1kg",
-          "variantName": "1kg Pack",
-          "quantity": 2,
-          "unitPriceMinor": 850000,
-          "lineTotalMinor": 1700000,
+          "productId": "prod-classic-sandwich-loaf",
+          "productName": "Classic Sandwich Loaf",
+          "productSlug": "classic-sandwich-loaf",
+          "productAvailabilityStatus": "available",
+          "availableRegions": [
+            "Lagos",
+            "Abuja",
+            "Port Harcourt",
+            "Kano"
+          ],
+          "minimumOrderQuantity": 40,
+          "maximumOrderQuantity": 6000,
+          "variantId": "var-classic-loaf-800g",
+          "variantName": "800g Family Loaf",
+          "quantity": 50,
+          "unitPriceMinor": 320000,
+          "lineTotalMinor": 16000000,
           "currency": "NGN",
           "imageUrl": "/placeholders/product-image-placeholder.svg"
         }
       ],
       "summary": {
         "currency": "NGN",
-        "subtotalMinor": 1700000,
-        "discountMinor": 170000,
+        "subtotalMinor": 16000000,
+        "discountMinor": 1600000,
         "deliveryFeeMinor": 150000,
-        "totalMinor": 1680000,
+        "totalMinor": 14550000,
         "promoCodeApplied": "WELCOME10"
       },
       "deliverySlotId": "slot-morning-lagos",
@@ -295,41 +340,41 @@
       "timeline": [
         {
           "status": "created",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.080Z",
           "note": "Order created."
         },
         {
           "status": "payment_pending",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.080Z",
           "note": "Awaiting payment confirmation."
         },
         {
           "status": "paid",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.080Z",
           "note": "Payment confirmed."
         },
         {
           "status": "processing",
-          "at": "2026-02-11T00:00:00.000Z",
+          "at": "2026-03-23T14:02:46.080Z",
           "note": "Order is being packed."
         }
       ],
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.080Z",
+      "updatedAt": "2026-03-23T14:02:46.080Z"
     }
   ],
   "subscriptions": [
     {
       "id": "sub-2026-0001",
       "customerEmail": "customer@example.com",
-      "variantId": "var-signature-rice-1kg",
-      "quantity": 1,
-      "frequency": "monthly",
+      "variantId": "var-classic-loaf-800g",
+      "quantity": 40,
+      "frequency": "weekly",
       "status": "active",
       "nextChargeAt": "2026-03-10T10:00:00.000Z",
       "provider": "paystack",
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "createdAt": "2026-03-23T14:02:46.080Z",
+      "updatedAt": "2026-03-23T14:02:46.080Z"
     }
   ],
   "webhookEvents": []

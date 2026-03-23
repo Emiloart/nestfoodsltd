@@ -233,13 +233,13 @@
       "actorRole": "SUPER_ADMIN",
       "action": "admin.catalog.product.update",
       "resourceType": "commerce.product",
-      "resourceId": "prod-signature-rice",
+      "resourceId": "prod-classic-sandwich-loaf",
       "outcome": "success",
       "severity": "info",
       "ipAddress": "::1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
       "details": {
-        "slug": "signature-jollof-rice-mix"
+        "slug": "classic-sandwich-loaf"
       }
     },
     {

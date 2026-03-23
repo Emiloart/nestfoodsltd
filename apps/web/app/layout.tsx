@@ -29,7 +29,8 @@ export const metadata: Metadata = {
     default: "Nest Foods Ltd",
     template: "%s | Nest Foods Ltd",
   },
-  description: "Premium food brand commerce and distribution platform for growth across Africa.",
+  description:
+    "Premium bread manufacturing, quality traceability, and distributor supply infrastructure for growth across Africa.",
 };
 
 export const viewport: Viewport = {

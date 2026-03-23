@@ -21,10 +21,10 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/"
+              href="/shop"
               className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-center text-xs font-medium uppercase tracking-[0.15em] text-neutral-800 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
             >
-              Back Home
+              Explore Products
             </Link>
             <Link
               href="/contact"
@@ -36,16 +36,17 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
         </div>
 
         <div className="section-frame px-6 py-7">
-          <p className="section-kicker">Next Step</p>
+          <p className="section-kicker">Public Route</p>
           <p className="pretty-text mt-4 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
-            {nextStep ?? "Reach the Nest Foods team to move from browsing to implementation."}
+            {nextStep ??
+              "Move from brand discovery into product review, quality verification, or direct contact with the Nest Foods team."}
           </p>
           <div className="mt-5 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
-              Primary route
+              Recommended route
             </p>
             <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
-              /contact
+              /shop
             </p>
           </div>
         </div>

@@ -8,18 +8,19 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/shop", label: "Wholesale" },
+  { href: "/shop", label: "Products" },
+  { href: "/traceability", label: "Quality & Traceability" },
   { href: "/about", label: "About" },
-  { href: "/recipes", label: "Recipes" },
-  { href: "/traceability", label: "Traceability" },
-  { href: "/b2b", label: "Distributor" },
+  { href: "/vision", label: "Vision" },
+  { href: "/recipes", label: "Ingredients & Insights" },
+  { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
 
 const quickActions = [
-  { href: "/account", label: "Account" },
-  { href: "/cart", label: "Bulk Cart" },
-  { href: "/shop", label: "Shop Now" },
+  { href: "/b2b", label: "Distributor Portal" },
+  { href: "/shop", label: "Explore Products" },
+  { href: "/blog", label: "Read Insights" },
 ];
 
 export function MobileNav() {
@@ -40,7 +41,7 @@ export function MobileNav() {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <Button
         variant="ghost"
         size="icon"
@@ -113,7 +114,7 @@ export function MobileNav() {
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Quick actions</p>
+                <p className="section-kicker">Utility links</p>
                 <div className="mt-3 grid gap-2 sm:grid-cols-3">
                   {quickActions.map((item) => (
                     <Link

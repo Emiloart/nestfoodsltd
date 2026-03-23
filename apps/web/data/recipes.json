@@ -2,98 +2,121 @@
   "recipes": [
     {
       "id": "recipe-0001",
-      "slug": "power-jollof-protein-bowl",
-      "title": "Power Jollof Protein Bowl",
-      "description": "High-protein jollof-inspired bowl combining signature rice mix and plant protein granules.",
-      "imageUrl": "/placeholders/section-image-placeholder.svg",
-      "status": "published",
-      "prepMinutes": 12,
-      "cookMinutes": 20,
-      "servings": 4,
-      "ingredients": [
-        "signature jollof rice mix",
-        "plant protein granules",
-        "tomato paste",
-        "onions",
-        "bell pepper",
-        "vegetable oil",
-        "garlic"
-      ],
-      "steps": [
-        "Hydrate plant protein granules in warm water for 8 minutes.",
-        "Sauté onions, garlic, and tomato paste in oil until aromatic.",
-        "Add signature jollof rice mix, water, and bell pepper, then simmer.",
-        "Fold in hydrated protein granules and cook until rice is tender.",
-        "Rest for 5 minutes and serve hot."
-      ],
-      "relatedProductSlugs": ["signature-jollof-rice-mix", "plant-protein-granules"],
-      "tags": ["high-protein", "family-meal", "quick-dinner"],
-      "nutritionPerServing": {
-        "calories": 430,
-        "proteinG": 24,
-        "carbsG": 52,
-        "fatG": 12
-      },
-      "updatedAt": "2026-02-11T00:00:00.000Z"
-    },
-    {
-      "id": "recipe-0002",
-      "slug": "fortified-breakfast-crunch",
-      "title": "Fortified Breakfast Crunch",
-      "description": "Balanced breakfast bowl featuring super breakfast cereal with fruit topping.",
-      "imageUrl": "/placeholders/section-image-placeholder.svg",
-      "status": "published",
-      "prepMinutes": 6,
-      "cookMinutes": 0,
-      "servings": 2,
-      "ingredients": ["super breakfast cereal", "milk", "banana", "peanuts", "honey"],
-      "steps": [
-        "Portion super breakfast cereal into bowls.",
-        "Slice banana and sprinkle over cereal.",
-        "Add chilled milk and top with peanuts and honey."
-      ],
-      "relatedProductSlugs": ["super-breakfast-cereal"],
-      "tags": ["breakfast", "kids-friendly", "fortified"],
-      "nutritionPerServing": {
-        "calories": 360,
-        "proteinG": 13,
-        "carbsG": 48,
-        "fatG": 11
-      },
-      "updatedAt": "2026-02-11T00:00:00.000Z"
-    },
-    {
-      "id": "recipe-0003",
-      "slug": "weekday-protein-wrap",
-      "title": "Weekday Protein Wrap",
-      "description": "Fast lunch wrap with plant protein granules and pepper relish.",
+      "slug": "golden-egg-bread-toast",
+      "title": "Golden Egg Bread Toast",
+      "description": "Fast breakfast toast built on classic sandwich bread, eggs, and lightly seasoned vegetables.",
       "imageUrl": "/placeholders/section-image-placeholder.svg",
       "status": "published",
       "prepMinutes": 10,
-      "cookMinutes": 10,
-      "servings": 3,
+      "cookMinutes": 8,
+      "servings": 4,
       "ingredients": [
-        "plant protein granules",
-        "wrap",
-        "lettuce",
-        "yogurt",
-        "pepper relish",
-        "onions"
+        "classic sandwich loaf",
+        "eggs",
+        "butter",
+        "onions",
+        "bell pepper",
+        "black pepper"
       ],
       "steps": [
-        "Sauté onions and hydrated protein granules for 6 minutes.",
-        "Warm wraps lightly and layer lettuce and relish.",
-        "Add protein mix and finish with yogurt drizzle."
+        "Lightly toast the bread slices until the edges turn golden.",
+        "Whisk eggs with pepper and sauté onions and bell pepper in butter.",
+        "Scramble eggs gently until set and spoon over toasted bread.",
+        "Serve warm as a quick breakfast or café-style snack."
       ],
-      "relatedProductSlugs": ["plant-protein-granules"],
-      "tags": ["lunch", "quick", "high-protein"],
+      "relatedProductSlugs": [
+        "classic-sandwich-loaf"
+      ],
+      "tags": [
+        "breakfast",
+        "quick",
+        "bread-based"
+      ],
       "nutritionPerServing": {
-        "calories": 390,
-        "proteinG": 20,
-        "carbsG": 39,
-        "fatG": 16
+        "calories": 290,
+        "proteinG": 11,
+        "carbsG": 28,
+        "fatG": 14
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-23T14:02:46.087Z"
+    },
+    {
+      "id": "recipe-0002",
+      "slug": "whole-wheat-garden-sandwich",
+      "title": "Whole Wheat Garden Sandwich",
+      "description": "Fresh sandwich idea featuring whole wheat bread, greens, and creamy spread.",
+      "imageUrl": "/placeholders/section-image-placeholder.svg",
+      "status": "published",
+      "prepMinutes": 12,
+      "cookMinutes": 0,
+      "servings": 2,
+      "ingredients": [
+        "whole wheat loaf",
+        "lettuce",
+        "tomato",
+        "cucumber",
+        "spread",
+        "pepper"
+      ],
+      "steps": [
+        "Slice whole wheat bread evenly and spread with your preferred sandwich dressing.",
+        "Layer lettuce, tomato, cucumber, and pepper for a clean fresh stack.",
+        "Close, slice, and serve for retail sampling or home lunch inspiration."
+      ],
+      "relatedProductSlugs": [
+        "whole-wheat-loaf"
+      ],
+      "tags": [
+        "fresh",
+        "healthy",
+        "sandwich"
+      ],
+      "nutritionPerServing": {
+        "calories": 260,
+        "proteinG": 9,
+        "carbsG": 34,
+        "fatG": 9
+      },
+      "updatedAt": "2026-03-23T14:02:46.087Z"
+    },
+    {
+      "id": "recipe-0003",
+      "slug": "butter-loaf-bread-pudding-cups",
+      "title": "Butter Loaf Bread Pudding Cups",
+      "description": "A richer dessert-style idea using butter loaf cubes, milk, and warm spice notes.",
+      "imageUrl": "/placeholders/section-image-placeholder.svg",
+      "status": "published",
+      "prepMinutes": 15,
+      "cookMinutes": 20,
+      "servings": 3,
+      "ingredients": [
+        "butter top loaf",
+        "milk",
+        "egg",
+        "sugar",
+        "cinnamon",
+        "raisins"
+      ],
+      "steps": [
+        "Cube the butter loaf and soak lightly in milk and beaten egg.",
+        "Fold in sugar, cinnamon, and raisins, then portion into cups.",
+        "Bake until set and lightly golden on top."
+      ],
+      "relatedProductSlugs": [
+        "butter-top-loaf"
+      ],
+      "tags": [
+        "dessert",
+        "premium",
+        "bread-based"
+      ],
+      "nutritionPerServing": {
+        "calories": 340,
+        "proteinG": 8,
+        "carbsG": 42,
+        "fatG": 14
+      },
+      "updatedAt": "2026-03-23T14:02:46.087Z"
     }
   ]
 }

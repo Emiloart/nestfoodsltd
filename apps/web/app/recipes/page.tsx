@@ -2,9 +2,9 @@ import { RecipesPageClient } from "@/components/recipes/recipes-page-client";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Recipes",
+  title: "Ingredients & Insights",
   description:
-    "Find recipes by ingredient and estimate nutrition bundles with Nest Foods products.",
+    "Search bread pairings, ingredient-led ideas, and product nutrition bundles built around the Nest Foods range.",
   path: "/recipes",
 });
 

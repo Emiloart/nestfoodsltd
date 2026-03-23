@@ -63,7 +63,7 @@ export function RecipesPageClient() {
   const [recipes, setRecipes] = useState<RecipeSearchResult[]>([]);
   const [ingredientInput, setIngredientInput] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  const [status, setStatus] = useState("Search by ingredients to discover recipes.");
+  const [status, setStatus] = useState("Search by ingredients to discover bread ideas.");
 
   const [variantOptions, setVariantOptions] = useState<
     Array<{
@@ -146,13 +146,13 @@ export function RecipesPageClient() {
 
     const response = await fetch(`/api/recipes/search?${searchParams.toString()}`);
     if (!response.ok) {
-      setStatus("Recipe search failed.");
+      setStatus("Ingredient search failed.");
       return;
     }
 
     const data = (await response.json()) as RecipeSearchResponse;
     setRecipes(data.recipes);
-    setStatus(`Found ${data.recipes.length} recipe matches.`);
+    setStatus(`Found ${data.recipes.length} matching bread ideas.`);
   }
 
   function addBundleItem() {
@@ -200,31 +200,31 @@ export function RecipesPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Recipe Finder & Nutrition Calculator
+          Ingredients & Bread Ideas
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Discover recipes by available ingredients and estimate nutrition totals for product
-          bundles.
+          Explore ingredient-led bread ideas, then estimate nutrition totals for Nest Foods product
+          bundles used in planning or retail activation.
         </p>
       </div>
 
       <Card className="space-y-4">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-          Recipe Finder
+          Ingredient Finder
         </p>
         <div className="grid gap-3 md:grid-cols-2">
           <Input
             value={ingredientInput}
             onChange={(event) => setIngredientInput(event.target.value)}
-            placeholder="Ingredients you have (comma separated)"
+            placeholder="Ingredients you have available (comma separated)"
           />
           <Input
             value={searchInput}
             onChange={(event) => setSearchInput(event.target.value)}
-            placeholder="Search by recipe title or tag"
+            placeholder="Search by idea title or tag"
           />
         </div>
-        <Button onClick={runRecipeSearch}>Find Recipes</Button>
+        <Button onClick={runRecipeSearch}>Find Ideas</Button>
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
           Ingredient ideas: {ingredientsHint.slice(0, 8).join(", ")}
         </p>
@@ -262,7 +262,7 @@ export function RecipesPageClient() {
 
       <Card className="space-y-4">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-          Bundle Nutrition Calculator
+          Product Bundle Nutrition
         </p>
         <div className="grid gap-3 md:grid-cols-[1fr_140px_auto]">
           <select
@@ -292,7 +292,7 @@ export function RecipesPageClient() {
         <div className="space-y-2">
           {hydratedBundleItems.length === 0 ? (
             <p className="text-sm text-neutral-600 dark:text-neutral-300">
-              No bundle items added yet.
+              No product bundle items added yet.
             </p>
           ) : (
             hydratedBundleItems.map((item) => (
@@ -316,7 +316,7 @@ export function RecipesPageClient() {
           onClick={calculateNutrition}
           disabled={bundleItems.length === 0}
         >
-          Calculate Nutrition
+          Calculate Bundle Nutrition
         </Button>
 
         {nutritionResult ? (
