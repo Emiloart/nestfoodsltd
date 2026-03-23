@@ -11,9 +11,11 @@ export async function GET() {
       checks: {
         api: "ok",
         storageDrivers: {
+          adminUsers: process.env.ADMIN_USERS_STORAGE_DRIVER ?? "json",
           cms: process.env.CMS_STORAGE_DRIVER ?? "json",
           commerce: process.env.COMMERCE_STORAGE_DRIVER ?? "json",
           customer: process.env.CUSTOMER_STORAGE_DRIVER ?? "json",
+          chat: process.env.CHAT_STORAGE_DRIVER ?? "json",
           b2b: process.env.B2B_STORAGE_DRIVER ?? "json",
           traceability: process.env.TRACEABILITY_STORAGE_DRIVER ?? "json",
           observability: process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json",

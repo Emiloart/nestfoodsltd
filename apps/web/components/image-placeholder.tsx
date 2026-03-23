@@ -33,7 +33,7 @@ export function ImagePlaceholder({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900",
+        "relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)]",
         className,
       )}
     >
@@ -55,7 +55,8 @@ export function ImagePlaceholder({
           className="h-full w-full object-cover"
         />
       )}
-      <div className="absolute inset-x-3 bottom-3 rounded-lg bg-black/55 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/45 to-transparent" />
+      <div className="absolute left-4 top-4 rounded-full border border-white/35 bg-black/45 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur">
         {label}
       </div>
     </div>

@@ -25,6 +25,7 @@ type CartContextValue = {
 };
 
 const STORAGE_KEY = "nestfoodsltd_cart_v1";
+const MAX_CART_QUANTITY = 100000;
 
 const CartContext = createContext<CartContextValue | null>(null);
 
@@ -32,7 +33,7 @@ function sanitize(items: CartItem[]) {
   return items
     .map((item) => ({
       variantId: item.variantId,
-      quantity: Math.max(1, Math.min(99, Math.floor(item.quantity))),
+      quantity: Math.max(1, Math.min(MAX_CART_QUANTITY, Math.floor(item.quantity))),
     }))
     .filter((item) => item.variantId.length > 0);
 }

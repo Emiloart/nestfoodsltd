@@ -9,27 +9,53 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-10 md:flex-row md:items-center md:justify-between md:px-6">
-        <div>
-          <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-            Nest Foods Ltd
-          </p>
-          <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-            Enterprise-ready food commerce platform.
-          </p>
-        </div>
-        <nav aria-label="Footer navigation" className="flex flex-wrap items-center gap-4">
-          {links.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-md text-xs text-neutral-600 transition hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-300 dark:hover:text-neutral-100"
+    <footer className="px-3 pb-4 pt-4 md:px-4 md:pb-6">
+      <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
+        <div className="grid gap-8 px-4 py-8 md:px-6 md:py-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <p className="section-kicker">Nest Foods Digital Platform</p>
+            <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
+              Built for trusted food growth across Africa.
+            </h2>
+            <p className="pretty-text mt-4 max-w-xl text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+              Premium food manufacturing, distribution, and digital commerce in one calmer, more
+              operationally focused interface.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+                Wholesale Ready
+              </span>
+              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+                Batch Traceability
+              </span>
+              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+                NDPR Aligned
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6 lg:items-end">
+            <nav
+              aria-label="Footer navigation"
+              className="flex flex-wrap items-start gap-x-5 gap-y-2 lg:justify-end"
             >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+              {links.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-md text-xs font-medium uppercase tracking-[0.12em] text-neutral-600 transition hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-300 dark:hover:text-neutral-100"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <p className="text-xs leading-6 text-neutral-500 dark:text-neutral-400 lg:max-w-xs lg:text-right">
+              Nest Foods Ltd. Premium nutrition, cleaner discovery, and sharper distributor
+              workflows.
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );

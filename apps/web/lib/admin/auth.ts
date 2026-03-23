@@ -8,9 +8,22 @@ export type AdminPermission =
   | "cms.pages.read"
   | "cms.pages.write"
   | "cms.pages.publish"
+  | "cms.media.read"
+  | "cms.media.write"
+  | "cms.recipes.read"
+  | "cms.recipes.write"
   | "cms.catalog.read"
   | "cms.catalog.write"
-  | "orders.read";
+  | "orders.read"
+  | "orders.write";
+
+export type AdminAuthSource = "session_user" | "session_role_token" | "header_role_token";
+
+export type AdminSession = {
+  role: AdminRole;
+  source: AdminAuthSource;
+  actorId?: string;
+};
 
 export const ADMIN_SESSION_COOKIE_NAME = "nest_admin_token";
 const ADMIN_SESSION_TOKEN_TYPE = "admin";
@@ -20,12 +33,33 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.pages.read",
     "cms.pages.write",
     "cms.pages.publish",
+    "cms.media.read",
+    "cms.media.write",
+    "cms.recipes.read",
+    "cms.recipes.write",
     "cms.catalog.read",
     "cms.catalog.write",
     "orders.read",
+    "orders.write",
   ],
-  CONTENT_EDITOR: ["cms.pages.read", "cms.pages.write", "cms.catalog.read"],
-  SALES_MANAGER: ["cms.pages.read", "cms.catalog.read", "orders.read"],
+  CONTENT_EDITOR: [
+    "cms.pages.read",
+    "cms.pages.write",
+    "cms.media.read",
+    "cms.media.write",
+    "cms.recipes.read",
+    "cms.recipes.write",
+    "cms.catalog.read",
+    "cms.catalog.write",
+  ],
+  SALES_MANAGER: [
+    "cms.pages.read",
+    "cms.media.read",
+    "cms.catalog.read",
+    "cms.catalog.write",
+    "orders.read",
+    "orders.write",
+  ],
 };
 
 function getConfiguredTokenMap() {
@@ -47,7 +81,7 @@ function getConfiguredTokenMap() {
   return mapping;
 }
 
-function isAdminRole(value: string): value is AdminRole {
+export function isAdminRole(value: string): value is AdminRole {
   return value === "SUPER_ADMIN" || value === "CONTENT_EDITOR" || value === "SALES_MANAGER";
 }
 
@@ -60,18 +94,29 @@ export function resolveAdminRoleFromAuthToken(token?: string | null): AdminRole 
   return tokenMap.get(token) ?? null;
 }
 
-export function createAdminSessionToken(role: AdminRole) {
+export function createAdminSessionToken(role: AdminRole, options?: { adminUserId?: string }) {
+  const adminUserId = options?.adminUserId?.trim();
+  if (adminUserId) {
+    return createSignedSessionToken(
+      {
+        type: ADMIN_SESSION_TOKEN_TYPE,
+        sub: adminUserId,
+        role,
+      },
+      { ttlSeconds: 60 * 60 * 8 },
+    );
+  }
+
   return createSignedSessionToken(
     {
       type: ADMIN_SESSION_TOKEN_TYPE,
       sub: role,
-      role,
     },
     { ttlSeconds: 60 * 60 * 8 },
   );
 }
 
-function resolveAdminRoleFromSessionToken(token?: string | null): AdminRole | null {
+export function resolveAdminSessionFromSessionToken(token?: string | null): AdminSession | null {
   if (!token) {
     return null;
   }
@@ -80,21 +125,55 @@ function resolveAdminRoleFromSessionToken(token?: string | null): AdminRole | nu
     return null;
   }
 
-  const roleFromPayload = typeof payload.role === "string" ? payload.role : payload.sub;
-  if (!isAdminRole(roleFromPayload)) {
+  if (typeof payload.role === "string" && isAdminRole(payload.role)) {
+    const actorId = payload.sub.trim();
+    return {
+      role: payload.role,
+      source: "session_user",
+      actorId: actorId && !isAdminRole(actorId) ? actorId : undefined,
+    };
+  }
+
+  const roleFromSubject = payload.sub;
+  if (!isAdminRole(roleFromSubject)) {
     return null;
   }
-  return roleFromPayload;
+
+  return {
+    role: roleFromSubject,
+    source: "session_role_token",
+  };
+}
+
+export function resolveAdminSessionFromToken(token?: string | null): AdminSession | null {
+  const fromSession = resolveAdminSessionFromSessionToken(token);
+  if (fromSession) {
+    return fromSession;
+  }
+
+  const roleFromHeaderToken = resolveAdminRoleFromAuthToken(token);
+  if (!roleFromHeaderToken) {
+    return null;
+  }
+
+  return {
+    role: roleFromHeaderToken,
+    source: "header_role_token",
+  };
 }
 
 export function resolveAdminRoleFromToken(token?: string | null): AdminRole | null {
-  return resolveAdminRoleFromSessionToken(token) ?? resolveAdminRoleFromAuthToken(token);
+  return resolveAdminSessionFromToken(token)?.role ?? null;
+}
+
+export function resolveAdminSessionFromRequest(request: NextRequest): AdminSession | null {
+  const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value;
+  const tokenFromHeader = request.headers.get("x-admin-token");
+  return resolveAdminSessionFromToken(tokenFromHeader ?? tokenFromCookie);
 }
 
 export function resolveAdminRoleFromRequest(request: NextRequest): AdminRole | null {
-  const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value;
-  const tokenFromHeader = request.headers.get("x-admin-token");
-  return resolveAdminRoleFromToken(tokenFromHeader ?? tokenFromCookie);
+  return resolveAdminSessionFromRequest(request)?.role ?? null;
 }
 
 export function hasAdminPermission(role: AdminRole, permission: AdminPermission) {

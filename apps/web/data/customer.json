@@ -8,11 +8,17 @@
       "addresses": [
         "Lekki Phase 1, Lagos, Nigeria"
       ],
-      "wishlistSlugs": [
-        "super-breakfast-cereal"
-      ],
-      "createdAt": "2026-02-11T00:00:00.000Z",
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "wishlistSlugs": [],
+      "createdAt": "2026-03-02T11:22:38.897Z",
+      "updatedAt": "2026-03-03T07:06:21.852Z"
+    },
+    {
+      "id": "a4a55d3e-c22c-44c8-9573-aa72b7ebd805",
+      "email": "ilodubahemeka@gmail.com",
+      "addresses": [],
+      "wishlistSlugs": [],
+      "createdAt": "2026-03-02T11:58:44.556Z",
+      "updatedAt": "2026-03-02T11:58:44.556Z"
     }
   ],
   "preferences": [
@@ -41,7 +47,29 @@
         ],
         "frequency": "weekly"
       },
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-02T11:22:38.897Z"
+    },
+    {
+      "customerEmail": "ilodubahemeka@gmail.com",
+      "locale": "en-NG",
+      "currency": "NGN",
+      "dietaryTags": [],
+      "interests": [
+        "new-products"
+      ],
+      "notifications": {
+        "orderUpdates": true,
+        "marketingEmails": true,
+        "smsAlerts": false
+      },
+      "newsletter": {
+        "subscribed": true,
+        "topics": [
+          "new-products"
+        ],
+        "frequency": "weekly"
+      },
+      "updatedAt": "2026-03-02T11:58:44.557Z"
     }
   ],
   "recommendations": [
@@ -62,10 +90,16 @@
   ],
   "recentlyViewed": [
     {
+      "id": "ce7c17b5-a890-4c43-b535-bf37ab0954c6",
+      "customerEmail": "ilodubahemeka@gmail.com",
+      "productSlug": "signature-jollof-rice-mix",
+      "viewedAt": "2026-03-02T11:23:11.240Z"
+    },
+    {
       "id": "rv-0001",
       "customerEmail": "customer@example.com",
       "productSlug": "signature-jollof-rice-mix",
-      "viewedAt": "2026-02-11T00:00:00.000Z"
+      "viewedAt": "2026-03-02T11:22:38.897Z"
     }
   ]
 }

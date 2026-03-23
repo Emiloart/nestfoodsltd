@@ -16,7 +16,7 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 ```txt
 .
 ├─ apps/
-│  └─ web/                # Public website + future admin surface
+│  └─ web/                # Public website + isolated admin surface (host-gated)
 ├─ CHECKLIST.md           # Master enterprise build checklist
 ├─ .env.example           # Environment contract
 ├─ package.json           # Workspace scripts
@@ -36,9 +36,13 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 4. Enable admin edits:
    - copy `.env.example` to `.env.local`
    - set at least `ADMIN_TOKEN_SUPER_ADMIN`
+   - set `ADMIN_APP_HOSTS` (for local dev use `admin.localhost:3000`)
 5. Sign in to admin:
-   - open `/admin/login`
+   - open `http://admin.localhost:3000/admin/login`
    - use one configured role token
+6. Verify separation:
+   - public site: `http://localhost:3000`
+   - admin site: `http://admin.localhost:3000/admin/login`
 
 ## Current Progress
 
@@ -57,18 +61,21 @@ Enterprise-grade, modern web platform foundation for Nest Foods Ltd with a premi
 - Traceability and food-tooling foundations are live (batch lookup timeline, admin batch ingestion, recipe finder, nutrition calculator).
 - Security/compliance foundations are live (signed sessions, rate limits, audit events, NDPR consent + data request flows).
 - Security operations runbook is documented in `docs/security-operations.md`.
+- Admin surface is isolated by host (`ADMIN_APP_HOSTS`) so public site navigation no longer exposes admin routes.
 - Performance/accessibility/SEO hardening is live (WCAG-focused critical flow upgrades, Core Web Vitals budgets + telemetry endpoint, canonical metadata, robots/sitemap expansion, and structured data).
 - Blog editorial foundation now includes index/detail routes with metadata and Article schema coverage.
 - DevOps/release operations foundations are live (CI quality gates, preview/staging/production deploy workflows, environment templates, release + launch runbooks).
 - SUPER_ADMIN operations dashboard is live (`/admin/ops`) with web-vitals and runtime error telemetry summaries.
+- Chat Agent v1 is live as a floating assistant widget (grounded intent responses + lead handoff).
+- Admin user management v1 is live (`/admin/users`) with invite activation, managed credentials, MFA policy, and break-glass token fallback.
 
 ## Next Build Steps
 
-1. Move CMS + commerce + customer storage drivers from JSON to PostgreSQL adapters.
-2. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
-3. Implement inventory locking and transactional checkout.
-4. Add persistent analytics/error sinks (Sentry + GA4/Plausible) and alert routing.
-5. Finalize launch sign-off against `docs/launch-checklist.md`.
+1. Execute `apps/admin` split migration (`docs/admin-app-split-plan.md`).
+2. Upgrade admin MFA from static code to authenticator TOTP.
+3. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
+4. Implement inventory locking and transactional checkout.
+5. Add admin-side chat lead triage and intent analytics dashboard.
 
 ## GitHub Setup
 

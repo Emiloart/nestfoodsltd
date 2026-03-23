@@ -153,8 +153,12 @@ export default function AdminContentPage() {
 
       const payload = (await response.json()) as CmsPageResponse;
       setPages((current) => current.map((page) => (page.slug === payload.page.slug ? payload.page : page)));
+      const liveStateMessage =
+        payload.page.status === "published"
+          ? "Live page refreshed."
+          : "Content saved to preview state. Publish to show on live pages.";
       setStatus(
-        `Saved ${payload.page.slug} (${payload.page.status}) at ${new Date(payload.page.updatedAt).toLocaleTimeString("en-NG")}`,
+        `Saved ${payload.page.slug} (${payload.page.status}) at ${new Date(payload.page.updatedAt).toLocaleTimeString("en-NG")}. ${liveStateMessage}`,
       );
     } catch {
       setStatus("Save failed.");

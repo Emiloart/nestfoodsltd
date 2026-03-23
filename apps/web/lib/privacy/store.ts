@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { type PrivacyData } from "./types";
 
 const relativeDataFilePath = path.join("data", "privacy.json");
@@ -15,6 +17,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.PRIVACY_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "privacy";
 
 function mergePrivacyData(input: Partial<PrivacyData> | null | undefined): PrivacyData {
   return {
@@ -24,6 +27,14 @@ function mergePrivacyData(input: Partial<PrivacyData> | null | undefined): Priva
 }
 
 export async function readPrivacyData(): Promise<PrivacyData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<PrivacyData>>(postgresModuleKey, {
+      consents: [],
+      dataRequests: [],
+    });
+    return mergePrivacyData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error("PRIVACY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
@@ -39,6 +50,11 @@ export async function readPrivacyData(): Promise<PrivacyData> {
 }
 
 export async function writePrivacyData(data: PrivacyData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error("PRIVACY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }

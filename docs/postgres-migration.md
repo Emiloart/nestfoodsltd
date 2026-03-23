@@ -2,7 +2,8 @@
 
 ## Current State
 
-- Runtime storage driver is JSON (`apps/web/data/cms.json`) for rapid iteration.
+- Runtime storage supports `json` and `postgres` drivers per module.
+- Admin-critical modules can persist via Postgres JSONB through `apps/web/lib/storage/postgres-json.ts`.
 - RBAC, scheduling, SEO fields, and revision history are already in the domain model.
 
 ## SQL Foundation
@@ -19,13 +20,13 @@
 ## Migration Steps
 
 1. Create PostgreSQL database and run `db/postgres/schema.sql`.
-2. Set `CMS_STORAGE_DRIVER=postgres` in `.env.local`.
-3. Implement storage adapter switch in `apps/web/lib/cms/store.ts`.
-4. Add migration script to copy JSON seed data into PostgreSQL.
-5. Add transaction-safe writes for page updates and revisions.
+2. Set module drivers to `postgres` in environment config (`*_STORAGE_DRIVER`).
+3. Ensure `DATABASE_URL` is configured for the runtime.
+4. Add migration script to copy JSON seed data into PostgreSQL for existing deployments.
+5. Add transaction-safe writes and typed relational schemas for high-volume entities.
 
 ## Production Notes
 
-- Keep JSON driver for local fallback only.
+- Keep JSON driver for local fallback and disaster-recovery export.
 - Use managed Postgres with automated backups.
-- Add per-table audit columns and change events before enterprise launch.
+- Add per-table audit columns and change events before full relational cutover.

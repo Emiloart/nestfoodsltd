@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { TRACEABILITY_SEED_DATA } from "./seed";
 import { type TraceabilityData } from "./types";
 
@@ -18,6 +20,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.TRACEABILITY_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "traceability";
 
 function mergeTraceabilityData(
   input: Partial<TraceabilityData> | null | undefined,
@@ -32,6 +35,14 @@ function mergeTraceabilityData(
 }
 
 export async function readTraceabilityData(): Promise<TraceabilityData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<TraceabilityData>>(
+      postgresModuleKey,
+      TRACEABILITY_SEED_DATA,
+    );
+    return mergeTraceabilityData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "TRACEABILITY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
@@ -48,6 +59,11 @@ export async function readTraceabilityData(): Promise<TraceabilityData> {
 }
 
 export async function writeTraceabilityData(data: TraceabilityData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "TRACEABILITY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",

@@ -1,6 +1,5 @@
 "use client";
 
-import { Heart } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -48,7 +47,15 @@ export function AddToWishlistButton({ productSlug, size = "sm" }: AddToWishlistB
 
   return (
     <Button variant="secondary" size={size} onClick={handleSave} disabled={saving || status === "saved"}>
-      <Heart size={14} className="mr-1.5" />
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="mr-1.5 h-3.5 w-3.5">
+        <path
+          d="M12 20s-6.8-4.4-9-8.2C1.2 8.6 3.2 5 6.9 5c2 0 3.1 1.2 4.1 2.5C12 6.2 13.1 5 15.1 5 18.8 5 20.8 8.6 21 11.8 18.8 15.6 12 20 12 20Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
       {saving ? "Saving..." : label}
     </Button>
   );

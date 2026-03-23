@@ -1,0 +1,120 @@
+{
+  "conversations": [
+    {
+      "id": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "sessionId": "chat-session-39d05604-5a4e-4a50-9e53-c201a6c5d93b",
+      "channel": "web_widget",
+      "status": "handoff_requested",
+      "lastIntent": "unknown",
+      "lastConfidence": 0.45,
+      "lastMessageAt": "2026-03-02T11:54:34.322Z",
+      "createdAt": "2026-02-21T08:56:25.211Z",
+      "updatedAt": "2026-03-02T11:54:34.322Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "cad25441-f209-4e89-9a57-b0b5bc40de2e",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "user",
+      "content": "hey",
+      "intent": "greeting",
+      "confidence": 0.94,
+      "createdAt": "2026-02-21T08:56:25.213Z"
+    },
+    {
+      "id": "5a87f67b-b44c-4bd6-b55b-5f86ed028491",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "assistant",
+      "content": "Hi — I can help with product discovery, allergens, recipes, order tracking, traceability, and distributor support.",
+      "intent": "greeting",
+      "confidence": 0.96,
+      "createdAt": "2026-02-21T08:56:25.213Z"
+    },
+    {
+      "id": "3bcd5872-e44a-41ef-8e4b-4d00fa1f0153",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "user",
+      "content": "Show me your bread options.",
+      "intent": "product_search",
+      "confidence": 0.78,
+      "createdAt": "2026-02-21T08:56:42.632Z"
+    },
+    {
+      "id": "c6188a0f-ab9e-4074-9175-0d32784b7334",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "assistant",
+      "content": "I couldn't find a close match yet. Try keywords like bread type, flavor, or category, and I’ll narrow it down.",
+      "intent": "product_search",
+      "confidence": 0.58,
+      "createdAt": "2026-02-21T08:56:42.632Z"
+    },
+    {
+      "id": "dbadf54b-c0e7-4db2-b627-f3e52464fb80",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "user",
+      "content": "vanila flavour bread",
+      "intent": "product_search",
+      "confidence": 0.78,
+      "createdAt": "2026-02-21T08:57:02.975Z"
+    },
+    {
+      "id": "5e5f6df9-81f4-493e-b89b-bfd7f1266b8d",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "assistant",
+      "content": "I couldn't find a close match yet. Try keywords like bread type, flavor, or category, and I’ll narrow it down.",
+      "intent": "product_search",
+      "confidence": 0.58,
+      "createdAt": "2026-02-21T08:57:02.975Z"
+    },
+    {
+      "id": "c19bedeb-0e53-4ae5-bff8-a241763c4b67",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "user",
+      "content": "Show me your bread options.",
+      "intent": "product_search",
+      "confidence": 0.78,
+      "createdAt": "2026-03-02T11:35:01.375Z"
+    },
+    {
+      "id": "4a263ee5-c322-4617-82d7-8179c1d9905c",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "assistant",
+      "content": "I couldn't find a close match yet. Try keywords like bread type, flavor, or category, and I’ll narrow it down.",
+      "intent": "product_search",
+      "confidence": 0.58,
+      "createdAt": "2026-03-02T11:35:01.375Z"
+    },
+    {
+      "id": "c687cdd8-8be7-4fdf-be14-d20d50dda213",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "user",
+      "content": "does Signature Jollof Rice Mix have allergies",
+      "intent": "unknown",
+      "confidence": 0.44,
+      "createdAt": "2026-03-02T11:53:54.393Z"
+    },
+    {
+      "id": "cf644bcc-7a29-4f0c-ba2c-94c5b50cbdd0",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "role": "assistant",
+      "content": "I’m not fully confident on that request yet. I can connect you to human support while we keep improving responses.",
+      "intent": "unknown",
+      "confidence": 0.45,
+      "createdAt": "2026-03-02T11:53:54.393Z"
+    }
+  ],
+  "leads": [
+    {
+      "id": "6a88adff-6099-423a-b699-0904df9da72e",
+      "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "name": "chukwuemeka Ilodubah",
+      "email": "ilodubahemeka@gmail.com",
+      "phone": "08081997403",
+      "message": "does Signature Jollof Rice Mix have allergies",
+      "sourceIntent": "unknown",
+      "status": "new",
+      "createdAt": "2026-03-02T11:54:34.322Z"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -11,9 +11,15 @@ import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
 import "./globals.css";
 
-const inter = Inter({
+const bodyFont = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const displayFont = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -27,7 +33,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }],
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fff8f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#121315" },
+  ],
 };
 
 type RootLayoutProps = {
@@ -38,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} min-h-screen bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100`}
+        className={`${bodyFont.variable} ${displayFont.variable} min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased`}
       >
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a

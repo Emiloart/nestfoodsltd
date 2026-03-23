@@ -1,3 +1,559 @@
 {
-  "events": []
+  "events": [
+    {
+      "id": "b136a234-bc06-4a57-83ec-94b6149779fe",
+      "occurredAt": "2026-03-03T07:05:27.384Z",
+      "actorType": "customer",
+      "actorId": "customer@example.com",
+      "action": "customer.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    },
+    {
+      "id": "49c222f5-8c16-4f46-8aa0-a85904d2f5d7",
+      "occurredAt": "2026-03-03T07:03:52.346Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "1b04537c-6e3f-4994-8add-ae67c1797638",
+      "occurredAt": "2026-03-03T07:03:51.554Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "04e1c96a-0c80-42d4-bdf3-25295eff3860",
+      "occurredAt": "2026-03-03T07:03:50.727Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "340ad08f-f950-44de-bc95-8bf8fefefc8e",
+      "occurredAt": "2026-03-03T07:03:49.355Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "f25583c8-3549-46cb-a2ce-b821d6e26e22",
+      "occurredAt": "2026-03-03T07:03:31.788Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "c7c6789a-913d-40dc-9328-3f6563d9a36b",
+      "occurredAt": "2026-03-03T07:02:57.520Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.users.invite.create",
+      "resourceType": "admin.invite",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "48c3de7a-655a-41e4-b900-67a4629aa9f8",
+      "occurredAt": "2026-03-03T06:56:16.047Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "mode": "token"
+      }
+    },
+    {
+      "id": "6453b2c9-6159-45f7-929e-9d533347f3f6",
+      "occurredAt": "2026-03-02T14:01:14.508Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "mode": "token"
+      }
+    },
+    {
+      "id": "957b367d-b7de-424a-ae31-72957f2cb714",
+      "occurredAt": "2026-03-02T12:04:57.602Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "careers",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "67b64fa4-c328-438c-891e-44ca58e6af8c",
+      "occurredAt": "2026-03-02T12:03:07.002Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "careers",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "60394a50-d6d8-4cfa-bc42-eb8c472256db",
+      "occurredAt": "2026-03-02T12:02:37.875Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "careers",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "08fc7c86-5bc9-43a8-9629-c3f266a99653",
+      "occurredAt": "2026-03-02T11:58:30.905Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.orders.status.update",
+      "resourceType": "commerce.order",
+      "resourceId": "order-2026-0001",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "Invalid status transition: processing -> delivered"
+      }
+    },
+    {
+      "id": "a00d0b95-cfd4-4f33-9b7b-816ef06ea34a",
+      "occurredAt": "2026-03-02T11:54:34.520Z",
+      "actorType": "anonymous",
+      "action": "chat.lead.create",
+      "resourceType": "chat.lead",
+      "resourceId": "6a88adff-6099-423a-b699-0904df9da72e",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+        "sourceIntent": "unknown"
+      }
+    },
+    {
+      "id": "dc910ca3-73fc-45c4-bf07-f58112421671",
+      "occurredAt": "2026-03-02T11:53:54.438Z",
+      "actorType": "anonymous",
+      "action": "chat.ask",
+      "resourceType": "chat.conversation",
+      "resourceId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "intent": "unknown",
+        "confidence": 0.45,
+        "handoffSuggested": true
+      }
+    },
+    {
+      "id": "55bee06a-552a-45ff-82e9-66d4a344f9cd",
+      "occurredAt": "2026-03-02T11:51:21.110Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.catalog.product.update",
+      "resourceType": "commerce.product",
+      "resourceId": "prod-signature-rice",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "slug": "signature-jollof-rice-mix"
+      }
+    },
+    {
+      "id": "525faeee-49d1-4e7e-a813-8ca2f45bfda3",
+      "occurredAt": "2026-03-02T11:49:06.243Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.catalog.product.create",
+      "resourceType": "commerce.product",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "b6bb8223-0eb7-44db-b45f-a1f54bb08eca",
+      "occurredAt": "2026-03-02T11:49:04.660Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.catalog.product.create",
+      "resourceType": "commerce.product",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "4bddc2ac-f788-4001-913e-5eb2abd53ac5",
+      "occurredAt": "2026-03-02T11:48:07.567Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.catalog.product.create",
+      "resourceType": "commerce.product",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_payload"
+      }
+    },
+    {
+      "id": "051689bc-af8c-4f5d-a075-6c223674917e",
+      "occurredAt": "2026-03-02T11:35:46.912Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.banner.create",
+      "resourceType": "cms.banner",
+      "resourceId": "banner-launch-banner-7806b03c",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published",
+        "order": 2
+      }
+    },
+    {
+      "id": "fe8bf4b9-f17f-4273-92d1-2da5ecaf8ad3",
+      "occurredAt": "2026-03-02T11:35:01.423Z",
+      "actorType": "anonymous",
+      "action": "chat.ask",
+      "resourceType": "chat.conversation",
+      "resourceId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "intent": "product_search",
+        "confidence": 0.58,
+        "handoffSuggested": false
+      }
+    },
+    {
+      "id": "f19785a0-be4f-4835-b33c-fa6753ce5ff1",
+      "occurredAt": "2026-03-02T11:34:26.075Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "home",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "1edd3a37-d175-49ba-a9af-2f84a9bdc6e4",
+      "occurredAt": "2026-03-02T11:34:20.650Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "home",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "b1c49260-2bee-4558-b14e-ca2c642cee1b",
+      "occurredAt": "2026-03-02T11:32:48.612Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "home",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "7de2023b-b544-4057-8c5b-289edaf8e87c",
+      "occurredAt": "2026-03-02T11:32:27.949Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "home",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "dbcc2e1d-78bb-4852-901b-7a0233771f2f",
+      "occurredAt": "2026-03-02T11:31:13.282Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.cms.page.update",
+      "resourceType": "cms.page",
+      "resourceId": "home",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "status": "published"
+      }
+    },
+    {
+      "id": "2b3c249e-ed67-4007-b722-511583771591",
+      "occurredAt": "2026-03-02T11:29:48.969Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "mode": "token"
+      }
+    },
+    {
+      "id": "8d61addb-0bc8-41e5-bcd3-a6095532bf09",
+      "occurredAt": "2026-03-02T11:29:18.329Z",
+      "actorType": "admin",
+      "action": "admin.session.login",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_credentials",
+        "mode": "token"
+      }
+    },
+    {
+      "id": "4adc36b3-520c-47b4-97f4-8fcdea61c842",
+      "occurredAt": "2026-03-02T11:28:58.665Z",
+      "actorType": "admin",
+      "action": "admin.session.login",
+      "outcome": "failure",
+      "severity": "warning",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "reason": "invalid_credentials",
+        "mode": "token"
+      }
+    },
+    {
+      "id": "f59d4de8-ede7-487d-9e87-c2c182fbf482",
+      "occurredAt": "2026-02-21T09:05:56.275Z",
+      "actorType": "b2b",
+      "actorId": "b2b-acct-0001",
+      "action": "b2b.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/17.5 Mobile/15A5370a Safari/602.1",
+      "details": {
+        "companyName": "Prime Retail Distribution Ltd"
+      }
+    },
+    {
+      "id": "35634fc9-1b34-4436-ae3f-74c639f73917",
+      "occurredAt": "2026-02-21T09:01:56.474Z",
+      "actorType": "customer",
+      "actorId": "ilodubahemeka@gmail.com",
+      "action": "customer.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    },
+    {
+      "id": "13ab611c-0484-46e5-969a-9ad6504dd5c3",
+      "occurredAt": "2026-02-21T09:01:45.336Z",
+      "actorType": "customer",
+      "actorId": "v1.eyJ0eXBlIjoiY3VzdG9tZXIiLCJzdWIiOiJjdXN0b21lckBleGFtcGxlLmNvbSIsImlhdCI6MTc3MTY2NDQ1OCwiZXhwIjoxNzc0MjU2NDU4LCJub25jZSI6IjA0ZmFmMTIxLWQzNzYtNDhiNy04OTFjLTdkMTYxYWFmY2Q1OSJ9.CQ3pjdapPYtciHmMJJhZGAldsftlMDr9ZI9GMxBUMuY",
+      "action": "customer.session.logout",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    },
+    {
+      "id": "d8c0d936-dc15-4bf8-af60-f0c0a0a8c24b",
+      "occurredAt": "2026-02-21T09:00:58.461Z",
+      "actorType": "customer",
+      "actorId": "customer@example.com",
+      "action": "customer.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    },
+    {
+      "id": "3fc1d23b-8d4a-4854-b171-e600f11f90df",
+      "occurredAt": "2026-02-21T08:59:25.618Z",
+      "actorType": "admin",
+      "actorRole": "SUPER_ADMIN",
+      "action": "admin.session.login",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "mode": "token"
+      }
+    },
+    {
+      "id": "8d7f8598-777e-4edd-bfbb-368e8f2f0f3b",
+      "occurredAt": "2026-02-21T08:57:02.987Z",
+      "actorType": "anonymous",
+      "action": "chat.ask",
+      "resourceType": "chat.conversation",
+      "resourceId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "intent": "product_search",
+        "confidence": 0.58,
+        "handoffSuggested": false
+      }
+    },
+    {
+      "id": "337dc8db-e2c0-41b0-a73b-f48653e09a3b",
+      "occurredAt": "2026-02-21T08:56:42.674Z",
+      "actorType": "anonymous",
+      "action": "chat.ask",
+      "resourceType": "chat.conversation",
+      "resourceId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "intent": "product_search",
+        "confidence": 0.58,
+        "handoffSuggested": false
+      }
+    },
+    {
+      "id": "36616954-8a51-4eb1-a3e4-122e7370ded3",
+      "occurredAt": "2026-02-21T08:56:25.245Z",
+      "actorType": "anonymous",
+      "action": "chat.ask",
+      "resourceType": "chat.conversation",
+      "resourceId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
+      "outcome": "success",
+      "severity": "info",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "details": {
+        "intent": "greeting",
+        "confidence": 0.96,
+        "handoffSuggested": false
+      }
+    }
+  ]
 }

@@ -22,12 +22,18 @@
 
 ## Business/Admin
 
-- `/admin` Admin entry
-- `/admin/login` Admin login
-- `/admin/content` Content manager
-- `/admin/traceability` Traceability manager
-- `/admin/audit` Security audit viewer
-- `/admin/ops` Operations dashboard
+- `https://admin.<domain>/admin` Admin entry
+- `https://admin.<domain>/admin/login` Admin login
+- `https://admin.<domain>/admin/content` Content manager
+- `https://admin.<domain>/admin/banners` Banner manager
+- `https://admin.<domain>/admin/catalog` Catalog manager
+- `https://admin.<domain>/admin/media` Media library
+- `https://admin.<domain>/admin/recipes` Recipe manager
+- `https://admin.<domain>/admin/orders` Order control
+- `https://admin.<domain>/admin/traceability` Traceability manager
+- `https://admin.<domain>/admin/users` Admin user directory
+- `https://admin.<domain>/admin/audit` Security audit viewer
+- `https://admin.<domain>/admin/ops` Operations dashboard
 - `/b2b` Distributor portal
 
 ## Utility
@@ -38,11 +44,27 @@
 - `/careers`
 - `/design-system`
 - `/api/health`
-- `/api/admin/session`
-- `/api/admin/audit/events`
-- `/api/admin/ops/summary`
-- `/api/cms/pages`
-- `/api/cms/pages/[slug]`
+- `https://admin.<domain>/api/admin/session`
+- `https://admin.<domain>/api/admin/audit/events`
+- `https://admin.<domain>/api/admin/ops/summary`
+- `https://admin.<domain>/api/cms/pages`
+- `https://admin.<domain>/api/cms/pages/[slug]`
+- `https://admin.<domain>/api/admin/cms/banners`
+- `https://admin.<domain>/api/admin/cms/banners/[id]`
+- `https://admin.<domain>/api/admin/catalog/products`
+- `https://admin.<domain>/api/admin/catalog/products/[id]`
+- `https://admin.<domain>/api/admin/cms/media`
+- `https://admin.<domain>/api/admin/cms/media/[id]`
+- `https://admin.<domain>/api/admin/cms/recipes`
+- `https://admin.<domain>/api/admin/cms/recipes/[id]`
+- `https://admin.<domain>/api/admin/orders`
+- `https://admin.<domain>/api/admin/orders/[id]`
+- `https://admin.<domain>/api/admin/orders/webhooks`
+- `https://admin.<domain>/api/admin/users`
+- `https://admin.<domain>/api/admin/users/[id]`
+- `https://admin.<domain>/api/admin/users/invites`
+- `https://admin.<domain>/api/admin/users/invites/[id]`
+- `https://admin.<domain>/api/admin/users/invites/activate`
 - `/api/commerce/products`
 - `/api/commerce/products/[slug]`
 - `/api/commerce/delivery-slots`
@@ -70,11 +92,13 @@
 - `/api/recipes/search`
 - `/api/recipes/ingredients`
 - `/api/recipes/nutrition-calculator`
-- `/api/admin/traceability/batches`
-- `/api/admin/traceability/batches/import`
-- `/api/admin/traceability/batches/[id]`
+- `https://admin.<domain>/api/admin/traceability/batches`
+- `https://admin.<domain>/api/admin/traceability/batches/import`
+- `https://admin.<domain>/api/admin/traceability/batches/[id]`
 - `/api/privacy/consent`
 - `/api/privacy/data-requests`
+- `/api/chat/ask`
+- `/api/chat/leads`
 - `/api/telemetry/web-vitals`
 - `/api/telemetry/errors`
 - `/api/b2b/session`
@@ -90,6 +114,6 @@
 - `/api/b2b/statements`
 - `/api/b2b/account-manager`
 - `/api/b2b/support/tickets`
-- `/api/b2b/admin/accounts`
-- `/api/b2b/admin/accounts/[id]/approval`
-- `/api/b2b/admin/quotes/[id]/status`
+- `https://admin.<domain>/api/b2b/admin/accounts`
+- `https://admin.<domain>/api/b2b/admin/accounts/[id]/approval`
+- `https://admin.<domain>/api/b2b/admin/quotes/[id]/status`

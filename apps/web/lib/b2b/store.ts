@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { B2B_SEED_DATA } from "./seed";
 import { type B2BData } from "./types";
 
@@ -18,6 +20,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.B2B_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "b2b";
 
 function mergeB2BData(input: Partial<B2BData> | null | undefined): B2BData {
   if (!input) {
@@ -36,6 +39,11 @@ function mergeB2BData(input: Partial<B2BData> | null | undefined): B2BData {
 }
 
 export async function readB2BData(): Promise<B2BData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<B2BData>>(postgresModuleKey, B2B_SEED_DATA);
+    return mergeB2BData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error("B2B_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
@@ -50,6 +58,11 @@ export async function readB2BData(): Promise<B2BData> {
 }
 
 export async function writeB2BData(data: B2BData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error("B2B_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }

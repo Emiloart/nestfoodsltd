@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { type ReactNode } from "react";
 
 import { CartProvider } from "@/components/cart/cart-provider";
+import { ChatAgentWidget } from "@/components/chat/chat-agent-widget";
 import { ExperienceProvider } from "@/components/customer/experience-provider";
 import { ClientErrorReporter } from "@/components/performance/client-error-reporter";
 import { WebVitalsReporter } from "@/components/performance/web-vitals-reporter";
@@ -22,6 +23,7 @@ export function Providers({ children }: ProvidersProps) {
           <ClientErrorReporter />
           <WebVitalsReporter />
           <PrivacyConsentBanner />
+          <ChatAgentWidget />
         </CartProvider>
       </ExperienceProvider>
     </ThemeProvider>

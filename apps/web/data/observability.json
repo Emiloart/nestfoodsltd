@@ -1,4 +1,18 @@
 {
-  "webVitals": [],
+  "webVitals": [
+    {
+      "id": "41235769-f419-42e2-9039-7fba1ffe7799",
+      "metricId": "v4-1774262288196-8689870271343",
+      "metricName": "CLS",
+      "value": 0.10882681022358019,
+      "status": "over_budget",
+      "rating": "needs-improvement",
+      "navigationType": "navigate",
+      "route": "/",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+      "observedAt": "2026-03-23T10:39:28.012Z"
+    }
+  ],
   "errors": []
 }

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -29,6 +30,13 @@ function parseSlug(value: string): CmsPageSlug | null {
     return value as CmsPageSlug;
   }
   return null;
+}
+
+function resolvePublicPagePath(slug: CmsPageSlug) {
+  if (slug === "home") {
+    return "/";
+  }
+  return `/${slug}`;
 }
 
 function normalizeOptional(value?: string) {
@@ -210,6 +218,12 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     resourceId: slug,
     details: { status: updated.status },
   });
+
+  revalidatePath(resolvePublicPagePath(slug));
+  if (slug === "home") {
+    revalidatePath("/shop");
+    revalidatePath("/b2b");
+  }
 
   return NextResponse.json({ page: updated, role });
 }

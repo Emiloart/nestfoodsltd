@@ -1,6 +1,7 @@
 export type CurrencyCode = "NGN" | "USD";
 
 export type ProductStatus = "draft" | "published";
+export type ProductAvailabilityStatus = "available" | "limited" | "unavailable";
 
 export type ProductVariant = {
   id: string;
@@ -23,6 +24,10 @@ export type CommerceProduct = {
   id: string;
   slug: string;
   status: ProductStatus;
+  availabilityStatus: ProductAvailabilityStatus;
+  availableRegions: string[];
+  minimumOrderQuantity: number;
+  maximumOrderQuantity: number;
   name: string;
   category: string;
   shortDescription: string;
@@ -68,6 +73,10 @@ export type CartLineQuote = {
   productId: string;
   productName: string;
   productSlug: string;
+  productAvailabilityStatus: ProductAvailabilityStatus;
+  availableRegions: string[];
+  minimumOrderQuantity: number;
+  maximumOrderQuantity: number;
   variantId: string;
   variantName: string;
   quantity: number;

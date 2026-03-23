@@ -2,8 +2,8 @@ import { CheckoutPageClient } from "@/components/cart/checkout-page-client";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Checkout",
-  description: "Secure checkout flow with payment provider selection and order confirmation.",
+  title: "Bulk Checkout",
+  description: "Bulk checkout flow with delivery-slot region validation and payment selection.",
   path: "/checkout",
   noIndex: true,
 });

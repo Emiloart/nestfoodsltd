@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { CUSTOMER_SEED_DATA } from "./seed";
 import {
   type CustomerData,
@@ -24,6 +26,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.CUSTOMER_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "customer";
 
 function uniqueStrings(values: unknown): string[] {
   if (!Array.isArray(values)) {
@@ -200,6 +203,14 @@ function mergeCustomerData(input: Partial<CustomerData> | null | undefined): Cus
 }
 
 export async function readCustomerData(): Promise<CustomerData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<CustomerData>>(
+      postgresModuleKey,
+      CUSTOMER_SEED_DATA,
+    );
+    return mergeCustomerData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error("CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
@@ -214,6 +225,11 @@ export async function readCustomerData(): Promise<CustomerData> {
 }
 
 export async function writeCustomerData(data: CustomerData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error("CUSTOMER_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }

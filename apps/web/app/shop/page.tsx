@@ -11,9 +11,9 @@ import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Shop",
+  title: "Wholesale Catalog",
   description:
-    "Browse Nest Foods products with filters for category, allergens, tags, and availability.",
+    "Bulk-focused Nest Foods catalog with region availability and minimum/maximum order controls.",
   path: "/shop",
 });
 
@@ -23,6 +23,7 @@ type ShopPageProps = {
     category?: string;
     allergenExclude?: string;
     tag?: string;
+    region?: string;
     inStockOnly?: string;
     sort?: string;
   }>;
@@ -34,29 +35,30 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const category = params.category?.trim() || undefined;
   const allergenExclude = params.allergenExclude?.trim() || undefined;
   const tag = params.tag?.trim() || undefined;
+  const region = params.region?.trim() || undefined;
   const inStockOnly = params.inStockOnly === "1";
   const sort =
     params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : undefined;
 
   const [products, facets] = await Promise.all([
-    listCommerceProducts({ search, category, allergenExclude, tag, inStockOnly, sort }),
+    listCommerceProducts({ search, category, allergenExclude, tag, region, inStockOnly, sort }),
     listCommerceFacets(),
   ]);
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <div className="space-y-3">
-        <Badge>Commerce Catalog</Badge>
+        <Badge>Wholesale Catalog</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Shop
+          Bulk Product Catalog
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Faceted search with categories, tags, allergen exclusion, and stock filters.
+          Filter by region, category, tags, allergens, and stock for distributor-ready ordering.
         </p>
       </div>
 
       <Card className="space-y-4">
-        <form className="grid gap-3 md:grid-cols-2 lg:grid-cols-3" method="GET">
+        <form className="grid gap-3 md:grid-cols-2 lg:grid-cols-4" method="GET">
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Search</span>
             <Input
@@ -96,6 +98,21 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             </select>
           </label>
           <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Region</span>
+            <select
+              name="region"
+              defaultValue={region ?? ""}
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            >
+              <option value="">All regions</option>
+              {facets.regions.map((entry) => (
+                <option key={entry} value={entry}>
+                  {entry}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2">
             <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">
               Exclude allergen
             </span>
@@ -120,11 +137,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
             >
               <option value="">Relevance</option>
-              <option value="price_asc">Price: low to high</option>
-              <option value="price_desc">Price: high to low</option>
+              <option value="price_asc">Price per unit: low to high</option>
+              <option value="price_desc">Price per unit: high to low</option>
             </select>
           </label>
-          <div className="flex items-end gap-3">
+          <div className="flex items-end gap-3 md:col-span-2 lg:col-span-4">
             <label className="flex h-11 items-center gap-2 rounded-xl border border-neutral-300 px-3 text-sm dark:border-neutral-700">
               <input
                 type="checkbox"
@@ -157,6 +174,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           if (!defaultVariant) {
             return null;
           }
+          const canOrder =
+            product.availabilityStatus !== "unavailable" &&
+            defaultVariant.stockStatus !== "out_of_stock";
           return (
             <Card key={product.id} className="space-y-4">
               <Link href={`/products/${product.slug}`} className="block">
@@ -181,12 +201,30 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   {formatCurrency(defaultVariant.currency, defaultVariant.priceMinor)}
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Status: {product.availabilityStatus}
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Bulk range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Regions: {product.availableRegions.join(", ")}
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Allergens: {product.allergens.join(", ")}
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <AddToCartButton variantId={defaultVariant.id} />
+                  <AddToCartButton
+                    variantId={defaultVariant.id}
+                    quantity={product.minimumOrderQuantity}
+                    disabled={!canOrder}
+                    label={
+                      canOrder
+                        ? `Add ${product.minimumOrderQuantity} units`
+                        : "Not available"
+                    }
+                  />
                   <AddToWishlistButton productSlug={product.slug} />
                 </div>
                 <Link
@@ -204,7 +242,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       {products.length === 0 ? (
         <Card className="p-6">
           <p className="text-sm text-neutral-600 dark:text-neutral-300">
-            No products matched your filters. Try relaxing one filter or reset.
+            No products matched your filters. Try another region or reset the filters.
           </p>
         </Card>
       ) : null}

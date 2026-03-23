@@ -19,7 +19,7 @@ const checkoutSchema = z.object({
     .array(
       z.object({
         variantId: z.string().trim().min(3),
-        quantity: z.number().int().min(1).max(99),
+        quantity: z.number().int().min(1).max(100000),
       }),
     )
     .min(1),

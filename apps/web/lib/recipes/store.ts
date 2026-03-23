@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { RECIPE_SEED_DATA } from "./seed";
 import { type RecipeData } from "./types";
 
@@ -18,6 +20,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.RECIPES_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "recipes";
 
 function mergeRecipeData(input: Partial<RecipeData> | null | undefined): RecipeData {
   if (!input) {
@@ -30,6 +33,14 @@ function mergeRecipeData(input: Partial<RecipeData> | null | undefined): RecipeD
 }
 
 export async function readRecipeData(): Promise<RecipeData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<RecipeData>>(
+      postgresModuleKey,
+      RECIPE_SEED_DATA,
+    );
+    return mergeRecipeData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error("RECIPES_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
@@ -44,6 +55,11 @@ export async function readRecipeData(): Promise<RecipeData> {
 }
 
 export async function writeRecipeData(data: RecipeData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error("RECIPES_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }

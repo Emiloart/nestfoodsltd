@@ -72,7 +72,15 @@
           "subscriptionEligible": true
         }
       ],
-      "updatedAt": "2026-02-11T00:00:00.000Z"
+      "updatedAt": "2026-03-02T11:51:21.092Z",
+      "availabilityStatus": "available",
+      "availableRegions": [
+        "Lagos",
+        "Anambra",
+        "Enugu"
+      ],
+      "minimumOrderQuantity": 10,
+      "maximumOrderQuantity": 10000
     },
     {
       "id": "prod-protein-granules",

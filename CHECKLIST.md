@@ -1,6 +1,6 @@
 # Nest Foods Ltd — Enterprise Build Checklist
 
-Last updated: 2026-02-18
+Last updated: 2026-02-20
 
 ## 0) Foundation (Start Here)
 
@@ -44,6 +44,7 @@ Last updated: 2026-02-18
 - [x] Personalization blocks (recently viewed, recommendations)
 - [x] Newsletter preferences + notification preferences
 - [x] Multi-language + multi-currency architecture
+- [x] Conversational chat assistant v1 (grounded intents + human handoff)
 
 ## 5) B2B / Distributor Portal
 
@@ -88,6 +89,19 @@ Last updated: 2026-02-18
 - [x] Error monitoring + analytics dashboards
 - [x] Runbooks + handover docs
 - [x] Launch checklist + post-launch SLA monitoring
+
+## 10) Admin Completion Backlog (Post-Audit)
+
+- Progress: audited admin backlog completed (catalog, banners, media, recipes, order control, storage, payment sessions, and migration plans).
+- [x] Catalog Manager v1 (admin CRUD for products, variants, nutrition, allergens, ingredients)
+- [x] Banner Manager v1 (create/edit/schedule/order hero banners)
+- [x] Media Library v1 (asset metadata manager + usage references)
+- [x] Recipe Manager v1 (create/edit/publish recipe content)
+- [x] Order Control v1 (admin lifecycle updates + payment event visibility)
+- [x] Admin user management v1 (directory, invite activation, managed login, MFA policy)
+- [x] Separate `apps/admin` app split plan + migration checklist
+- [x] Postgres storage drivers for admin-critical modules
+- [x] Replace mock payment sessions with live provider flows
 
 ## Immediate execution order
 

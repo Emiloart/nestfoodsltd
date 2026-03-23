@@ -59,7 +59,7 @@ export function CheckoutPageClient() {
   const [notes, setNotes] = useState("");
   const [paymentProvider, setPaymentProvider] = useState<PaymentProvider>("paystack");
   const [submitting, setSubmitting] = useState(false);
-  const [status, setStatus] = useState("Ready to checkout.");
+  const [status, setStatus] = useState("Ready for bulk checkout.");
   const [checkoutResult, setCheckoutResult] = useState<CheckoutResponse | null>(null);
 
   useEffect(() => {
@@ -167,9 +167,11 @@ export function CheckoutPageClient() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Checkout</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          Bulk Checkout
+        </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          One-page checkout with delivery slots, promos, and payment provider selection.
+          Confirm business delivery details, validate regional availability, and create bulk orders.
         </p>
       </div>
 
@@ -199,11 +201,13 @@ export function CheckoutPageClient() {
       ) : (
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <Card className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Customer</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              Buyer Details
+            </p>
             <Input
               value={customerEmail}
               onChange={(event) => setCustomerEmail(event.target.value)}
-              placeholder="Email address"
+              placeholder="Business email address"
               type="email"
             />
             <Input
@@ -214,7 +218,7 @@ export function CheckoutPageClient() {
             <Input
               value={shippingAddress}
               onChange={(event) => setShippingAddress(event.target.value)}
-              placeholder="Delivery address"
+              placeholder="Delivery address (region required)"
             />
             <Input value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Delivery notes" />
             <div className="grid gap-3 sm:grid-cols-2">
@@ -252,7 +256,7 @@ export function CheckoutPageClient() {
               onClick={handleCheckout}
               disabled={submitting || items.length === 0 || !customerEmail || !shippingAddress}
             >
-              {submitting ? "Submitting..." : "Create Order"}
+              {submitting ? "Submitting..." : "Create Bulk Order"}
             </Button>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
           </Card>

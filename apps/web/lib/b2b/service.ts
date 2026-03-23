@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 
 import { type AdminRole } from "@/lib/admin/auth";
+import { type CommerceProduct } from "@/lib/commerce/types";
 import { readCommerceData } from "@/lib/commerce/store";
 
 import { readB2BData, writeB2BData } from "./store";
@@ -38,6 +39,41 @@ function resolveEstimatedFulfillmentDays(totalUnits: number) {
     return 4;
   }
   return 7;
+}
+
+function normalizeRegionToken(value: string) {
+  return value.trim().toLowerCase();
+}
+
+function normalizeProductAvailabilityStatus(value: unknown) {
+  return value === "limited" || value === "unavailable" ? value : "available";
+}
+
+function normalizeProductAvailableRegions(product: CommerceProduct) {
+  const input = Array.isArray(product.availableRegions) ? product.availableRegions : [];
+  const regions = input.map((entry) => entry.trim()).filter(Boolean);
+  if (regions.length > 0) {
+    return [...new Set(regions)];
+  }
+  return ["Lagos"];
+}
+
+function normalizeProductOrderRange(product: CommerceProduct) {
+  const minCandidate = Number(product.minimumOrderQuantity);
+  const minimumOrderQuantity = Number.isFinite(minCandidate)
+    ? Math.max(1, Math.min(1_000_000, Math.round(minCandidate)))
+    : 10;
+  const maxCandidate = Number(product.maximumOrderQuantity);
+  const maximumOrderQuantity = Number.isFinite(maxCandidate)
+    ? Math.max(minimumOrderQuantity, Math.min(1_000_000, Math.round(maxCandidate)))
+    : Math.max(minimumOrderQuantity, 10000);
+  return { minimumOrderQuantity, maximumOrderQuantity };
+}
+
+function isProductVisibleForAccountRegions(product: CommerceProduct, accountRegions: string[]) {
+  const productRegions = normalizeProductAvailableRegions(product);
+  const accountTokens = new Set(accountRegions.map((entry) => normalizeRegionToken(entry)));
+  return productRegions.some((entry) => accountTokens.has(normalizeRegionToken(entry)));
 }
 
 function findTierDiscountPercent(tier: B2BTier, accountsDiscounts: Awaited<ReturnType<typeof readB2BData>>["pricingTiers"]) {
@@ -176,12 +212,17 @@ export async function listB2BCatalogForAccount(accountId: string) {
 
   const catalog = commerceData.products
     .filter((product) => product.status === "published")
+    .filter((product) => normalizeProductAvailabilityStatus(product.availabilityStatus) !== "unavailable")
+    .filter((product) => isProductVisibleForAccountRegions(product, account.regions))
     .map((product) => ({
       id: product.id,
       slug: product.slug,
       name: product.name,
       category: product.category,
       imageUrl: product.imageUrl,
+      availabilityStatus: normalizeProductAvailabilityStatus(product.availabilityStatus),
+      availableRegions: normalizeProductAvailableRegions(product),
+      ...normalizeProductOrderRange(product),
       variants: product.variants.map((variant) => {
         const discountedPriceMinor = Math.max(
           0,
@@ -231,6 +272,22 @@ export async function buildB2BQuote(accountId: string, items: B2BQuoteInputItem[
     const variant = product.variants.find((entry) => entry.id === item.variantId);
     if (!variant) {
       continue;
+    }
+    if (normalizeProductAvailabilityStatus(product.availabilityStatus) === "unavailable") {
+      throw new Error(`${product.name} is currently unavailable.`);
+    }
+    if (!isProductVisibleForAccountRegions(product, account.regions)) {
+      throw new Error(`${product.name} is not available for your approved regions.`);
+    }
+    if (variant.stockStatus === "out_of_stock") {
+      throw new Error(`${product.name} (${variant.name}) is out of stock.`);
+    }
+    const { minimumOrderQuantity, maximumOrderQuantity } = normalizeProductOrderRange(product);
+    if (quantity < minimumOrderQuantity) {
+      throw new Error(`${product.name} requires a minimum of ${minimumOrderQuantity} units.`);
+    }
+    if (quantity > maximumOrderQuantity) {
+      throw new Error(`${product.name} supports up to ${maximumOrderQuantity} units per order.`);
     }
 
     const unitPriceMinor = Math.max(0, Math.round((variant.priceMinor * (100 - discountPercent)) / 100));

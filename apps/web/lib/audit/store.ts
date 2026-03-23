@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { type AuditData } from "./types";
 
 const relativeDataFilePath = path.join("data", "audit-log.json");
@@ -15,6 +17,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.AUDIT_LOG_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "audit";
 
 function mergeAuditData(input: Partial<AuditData> | null | undefined): AuditData {
   return {
@@ -23,6 +26,13 @@ function mergeAuditData(input: Partial<AuditData> | null | undefined): AuditData
 }
 
 export async function readAuditData(): Promise<AuditData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<AuditData>>(postgresModuleKey, {
+      events: [],
+    });
+    return mergeAuditData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "AUDIT_LOG_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
@@ -40,6 +50,11 @@ export async function readAuditData(): Promise<AuditData> {
 }
 
 export async function writeAuditData(data: AuditData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "AUDIT_LOG_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",

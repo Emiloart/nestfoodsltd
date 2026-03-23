@@ -20,17 +20,20 @@ export function BrandLogo({ href = "/", compact = false, className }: BrandLogoP
         priority
         unoptimized
         className={cn(
-          "h-9 w-9 rounded-xl border border-neutral-200 dark:border-neutral-800",
+          "h-9 w-9 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-1 shadow-[0_10px_24px_rgba(63,43,23,0.08)]",
           compact && "h-8 w-8",
         )}
       />
-      <span
-        className={cn(
-          "text-sm font-semibold tracking-[0.18em] text-neutral-900 dark:text-neutral-100",
-          compact && "hidden sm:inline-flex",
-        )}
-      >
-        NEST FOODS LTD
+      <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
+        <span className="section-kicker text-[0.58rem]">Nest Foods Ltd</span>
+        <span
+          className={cn(
+            "display-heading text-base text-neutral-900 dark:text-neutral-100",
+            compact && "text-sm",
+          )}
+        >
+          Trusted nutrition.
+        </span>
       </span>
     </span>
   );

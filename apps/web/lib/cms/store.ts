@@ -2,6 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { CMS_SEED_DATA } from "./seed";
 import { type CmsData } from "./types";
 
@@ -19,6 +21,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.CMS_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "cms";
 
 function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
   if (!input) {
@@ -49,6 +52,11 @@ function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
 }
 
 export async function readCmsData(): Promise<CmsData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<CmsData>>(postgresModuleKey, CMS_SEED_DATA);
+    return mergeCmsData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error("CMS_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
@@ -63,6 +71,11 @@ export async function readCmsData(): Promise<CmsData> {
 }
 
 export async function writeCmsData(data: CmsData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error("CMS_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }

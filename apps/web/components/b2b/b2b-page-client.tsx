@@ -28,6 +28,10 @@ type B2BCatalogResponse = {
     name: string;
     category: string;
     imageUrl: string;
+    availabilityStatus: "available" | "limited" | "unavailable";
+    availableRegions: string[];
+    minimumOrderQuantity: number;
+    maximumOrderQuantity: number;
     variants: {
       id: string;
       name: string;
@@ -107,10 +111,32 @@ export function B2BPageClient() {
         product.variants.map((variant) => ({
           ...variant,
           productName: product.name,
+          productAvailabilityStatus: product.availabilityStatus,
+          productRegions: product.availableRegions,
+          minimumOrderQuantity: product.minimumOrderQuantity,
+          maximumOrderQuantity: product.maximumOrderQuantity,
         })),
       ),
     [catalog],
   );
+
+  const selectedVariant = useMemo(
+    () => variantOptions.find((entry) => entry.id === draftVariantId) ?? null,
+    [draftVariantId, variantOptions],
+  );
+
+  useEffect(() => {
+    if (!selectedVariant) {
+      return;
+    }
+    setDraftQuantity((current) => {
+      const normalizedCurrent = Number.isFinite(current) ? Math.floor(current) : 0;
+      return Math.min(
+        selectedVariant.maximumOrderQuantity,
+        Math.max(selectedVariant.minimumOrderQuantity, normalizedCurrent),
+      );
+    });
+  }, [selectedVariant]);
 
   const draftItemsHydrated = useMemo(
     () =>
@@ -299,15 +325,40 @@ export function B2BPageClient() {
     if (!draftVariantId || !Number.isFinite(draftQuantity) || draftQuantity <= 0) {
       return;
     }
+    const selected = variantOptions.find((entry) => entry.id === draftVariantId);
+    if (!selected) {
+      setStatus("Select a valid product variant.");
+      return;
+    }
+    if (selected.stockStatus === "out_of_stock") {
+      setStatus("Selected variant is out of stock.");
+      return;
+    }
+    const normalizedQuantity = Math.floor(draftQuantity);
+    if (normalizedQuantity < selected.minimumOrderQuantity) {
+      setStatus(`Minimum quantity for ${selected.productName} is ${selected.minimumOrderQuantity}.`);
+      return;
+    }
+    if (normalizedQuantity > selected.maximumOrderQuantity) {
+      setStatus(`Maximum quantity for ${selected.productName} is ${selected.maximumOrderQuantity}.`);
+      return;
+    }
 
     setDraftItems((current) => {
       const existing = current.find((entry) => entry.variantId === draftVariantId);
       if (!existing) {
-        return [...current, { variantId: draftVariantId, quantity: Math.floor(draftQuantity) }];
+        return [...current, { variantId: draftVariantId, quantity: normalizedQuantity }];
+      }
+      const nextQuantity = Math.floor(existing.quantity + normalizedQuantity);
+      if (nextQuantity > selected.maximumOrderQuantity) {
+        setStatus(
+          `Combined quantity for ${selected.productName} cannot exceed ${selected.maximumOrderQuantity}.`,
+        );
+        return current;
       }
       return current.map((entry) =>
         entry.variantId === draftVariantId
-          ? { ...entry, quantity: Math.floor(entry.quantity + draftQuantity) }
+          ? { ...entry, quantity: nextQuantity }
           : entry,
       );
     });
@@ -511,21 +562,36 @@ export function B2BPageClient() {
                 <option value="">Select variant</option>
                 {variantOptions.map((variant) => (
                   <option key={variant.id} value={variant.id}>
-                    {variant.productName} · {variant.name} ({formatMinorAmount(variant.tierPriceMinor, variant.currency)})
+                    {variant.productName} · {variant.name} ({formatMinorAmount(variant.tierPriceMinor, variant.currency)}) · min {variant.minimumOrderQuantity}
                   </option>
                 ))}
               </select>
               <Input
                 type="number"
-                min={1}
+                min={selectedVariant?.minimumOrderQuantity ?? 1}
+                max={selectedVariant?.maximumOrderQuantity ?? 100000}
                 value={draftQuantity}
                 onChange={(event) => setDraftQuantity(Number(event.target.value))}
                 placeholder="Qty"
               />
-              <Button onClick={addDraftItem} disabled={!draftVariantId || draftQuantity <= 0}>
+              <Button
+                onClick={addDraftItem}
+                disabled={
+                  !draftVariantId ||
+                  draftQuantity <= 0 ||
+                  selectedVariant?.stockStatus === "out_of_stock"
+                }
+              >
                 Add Item
               </Button>
             </div>
+            {selectedVariant ? (
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                Allowed quantity: {selectedVariant.minimumOrderQuantity} -{" "}
+                {selectedVariant.maximumOrderQuantity} · Regions:{" "}
+                {selectedVariant.productRegions.join(", ")}
+              </p>
+            ) : null}
 
             {draftItemsHydrated.length === 0 ? (
               <p className="text-sm text-neutral-600 dark:text-neutral-300">No items added yet.</p>

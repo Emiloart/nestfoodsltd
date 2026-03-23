@@ -1,4 +1,19 @@
 {
-  "consents": [],
+  "consents": [
+    {
+      "id": "6a4801b3-5117-4129-8503-f01403486c3e",
+      "subjectId": "95b9a44a-d40b-477a-ac03-a965a9c07eea",
+      "source": "banner",
+      "categories": {
+        "necessary": true,
+        "analytics": true,
+        "marketing": true,
+        "personalization": true
+      },
+      "ipAddress": "105.112.213.34",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Mobile Safari/537.36",
+      "consentedAt": "2026-03-12T12:32:27.041Z"
+    }
+  ],
   "dataRequests": []
 }

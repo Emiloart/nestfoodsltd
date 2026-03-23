@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
+
 import { type ObservabilityData } from "./types";
 
 const relativeDataFilePath = path.join("data", "observability.json");
@@ -15,6 +17,7 @@ function resolveDataFilePath() {
 
 const dataFilePath = resolveDataFilePath();
 const storageDriver = process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json";
+const postgresModuleKey = "observability";
 
 function mergeObservabilityData(
   input: Partial<ObservabilityData> | null | undefined,
@@ -26,6 +29,14 @@ function mergeObservabilityData(
 }
 
 export async function readObservabilityData(): Promise<ObservabilityData> {
+  if (storageDriver === "postgres") {
+    const payload = await readPostgresJsonStore<Partial<ObservabilityData>>(postgresModuleKey, {
+      webVitals: [],
+      errors: [],
+    });
+    return mergeObservabilityData(payload);
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "OBSERVABILITY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",
@@ -43,6 +54,11 @@ export async function readObservabilityData(): Promise<ObservabilityData> {
 }
 
 export async function writeObservabilityData(data: ObservabilityData) {
+  if (storageDriver === "postgres") {
+    await writePostgresJsonStore(postgresModuleKey, data);
+    return;
+  }
+
   if (storageDriver !== "json") {
     throw new Error(
       "OBSERVABILITY_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.",

@@ -83,6 +83,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <p className="text-sm text-neutral-600 dark:text-neutral-300">
               {product.longDescription}
             </p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Availability: {product.availabilityStatus}
+            </p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Bulk range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+            </p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Regions: {product.availableRegions.join(", ")}
+            </p>
             <AddToWishlistButton productSlug={product.slug} />
           </div>
 
@@ -109,7 +118,12 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   </div>
                   <AddToCartButton
                     variantId={variant.id}
-                    disabled={variant.stockStatus === "out_of_stock"}
+                    quantity={product.minimumOrderQuantity}
+                    label={`Add ${product.minimumOrderQuantity} units`}
+                    disabled={
+                      variant.stockStatus === "out_of_stock" ||
+                      product.availabilityStatus === "unavailable"
+                    }
                   />
                 </div>
               ))}

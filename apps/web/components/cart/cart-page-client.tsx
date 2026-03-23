@@ -69,7 +69,8 @@ export function CartPageClient() {
       });
 
       if (!response.ok) {
-        setStatus("Failed to calculate cart.");
+        const body = (await response.json().catch(() => null)) as { error?: string } | null;
+        setStatus(body?.error ?? "Failed to calculate cart.");
         setLoading(false);
         return;
       }
@@ -101,17 +102,19 @@ export function CartPageClient() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">Cart</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          Bulk Cart
+        </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
-          Persistent cart with promo codes and delivery slot pricing.
+          Wholesale cart with region-aware availability and product-level quantity ranges.
         </p>
       </div>
 
       {!hasItems ? (
         <Card className="space-y-3">
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">Your cart is empty.</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-300">Your bulk cart is empty.</p>
           <Link href="/shop" className="text-sm font-medium text-neutral-900 underline dark:text-neutral-100">
-            Browse products
+            Browse wholesale catalog
           </Link>
         </Card>
       ) : (
@@ -132,12 +135,19 @@ export function CartPageClient() {
                       <p className="text-xs text-neutral-500 dark:text-neutral-400">
                         {formatMinorAmount(line.unitPriceMinor, line.currency)} each
                       </p>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                        Quantity range: {line.minimumOrderQuantity} - {line.maximumOrderQuantity}
+                      </p>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                        Regions: {line.availableRegions.join(", ")}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Button
                         variant="secondary"
                         size="sm"
                         onClick={() => setQuantity(line.variantId, line.quantity - 1)}
+                        disabled={line.quantity <= line.minimumOrderQuantity}
                       >
                         -
                       </Button>
@@ -146,6 +156,7 @@ export function CartPageClient() {
                         variant="secondary"
                         size="sm"
                         onClick={() => setQuantity(line.variantId, line.quantity + 1)}
+                        disabled={line.quantity >= line.maximumOrderQuantity}
                       >
                         +
                       </Button>
@@ -162,7 +173,7 @@ export function CartPageClient() {
                 ))}
               </div>
               <Button variant="secondary" onClick={clear}>
-                Clear Cart
+                Clear Bulk Cart
               </Button>
             </Card>
 
@@ -221,7 +232,7 @@ export function CartPageClient() {
                 href={checkoutHref}
                 className="inline-flex h-10 w-full items-center justify-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
               >
-                Proceed to Checkout
+                Proceed to Bulk Checkout
               </Link>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 {loading ? "Refreshing totals..." : status}
