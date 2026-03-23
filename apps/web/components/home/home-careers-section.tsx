@@ -16,7 +16,7 @@ export function HomeCareersSection({ careersPage }: HomeCareersSectionProps) {
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
               {careersPage.headline}
             </h2>
-            <p className="pretty-text mt-4 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+            <p className="pretty-text mt-4 hidden text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:block">
               {careersPage.description}
             </p>
           </div>

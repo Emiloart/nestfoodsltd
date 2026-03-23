@@ -11,7 +11,6 @@ const navItems = [
   { href: "/traceability", label: "Quality & Traceability" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
-  { href: "/recipes", label: "Ingredients & Insights" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
@@ -56,10 +55,10 @@ export function Header() {
           </nav>
 
           <Link
-            href="/blog"
+            href="/contact"
             className="section-kicker rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-2 text-[0.68rem] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
           >
-            Read Insights
+            Make Enquiry
           </Link>
         </div>
       </div>

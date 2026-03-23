@@ -14,11 +14,11 @@ export function HomeDistributorTeaser() {
           <div className="max-w-3xl">
             <p className="section-kicker">Distributor Partnership</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
-              Keep partner access prominent, but secondary to the public brand story.
+              Partner access stays strong, but secondary.
             </h2>
-            <p className="pretty-text mt-4 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-              The portal remains one of the strongest conversion paths in the product, but it now
-              reads clearly as a partner workflow rather than the homepage identity.
+            <p className="pretty-text mt-4 hidden text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:block">
+              The portal remains a strong conversion path, but it now reads as a partner workflow
+              instead of the homepage identity.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {partnerHighlights.map((item) => (

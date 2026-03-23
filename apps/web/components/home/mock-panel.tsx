@@ -7,10 +7,18 @@ type MockPanelProps = {
   title: string;
   description?: string;
   className?: string;
+  descriptionClassName?: string;
   children: ReactNode;
 };
 
-export function MockPanel({ label, title, description, className, children }: MockPanelProps) {
+export function MockPanel({
+  label,
+  title,
+  description,
+  className,
+  descriptionClassName,
+  children,
+}: MockPanelProps) {
   return (
     <div className={cn("placeholder-panel p-5 sm:p-6", className)}>
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -21,7 +29,12 @@ export function MockPanel({ label, title, description, className, children }: Mo
       </div>
       <h3 className="mt-4 text-xl font-semibold text-neutral-900 dark:text-neutral-100">{title}</h3>
       {description ? (
-        <p className="pretty-text mt-2 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+        <p
+          className={cn(
+            "pretty-text mt-2 text-sm leading-7 text-neutral-600 dark:text-neutral-300",
+            descriptionClassName,
+          )}
+        >
           {description}
         </p>
       ) : null}

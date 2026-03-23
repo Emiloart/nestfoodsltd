@@ -12,14 +12,14 @@ const navItems = [
   { href: "/traceability", label: "Quality & Traceability" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
-  { href: "/recipes", label: "Ingredients & Insights" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
 
 const quickActions = [
   { href: "/b2b", label: "Distributor Portal" },
-  { href: "/shop", label: "Explore Products" },
+  { href: "/contact", label: "Make Enquiry" },
+  { href: "/recipes", label: "Ingredients" },
   { href: "/blog", label: "Read Insights" },
 ];
 
@@ -115,7 +115,7 @@ export function MobileNav() {
 
               <div className="mt-5">
                 <p className="section-kicker">Utility links</p>
-                <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                <div className="mt-3 grid grid-cols-2 gap-2">
                   {quickActions.map((item) => (
                     <Link
                       key={item.href}

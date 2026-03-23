@@ -121,8 +121,6 @@ function LaunchIcon() {
 export function ChatAgentWidget() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [conversationId, setConversationId] = useState("");
-  const [sessionId, setSessionId] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [sending, setSending] = useState(false);
   const [messages, setMessages] = useState<WidgetMessage[]>([
@@ -146,6 +144,8 @@ export function ChatAgentWidget() {
   const [leadMessage, setLeadMessage] = useState("");
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadStatus, setLeadStatus] = useState("");
+  const conversationIdRef = useRef("");
+  const sessionIdRef = useRef("");
   const messagesViewportRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -153,8 +153,8 @@ export function ChatAgentWidget() {
     const storedConversationId = window.localStorage.getItem(conversationStorageKey);
     const nextSessionId = storedSessionId || buildSessionId();
 
-    setSessionId(nextSessionId);
-    setConversationId(storedConversationId ?? "");
+    sessionIdRef.current = nextSessionId;
+    conversationIdRef.current = storedConversationId ?? "";
     if (!storedSessionId) {
       window.localStorage.setItem(sessionStorageKey, nextSessionId);
     }
@@ -193,8 +193,8 @@ export function ChatAgentWidget() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         message,
-        conversationId: conversationId || undefined,
-        sessionId: sessionId || undefined,
+        conversationId: conversationIdRef.current || undefined,
+        sessionId: sessionIdRef.current || undefined,
       }),
     });
 
@@ -212,8 +212,8 @@ export function ChatAgentWidget() {
     }
 
     const data = (await response.json()) as AskChatResponse;
-    setConversationId(data.conversationId);
-    setSessionId(data.sessionId);
+    conversationIdRef.current = data.conversationId;
+    sessionIdRef.current = data.sessionId;
     window.localStorage.setItem(conversationStorageKey, data.conversationId);
     window.localStorage.setItem(sessionStorageKey, data.sessionId);
 
@@ -252,8 +252,8 @@ export function ChatAgentWidget() {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        conversationId: conversationId || undefined,
-        sessionId: sessionId || undefined,
+        conversationId: conversationIdRef.current || undefined,
+        sessionId: sessionIdRef.current || undefined,
         name: leadName || undefined,
         email: leadEmail,
         phone: leadPhone || undefined,
@@ -270,8 +270,8 @@ export function ChatAgentWidget() {
     }
 
     const data = (await response.json()) as LeadCreateResponse;
-    setConversationId(data.conversationId);
-    setSessionId(data.sessionId);
+    conversationIdRef.current = data.conversationId;
+    sessionIdRef.current = data.sessionId;
     window.localStorage.setItem(conversationStorageKey, data.conversationId);
     window.localStorage.setItem(sessionStorageKey, data.sessionId);
 
@@ -285,7 +285,7 @@ export function ChatAgentWidget() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-6 right-4 z-[70] flex w-[min(95vw,380px)] flex-col items-end gap-3 md:bottom-8">
+    <div className="pointer-events-none fixed bottom-4 right-3 z-[70] flex w-[min(92vw,380px)] flex-col items-end gap-3 md:bottom-8 md:right-4 md:w-[min(95vw,380px)]">
       {open ? (
         <Card className="pointer-events-auto w-full overflow-hidden p-0">
           <div className="shell-surface flex items-center justify-between border-b px-4 py-3">
@@ -440,16 +440,16 @@ export function ChatAgentWidget() {
 
       <Button
         onClick={onWidgetToggle}
-        className="pointer-events-auto inline-flex items-center gap-2"
+        className="pointer-events-auto inline-flex h-12 w-12 items-center justify-center rounded-full px-0 md:h-auto md:w-auto md:gap-2 md:px-4"
         aria-label={open ? "Close Nest chat agent" : "Open Nest chat agent"}
       >
         {open ? <CloseIcon /> : <LaunchIcon />}
-        {open ? "Close Agent" : "Chat with Nest Agent"}
+        <span className="hidden md:inline">{open ? "Close Agent" : "Chat with Nest Agent"}</span>
       </Button>
       {!open ? (
         <span className="pointer-events-none mr-1 inline-flex items-center gap-1 text-[11px] text-neutral-500 dark:text-neutral-400">
           <AssistantIcon />
-          Product + support assistant
+          <span className="hidden md:inline">Product + support assistant</span>
         </span>
       ) : null}
     </div>

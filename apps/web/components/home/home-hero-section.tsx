@@ -33,7 +33,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
             <h1 className="display-heading text-5xl text-neutral-900 dark:text-neutral-50 sm:text-6xl lg:text-7xl">
               {page.headline}
             </h1>
-            <p className="pretty-text max-w-2xl text-base leading-8 text-neutral-600 dark:text-neutral-300 md:text-lg">
+            <p className="pretty-text max-w-2xl text-base leading-7 text-neutral-600 dark:text-neutral-300 md:text-lg md:leading-8">
               {page.description}
             </p>
           </div>
@@ -54,7 +54,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
           </div>
 
           {banner ? (
-            <div className="section-frame px-5 py-5">
+            <div className="section-frame hidden px-5 py-5 md:block">
               <p className="section-kicker">{banner.label}</p>
               <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
                 {banner.headline}

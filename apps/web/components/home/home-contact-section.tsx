@@ -21,8 +21,9 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
       <div className="section-frame px-5 py-6 sm:px-6 sm:py-7">
         <SectionHeading
           eyebrow="Contact"
-          title="Structured contact details and a clear route into the company."
+          title="Reach the right Nest Foods team quickly."
           description={contactPage.description}
+          descriptionClassName="hidden md:block"
           actions={
             <Link
               href="/contact"
@@ -52,6 +53,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
             label="Map Preview"
             title="Facility / office map placeholder"
             description="Reserved for the future public map or directional block."
+            descriptionClassName="hidden md:block"
           >
             <div className="grid gap-3">
               <div className="h-48 rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)]" />

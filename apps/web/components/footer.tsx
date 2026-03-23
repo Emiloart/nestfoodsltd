@@ -8,6 +8,7 @@ const footerGroups = [
       { href: "/vision", label: "Vision" },
       { href: "/careers", label: "Careers" },
       { href: "/contact", label: "Contact" },
+      { href: "/blog", label: "Insights" },
     ],
   },
   {
@@ -15,7 +16,7 @@ const footerGroups = [
     links: [
       { href: "/shop", label: "Products" },
       { href: "/traceability", label: "Quality & Traceability" },
-      { href: "/recipes", label: "Ingredients & Insights" },
+      { href: "/recipes", label: "Ingredients" },
       { href: "/b2b", label: "Distributor Portal" },
     ],
   },
@@ -33,16 +34,73 @@ export function Footer() {
   return (
     <footer className="px-3 pb-4 pt-4 md:px-4 md:pb-6">
       <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
-        <div className="grid gap-10 px-4 py-8 md:px-6 md:py-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="space-y-6 px-4 py-6 md:hidden">
+          <div>
+            <p className="section-kicker">Nest Foods Ltd</p>
+            <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100">
+              Bread quality you can verify quickly.
+            </h2>
+            <p className="pretty-text mt-3 max-w-md text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+              Products, traceability, partner access, and direct enquiry paths without a crowded footer.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { href: "/shop", label: "Products" },
+              { href: "/traceability", label: "Traceability" },
+              { href: "/contact", label: "Enquiry" },
+              { href: "/b2b", label: "Distributor" },
+              { href: "/about", label: "About" },
+              { href: "/blog", label: "Insights" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm font-medium text-neutral-800 transition hover:brightness-105 dark:text-neutral-100"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              Registered Manufacturer
+            </span>
+            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              Hygienic Production
+            </span>
+            <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              Batch Traceability
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-500 dark:text-neutral-400">
+            <Link href="/privacy" className="transition hover:text-neutral-900 dark:hover:text-neutral-100">
+              Privacy
+            </Link>
+            <Link href="/terms" className="transition hover:text-neutral-900 dark:hover:text-neutral-100">
+              Terms
+            </Link>
+            <Link
+              href="/sustainability"
+              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+            >
+              Sustainability
+            </Link>
+          </div>
+        </div>
+
+        <div className="hidden gap-10 px-4 py-8 md:grid md:px-6 md:py-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
-              Premium bread manufacturing with cleaner public trust signals.
+              Bread quality, traceability, and supply you can verify.
             </h2>
             <p className="pretty-text mt-4 max-w-xl text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-              The public experience is designed to foreground product quality, production
-              discipline, traceability, and reliable supply for households, retailers, and
-              approved distribution partners.
+              Product trust, production discipline, and partner supply stay easier to scan across
+              the public experience.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
