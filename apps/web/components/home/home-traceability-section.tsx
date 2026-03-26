@@ -6,17 +6,17 @@ import { SectionHeading } from "@/components/home/section-heading";
 const traceabilityPoints = [
   "Source and lot details appear first.",
   "QA checks and certifications stay grouped.",
-  "Dispatch status is visible without extra steps.",
+  "Release status stays visible.",
 ];
 
 export function HomeTraceabilitySection() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
-      <div className="section-frame hidden px-5 py-6 sm:px-6 sm:py-7 md:block">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+      <div className="section-frame hidden px-5 py-5 sm:px-6 md:block">
         <SectionHeading
           eyebrow="Quality & Traceability"
           title="Check batch quality before purchase or enquiry."
-          description="The traceability flow stays simple on mobile and deeper on the dedicated page."
+          description="Batch checks in one place."
           descriptionClassName="hidden md:block"
           actionsClassName="w-full sm:w-auto"
           actions={
@@ -29,50 +29,11 @@ export function HomeTraceabilitySection() {
           }
         />
 
-        <div className="mt-6 grid gap-4 md:hidden">
-          <MockPanel
-            label="Batch Lookup Preview"
-            title="Fast mobile verification"
-            description="One code reveals source, QA, and release status."
-            descriptionClassName="text-sm leading-6"
-          >
-            <div className="space-y-3">
-              <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
-                  Batch code
-                </p>
-                <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                  NFL-BREAD-260301-A
-                </p>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { label: "Source", value: "Tracked" },
-                  { label: "QA", value: "Passed" },
-                  { label: "Dispatch", value: "Visible" },
-                ].map((step) => (
-                  <div
-                    key={step.label}
-                    className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-4"
-                  >
-                    <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
-                      {step.label}
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                      {step.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </MockPanel>
-        </div>
-
         <div className="mt-6 hidden gap-4 md:grid lg:grid-cols-[1.08fr_0.92fr]">
           <MockPanel
             label="Batch Lookup Preview"
-            title="Readable verification surface"
-            description="Placeholder preview for the public batch verification interface."
+            title="Batch verification"
+            description="Preview of the public lookup."
           >
             <div className="space-y-3">
               <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3">
@@ -120,7 +81,7 @@ export function HomeTraceabilitySection() {
             {traceabilityPoints.map((point, index) => (
               <div
                 key={point}
-                className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5"
+                className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
               >
                 <p className="section-kicker">Step {index + 1}</p>
                 <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
@@ -133,7 +94,7 @@ export function HomeTraceabilitySection() {
       </div>
 
       <div className="md:hidden">
-        <div className="section-frame px-5 py-5">
+        <div className="section-frame px-4 py-4.5 sm:px-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="section-kicker">Quality & Traceability</p>

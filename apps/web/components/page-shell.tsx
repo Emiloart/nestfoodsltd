@@ -9,23 +9,23 @@ type PageShellProps = {
 
 export function PageShell({ title, headline, description, nextStep }: PageShellProps) {
   return (
-    <section className="hero-ripple mx-auto w-full max-w-7xl px-4 py-10 md:px-6 md:py-16">
+    <section className="hero-ripple mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-12">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
-        <div className="section-frame px-6 py-8 sm:px-8 sm:py-10">
+        <div className="section-frame px-5 py-7 sm:px-6 sm:py-8">
           <p className="section-kicker">{title}</p>
           <h1 className="display-heading mt-4 text-4xl text-neutral-900 dark:text-neutral-100 sm:text-5xl">
             {headline ?? title}
           </h1>
-          <p className="pretty-text mt-5 max-w-2xl text-base leading-8 text-neutral-600 dark:text-neutral-300">
+          <p className="pretty-text mt-4 max-w-2xl text-[0.98rem] leading-7 text-neutral-600 dark:text-neutral-300">
             {description}
           </p>
           <div className="mt-5 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 lg:hidden">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
-              Recommended route
+              Next step
             </p>
             <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">/shop</p>
           </div>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/shop"
               className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-center text-xs font-medium uppercase tracking-[0.15em] text-neutral-800 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
@@ -41,15 +41,14 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
           </div>
         </div>
 
-        <div className="section-frame hidden px-6 py-7 lg:block">
-          <p className="section-kicker">Public Route</p>
+        <div className="section-frame hidden px-5 py-6 lg:block">
+          <p className="section-kicker">Next Step</p>
           <p className="pretty-text mt-4 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
-            {nextStep ??
-              "Move from brand discovery into product review, quality verification, or direct contact with the Nest Foods team."}
+            {nextStep ?? "Continue to products or contact Nest Foods."}
           </p>
           <div className="mt-5 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
-              Recommended route
+              Route
             </p>
             <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">/shop</p>
           </div>

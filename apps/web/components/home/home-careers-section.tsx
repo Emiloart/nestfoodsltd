@@ -8,8 +8,8 @@ type HomeCareersSectionProps = {
 
 export function HomeCareersSection({ careersPage }: HomeCareersSectionProps) {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
-      <div className="section-frame px-5 py-6 sm:px-6 sm:py-7">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+      <div className="section-frame px-5 py-5 sm:px-6">
         <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-3xl">
             <p className="section-kicker">Careers</p>

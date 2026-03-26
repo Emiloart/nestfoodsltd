@@ -17,14 +17,11 @@ const navItems = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 md:px-4">
+    <header className="sticky top-0 z-50 px-3 pt-2.5 md:px-4">
       <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
-        <div className="flex min-h-[4.5rem] items-center justify-between gap-3 px-4 py-3 md:px-5">
+        <div className="flex min-h-[4.25rem] items-center justify-between gap-3 px-4 py-3 md:px-5">
           <div className="flex min-w-0 items-center gap-3">
             <BrandLogo className="min-w-0" />
-            <p className="pretty-text hidden max-w-sm text-xs leading-6 text-neutral-600 dark:text-neutral-300 xl:block">
-              Bread manufacturing, traceability, and partner supply in one clear public surface.
-            </p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -40,7 +37,7 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden items-center justify-between gap-4 border-t border-[color:var(--border)] px-5 py-3 lg:flex">
+        <div className="hidden items-center justify-between gap-4 border-t border-[color:var(--border)] px-5 py-2.5 lg:flex">
           <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-2">
             {navItems.map((item) => (
               <Link

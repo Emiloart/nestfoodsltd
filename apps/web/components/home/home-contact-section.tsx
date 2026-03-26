@@ -17,11 +17,11 @@ const contactBlocks = [
 
 export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
-      <div className="section-frame px-5 py-6 sm:px-6 sm:py-7">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+      <div className="section-frame px-5 py-5 sm:px-6">
         <SectionHeading
           eyebrow="Contact"
-          title="Reach the right Nest Foods team quickly."
+          title="Reach Nest Foods."
           description={contactPage.description}
           descriptionClassName="hidden md:block"
           actions={
@@ -52,7 +52,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
           <MockPanel
             label="Map Preview"
             title="Facility / office map placeholder"
-            description="Reserved for the future public map or directional block."
+            description="Reserved for public map content."
             descriptionClassName="hidden md:block"
           >
             <div className="grid gap-3">

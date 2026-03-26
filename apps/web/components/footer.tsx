@@ -39,18 +39,14 @@ const footerGroups = [
 
 export function Footer() {
   return (
-    <footer className="px-3 pb-4 pt-4 md:px-4 md:pb-6">
+    <footer className="px-3 pb-3 pt-3 md:px-4 md:pb-5 md:pt-4">
       <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
-        <div className="space-y-6 px-4 py-6 md:hidden">
+        <div className="space-y-5 px-4 py-5 md:hidden">
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100">
-              Bread quality with a cleaner mobile finish.
+              Bread quality, made clear.
             </h2>
-            <p className="pretty-text mt-3 max-w-md text-sm leading-6 text-neutral-600 dark:text-neutral-300">
-              Products, traceability, partner access, and direct enquiry paths without a crowded
-              footer.
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -122,16 +118,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="hidden gap-10 px-4 py-8 md:grid md:px-6 md:py-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="hidden gap-8 px-5 py-8 md:grid md:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
               Bread quality, traceability, and supply you can verify.
             </h2>
-            <p className="pretty-text mt-4 max-w-xl text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-              Product trust, production discipline, and partner supply stay easier to scan across
-              the public experience.
-            </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
                 Registered Manufacturer

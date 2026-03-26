@@ -19,9 +19,9 @@ const heroMetrics = [
 
 export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
   return (
-    <section className="hero-ripple mx-auto w-full max-w-7xl px-4 pb-8 pt-8 md:px-6 md:pb-12 md:pt-12">
-      <FadeIn className="grid gap-8 lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)] lg:items-end">
-        <div className="max-w-3xl space-y-7">
+    <section className="hero-ripple mx-auto w-full max-w-7xl px-4 pb-7 pt-6 md:px-6 md:pb-10 md:pt-9 lg:pb-12 lg:pt-10">
+      <FadeIn className="grid gap-6 md:gap-7 lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)] lg:items-end">
+        <div className="max-w-3xl space-y-6">
           <div className="flex flex-wrap items-center gap-3">
             <p className="section-kicker">Premium Bread Production</p>
             <Badge>Manufacturing credibility first</Badge>
@@ -29,11 +29,11 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
 
           <BrandLogo href={null} />
 
-          <div className="space-y-4">
-            <h1 className="display-heading text-5xl text-neutral-900 dark:text-neutral-50 sm:text-6xl lg:text-7xl">
+          <div className="space-y-3">
+            <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-50 sm:text-5xl lg:text-[3.75rem]">
               {page.headline}
             </h1>
-            <p className="pretty-text max-w-2xl text-base leading-7 text-neutral-600 dark:text-neutral-300 md:text-lg md:leading-8">
+            <p className="pretty-text max-w-2xl text-[0.98rem] leading-7 text-neutral-600 dark:text-neutral-300 md:text-lg">
               {page.description}
             </p>
           </div>
@@ -54,7 +54,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
           </div>
 
           {banner ? (
-            <div className="section-frame hidden px-5 py-5 md:block">
+            <div className="section-frame hidden px-4 py-4 md:block">
               <p className="section-kicker">{banner.label}</p>
               <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
                 {banner.headline}
@@ -71,7 +71,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
           ) : null}
         </div>
 
-        <div className="section-frame p-4 sm:p-5 lg:p-6">
+        <div className="section-frame p-4 sm:p-5">
           <ImagePlaceholder
             src={page.heroImageUrl ?? "/placeholders/hero-image-placeholder.svg"}
             alt="Nest Foods production placeholder"
@@ -80,16 +80,16 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
             priority
           />
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
             {heroMetrics.map((metric) => (
               <div
                 key={metric.label}
-                className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
+                className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3.5"
               >
-                <p className="display-heading text-3xl text-neutral-900 dark:text-neutral-100">
+                <p className="display-heading text-[1.75rem] text-neutral-900 dark:text-neutral-100">
                   {metric.value}
                 </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                <p className="mt-1.5 text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
                   {metric.label}
                 </p>
               </div>

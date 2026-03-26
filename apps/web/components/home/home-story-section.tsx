@@ -12,7 +12,7 @@ type HomeStorySectionProps = {
 
 function StoryCard({ page }: { page: CmsPage }) {
   return (
-    <Card className="space-y-5">
+    <Card className="space-y-4">
       <div>
         <p className="section-kicker">{page.title}</p>
         <h3 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
@@ -36,24 +36,24 @@ export function HomeStorySection({ aboutPage, visionPage }: HomeStorySectionProp
   const pages = [aboutPage, visionPage];
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
         eyebrow="About & Vision"
-        title="Company story and direction, without crowding the first impression."
-        description="These pages stay available, but they no longer compete with products and traceability on the opening scroll."
+        title="Company story and direction."
+        description="Available when needed."
         descriptionClassName="hidden md:block"
       />
 
       <MobileAutoCarousel
         ariaLabel="About and vision"
-        className="mt-6"
+        className="mt-5"
         intervalMs={3000}
         items={pages.map((page) => (
           <StoryCard key={page.slug} page={page} />
         ))}
       />
 
-      <div className="mt-6 hidden gap-4 md:grid lg:grid-cols-2">
+      <div className="mt-5 hidden gap-4 md:grid lg:grid-cols-2">
         {pages.map((page) => (
           <StoryCard key={page.slug} page={page} />
         ))}

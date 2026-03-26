@@ -2,8 +2,8 @@
 
 :root {
   color-scheme: light;
-  --font-body: "Aptos", "Segoe UI", "Helvetica Neue", sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --surface: #f2eee8;
   --surface-elevated: #faf6ef;
   --surface-overlay: rgba(250, 246, 239, 0.9);
@@ -65,7 +65,7 @@ body {
     radial-gradient(80% 56% at 50% 0%, var(--bg-accent-warm), transparent 78%);
   background-size: auto, auto;
   color: var(--foreground);
-  line-height: 1.5;
+  line-height: 1.55;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -206,17 +206,17 @@ img {
 }
 
 .display-heading {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 0.96;
+  font-family: var(--font-display), Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
 .section-kicker {
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--muted-foreground) 84%, transparent);
 }

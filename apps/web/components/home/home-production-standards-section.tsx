@@ -31,12 +31,12 @@ export function HomeProductionStandardsSection() {
   ));
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
-      <div className="section-frame px-5 py-6 sm:px-6 sm:py-7 md:hidden">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+      <div className="section-frame px-5 py-5 sm:px-6 md:hidden">
         <SectionHeading
           eyebrow="Production Standards"
           title="Production standards buyers can scan quickly."
-          description="Process, hygiene, and packaging signals in one tighter mobile block."
+          description="Process, hygiene, and packaging."
           descriptionClassName="hidden"
         />
 
@@ -58,11 +58,11 @@ export function HomeProductionStandardsSection() {
       </div>
 
       <div className="hidden gap-5 md:grid lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-        <div className="section-frame px-5 py-6 sm:px-6 sm:py-7">
+        <div className="section-frame px-5 py-5 sm:px-6">
           <SectionHeading
             eyebrow="Production Standards"
-            title="Production standards buyers should see before deeper workflows."
-            description="Bread production quality, hygiene, and packaging control stay visible without turning the page into an operations memo."
+            title="Production standards that matter."
+            description="Production quality, hygiene, and packaging."
             descriptionClassName="hidden lg:block"
           />
 

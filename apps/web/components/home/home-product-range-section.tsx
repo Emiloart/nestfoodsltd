@@ -13,7 +13,7 @@ type HomeProductRangeSectionProps = {
 
 function ProductPreviewCard({ product }: { product: CommerceProduct }) {
   return (
-    <Card className="h-full space-y-5">
+    <Card className="h-full space-y-4">
       <Link href={`/products/${product.slug}`} className="block">
         <ImagePlaceholder
           src={product.imageUrl}
@@ -24,7 +24,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
       </Link>
       <div>
         <p className="section-kicker">{product.category}</p>
-        <h3 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+        <h3 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100 md:text-2xl">
           {product.name}
         </h3>
         <p className="pretty-text mt-3 line-clamp-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:line-clamp-none">
@@ -33,7 +33,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
+        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
           <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
             Shelf life
           </p>
@@ -41,7 +41,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
             {product.shelfLifeDays} days
           </p>
         </div>
-        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
+        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
           <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
             Coverage
           </p>
@@ -76,11 +76,11 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
   const featuredProducts = products.slice(0, 3);
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
         eyebrow="Bread Product Range"
         title="Bread products for retail and partner supply."
-        description="The public catalog leads with clear product cues first, while deeper ordering detail stays out of the opening scroll."
+        description="Clear product cues first."
         descriptionClassName="hidden md:block"
         actions={
           <Link
@@ -94,14 +94,14 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
 
       <MobileAutoCarousel
         ariaLabel="Bread product previews"
-        className="mt-6"
+        className="mt-5"
         intervalMs={2000}
         items={featuredProducts.map((product) => (
           <ProductPreviewCard key={product.id} product={product} />
         ))}
       />
 
-      <div className="mt-6 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-5 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-3">
         {featuredProducts.map((product, index) => (
           <FadeIn key={product.id} delay={(index + 1) * 0.06}>
             <ProductPreviewCard product={product} />
