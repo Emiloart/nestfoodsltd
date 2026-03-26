@@ -1,13 +1,17 @@
 import { unstable_noStore as noStore } from "next/cache";
 
+import { readB2BData } from "@/lib/b2b/store";
 import { formatCurrency } from "@/lib/commerce/format";
 import {
   listCommerceFacets,
   listCommerceProducts,
   listOrdersByEmail,
 } from "@/lib/commerce/service";
+import { type CommerceProduct, type Order } from "@/lib/commerce/types";
 import { searchRecipes } from "@/lib/recipes/service";
+import { type RecipeSearchResult } from "@/lib/recipes/types";
 import { lookupTraceabilityBatch } from "@/lib/traceability/service";
+import { type TraceabilityBatch } from "@/lib/traceability/types";
 
 import { readChatData, writeChatData } from "./store";
 import {
@@ -35,6 +39,53 @@ type ChatReply = {
   handoffSuggested: boolean;
   handoffReason?: string;
 };
+
+type ConversationContext = {
+  conversation: ChatConversation;
+  recentMessages: ChatMessage[];
+  previousIntent: ChatIntent;
+  previousConfidence: number;
+  email?: string;
+  orderNumber?: string;
+  batchCode?: string;
+  previousProductMessage?: string;
+  previousRecipeMessage?: string;
+};
+
+type ProductSearchOptions = {
+  searchTerm?: string;
+  category?: string;
+  tag?: string;
+  region?: string;
+  inStockOnly: boolean;
+  subscriptionOnly: boolean;
+  sort?: "price_asc" | "price_desc";
+};
+
+type RecipeSearchOptions = {
+  searchTerm?: string;
+  ingredientsHint?: string;
+  maxMinutes?: number;
+  minProteinG?: number;
+  maxCalories?: number;
+};
+
+type OrderReplyTopic = "summary" | "timeline" | "delivery" | "payment" | "items" | "address";
+type TraceabilityReplyTopic =
+  | "summary"
+  | "timeline"
+  | "certifications"
+  | "source"
+  | "processing"
+  | "dates";
+type B2BReplyTopic =
+  | "overview"
+  | "quote"
+  | "approval"
+  | "pricing"
+  | "invoice"
+  | "statement"
+  | "support";
 
 export type AskChatAgentInput = {
   message: string;
@@ -75,14 +126,14 @@ export type CaptureChatLeadResult = {
 };
 
 const defaultQuickActions: ChatQuickAction[] = [
-  { label: "Find bread options", prompt: "Show me your bread options." },
-  { label: "Allergen help", prompt: "Which products are safe for gluten-sensitive customers?" },
+  { label: "Compare breads", prompt: "Compare your bread options for me." },
+  { label: "Trace a batch", prompt: "Help me verify a batch code." },
   { label: "Track my order", prompt: "Help me check my order status." },
-  { label: "B2B support", prompt: "I need distributor quote support." },
+  { label: "Distributor support", prompt: "I need distributor quote support." },
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
-  { label: "Shop", href: "/shop" },
+  { label: "Products", href: "/shop" },
   { label: "Traceability", href: "/traceability" },
   { label: "Distributor Portal", href: "/b2b" },
 ];
@@ -112,7 +163,143 @@ const stopWords = new Set([
   "want",
   "some",
   "any",
+  "find",
+  "give",
+  "products",
+  "product",
+  "options",
+  "option",
+  "catalog",
+  "details",
+  "detail",
+  "full",
+  "more",
+  "stock",
+  "available",
+  "subscriptions",
+  "subscription",
+  "eligible",
+  "price",
+  "prices",
+  "sort",
+  "lowest",
+  "highest",
+  "cheapest",
+  "expensive",
+  "status",
+  "timeline",
+  "update",
+  "updates",
+  "info",
+  "information",
 ]);
+
+const greetingKeywords = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"];
+const b2bKeywords = [
+  "distributor",
+  "wholesale",
+  "bulk",
+  "retailer",
+  "b2b",
+  "quote",
+  "reseller",
+  "invoice",
+  "statement",
+  "account manager",
+  "partner portal",
+];
+const orderKeywords = ["order", "tracking", "track", "delivery", "shipment", "payment status"];
+const traceabilityKeywords = ["trace", "traceability", "batch", "qr", "lot", "certification"];
+const allergenKeywords = [
+  "allergen",
+  "allergy",
+  "gluten",
+  "dairy",
+  "milk",
+  "soy",
+  "nut",
+  "peanut",
+  "egg",
+  "sesame",
+];
+const recipeKeywords = ["recipe", "cook", "meal", "ingredient", "prep", "protein", "calorie"];
+const productKeywords = [
+  "bread",
+  "beverage",
+  "drink",
+  "product",
+  "shop",
+  "buy",
+  "price",
+  "catalog",
+  "subscription",
+  "in stock",
+  "available in",
+];
+const orderFollowUpKeywords = [
+  "delivery",
+  "shipment",
+  "shipping",
+  "payment",
+  "paid",
+  "reference",
+  "items",
+  "address",
+  "where is it",
+  "timeline",
+];
+const traceabilityFollowUpKeywords = [
+  "timeline",
+  "history",
+  "source",
+  "farm",
+  "processing",
+  "facility",
+  "certification",
+  "certificate",
+  "expiry",
+  "production date",
+];
+const productFollowUpKeywords = [
+  "in stock",
+  "available",
+  "subscription",
+  "subscribe",
+  "cheapest",
+  "price",
+  "region",
+  "compare",
+  "filter",
+];
+const recipeFollowUpKeywords = [
+  "quick",
+  "under",
+  "minutes",
+  "ingredient",
+  "protein",
+  "calorie",
+];
+const b2bFollowUpKeywords = [
+  "quote",
+  "approval",
+  "invoice",
+  "statement",
+  "support",
+  "ticket",
+  "pricing",
+  "portal",
+];
+const followUpKeywords = [
+  "this",
+  "that",
+  "it",
+  "those",
+  "these",
+  "same",
+  "more",
+  "details",
+  "full",
+];
 
 const intentSet = new Set<ChatIntent>(chatIntentValues);
 
@@ -173,12 +360,15 @@ function extractBatchCode(value: string) {
   return match[0];
 }
 
-function toSearchTerm(message: string) {
-  const tokens = normalizeToken(message)
+function tokenizeSearchValue(value: string) {
+  return normalizeToken(value)
     .split(/[^a-z0-9]+/)
     .map((entry) => entry.trim())
     .filter((entry) => entry.length > 2 && !stopWords.has(entry));
-  return tokens.slice(0, 7).join(" ");
+}
+
+function toSearchTerm(message: string) {
+  return tokenizeSearchValue(message).slice(0, 7).join(" ");
 }
 
 function extractIngredientHint(message: string) {
@@ -204,40 +394,177 @@ function extractIngredientHint(message: string) {
   return entries.slice(0, 6).join(",");
 }
 
-function resolveIntent(message: string): IntentResolution {
+function findMatchingFacet(message: string, values: string[]) {
+  const normalized = normalizeToken(message);
+  return values.find((entry) => normalized.includes(normalizeToken(entry))) ?? null;
+}
+
+function hasShortFollowUpShape(message: string) {
+  const tokens = tokenizeSearchValue(message);
+  return tokens.length <= 4 || includesAny(normalizeToken(message), followUpKeywords);
+}
+
+function formatDate(value?: string) {
+  if (!value) {
+    return "Not available";
+  }
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
+}
+
+function formatDateTime(value?: string) {
+  if (!value) {
+    return "Not available";
+  }
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
+
+function summarizeStockStatus(product: CommerceProduct) {
+  if (product.variants.every((variant) => variant.stockStatus === "out_of_stock")) {
+    return "out of stock";
+  }
+  if (product.variants.some((variant) => variant.stockStatus === "low_stock")) {
+    return "limited stock";
+  }
+  return "in stock";
+}
+
+function hasSubscriptionVariant(product: CommerceProduct) {
+  return product.variants.some((variant) => variant.subscriptionEligible);
+}
+
+function minimumVariantPrice(product: CommerceProduct) {
+  return Math.min(...product.variants.map((variant) => variant.priceMinor));
+}
+
+function maximumVariantPrice(product: CommerceProduct) {
+  return Math.max(...product.variants.map((variant) => variant.priceMinor));
+}
+
+function scoreTextMatch(text: string, tokens: string[]) {
+  const normalized = normalizeToken(text);
+  return tokens.reduce((score, token) => score + (normalized.includes(token) ? 1 : 0), 0);
+}
+
+function sortOrdersByUpdatedAt(orders: Order[]) {
+  return [...orders].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+}
+
+function findLatestConversationValue(
+  messages: ChatMessage[],
+  extractor: (value: string) => string | null | undefined,
+) {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const value = extractor(messages[index]?.content ?? "");
+    if (value) {
+      return value;
+    }
+  }
+  return undefined;
+}
+
+function findLatestIntentMessage(messages: ChatMessage[], intent: ChatIntent) {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message?.role === "user" && message.intent === intent) {
+      return message.content;
+    }
+  }
+  return undefined;
+}
+
+function getConversationMessages(data: ChatData, conversationId: string) {
+  return data.messages
+    .filter((entry) => entry.conversationId === conversationId)
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt));
+}
+
+function buildConversationContext(
+  data: ChatData,
+  conversation: ChatConversation,
+): ConversationContext {
+  const recentMessages = getConversationMessages(data, conversation.id).slice(-18);
+  const recentUserMessages = recentMessages.filter((entry) => entry.role === "user");
+
+  return {
+    conversation,
+    recentMessages,
+    previousIntent: conversation.lastIntent,
+    previousConfidence: conversation.lastConfidence,
+    email: findLatestConversationValue(recentUserMessages, extractEmail),
+    orderNumber: findLatestConversationValue(recentUserMessages, extractOrderNumber),
+    batchCode: findLatestConversationValue(recentUserMessages, extractBatchCode),
+    previousProductMessage: findLatestIntentMessage(recentMessages, "product_search"),
+    previousRecipeMessage: findLatestIntentMessage(recentMessages, "recipe_help"),
+  };
+}
+
+function resolveFollowUpIntent(
+  message: string,
+  context?: ConversationContext,
+): IntentResolution | null {
+  if (!context || context.previousIntent === "unknown") {
+    return null;
+  }
+
+  const normalized = normalizeToken(message);
+  const followUpMessage = hasShortFollowUpShape(message);
+
+  if (
+    context.previousIntent === "order_status" &&
+    (includesAny(normalized, orderFollowUpKeywords) ||
+      (followUpMessage && Boolean(context.orderNumber || context.email)))
+  ) {
+    return { intent: "order_status", confidence: 0.78 };
+  }
+
+  if (
+    context.previousIntent === "traceability_lookup" &&
+    (includesAny(normalized, traceabilityFollowUpKeywords) ||
+      (followUpMessage && Boolean(context.batchCode)))
+  ) {
+    return { intent: "traceability_lookup", confidence: 0.8 };
+  }
+
+  if (
+    context.previousIntent === "product_search" &&
+    (includesAny(normalized, productFollowUpKeywords) || followUpMessage)
+  ) {
+    return { intent: "product_search", confidence: 0.72 };
+  }
+
+  if (
+    context.previousIntent === "recipe_help" &&
+    (includesAny(normalized, recipeFollowUpKeywords) || followUpMessage)
+  ) {
+    return { intent: "recipe_help", confidence: 0.72 };
+  }
+
+  if (
+    context.previousIntent === "b2b_quote" &&
+    (includesAny(normalized, b2bFollowUpKeywords) || followUpMessage)
+  ) {
+    return { intent: "b2b_quote", confidence: 0.74 };
+  }
+
+  return null;
+}
+
+function resolveIntent(message: string, context?: ConversationContext): IntentResolution {
   const normalized = normalizeToken(message);
   if (!normalized) {
     return { intent: "unknown", confidence: 0.2 };
   }
-
-  const greetingKeywords = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"];
-  const b2bKeywords = ["distributor", "wholesale", "bulk", "retailer", "b2b", "quote", "reseller"];
-  const orderKeywords = ["order", "tracking", "track", "delivery", "shipment", "payment status"];
-  const traceabilityKeywords = ["trace", "traceability", "batch", "qr", "lot"];
-  const allergenKeywords = [
-    "allergen",
-    "allergy",
-    "gluten",
-    "dairy",
-    "milk",
-    "soy",
-    "nut",
-    "peanut",
-    "egg",
-    "sesame",
-  ];
-  const recipeKeywords = ["recipe", "cook", "meal", "ingredient", "prep"];
-  const productKeywords = [
-    "bread",
-    "beverage",
-    "drink",
-    "product",
-    "shop",
-    "buy",
-    "price",
-    "catalog",
-    "subscription",
-  ];
 
   if (extractOrderNumber(message) || includesAny(normalized, orderKeywords)) {
     return { intent: "order_status", confidence: 0.88 };
@@ -254,11 +581,24 @@ function resolveIntent(message: string): IntentResolution {
   if (includesAny(normalized, recipeKeywords)) {
     return { intent: "recipe_help", confidence: 0.83 };
   }
+
+  const followUpIntent = resolveFollowUpIntent(message, context);
+  if (followUpIntent) {
+    return followUpIntent;
+  }
+
   if (includesAny(normalized, greetingKeywords) && normalized.split(" ").length <= 7) {
     return { intent: "greeting", confidence: 0.94 };
   }
   if (includesAny(normalized, productKeywords)) {
     return { intent: "product_search", confidence: 0.78 };
+  }
+
+  if (context?.previousIntent && context.previousIntent !== "unknown" && hasShortFollowUpShape(message)) {
+    return {
+      intent: context.previousIntent,
+      confidence: Math.max(0.58, Math.min(0.76, context.previousConfidence || 0.58)),
+    };
   }
 
   return { intent: "unknown", confidence: 0.44 };
@@ -340,33 +680,126 @@ async function buildGreetingReply(): Promise<ChatReply> {
     intent: "greeting",
     confidence: 0.96,
     answer:
-      "Hi — I can help with product discovery, allergens, recipes, order tracking, traceability, and distributor support.",
+      "Hi. I can compare products, filter allergens, suggest recipes, verify traceability, check order status, and guide distributor support.",
     quickActions: defaultQuickActions,
     suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: false,
   };
 }
 
-async function buildProductSearchReply(message: string): Promise<ChatReply> {
-  const searchTerm = toSearchTerm(message);
-  const [products, recipes] = await Promise.all([
-    listCommerceProducts({ search: searchTerm || undefined }),
-    searchRecipes({ search: searchTerm || undefined }),
-  ]);
+function parseProductSearchOptions(
+  message: string,
+  context: ConversationContext,
+  facets: Awaited<ReturnType<typeof listCommerceFacets>>,
+): ProductSearchOptions {
+  const normalized = normalizeToken(message);
+  const followUpSearchTerm =
+    !includesAny(normalized, productFollowUpKeywords) && tokenizeSearchValue(message).length > 0
+      ? toSearchTerm(message)
+      : undefined;
 
-  const topProducts = products.slice(0, 3);
-  const topRecipes = recipes.slice(0, 2);
-  if (topProducts.length === 0 && topRecipes.length === 0) {
+  return {
+    searchTerm: followUpSearchTerm || context.previousProductMessage
+      ? followUpSearchTerm || toSearchTerm(context.previousProductMessage ?? "")
+      : undefined,
+    category: findMatchingFacet(message, facets.categories) ?? undefined,
+    tag: findMatchingFacet(message, facets.tags) ?? undefined,
+    region: findMatchingFacet(message, facets.regions) ?? undefined,
+    inStockOnly: includesAny(normalized, ["in stock", "available now", "ready stock"]),
+    subscriptionOnly: includesAny(normalized, ["subscription", "subscribe", "recurring"]),
+    sort: includesAny(normalized, ["cheapest", "lowest price", "budget"])
+      ? "price_asc"
+      : includesAny(normalized, ["premium", "highest price", "most expensive"])
+        ? "price_desc"
+        : undefined,
+  };
+}
+
+function filterAndRankProducts(products: CommerceProduct[], options: ProductSearchOptions) {
+  let rankedProducts = [...products];
+
+  if (options.subscriptionOnly) {
+    rankedProducts = rankedProducts.filter((product) => hasSubscriptionVariant(product));
+  }
+
+  const tokens = options.searchTerm ? tokenizeSearchValue(options.searchTerm) : [];
+  if (tokens.length > 0) {
+    rankedProducts = rankedProducts
+      .map((product) => ({
+        product,
+        score: scoreTextMatch(
+          [
+            product.name,
+            product.category,
+            product.shortDescription,
+            product.longDescription,
+            product.tags.join(" "),
+            product.availableRegions.join(" "),
+          ].join(" "),
+          tokens,
+        ),
+      }))
+      .filter((entry) => entry.score > 0)
+      .sort((left, right) => {
+        if (left.score !== right.score) {
+          return right.score - left.score;
+        }
+        return minimumVariantPrice(left.product) - minimumVariantPrice(right.product);
+      })
+      .map((entry) => entry.product);
+  }
+
+  if (options.sort === "price_asc") {
+    rankedProducts.sort((left, right) => minimumVariantPrice(left) - minimumVariantPrice(right));
+  }
+  if (options.sort === "price_desc") {
+    rankedProducts.sort((left, right) => maximumVariantPrice(right) - maximumVariantPrice(left));
+  }
+
+  return rankedProducts;
+}
+
+async function buildProductSearchReply(
+  message: string,
+  context: ConversationContext,
+): Promise<ChatReply> {
+  const facets = await listCommerceFacets();
+  const options = parseProductSearchOptions(message, context, facets);
+  const products = await listCommerceProducts({
+    category: options.category,
+    tag: options.tag,
+    region: options.region,
+    inStockOnly: options.inStockOnly,
+  });
+  const rankedProducts = filterAndRankProducts(products, options);
+  const topProducts = rankedProducts.slice(0, 3);
+
+  if (topProducts.length === 0) {
     return {
       intent: "product_search",
       confidence: 0.58,
       answer:
-        "I couldn't find a close match yet. Try keywords like bread type, flavor, or category, and I’ll narrow it down.",
-      quickActions: defaultQuickActions,
-      suggestedLinks: [{ label: "Open Shop", href: "/shop" }],
+        "I could not find a strong product match yet. Try a bread type, region, price direction, or ask for in-stock or subscription-eligible options.",
+      quickActions: normalizeQuickActions([
+        { label: "In-stock only", prompt: "Show in-stock bread options." },
+        { label: "By region", prompt: "Show products available in Lagos." },
+        { label: "Subscriptions", prompt: "Which products support subscriptions?" },
+        ...defaultQuickActions.slice(1, 3),
+      ]),
+      suggestedLinks: [{ label: "Open Products", href: "/shop" }],
       handoffSuggested: false,
     };
   }
+
+  const activeFilters = [
+    options.category,
+    options.tag,
+    options.region,
+    options.inStockOnly ? "in stock only" : "",
+    options.subscriptionOnly ? "subscription eligible" : "",
+    options.sort === "price_asc" ? "lowest price first" : "",
+    options.sort === "price_desc" ? "highest price first" : "",
+  ].filter(Boolean);
 
   const productLines = topProducts.map((product) => {
     const cheapestVariant = [...product.variants].sort(
@@ -375,63 +808,139 @@ async function buildProductSearchReply(message: string): Promise<ChatReply> {
     const priceLabel = cheapestVariant
       ? formatCurrency(cheapestVariant.currency, cheapestVariant.priceMinor)
       : "Price on request";
-    return `• ${product.name} (${product.category}) — from ${priceLabel}`;
+    const subscriptionLabel = hasSubscriptionVariant(product) ? "subscription ready" : "one-off only";
+    return `• ${product.name} — ${product.category} · ${summarizeStockStatus(product)} · MOQ ${product.minimumOrderQuantity}+ · ${subscriptionLabel} · from ${priceLabel}`;
   });
 
-  const recipeLines = topRecipes.map(
-    (recipe) => `• ${recipe.title} (${recipe.prepMinutes + recipe.cookMinutes} mins)`,
-  );
-
-  const answerParts = [
-    `I found ${products.length} product match${products.length === 1 ? "" : "es"}.`,
+  const answerLines = [
+    `I found ${rankedProducts.length} product match${rankedProducts.length === 1 ? "" : "es"}${activeFilters.length > 0 ? ` for ${activeFilters.join(", ")}` : ""}.`,
     productLines.join("\n"),
   ];
-  if (recipeLines.length > 0) {
-    answerParts.push(`Related recipe ideas:\n${recipeLines.join("\n")}`);
-  }
-
-  const suggestedLinks = normalizeSuggestedLinks([
-    {
-      label: "Shop Results",
-      href: searchTerm ? `/shop?search=${encodeURIComponent(searchTerm)}` : "/shop",
-    },
-    ...topProducts.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
-    { label: "Recipes", href: "/recipes" },
-  ]);
 
   return {
     intent: "product_search",
-    confidence: products.length > 0 ? 0.84 : 0.68,
-    answer: answerParts.filter(Boolean).join("\n\n"),
+    confidence: rankedProducts.length > 0 ? 0.86 : 0.68,
+    answer: answerLines.join("\n\n"),
     quickActions: normalizeQuickActions([
-      { label: "Show subscriptions", prompt: "Which products support subscriptions?" },
-      { label: "Filter by allergens", prompt: "Help me filter products by allergens." },
-      { label: "See recipes", prompt: "Show recipe ideas for these products." },
-      ...defaultQuickActions.slice(0, 2),
+      { label: "In-stock only", prompt: "Filter these to in-stock products only." },
+      { label: "Subscriptions", prompt: "Which of these support subscriptions?" },
+      { label: "Lowest price", prompt: "Sort these by lowest price." },
+      { label: "Allergen filter", prompt: "Help me filter these by allergens." },
+      { label: "Recipe ideas", prompt: "Show recipe ideas for these products." },
     ]),
-    suggestedLinks,
+    suggestedLinks: normalizeSuggestedLinks([
+      {
+        label: "Products",
+        href: options.searchTerm ? `/shop?search=${encodeURIComponent(options.searchTerm)}` : "/shop",
+      },
+      ...topProducts.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
+    ]),
     handoffSuggested: false,
   };
 }
 
-async function buildRecipeReply(message: string): Promise<ChatReply> {
-  const searchTerm = toSearchTerm(message);
+function extractMaxMinutes(message: string) {
+  const normalized = normalizeToken(message);
+  const match = normalized.match(/\b(?:under|within|less than)\s+(\d{1,3})\s*(?:min|mins|minutes)\b/);
+  if (match?.[1]) {
+    return Number(match[1]);
+  }
+  const compactMatch = normalized.match(/\b(\d{1,3})\s*(?:min|mins|minutes)\b/);
+  if (compactMatch?.[1] && includesAny(normalized, ["under", "quick", "fast"])) {
+    return Number(compactMatch[1]);
+  }
+  return undefined;
+}
+
+function extractMaxCalories(message: string) {
+  const normalized = normalizeToken(message);
+  const match = normalized.match(/\b(?:under|below|less than)\s+(\d{2,4})\s*cal/);
+  if (match?.[1]) {
+    return Number(match[1]);
+  }
+  if (includesAny(normalized, ["lower calorie", "low calorie", "lighter"])) {
+    return 450;
+  }
+  return undefined;
+}
+
+function parseRecipeSearchOptions(message: string, context: ConversationContext): RecipeSearchOptions {
+  const normalized = normalizeToken(message);
+  const searchTerm = toSearchTerm(message) || toSearchTerm(context.previousRecipeMessage ?? "");
   const ingredientsHint = extractIngredientHint(message);
+
+  return {
+    searchTerm: searchTerm || undefined,
+    ingredientsHint: ingredientsHint || undefined,
+    maxMinutes: extractMaxMinutes(message),
+    minProteinG: includesAny(normalized, ["high protein", "more protein", "protein"]) ? 15 : undefined,
+    maxCalories: extractMaxCalories(message),
+  };
+}
+
+function filterAndRankRecipes(recipes: RecipeSearchResult[], options: RecipeSearchOptions) {
+  let rankedRecipes = [...recipes];
+
+  if (options.searchTerm) {
+    const tokens = tokenizeSearchValue(options.searchTerm);
+    if (tokens.length > 0) {
+      rankedRecipes = rankedRecipes
+        .map((recipe) => ({
+          recipe,
+          score:
+            recipe.matchScore +
+            scoreTextMatch(
+              [
+                recipe.title,
+                recipe.description,
+                recipe.tags.join(" "),
+                recipe.ingredients.join(" "),
+              ].join(" "),
+              tokens,
+            ),
+        }))
+        .filter((entry) => entry.score > 0)
+        .sort((left, right) => right.score - left.score)
+        .map((entry) => entry.recipe);
+    }
+  }
+
+  if (options.maxMinutes !== undefined) {
+    rankedRecipes = rankedRecipes.filter(
+      (recipe) => recipe.prepMinutes + recipe.cookMinutes <= options.maxMinutes!,
+    );
+  }
+  if (options.minProteinG !== undefined) {
+    rankedRecipes = rankedRecipes.filter(
+      (recipe) => recipe.nutritionPerServing.proteinG >= options.minProteinG!,
+    );
+  }
+  if (options.maxCalories !== undefined) {
+    rankedRecipes = rankedRecipes.filter(
+      (recipe) => recipe.nutritionPerServing.calories <= options.maxCalories!,
+    );
+  }
+
+  return rankedRecipes;
+}
+
+async function buildRecipeReply(message: string, context: ConversationContext): Promise<ChatReply> {
+  const options = parseRecipeSearchOptions(message, context);
   const recipes = await searchRecipes({
-    search: searchTerm || undefined,
-    ingredients: ingredientsHint || undefined,
+    ingredients: options.ingredientsHint,
   });
-  const topRecipes = recipes.slice(0, 3);
+  const topRecipes = filterAndRankRecipes(recipes, options).slice(0, 3);
 
   if (topRecipes.length === 0) {
     return {
       intent: "recipe_help",
       confidence: 0.6,
       answer:
-        "I couldn't find a recipe match yet. Share ingredients you have (comma separated), and I’ll suggest the best options.",
+        "I could not find a recipe match for that combination yet. Try ingredient names, a time target like under 20 minutes, or ask for higher-protein options.",
       quickActions: normalizeQuickActions([
-        { label: "Quick recipes", prompt: "Show quick recipes under 30 minutes." },
-        { label: "Ingredient recipes", prompt: "Find recipes with tomatoes, onions, and peppers." },
+        { label: "Quick recipes", prompt: "Show quick recipes under 20 minutes." },
+        { label: "High protein", prompt: "Show higher-protein recipe ideas." },
+        { label: "By ingredients", prompt: "Find recipes with tomatoes, onions, and peppers." },
         ...defaultQuickActions.slice(0, 2),
       ]),
       suggestedLinks: [{ label: "Recipe Finder", href: "/recipes" }],
@@ -439,22 +948,23 @@ async function buildRecipeReply(message: string): Promise<ChatReply> {
     };
   }
 
-  const recipeLines = topRecipes.map(
-    (recipe) =>
-      `• ${recipe.title} — ${recipe.prepMinutes + recipe.cookMinutes} mins · serves ${recipe.servings}`,
-  );
+  const recipeLines = topRecipes.map((recipe) => {
+    const totalMinutes = recipe.prepMinutes + recipe.cookMinutes;
+    return `• ${recipe.title} — ${totalMinutes} mins · ${recipe.nutritionPerServing.proteinG}g protein · ${recipe.nutritionPerServing.calories} cal`;
+  });
 
   return {
     intent: "recipe_help",
-    confidence: 0.86,
-    answer: `Here are top recipe matches:\n${recipeLines.join("\n")}`,
+    confidence: 0.87,
+    answer: `Here are the strongest recipe matches:\n${recipeLines.join("\n")}`,
     quickActions: normalizeQuickActions([
-      { label: "Ingredient search", prompt: "Find recipes with rice, tomato, and pepper." },
-      { label: "Nutrition check", prompt: "Show me recipes with higher protein." },
-      ...defaultQuickActions.slice(0, 2),
+      { label: "Under 20 mins", prompt: "Show recipes under 20 minutes." },
+      { label: "High protein", prompt: "Show higher-protein recipe ideas." },
+      { label: "Lower calorie", prompt: "Show lower-calorie recipe ideas." },
+      { label: "By ingredients", prompt: "Find recipes with rice, tomato, and pepper." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Open Recipes", href: "/recipes" },
+      { label: "Recipes", href: "/recipes" },
       ...topRecipes.map((recipe) => ({ label: recipe.title, href: `/recipes#${recipe.slug}` })),
     ]),
     handoffSuggested: false,
@@ -504,13 +1014,13 @@ async function buildAllergenReply(message: string): Promise<ChatReply> {
       intent: "allergen_help",
       confidence: 0.62,
       answer:
-        "Tell me the exact allergen to exclude (for example: gluten, soy, dairy, nuts, or egg), and I’ll filter suitable products.",
+        "Tell me the allergen to exclude, such as gluten, soy, dairy, nuts, sesame, or egg, and I will narrow the products.",
       quickActions: normalizeQuickActions([
-        { label: "Gluten-safe options", prompt: "Show products that avoid gluten." },
-        { label: "Soy-safe options", prompt: "Show products that avoid soy." },
-        { label: "Dairy-safe options", prompt: "Show products that avoid dairy." },
+        { label: "Gluten-safe", prompt: "Show products that avoid gluten." },
+        { label: "Soy-safe", prompt: "Show products that avoid soy." },
+        { label: "Dairy-safe", prompt: "Show products that avoid dairy." },
       ]),
-      suggestedLinks: [{ label: "Open Shop Filters", href: "/shop" }],
+      suggestedLinks: [{ label: "Products", href: "/shop" }],
       handoffSuggested: false,
     };
   }
@@ -527,18 +1037,18 @@ async function buildAllergenReply(message: string): Promise<ChatReply> {
     return {
       intent: "allergen_help",
       confidence: 0.72,
-      answer: `I did not find safe matches for "${allergen}" right now. A specialist can confirm alternatives and handling details.`,
+      answer: `I did not find safe matches for "${allergen}" right now. A specialist should confirm alternatives and handling details.`,
       quickActions: normalizeQuickActions([
         { label: "Try another allergen", prompt: "Help me filter by another allergen." },
-        { label: "Talk to support", prompt: "I need human support for allergen guidance." },
+        { label: "Human support", prompt: "I need human support for allergen guidance." },
         ...defaultQuickActions.slice(0, 1),
       ]),
       suggestedLinks: normalizeSuggestedLinks([
-        { label: "Shop Filter", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
+        { label: "Filtered Products", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
         { label: "Contact Team", href: "/contact" },
       ]),
       handoffSuggested: true,
-      handoffReason: "No safe products found for selected allergen.",
+      handoffReason: "No safe products found for the selected allergen.",
     };
   }
 
@@ -548,37 +1058,126 @@ async function buildAllergenReply(message: string): Promise<ChatReply> {
   return {
     intent: "allergen_help",
     confidence: 0.83,
-    answer: `Top options excluding "${allergen}":\n${safeLines.join("\n")}\n\nAlways verify allergen details on each product page before purchase.`,
+    answer: `Top options excluding "${allergen}":\n${safeLines.join("\n")}`,
     quickActions: normalizeQuickActions([
-      { label: "Filter in shop", prompt: `Show products excluding ${allergen}.` },
-      { label: "Check ingredients", prompt: "Compare ingredient details for these products." },
+      { label: "Filter in products", prompt: `Show products excluding ${allergen}.` },
+      { label: "Compare ingredients", prompt: "Compare ingredient details for these products." },
       ...defaultQuickActions.slice(0, 1),
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Filtered Shop", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
+      { label: "Filtered Products", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
       ...topSafe.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
     ]),
     handoffSuggested: false,
   };
 }
 
-async function buildOrderStatusReply(message: string): Promise<ChatReply> {
-  const email = extractEmail(message);
-  const orderNumber = extractOrderNumber(message);
+function resolveOrderReplyTopic(message: string): OrderReplyTopic {
+  const normalized = normalizeToken(message);
+  if (includesAny(normalized, ["timeline", "history", "events", "progress"])) {
+    return "timeline";
+  }
+  if (includesAny(normalized, ["delivery", "shipment", "shipping", "dispatch", "arrival"])) {
+    return "delivery";
+  }
+  if (includesAny(normalized, ["payment", "paid", "reference", "paystack", "flutterwave"])) {
+    return "payment";
+  }
+  if (includesAny(normalized, ["items", "products", "ordered", "contents"])) {
+    return "items";
+  }
+  if (includesAny(normalized, ["address", "destination", "ship to"])) {
+    return "address";
+  }
+  return "summary";
+}
 
-  if (!email || !orderNumber) {
+function buildOrderTimelineLines(order: Order) {
+  return [...order.timeline]
+    .sort((left, right) => right.at.localeCompare(left.at))
+    .slice(0, 3)
+    .map((entry) => `• ${formatDateTime(entry.at)} — ${formatOrderStatus(entry.status)}: ${entry.note}`);
+}
+
+async function buildOrderStatusReply(
+  message: string,
+  context: ConversationContext,
+): Promise<ChatReply> {
+  const email = extractEmail(message) ?? context.email;
+  const orderNumber = extractOrderNumber(message) ?? context.orderNumber;
+  const topic = resolveOrderReplyTopic(message);
+
+  if (!email && !orderNumber) {
     return {
       intent: "order_status",
       confidence: 0.64,
       answer:
-        "To check order status, share both your order number (for example NFL-2026-0001) and the checkout email used.",
+        "To check an order, share the order number and the checkout email. You can also send just the email first and I will list recent orders.",
       quickActions: normalizeQuickActions([
         { label: "How to track", prompt: "How can I track my order?" },
-        { label: "Open account", prompt: "Take me to my account dashboard." },
-        ...defaultQuickActions.slice(0, 1),
+        { label: "Recent orders", prompt: "Show recent orders for my email." },
+        { label: "Account dashboard", prompt: "Take me to my account dashboard." },
       ]),
       suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account Dashboard", href: "/account" },
+        { label: "Account", href: "/account" },
+        { label: "Contact Support", href: "/contact" },
+      ]),
+      handoffSuggested: false,
+    };
+  }
+
+  if (email && !orderNumber) {
+    const orders = sortOrdersByUpdatedAt(await listOrdersByEmail(email));
+    if (orders.length === 0) {
+      return {
+        intent: "order_status",
+        confidence: 0.66,
+        answer: "I could not find recent orders for that email. Double-check the checkout email or request human support.",
+        quickActions: normalizeQuickActions([
+          { label: "Retry lookup", prompt: "Help me retry order tracking." },
+          { label: "Human support", prompt: "I need help with an order issue." },
+        ]),
+        suggestedLinks: normalizeSuggestedLinks([
+          { label: "Account", href: "/account" },
+          { label: "Contact Support", href: "/contact" },
+        ]),
+        handoffSuggested: true,
+        handoffReason: "No orders were found for the provided email.",
+      };
+    }
+
+    const orderLines = orders
+      .slice(0, 3)
+      .map((entry) => `• ${entry.orderNumber} — ${formatOrderStatus(entry.status)} · updated ${formatDate(entry.updatedAt)}`);
+
+    return {
+      intent: "order_status",
+      confidence: 0.86,
+      answer: `Here are the most recent orders for ${email}:\n${orderLines.join("\n")}`,
+      quickActions: normalizeQuickActions([
+        { label: "Order timeline", prompt: `Show the timeline for ${orders[0]!.orderNumber}.` },
+        { label: "Payment status", prompt: `Show payment details for ${orders[0]!.orderNumber}.` },
+        { label: "Delivery details", prompt: `Show delivery details for ${orders[0]!.orderNumber}.` },
+      ]),
+      suggestedLinks: normalizeSuggestedLinks([
+        { label: "Account", href: "/account" },
+        { label: "Checkout", href: "/checkout" },
+      ]),
+      handoffSuggested: false,
+    };
+  }
+
+  if (!email || !orderNumber) {
+    return {
+      intent: "order_status",
+      confidence: 0.68,
+      answer: "I have the order number, but I still need the checkout email to verify the order.",
+      quickActions: normalizeQuickActions([
+        { label: "Add email", prompt: `Track ${orderNumber ?? "my order"} with this checkout email:` },
+        { label: "Human support", prompt: "I need help with my order tracking." },
+      ]),
+      suggestedLinks: normalizeSuggestedLinks([
+        { label: "Account", href: "/account" },
         { label: "Contact Support", href: "/contact" },
       ]),
       handoffSuggested: false,
@@ -595,55 +1194,99 @@ async function buildOrderStatusReply(message: string): Promise<ChatReply> {
       intent: "order_status",
       confidence: 0.7,
       answer:
-        "I couldn't verify that order with the details provided. Please double-check the order number/email, or request human support.",
+        "I could not verify that order with the details provided. Double-check the order number and email, or request human support.",
       quickActions: normalizeQuickActions([
         { label: "Retry order lookup", prompt: "Help me retry order tracking." },
         { label: "Human support", prompt: "I need help with my order tracking." },
       ]),
       suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account Dashboard", href: "/account" },
+        { label: "Account", href: "/account" },
         { label: "Contact Support", href: "/contact" },
       ]),
       handoffSuggested: true,
-      handoffReason: "Order lookup failed with provided order number/email.",
+      handoffReason: "Order lookup failed with the provided order number and email.",
     };
   }
 
-  const latestEvent = order.timeline[0] ?? order.timeline[order.timeline.length - 1];
-  const latestNote = latestEvent?.note || "No additional timeline note yet.";
+  const latestEvent = [...order.timeline].sort((left, right) => right.at.localeCompare(left.at))[0];
+  const orderItems = order.items
+    .slice(0, 3)
+    .map((item) => `• ${item.productName} x${item.quantity}`)
+    .join("\n");
+  const replyByTopic: Record<OrderReplyTopic, string> = {
+    summary: `Order ${order.orderNumber} is currently "${formatOrderStatus(order.status)}". Last update: ${latestEvent?.note ?? "No timeline note yet."}`,
+    timeline: `Recent timeline for ${order.orderNumber}:\n${buildOrderTimelineLines(order).join("\n")}`,
+    delivery: `Delivery status for ${order.orderNumber}: ${formatOrderStatus(order.status)}.\nShipping address: ${order.shippingAddress}\nLatest delivery note: ${latestEvent?.note ?? "No delivery note yet."}`,
+    payment: `Payment for ${order.orderNumber}: ${order.paymentProvider}${order.paymentReference ? ` · ref ${order.paymentReference}` : ""}.\nCurrent order status: ${formatOrderStatus(order.status)}.`,
+    items: `Items in ${order.orderNumber}:\n${orderItems}`,
+    address: `Shipping address for ${order.orderNumber}:\n${order.shippingAddress}`,
+  };
 
   return {
     intent: "order_status",
     confidence: 0.91,
-    answer: `Order ${order.orderNumber} is currently "${formatOrderStatus(order.status)}". Last update: ${latestNote}`,
+    answer: replyByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "View account orders", prompt: "Show me where to view all my orders." },
-      { label: "Delivery updates", prompt: "How do I get delivery updates for this order?" },
+      { label: "Timeline", prompt: `Show the timeline for ${order.orderNumber}.` },
+      { label: "Delivery", prompt: `Show delivery details for ${order.orderNumber}.` },
+      { label: "Payment", prompt: `Show payment details for ${order.orderNumber}.` },
+      { label: "Items", prompt: `Show the items for ${order.orderNumber}.` },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Account Dashboard", href: "/account" },
+      { label: "Account", href: "/account" },
       { label: "Checkout", href: "/checkout" },
     ]),
     handoffSuggested: false,
   };
 }
 
-async function buildTraceabilityReply(message: string): Promise<ChatReply> {
-  const normalized = sanitizeMessage(message).toUpperCase();
-  const extractedCode = extractBatchCode(message);
-  const lookupCode = extractedCode ?? normalized;
+function resolveTraceabilityReplyTopic(message: string): TraceabilityReplyTopic {
+  const normalized = normalizeToken(message);
+  if (includesAny(normalized, ["timeline", "history", "stages"])) {
+    return "timeline";
+  }
+  if (includesAny(normalized, ["certification", "certificate", "certified"])) {
+    return "certifications";
+  }
+  if (includesAny(normalized, ["source", "farm", "origin", "lot reference"])) {
+    return "source";
+  }
+  if (includesAny(normalized, ["processing", "facility", "packaged", "qa"])) {
+    return "processing";
+  }
+  if (includesAny(normalized, ["production date", "expiry", "dates", "harvested"])) {
+    return "dates";
+  }
+  return "summary";
+}
+
+function buildTraceabilityTimelineLines(batch: TraceabilityBatch) {
+  return [...batch.timeline]
+    .slice(-4)
+    .map(
+      (entry) =>
+        `• ${formatDateTime(entry.startedAt)} — ${entry.title} (${formatLabel(entry.stage)}) at ${entry.location}`,
+    );
+}
+
+async function buildTraceabilityReply(
+  message: string,
+  context: ConversationContext,
+): Promise<ChatReply> {
+  const lookupCode = extractBatchCode(message) ?? context.batchCode;
+  const topic = resolveTraceabilityReplyTopic(message);
 
   if (!lookupCode || lookupCode.length < 4) {
     return {
       intent: "traceability_lookup",
       confidence: 0.6,
       answer:
-        "Share the batch code or QR value, and I’ll look up sourcing, processing, and certification details.",
+        "Share the batch code or QR value and I will look up sourcing, processing, and certification details.",
       quickActions: normalizeQuickActions([
-        { label: "Trace by batch code", prompt: "Lookup traceability for this batch code." },
-        { label: "Open traceability page", prompt: "Open the traceability lookup page." },
+        { label: "Lookup a batch", prompt: "Lookup traceability for this batch code." },
+        { label: "Batch timeline", prompt: "Show the full timeline for this batch." },
       ]),
-      suggestedLinks: [{ label: "Traceability Lookup", href: "/traceability" }],
+      suggestedLinks: [{ label: "Traceability", href: "/traceability" }],
       handoffSuggested: false,
     };
   }
@@ -660,7 +1303,7 @@ async function buildTraceabilityReply(message: string): Promise<ChatReply> {
         { label: "Human support", prompt: "I need human help verifying a batch code." },
       ]),
       suggestedLinks: normalizeSuggestedLinks([
-        { label: "Traceability Lookup", href: "/traceability" },
+        { label: "Traceability", href: "/traceability" },
         { label: "Contact Team", href: "/contact" },
       ]),
       handoffSuggested: true,
@@ -669,37 +1312,99 @@ async function buildTraceabilityReply(message: string): Promise<ChatReply> {
   }
 
   const latestTimeline = batch.timeline[batch.timeline.length - 1];
-  const stage = latestTimeline?.stage ? formatLabel(latestTimeline.stage) : "processing";
+  const traceabilityReplyByTopic: Record<TraceabilityReplyTopic, string> = {
+    summary: `Batch ${batch.batchCode} for ${batch.productName} is "${batch.status}". Source: ${batch.source.farmName}, ${batch.source.region}. Latest stage: ${latestTimeline ? formatLabel(latestTimeline.stage) : "processing"}.`,
+    timeline: `Recent batch timeline for ${batch.batchCode}:\n${buildTraceabilityTimelineLines(batch).join("\n")}`,
+    certifications:
+      batch.certifications.length > 0
+        ? `Certifications for ${batch.batchCode}:\n${batch.certifications
+            .map(
+              (entry) =>
+                `• ${entry.name} · ${entry.issuer} · code ${entry.certificateCode}${entry.validUntil ? ` · valid until ${formatDate(entry.validUntil)}` : ""}`,
+            )
+            .join("\n")}`
+        : `No certifications are attached to ${batch.batchCode} yet.`,
+    source: `Source for ${batch.batchCode}: ${batch.source.farmName}, ${batch.source.region}, ${batch.source.country}. Lot reference: ${batch.source.lotReference}.${batch.source.harvestedAt ? ` Harvested ${formatDate(batch.source.harvestedAt)}.` : ""}`,
+    processing: `Processing details for ${batch.batchCode}: ${batch.processing.facilityName}, line ${batch.processing.lineName}. Packaged ${formatDateTime(batch.processing.packagedAt)}. QA lead: ${batch.processing.qaLead}.`,
+    dates: `Dates for ${batch.batchCode}: produced ${formatDate(batch.productionDate)}, packaged ${formatDate(batch.processing.packagedAt)}, expires ${formatDate(batch.expiryDate)}${batch.source.harvestedAt ? `, harvested ${formatDate(batch.source.harvestedAt)}` : ""}.`,
+  };
 
   return {
     intent: "traceability_lookup",
     confidence: 0.95,
-    answer: `Batch ${batch.batchCode} (${batch.productName}) is "${batch.status}". Source: ${batch.source.farmName}, ${batch.source.region}. Latest stage: ${stage}.`,
+    answer: traceabilityReplyByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Open batch timeline", prompt: `Show full timeline for ${batch.batchCode}.` },
-      { label: "Certification info", prompt: "Show certification details for this batch." },
+      { label: "Timeline", prompt: `Show the full timeline for ${batch.batchCode}.` },
+      { label: "Source", prompt: `Show source details for ${batch.batchCode}.` },
+      { label: "Certifications", prompt: `Show certification details for ${batch.batchCode}.` },
+      { label: "Processing", prompt: `Show processing details for ${batch.batchCode}.` },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       {
-        label: "Open Traceability",
+        label: "Traceability",
         href: `/traceability?code=${encodeURIComponent(batch.batchCode)}`,
       },
-      { label: "Shop Product", href: `/shop?search=${encodeURIComponent(batch.productName)}` },
+      { label: batch.productName, href: `/shop?search=${encodeURIComponent(batch.productName)}` },
     ]),
     handoffSuggested: false,
   };
 }
 
-async function buildB2BReply(): Promise<ChatReply> {
+function resolveB2BReplyTopic(message: string): B2BReplyTopic {
+  const normalized = normalizeToken(message);
+  if (includesAny(normalized, ["quote", "quotation", "pricing request", "bulk order"])) {
+    return "quote";
+  }
+  if (includesAny(normalized, ["approval", "approved", "application"])) {
+    return "approval";
+  }
+  if (includesAny(normalized, ["pricing", "tier", "discount", "minimum order"])) {
+    return "pricing";
+  }
+  if (includesAny(normalized, ["invoice", "billing", "due"])) {
+    return "invoice";
+  }
+  if (includesAny(normalized, ["statement", "account statement"])) {
+    return "statement";
+  }
+  if (includesAny(normalized, ["support", "ticket", "account manager", "issue"])) {
+    return "support";
+  }
+  return "overview";
+}
+
+async function buildB2BReply(message: string): Promise<ChatReply> {
+  const topic = resolveB2BReplyTopic(message);
+  const b2bData = await readB2BData();
+  const tierSummary = b2bData.pricingTiers
+    .map((tier) => `• ${tier.label} — review target ${tier.quoteReviewHours}h`)
+    .join("\n");
+
+  const answerByTopic: Record<B2BReplyTopic, string> = {
+    overview:
+      "The distributor portal supports account onboarding, quote requests, quote-to-order conversion, invoice access, statements, and support tickets.",
+    quote:
+      "For a bulk quote, submit company details, delivery region, product variants, quantities, preferred delivery date, and any handling notes through the distributor portal.",
+    approval:
+      "Distributor approval starts with company and contact details. Once reviewed, the team assigns your account tier, active regions, and account manager access.",
+    pricing: `Pricing is managed through account tiers. Current portal response windows:\n${tierSummary}`,
+    invoice:
+      "Invoices are handled inside the distributor portal after quote approval and order conversion. Use the portal for invoice downloads, balance checks, and payment follow-up.",
+    statement:
+      "Account statements are generated by period inside the distributor portal. Use the portal to review billed totals, payments, and outstanding balance.",
+    support:
+      "Distributor support runs through the portal or the sales team. You can open tickets for quoting, order issues, invoices, and account management follow-up.",
+  };
+
   return {
     intent: "b2b_quote",
-    confidence: 0.93,
-    answer:
-      "For distributor/B2B onboarding, use the portal to submit company details and quote requirements. You can request bulk pricing, convert quotes to orders, and download invoices.",
+    confidence: 0.92,
+    answer: answerByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Open B2B portal", prompt: "Take me to the distributor portal." },
       { label: "Quote requirements", prompt: "What details are needed for a bulk quote?" },
-      { label: "Track B2B order", prompt: "How do I track my B2B order?" },
+      { label: "Approval flow", prompt: "How does distributor approval work?" },
+      { label: "Invoices", prompt: "How do B2B invoices work?" },
+      { label: "Portal support", prompt: "I need distributor support." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Distributor Portal", href: "/b2b" },
@@ -709,46 +1414,62 @@ async function buildB2BReply(): Promise<ChatReply> {
   };
 }
 
-async function buildUnknownReply(): Promise<ChatReply> {
+async function buildUnknownReply(context?: ConversationContext): Promise<ChatReply> {
+  const contextualAction =
+    context?.previousIntent && context.previousIntent !== "unknown"
+      ? {
+          label: "Continue previous topic",
+          prompt: "Continue with the previous topic.",
+        }
+      : null;
+
   return {
     intent: "unknown",
     confidence: 0.45,
     answer:
-      "I’m not fully confident on that request yet. I can connect you to human support while we keep improving responses.",
+      "I do not have a strong match for that request yet. I can still help with products, allergens, recipes, traceability, orders, or distributor support.",
     quickActions: normalizeQuickActions([
+      ...(contextualAction ? [contextualAction] : []),
       { label: "Product help", prompt: "Help me find the right products." },
       { label: "Order support", prompt: "I need help with an order issue." },
+      { label: "Traceability", prompt: "Help me verify a batch code." },
       { label: "B2B help", prompt: "I need distributor support." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Contact Team", href: "/contact" },
-      { label: "Shop", href: "/shop" },
+      { label: "Products", href: "/shop" },
+      { label: "Traceability", href: "/traceability" },
     ]),
     handoffSuggested: true,
-    handoffReason: "Low answer confidence for current request.",
+    handoffReason: "Low answer confidence for the current request.",
   };
 }
 
-async function buildReply(input: { message: string; intent: ChatIntent; confidence: number }) {
+async function buildReply(input: {
+  message: string;
+  intent: ChatIntent;
+  confidence: number;
+  context: ConversationContext;
+}) {
   const normalizedIntent = intentSet.has(input.intent) ? input.intent : "unknown";
   switch (normalizedIntent) {
     case "greeting":
       return buildGreetingReply();
     case "product_search":
-      return buildProductSearchReply(input.message);
+      return buildProductSearchReply(input.message, input.context);
     case "recipe_help":
-      return buildRecipeReply(input.message);
+      return buildRecipeReply(input.message, input.context);
     case "allergen_help":
       return buildAllergenReply(input.message);
     case "order_status":
-      return buildOrderStatusReply(input.message);
+      return buildOrderStatusReply(input.message, input.context);
     case "traceability_lookup":
-      return buildTraceabilityReply(input.message);
+      return buildTraceabilityReply(input.message, input.context);
     case "b2b_quote":
-      return buildB2BReply();
+      return buildB2BReply(input.message);
     case "unknown":
     default:
-      return buildUnknownReply();
+      return buildUnknownReply(input.context);
   }
 }
 
@@ -763,12 +1484,13 @@ export async function askChatAgent(input: AskChatAgentInput): Promise<AskChatAge
     conversationId: input.conversationId,
     sessionId: input.sessionId,
   });
-
-  const intentResolution = resolveIntent(message);
+  const context = buildConversationContext(data, conversation);
+  const intentResolution = resolveIntent(message, context);
   const reply = await buildReply({
     message,
     intent: intentResolution.intent,
     confidence: intentResolution.confidence,
+    context,
   });
 
   const now = new Date().toISOString();

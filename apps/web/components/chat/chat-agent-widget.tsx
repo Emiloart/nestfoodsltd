@@ -43,19 +43,16 @@ const sessionStorageKey = "nestfoodsltd_chat_session_id";
 const conversationStorageKey = "nestfoodsltd_chat_conversation_id";
 
 const initialQuickActions: ChatQuickAction[] = [
-  { label: "Find bread options", prompt: "Show me your bread options." },
-  {
-    label: "Allergen help",
-    prompt: "Which products are suitable for gluten-sensitive customers?",
-  },
+  { label: "Compare breads", prompt: "Compare your bread options for me." },
+  { label: "Trace a batch", prompt: "Help me verify a batch code." },
   { label: "Track my order", prompt: "Help me check my order status." },
   { label: "Distributor support", prompt: "I need distributor quote support." },
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
-  { label: "Shop", href: "/shop" },
+  { label: "Products", href: "/shop" },
   { label: "Traceability", href: "/traceability" },
-  { label: "B2B", href: "/b2b" },
+  { label: "Distributor Portal", href: "/b2b" },
 ];
 
 function buildSessionId() {
@@ -128,7 +125,7 @@ export function ChatAgentWidget() {
       id: "welcome",
       role: "assistant",
       content:
-        "Hi — I’m Nest Agent. Ask about products, allergens, recipes, order tracking, traceability, or distributor support.",
+        "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, check orders, or guide distributor support.",
       createdAt: new Date().toISOString(),
     },
   ]);
@@ -284,6 +281,33 @@ export function ChatAgentWidget() {
     setOpen((current) => !current);
   }
 
+  function resetConversation() {
+    conversationIdRef.current = "";
+    window.localStorage.removeItem(conversationStorageKey);
+    setMessages([
+      {
+        id: "welcome",
+        role: "assistant",
+        content:
+          "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, check orders, or guide distributor support.",
+        createdAt: new Date().toISOString(),
+      },
+    ]);
+    setQuickActions(initialQuickActions);
+    setSuggestedLinks(initialLinks);
+    setLastIntent("unknown");
+    setHandoffSuggested(false);
+    setHandoffReason("");
+    setLeadFormOpen(false);
+    setLeadName("");
+    setLeadEmail("");
+    setLeadPhone("");
+    setLeadMessage("");
+    setLeadSubmitting(false);
+    setLeadStatus("");
+    setInputValue("");
+  }
+
   return (
     <div className="pointer-events-none fixed bottom-4 right-3 z-[70] flex w-[min(92vw,360px)] flex-col items-end gap-3 md:bottom-8 md:right-4 md:w-[min(95vw,380px)]">
       {open ? (
@@ -292,17 +316,26 @@ export function ChatAgentWidget() {
             <div className="space-y-1">
               <Badge>Nest Agent</Badge>
               <p className="hidden text-xs text-neutral-600 dark:text-neutral-300 md:block">
-                Fast product and support assistant
+                Product, traceability, order, and distributor assistant
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--border)] text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-950/70"
-              aria-label="Close chat"
-            >
-              <CloseIcon />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={resetConversation}
+                className="inline-flex items-center justify-center rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] font-medium text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-950/70"
+              >
+                New Chat
+              </button>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--border)] text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-950/70"
+                aria-label="Close chat"
+              >
+                <CloseIcon />
+              </button>
+            </div>
           </div>
 
           <div
