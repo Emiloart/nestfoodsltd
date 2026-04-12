@@ -48,6 +48,8 @@ export function ImagePlaceholder({
           unoptimized={isSvgSource(src)}
         />
       ) : (
+        // Remote placeholder sources are not guaranteed to be configured for next/image.
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
           alt={alt}

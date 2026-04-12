@@ -16,6 +16,26 @@ import { type LocaleCode } from "@/lib/customer/types";
 const LOCALE_STORAGE_KEY = "nestfoodsltd_locale";
 const CURRENCY_STORAGE_KEY = "nestfoodsltd_currency";
 
+function readInitialLocale() {
+  if (typeof window === "undefined") {
+    return DEFAULT_LOCALE;
+  }
+
+  const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+  return storedLocale && isSupportedLocale(storedLocale) ? storedLocale : DEFAULT_LOCALE;
+}
+
+function readInitialCurrency() {
+  if (typeof window === "undefined") {
+    return DEFAULT_CURRENCY;
+  }
+
+  const storedCurrency = window.localStorage.getItem(CURRENCY_STORAGE_KEY);
+  return storedCurrency && isSupportedCurrency(storedCurrency)
+    ? storedCurrency
+    : DEFAULT_CURRENCY;
+}
+
 type ExperienceContextValue = {
   locale: LocaleCode;
   currency: CurrencyCode;
@@ -28,19 +48,8 @@ type ExperienceContextValue = {
 const ExperienceContext = createContext<ExperienceContextValue | null>(null);
 
 export function ExperienceProvider({ children }: PropsWithChildren) {
-  const [locale, setLocale] = useState<LocaleCode>(DEFAULT_LOCALE);
-  const [currency, setCurrency] = useState<CurrencyCode>(DEFAULT_CURRENCY);
-
-  useEffect(() => {
-    const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-    if (storedLocale && isSupportedLocale(storedLocale)) {
-      setLocale(storedLocale);
-    }
-    const storedCurrency = window.localStorage.getItem(CURRENCY_STORAGE_KEY);
-    if (storedCurrency && isSupportedCurrency(storedCurrency)) {
-      setCurrency(storedCurrency);
-    }
-  }, []);
+  const [locale, setLocale] = useState<LocaleCode>(readInitialLocale);
+  const [currency, setCurrency] = useState<CurrencyCode>(readInitialCurrency);
 
   useEffect(() => {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);

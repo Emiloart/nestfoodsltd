@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -256,11 +256,7 @@ export function CatalogManagerClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "CONTENT_EDITOR" || role === "SALES_MANAGER";
 
-  useEffect(() => {
-    void reloadProducts();
-  }, []);
-
-  async function reloadProducts(preferredProductId?: string) {
+  const reloadProducts = useCallback(async (preferredProductId?: string) => {
     const response = await fetch("/api/admin/catalog/products", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
@@ -285,7 +281,14 @@ export function CatalogManagerClient() {
     }
 
     setStatus("Catalog manager ready.");
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadProducts();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadProducts]);
 
   function updateForm(partial: Partial<CatalogFormState>) {
     setForm((current) => ({ ...current, ...partial }));

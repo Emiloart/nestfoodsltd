@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useState } from "react";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { Badge } from "@/components/ui/badge";
@@ -40,13 +40,6 @@ export default function AdminLoginPage() {
   const [activationMfaCode, setActivationMfaCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("Sign in to access the admin workspace.");
-
-  useEffect(() => {
-    const prefillEmail = searchParams.get("email");
-    if (prefillEmail) {
-      setEmail(prefillEmail);
-    }
-  }, [searchParams]);
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

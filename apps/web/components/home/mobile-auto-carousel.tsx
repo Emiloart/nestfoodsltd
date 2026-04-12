@@ -22,6 +22,27 @@ export function MobileAutoCarousel({
   transitionMs = 550,
   intervalMs = 2000,
 }: MobileAutoCarouselProps) {
+  return (
+    <MobileAutoCarouselInner
+      key={`${items.length}-${transitionMs}-${intervalMs}`}
+      items={items}
+      ariaLabel={ariaLabel}
+      className={className}
+      slideClassName={slideClassName}
+      transitionMs={transitionMs}
+      intervalMs={intervalMs}
+    />
+  );
+}
+
+function MobileAutoCarouselInner({
+  items,
+  ariaLabel,
+  className,
+  slideClassName,
+  transitionMs = 550,
+  intervalMs = 2000,
+}: MobileAutoCarouselProps) {
   const reduceMotion = useReducedMotion();
   const hasLoop = items.length > 1;
   const renderedItems = useMemo(() => {
@@ -41,11 +62,6 @@ export function MobileAutoCarousel({
     setTransitionEnabled(true);
     setDisplayIndex((current) => current + 1);
   });
-
-  useEffect(() => {
-    setTransitionEnabled(false);
-    setDisplayIndex(hasLoop ? 1 : 0);
-  }, [hasLoop, items.length]);
 
   useEffect(() => {
     if (transitionEnabled) {
@@ -69,7 +85,7 @@ export function MobileAutoCarousel({
     }, intervalMs);
 
     return () => window.clearInterval(intervalId);
-  }, [goToNextSlide, hasLoop, intervalMs, reduceMotion]);
+  }, [hasLoop, intervalMs, reduceMotion]);
 
   if (items.length === 0) {
     return null;

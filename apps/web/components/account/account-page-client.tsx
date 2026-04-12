@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useExperience } from "@/components/customer/experience-provider";
 import { Button } from "@/components/ui/button";
@@ -88,37 +88,7 @@ export function AccountPageClient() {
   const preferencesDietaryTags = useMemo(() => preferences?.dietaryTags.join(", ") ?? "", [preferences?.dietaryTags]);
   const newsletterTopics = useMemo(() => preferences?.newsletter.topics.join(", ") ?? "", [preferences?.newsletter.topics]);
 
-  useEffect(() => {
-    async function loadSession() {
-      const response = await fetch("/api/customer/session");
-      if (!response.ok) {
-        setAuthenticated(false);
-        setProfile(null);
-        setAuthChecked(true);
-        return;
-      }
-
-      const data = (await response.json()) as CustomerSessionResponse;
-      if (!data.authenticated || !data.profile) {
-        setAuthenticated(false);
-        setProfile(null);
-        setAuthChecked(true);
-        return;
-      }
-
-      setAuthenticated(true);
-      setProfile(data.profile);
-      setProfileAddressInput(data.profile.addresses.join("\n"));
-      setLoginEmail(data.profile.email);
-      setStatus("Session restored.");
-      setAuthChecked(true);
-      await loadAccountData();
-    }
-
-    void loadSession();
-  }, []);
-
-  async function loadAccountData() {
+  const loadAccountData = useCallback(async () => {
     setLoading(true);
     const responses = await Promise.all([
       fetch("/api/customer/profile"),
@@ -159,7 +129,37 @@ export function AccountPageClient() {
     setCurrency(preferencesData.preferences.currency);
     setStatus("Account synchronized.");
     setLoading(false);
-  }
+  }, [setCurrency, setLocale]);
+
+  useEffect(() => {
+    async function loadSession() {
+      const response = await fetch("/api/customer/session");
+      if (!response.ok) {
+        setAuthenticated(false);
+        setProfile(null);
+        setAuthChecked(true);
+        return;
+      }
+
+      const data = (await response.json()) as CustomerSessionResponse;
+      if (!data.authenticated || !data.profile) {
+        setAuthenticated(false);
+        setProfile(null);
+        setAuthChecked(true);
+        return;
+      }
+
+      setAuthenticated(true);
+      setProfile(data.profile);
+      setProfileAddressInput(data.profile.addresses.join("\n"));
+      setLoginEmail(data.profile.email);
+      setStatus("Session restored.");
+      setAuthChecked(true);
+      await loadAccountData();
+    }
+
+    void loadSession();
+  }, [loadAccountData]);
 
   async function signIn() {
     if (!loginEmail.trim()) {

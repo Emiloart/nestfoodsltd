@@ -38,29 +38,30 @@ function sanitize(items: CartItem[]) {
     .filter((item) => item.variantId.length > 0);
 }
 
+function readInitialCartItems() {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  const raw = window.localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as CartItem[];
+    return sanitize(parsed);
+  } catch {
+    return [];
+  }
+}
+
 export function CartProvider({ children }: PropsWithChildren) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const [items, setItems] = useState<CartItem[]>(readInitialCartItems);
 
   useEffect(() => {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw) as CartItem[];
-        setItems(sanitize(parsed));
-      } catch {
-        setItems([]);
-      }
-    }
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) {
-      return;
-    }
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items, hydrated]);
+  }, [items]);
 
   const setQuantity = useCallback((variantId: string, quantity: number) => {
     setItems((current) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -51,22 +51,7 @@ export function OrderControlClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "SALES_MANAGER";
 
-  useEffect(() => {
-    void reloadOrders();
-    void reloadWebhooks();
-  }, []);
-
-  useEffect(() => {
-    void reloadOrders(selectedOrderId || undefined);
-  }, [search, statusFilter]);
-
-  useEffect(() => {
-    if (selectedOrder) {
-      setNextStatus(selectedOrder.status);
-    }
-  }, [selectedOrder]);
-
-  async function reloadOrders(preferredOrderId?: string) {
+  const reloadOrders = useCallback(async (preferredOrderId?: string) => {
     const searchParams = new URLSearchParams();
     if (search.trim()) {
       searchParams.set("search", search.trim());
@@ -93,21 +78,30 @@ export function OrderControlClient() {
       : data.orders[0];
     if (target) {
       setSelectedOrderId(target.id);
+      setNextStatus(target.status);
     } else {
       setSelectedOrderId("");
     }
 
     setStatus("Order control ready.");
-  }
+  }, [search, statusFilter]);
 
-  async function reloadWebhooks() {
+  const reloadWebhooks = useCallback(async () => {
     const response = await fetch("/api/admin/orders/webhooks", { cache: "no-store" });
     if (!response.ok) {
       return;
     }
     const data = (await response.json()) as AdminWebhooksResponse;
     setWebhookEvents(data.events.slice(0, 10));
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadOrders();
+      void reloadWebhooks();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadOrders, reloadWebhooks]);
 
   async function updateOrderStatus() {
     if (!selectedOrderId) {
@@ -188,7 +182,14 @@ export function OrderControlClient() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Orders</p>
           <select
             value={selectedOrderId}
-            onChange={(event) => setSelectedOrderId(event.target.value)}
+            onChange={(event) => {
+              const nextId = event.target.value;
+              setSelectedOrderId(nextId);
+              const target = orders.find((entry) => entry.id === nextId) ?? null;
+              if (target) {
+                setNextStatus(target.status);
+              }
+            }}
             className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
           >
             <option value="">Select order</option>

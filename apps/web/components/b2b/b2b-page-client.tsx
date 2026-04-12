@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useExperience } from "@/components/customer/experience-provider";
 import { Button } from "@/components/ui/button";
@@ -125,19 +125,6 @@ export function B2BPageClient() {
     [draftVariantId, variantOptions],
   );
 
-  useEffect(() => {
-    if (!selectedVariant) {
-      return;
-    }
-    setDraftQuantity((current) => {
-      const normalizedCurrent = Number.isFinite(current) ? Math.floor(current) : 0;
-      return Math.min(
-        selectedVariant.maximumOrderQuantity,
-        Math.max(selectedVariant.minimumOrderQuantity, normalizedCurrent),
-      );
-    });
-  }, [selectedVariant]);
-
   const draftItemsHydrated = useMemo(
     () =>
       draftItems
@@ -158,34 +145,7 @@ export function B2BPageClient() {
     [draftItems, variantOptions],
   );
 
-  useEffect(() => {
-    async function restoreSession() {
-      const response = await fetch("/api/b2b/session");
-      if (!response.ok) {
-        setAuthChecked(true);
-        return;
-      }
-
-      const data = (await response.json()) as B2BSessionResponse;
-      if (!data.authenticated || !data.account) {
-        setAuthChecked(true);
-        return;
-      }
-
-      setAuthenticated(true);
-      setAccount(data.account);
-      setCompanyName(data.account.companyName);
-      setContactName(data.account.contactName);
-      setEmail(data.account.email);
-      setPhone(data.account.phone ?? "");
-      await loadPortalData();
-      setAuthChecked(true);
-    }
-
-    void restoreSession();
-  }, []);
-
-  async function loadPortalData() {
+  const loadPortalData = useCallback(async () => {
     const [
       accountResponse,
       catalogResponse,
@@ -217,8 +177,20 @@ export function B2BPageClient() {
       const catalogData = (await catalogResponse.json()) as B2BCatalogResponse;
       setCatalog(catalogData.catalog);
       setPricing(catalogData.pricing);
-      if (!draftVariantId && catalogData.catalog[0]?.variants[0]) {
-        setDraftVariantId(catalogData.catalog[0].variants[0].id);
+      const firstProduct = catalogData.catalog[0];
+      const firstVariant = firstProduct?.variants[0];
+      setDraftVariantId((current) => current || firstVariant?.id || "");
+      if (firstVariant) {
+        setDraftQuantity((current) => {
+          const normalizedCurrent = Number.isFinite(current) ? Math.floor(current) : 0;
+          return Math.min(
+            firstProduct?.maximumOrderQuantity ?? 1,
+            Math.max(
+              firstProduct?.minimumOrderQuantity ?? 1,
+              normalizedCurrent || firstProduct?.minimumOrderQuantity || 1,
+            ),
+          );
+        });
       }
     } else {
       setCatalog([]);
@@ -251,7 +223,34 @@ export function B2BPageClient() {
       const data = (await ticketsResponse.json()) as { tickets: B2BSupportTicket[] };
       setTickets(data.tickets);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    async function restoreSession() {
+      const response = await fetch("/api/b2b/session");
+      if (!response.ok) {
+        setAuthChecked(true);
+        return;
+      }
+
+      const data = (await response.json()) as B2BSessionResponse;
+      if (!data.authenticated || !data.account) {
+        setAuthChecked(true);
+        return;
+      }
+
+      setAuthenticated(true);
+      setAccount(data.account);
+      setCompanyName(data.account.companyName);
+      setContactName(data.account.contactName);
+      setEmail(data.account.email);
+      setPhone(data.account.phone ?? "");
+      await loadPortalData();
+      setAuthChecked(true);
+    }
+
+    void restoreSession();
+  }, [loadPortalData]);
 
   async function signInOrRequestAccess() {
     setLoading(true);
@@ -556,7 +555,25 @@ export function B2BPageClient() {
             <div className="grid gap-3 md:grid-cols-[1fr_160px_auto]">
               <select
                 value={draftVariantId}
-                onChange={(event) => setDraftVariantId(event.target.value)}
+                onChange={(event) => {
+                  const nextId = event.target.value;
+                  setDraftVariantId(nextId);
+                  const nextVariant = variantOptions.find((entry) => entry.id === nextId) ?? null;
+                  if (nextVariant) {
+                    setDraftQuantity((current) => {
+                      const normalizedCurrent = Number.isFinite(current)
+                        ? Math.floor(current)
+                        : 0;
+                      return Math.min(
+                        nextVariant.maximumOrderQuantity,
+                        Math.max(
+                          nextVariant.minimumOrderQuantity,
+                          normalizedCurrent || nextVariant.minimumOrderQuantity,
+                        ),
+                      );
+                    });
+                  }
+                }}
                 className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
               >
                 <option value="">Select variant</option>

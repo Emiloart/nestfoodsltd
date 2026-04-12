@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -129,11 +129,7 @@ export function RecipeManagerClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "CONTENT_EDITOR";
 
-  useEffect(() => {
-    void reloadRecipes();
-  }, []);
-
-  async function reloadRecipes(preferredRecipeId?: string) {
+  const reloadRecipes = useCallback(async (preferredRecipeId?: string) => {
     const response = await fetch("/api/admin/cms/recipes", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
@@ -158,7 +154,14 @@ export function RecipeManagerClient() {
     }
 
     setStatus("Recipe manager ready.");
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadRecipes();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadRecipes]);
 
   function updateForm(partial: Partial<RecipeFormState>) {
     setForm((current) => ({ ...current, ...partial }));

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -72,11 +72,7 @@ export function MediaLibraryClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "CONTENT_EDITOR";
 
-  useEffect(() => {
-    void reloadAssets();
-  }, []);
-
-  async function reloadAssets(preferredAssetId?: string) {
+  const reloadAssets = useCallback(async (preferredAssetId?: string) => {
     const response = await fetch("/api/admin/cms/media", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
@@ -101,7 +97,14 @@ export function MediaLibraryClient() {
     }
 
     setStatus("Media library ready.");
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadAssets();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadAssets]);
 
   function updateForm(partial: Partial<MediaFormState>) {
     setForm((current) => ({ ...current, ...partial }));

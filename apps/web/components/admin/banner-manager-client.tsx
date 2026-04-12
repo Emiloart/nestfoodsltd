@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -101,11 +101,7 @@ export function BannerManagerClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "CONTENT_EDITOR";
 
-  useEffect(() => {
-    void reloadBanners();
-  }, []);
-
-  async function reloadBanners(preferredBannerId?: string) {
+  const reloadBanners = useCallback(async (preferredBannerId?: string) => {
     const response = await fetch("/api/admin/cms/banners", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
@@ -130,7 +126,14 @@ export function BannerManagerClient() {
     }
 
     setStatus("Banner manager ready.");
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadBanners();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadBanners]);
 
   function updateForm(partial: Partial<BannerFormState>) {
     setForm((current) => ({ ...current, ...partial }));

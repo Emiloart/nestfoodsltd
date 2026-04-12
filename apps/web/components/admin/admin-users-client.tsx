@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -93,19 +93,7 @@ export function AdminUsersClient() {
   );
   const canManage = role === "SUPER_ADMIN";
 
-  useEffect(() => {
-    void reloadDirectory();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedUser) {
-      setUserForm(null);
-      return;
-    }
-    setUserForm(toUserUpdateForm(selectedUser));
-  }, [selectedUser]);
-
-  async function reloadDirectory(preferredUserId?: string) {
+  const reloadDirectory = useCallback(async (preferredUserId?: string) => {
     const response = await fetch("/api/admin/users", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
@@ -122,8 +110,16 @@ export function AdminUsersClient() {
       ? (data.users.find((entry) => entry.id === preferredUserId) ?? data.users[0] ?? null)
       : (data.users[0] ?? null);
     setSelectedUserId(target ? target.id : "");
+    setUserForm(target ? toUserUpdateForm(target) : null);
     setStatus("Admin user directory ready.");
-  }
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      void reloadDirectory();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [reloadDirectory]);
 
   function updateInviteForm(partial: Partial<InviteFormState>) {
     setInviteForm((current) => {
@@ -410,7 +406,12 @@ export function AdminUsersClient() {
           </p>
           <select
             value={selectedUserId}
-            onChange={(event) => setSelectedUserId(event.target.value)}
+            onChange={(event) => {
+              const nextId = event.target.value;
+              setSelectedUserId(nextId);
+              const target = users.find((entry) => entry.id === nextId) ?? null;
+              setUserForm(target ? toUserUpdateForm(target) : null);
+            }}
             className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
           >
             <option value="">Select admin user</option>
