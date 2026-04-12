@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { Card } from "@/components/ui/card";
+import { buttonClassName } from "@/components/ui/button";
 import { SectionHeading } from "@/components/home/section-heading";
 import { type CmsPage } from "@/lib/cms/types";
 
@@ -24,7 +25,7 @@ function StoryCard({ page }: { page: CmsPage }) {
       </div>
       <Link
         href={`/${page.slug}`}
-        className="inline-flex rounded-full border border-[color:var(--border)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:bg-[color:var(--surface-strong)] dark:text-neutral-100"
+        className={buttonClassName({ variant: "secondary", size: "sm" })}
       >
         Explore {page.title}
       </Link>

@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { buttonClassName } from "./ui/button";
+
 const footerGroups = [
   {
     title: "Company",
@@ -51,11 +53,11 @@ const footerGroups = [
 export function Footer() {
   return (
     <footer className="px-3 pb-3 pt-3 md:px-4 md:pb-5 md:pt-4">
-      <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
+      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
         <div className="space-y-5 px-4 py-5 md:hidden">
           <div>
-            <p className="section-kicker">Nest Foods Ltd</p>
-            <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100">
+            <p className="section-kicker text-[color:var(--brand-3)]">Nest Foods Ltd</p>
+            <h2 className="display-heading mt-3 text-3xl text-white">
               Bread quality and traceability, made clear.
             </h2>
           </div>
@@ -70,7 +72,11 @@ export function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm font-medium text-neutral-800 transition hover:brightness-105 dark:text-neutral-100"
+                className={buttonClassName({
+                  variant: item.label === "Enquiry" || item.label === "Distributor" ? "primary" : "secondary",
+                  size: "sm",
+                  className: "min-h-12 rounded-[1.1rem] text-center",
+                })}
               >
                 {item.label}
               </Link>
@@ -86,10 +92,10 @@ export function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:brightness-105 dark:text-neutral-200"
+                className="flex items-center justify-between rounded-[1.15rem] border border-white/10 bg-white/6 px-4 py-3 text-sm text-white/82 transition hover:bg-white/10"
               >
                 <span>{item.label}</span>
-                <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">Open</span>
+                <span className="text-xs uppercase tracking-[0.14em] text-white/46">Open</span>
               </Link>
             ))}
           </div>
@@ -99,7 +105,7 @@ export function Footer() {
               (item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-[11px] text-neutral-700 dark:text-neutral-200"
+                  className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[11px] text-white/84"
                 >
                   {item}
                 </span>
@@ -107,22 +113,22 @@ export function Footer() {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-neutral-500 dark:text-neutral-400">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/58">
             <Link
               href="/privacy"
-              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+              className="transition hover:text-white"
             >
               Privacy
             </Link>
             <Link
               href="/terms"
-              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+              className="transition hover:text-white"
             >
               Terms
             </Link>
             <Link
               href="/sustainability"
-              className="transition hover:text-neutral-900 dark:hover:text-neutral-100"
+              className="transition hover:text-white"
             >
               Sustainability
             </Link>
@@ -131,22 +137,22 @@ export function Footer() {
 
         <div className="hidden gap-8 px-5 py-8 md:grid md:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p className="section-kicker">Nest Foods Ltd</p>
-            <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
+            <p className="section-kicker text-[color:var(--brand-3)]">Nest Foods Ltd</p>
+            <h2 className="display-heading mt-3 text-3xl text-white sm:text-4xl">
               Bread quality and traceability you can verify.
             </h2>
             <div className="mt-5 flex flex-wrap gap-2">
-              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
                 Registered Manufacturer
               </span>
-              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
                 Hygienic Production
               </span>
-              <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
+              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
                 Batch Traceability
               </span>
             </div>
-            <div className="mt-5 space-y-1.5 text-sm text-neutral-600 dark:text-neutral-300">
+            <div className="mt-5 space-y-1.5 text-sm text-white/68">
               <p>Phone and email placeholders live on the contact page.</p>
               <p>Address and business hours stay available for partner enquiries.</p>
             </div>
@@ -155,7 +161,7 @@ export function Footer() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {footerGroups.map((group) => (
               <div key={group.title}>
-                <p className="section-kicker">{group.title}</p>
+                <p className="section-kicker text-[color:var(--brand-3)]">{group.title}</p>
                 <nav
                   aria-label={`${group.title} footer links`}
                   className="mt-4 flex flex-col gap-3"
@@ -164,7 +170,7 @@ export function Footer() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="text-sm text-neutral-600 transition hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-300 dark:hover:text-neutral-100"
+                      className="text-sm text-white/72 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                     >
                       {item.label}
                     </Link>

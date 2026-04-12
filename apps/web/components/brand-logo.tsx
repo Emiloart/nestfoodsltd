@@ -6,10 +6,17 @@ import { cn } from "@/lib/cn";
 type BrandLogoProps = {
   href?: string | null;
   compact?: boolean;
+  tone?: "default" | "inverse";
   className?: string;
 };
 
-export function BrandLogo({ href = "/", compact = false, className }: BrandLogoProps) {
+export function BrandLogo({
+  href = "/",
+  compact = false,
+  tone = "default",
+  className,
+}: BrandLogoProps) {
+  const inverse = tone === "inverse";
   const content = (
     <span className={cn("inline-flex items-center gap-3", className)}>
       <Image
@@ -20,19 +27,23 @@ export function BrandLogo({ href = "/", compact = false, className }: BrandLogoP
         priority
         unoptimized
         className={cn(
-          "h-9 w-9 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-1 shadow-[0_10px_24px_rgba(63,43,23,0.08)]",
+          inverse
+            ? "h-9 w-9 rounded-2xl border border-white/14 bg-white/10 p-1 shadow-[0_12px_28px_rgba(10,6,18,0.2)]"
+            : "h-9 w-9 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-1 shadow-[0_12px_28px_rgba(46,18,69,0.08)]",
           compact && "h-8 w-8",
         )}
       />
       <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
-        <span className="section-kicker text-[0.58rem]">Nest Foods Ltd</span>
+        <span className={cn("section-kicker text-[0.58rem]", inverse && "text-[color:var(--brand-3)]")}>
+          Nest Foods Ltd
+        </span>
         <span
           className={cn(
-            "display-heading text-base text-neutral-900 dark:text-neutral-100",
+            inverse ? "display-heading text-base text-white" : "display-heading text-base text-neutral-900 dark:text-neutral-100",
             compact && "text-sm",
           )}
         >
-          Premium bread production.
+          Premium bread manufacturing.
         </span>
       </span>
     </span>
@@ -46,7 +57,7 @@ export function BrandLogo({ href = "/", compact = false, className }: BrandLogoP
     <Link
       href={href}
       aria-label="Nest Foods home"
-      className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
+      className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
     >
       {content}
     </Link>

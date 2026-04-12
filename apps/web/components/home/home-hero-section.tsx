@@ -4,6 +4,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Badge } from "@/components/ui/badge";
+import { buttonClassName } from "@/components/ui/button";
 import { type CmsBanner, type CmsPage } from "@/lib/cms/types";
 
 type HomeHeroSectionProps = {
@@ -41,13 +42,13 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href={page.ctaPrimaryHref ?? "/shop"}
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-6 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:brightness-105"
+              className={buttonClassName({ variant: "primary" })}
             >
               {page.ctaPrimaryLabel ?? "Explore Products"}
             </Link>
             <Link
               href={page.ctaSecondaryHref ?? "/traceability"}
-              className="inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-6 text-sm font-medium text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+              className={buttonClassName({ variant: "secondary" })}
             >
               {page.ctaSecondaryLabel ?? "Our Standards"}
             </Link>
@@ -62,7 +63,11 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
               {banner.ctaLabel && banner.ctaHref ? (
                 <Link
                   href={banner.ctaHref}
-                  className="mt-4 inline-flex rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+                  className={buttonClassName({
+                    variant: "secondary",
+                    size: "sm",
+                    className: "mt-4",
+                  })}
                 >
                   {banner.ctaLabel}
                 </Link>
@@ -84,7 +89,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
             {heroMetrics.map((metric) => (
               <div
                 key={metric.label}
-                className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3.5"
+                className="rounded-[1.3rem] border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-4 py-3.5 shadow-[0_12px_26px_rgba(46,18,69,0.08)]"
               >
                 <p className="display-heading text-[1.75rem] text-neutral-900 dark:text-neutral-100">
                   {metric.value}

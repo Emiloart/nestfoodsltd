@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
 
+import { buttonClassName } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
+
 function MoonIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
@@ -41,7 +44,7 @@ export function ThemeToggle() {
   );
 
   if (!mounted) {
-    return <span className="h-9 w-9 rounded-full border border-[color:var(--border)]" />;
+    return <span className="h-9 w-9 rounded-full border border-white/14 bg-white/8" />;
   }
 
   const isDark = resolvedTheme === "dark";
@@ -50,7 +53,10 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface-overlay)] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-100"
+      className={cn(
+        buttonClassName({ variant: "ghost", size: "icon" }),
+        "h-9 w-9 border-white/14 bg-white/8 text-white hover:border-white/22 hover:bg-white/12",
+      )}
       aria-label="Toggle theme"
     >
       <AnimatePresence initial={false} mode="wait">

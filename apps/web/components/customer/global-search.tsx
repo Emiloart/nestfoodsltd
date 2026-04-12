@@ -91,14 +91,14 @@ export function GlobalSearch() {
           onFocus={() => setFocused(true)}
           onBlur={() => window.setTimeout(() => setFocused(false), 120)}
           placeholder="Search bread products, ingredients, and insights..."
-          className="h-10 rounded-full pl-10"
+          className="header-search h-10 rounded-full pl-10"
           aria-label="Search Nest Foods products and insights"
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={showResults}
           aria-controls={resultsId}
         />
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 dark:text-neutral-400">
+        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-white/72">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
             <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.8" />
             <path
@@ -129,7 +129,7 @@ export function GlobalSearch() {
                   href={entry.href}
                   role="option"
                   aria-selected="false"
-                  className="block rounded-[1rem] px-3 py-2.5 transition hover:bg-[color:var(--surface-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
+                  className="block rounded-[1rem] px-3 py-2.5 transition hover:bg-[color:var(--surface-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                 >
                   <p className="text-sm text-neutral-900 dark:text-neutral-100">{entry.title}</p>
                   <p className="text-xs uppercase tracking-[0.12em] text-neutral-500 dark:text-neutral-400">

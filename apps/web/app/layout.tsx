@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Manrope, Sora } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -9,6 +10,18 @@ import { resolveSiteUrl } from "@/lib/seo/site";
 import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
 import "./globals.css";
+
+const bodyFont = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const displayFont = Sora({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(resolveSiteUrl()),
@@ -22,8 +35,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fff8f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#121315" },
+    { media: "(prefers-color-scheme: light)", color: "#5a247a" },
+    { media: "(prefers-color-scheme: dark)", color: "#14091f" },
   ],
 };
 
@@ -33,7 +46,11 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${bodyFont.variable} ${displayFont.variable}`}
+    >
       <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a

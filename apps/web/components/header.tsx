@@ -4,6 +4,7 @@ import { BrandLogo } from "./brand-logo";
 import { GlobalSearch } from "./customer/global-search";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
+import { buttonClassName } from "./ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -18,10 +19,10 @@ const navItems = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 px-3 pt-2.5 md:px-4">
-      <div className="shell-surface mx-auto w-full max-w-7xl rounded-[1.8rem] border">
+      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
         <div className="flex min-h-[4.25rem] items-center justify-between gap-3 px-4 py-3 md:px-5">
           <div className="flex min-w-0 items-center gap-3">
-            <BrandLogo className="min-w-0" />
+            <BrandLogo className="min-w-0" tone="inverse" />
           </div>
 
           <div className="flex items-center gap-2">
@@ -29,7 +30,11 @@ export function Header() {
             <MobileNav />
             <Link
               href="/b2b"
-              className="hidden rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-4 py-2 text-xs font-medium text-white transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 md:inline-flex"
+              className={buttonClassName({
+                variant: "primary",
+                size: "sm",
+                className: "hidden md:inline-flex",
+              })}
             >
               Distributor Portal
             </Link>
@@ -37,13 +42,13 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden items-center justify-between gap-4 border-t border-[color:var(--border)] px-5 py-2.5 lg:flex">
+        <div className="hidden items-center justify-between gap-4 border-t border-white/10 px-5 py-2.5 lg:flex">
           <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-4 py-2 text-sm text-neutral-600 transition hover:bg-[color:var(--surface-strong)] hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-300 dark:hover:bg-[color:var(--surface-strong)] dark:hover:text-neutral-100"
+                className="rounded-full px-4 py-2 text-sm text-white/76 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
               >
                 {item.label}
               </Link>
@@ -52,7 +57,7 @@ export function Header() {
 
           <Link
             href="/contact"
-            className="section-kicker rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-2 text-[0.68rem] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+            className={buttonClassName({ variant: "secondary", size: "sm" })}
           >
             Make Enquiry
           </Link>

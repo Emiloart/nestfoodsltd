@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { buttonClassName } from "@/components/ui/button";
+
 type PageShellProps = {
   title: string;
   headline?: string;
@@ -28,13 +30,13 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/shop"
-              className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-center text-xs font-medium uppercase tracking-[0.15em] text-neutral-800 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+              className={buttonClassName({ variant: "secondary" })}
             >
               View Product Range
             </Link>
             <Link
               href="/contact"
-              className="rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-5 py-3 text-center text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:-translate-y-0.5 hover:brightness-105"
+              className={buttonClassName({ variant: "primary" })}
             >
               Contact Team
             </Link>

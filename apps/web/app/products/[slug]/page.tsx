@@ -6,6 +6,7 @@ import { RecentlyViewedTracker } from "@/components/customer/recently-viewed-tra
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
+import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getCommerceProductBySlug } from "@/lib/commerce/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -75,7 +76,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <div className="space-y-6">
           <div className="space-y-3">
             <Badge>{product.category}</Badge>
-            <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+            <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
               {product.name}
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-300">
@@ -93,13 +94,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/contact"
-                className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                className={buttonClassName({ variant: "primary", size: "sm" })}
               >
                 Enquire About This Product
               </Link>
               <Link
                 href="/traceability"
-                className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+                className={buttonClassName({ variant: "secondary", size: "sm" })}
               >
                 Quality & Traceability
               </Link>
@@ -126,7 +127,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   </div>
                   <Link
                     href="/contact"
-                    className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+                    className={buttonClassName({ variant: "secondary", size: "sm" })}
                   >
                     {variant.stockStatus === "out_of_stock" ||
                     product.availabilityStatus === "unavailable"
@@ -164,13 +165,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <div className="flex flex-wrap gap-2">
                 <Link
                   href="/traceability"
-                  className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+                  className={buttonClassName({ variant: "secondary", size: "sm" })}
                 >
                   Quality & Traceability
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                  className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
                   Contact Team
                 </Link>

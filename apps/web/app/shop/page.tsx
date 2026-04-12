@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
+import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
@@ -44,7 +45,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
         <div className="space-y-3">
           <Badge>Product Range</Badge>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
             Bread Products Built For Consistency
           </h1>
           <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
@@ -62,7 +63,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </p>
           <Link
             href="/traceability"
-            className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+            className={buttonClassName({ variant: "secondary", size: "sm" })}
           >
             Open Traceability
           </Link>
@@ -84,7 +85,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <select
               name="category"
               defaultValue={category ?? ""}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="field-control h-11 px-3 text-sm"
             >
               <option value="">All categories</option>
               {facets.categories.map((entry) => (
@@ -99,7 +100,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <select
               name="tag"
               defaultValue={tag ?? ""}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="field-control h-11 px-3 text-sm"
             >
               <option value="">All tags</option>
               {facets.tags.map((entry) => (
@@ -114,7 +115,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <select
               name="region"
               defaultValue={region ?? ""}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="field-control h-11 px-3 text-sm"
             >
               <option value="">All regions</option>
               {facets.regions.map((entry) => (
@@ -131,7 +132,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <select
               name="allergenExclude"
               defaultValue={allergenExclude ?? ""}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="field-control h-11 px-3 text-sm"
             >
               <option value="">None</option>
               {facets.allergens.map((entry) => (
@@ -142,25 +143,25 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             </select>
           </label>
           <div className="flex items-end gap-3 md:col-span-2 lg:col-span-4">
-            <label className="flex h-11 items-center gap-2 rounded-xl border border-neutral-300 px-3 text-sm dark:border-neutral-700">
+            <label className="flex h-11 items-center gap-2 rounded-xl border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-3 text-sm text-[color:var(--foreground)] shadow-[0_10px_26px_rgba(46,18,69,0.04)]">
               <input
                 type="checkbox"
                 name="inStockOnly"
                 value="1"
                 defaultChecked={inStockOnly}
-                className="h-4 w-4 rounded border-neutral-300"
+                className="h-4 w-4 rounded border-[color:var(--border-strong)] accent-[color:var(--brand-1)]"
               />
               Currently available
             </label>
             <button
               type="submit"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+              className={buttonClassName({ variant: "primary" })}
             >
               Apply
             </button>
             <Link
               href="/shop"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-300 px-5 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+              className={buttonClassName({ variant: "secondary" })}
             >
               Reset
             </Link>
@@ -216,19 +217,19 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               <div className="flex flex-wrap items-center gap-2">
                 <Link
                   href={`/products/${product.slug}`}
-                  className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
+                  className={buttonClassName({ variant: "secondary", size: "sm" })}
                 >
                   View Product
                 </Link>
                 <Link
                   href="/contact"
-                  className="rounded-full bg-neutral-900 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                  className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
                   {isAvailable ? "Make Enquiry" : "Ask About Availability"}
                 </Link>
                 <Link
                   href="/traceability"
-                  className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
+                  className={buttonClassName({ variant: "secondary", size: "sm" })}
                 >
                   Trace Batch
                 </Link>

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
+import { buttonClassName } from "@/components/ui/button";
 
 const traceabilityPoints = [
   "Source and lot details appear first.",
@@ -22,7 +23,10 @@ export function HomeTraceabilitySection() {
           actions={
             <Link
               href="/traceability"
-              className="inline-flex w-full justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:-translate-y-0.5 hover:brightness-105 sm:w-auto"
+              className={buttonClassName({
+                variant: "primary",
+                className: "w-full sm:w-auto",
+              })}
             >
               Open Traceability
             </Link>
@@ -104,7 +108,7 @@ export function HomeTraceabilitySection() {
             </div>
             <Link
               href="/traceability"
-              className="inline-flex shrink-0 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-2 text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-900 dark:text-neutral-100"
+              className={buttonClassName({ variant: "secondary", size: "sm" })}
             >
               Open
             </Link>
@@ -121,7 +125,7 @@ export function HomeTraceabilitySection() {
                 </div>
                 <Link
                   href="/traceability"
-                  className="inline-flex shrink-0 rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-4 py-3 text-[11px] font-medium uppercase tracking-[0.14em] text-white"
+                  className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
                   Verify
                 </Link>

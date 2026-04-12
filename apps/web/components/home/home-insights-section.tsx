@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
 import { Card } from "@/components/ui/card";
+import { buttonClassName } from "@/components/ui/button";
 import { type BlogArticle } from "@/lib/blog/articles";
 
 type HomeInsightsSectionProps = {
@@ -42,13 +43,13 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
               href="/recipes"
-              className="inline-flex rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:-translate-y-0.5 hover:brightness-105"
+              className={buttonClassName({ variant: "primary" })}
             >
               Open Bread Ideas
             </Link>
             <Link
               href="/blog"
-              className="inline-flex rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+              className={buttonClassName({ variant: "secondary" })}
             >
               Read Insights
             </Link>
@@ -79,7 +80,7 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
               </div>
               <Link
                 href={`/blog/${article.slug}`}
-                className="inline-flex rounded-full border border-[color:var(--border)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:bg-[color:var(--surface-strong)] dark:text-neutral-100"
+                className={buttonClassName({ variant: "secondary", size: "sm" })}
               >
                 Read Insight
               </Link>

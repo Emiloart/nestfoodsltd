@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Card } from "@/components/ui/card";
+import { buttonClassName } from "@/components/ui/button";
 import { SectionHeading } from "@/components/home/section-heading";
 import { type CommerceProduct } from "@/lib/commerce/types";
 
@@ -64,7 +65,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
 
       <Link
         href={`/products/${product.slug}`}
-        className="inline-flex rounded-full border border-[color:var(--border)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:bg-[color:var(--surface-strong)] dark:text-neutral-100"
+        className={buttonClassName({ variant: "secondary", size: "sm" })}
       >
         View Product
       </Link>
@@ -85,7 +86,7 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
         actions={
           <Link
             href="/shop"
-            className="inline-flex rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+            className={buttonClassName({ variant: "secondary" })}
           >
             Browse Catalog
           </Link>

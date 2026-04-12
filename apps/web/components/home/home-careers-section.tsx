@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { buttonClassName } from "@/components/ui/button";
 import { type CmsPage } from "@/lib/cms/types";
 
 type HomeCareersSectionProps = {
@@ -23,7 +24,7 @@ export function HomeCareersSection({ careersPage }: HomeCareersSectionProps) {
 
           <Link
             href="/careers"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-6 text-sm font-medium text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+            className={buttonClassName({ variant: "secondary" })}
           >
             View Open Roles
           </Link>

@@ -3,6 +3,7 @@
 import { type ReactNode, useEffect } from "react";
 
 import { cn } from "@/lib/cn";
+import { buttonClassName } from "@/components/ui/button";
 
 type ModalProps = {
   open: boolean;
@@ -36,14 +37,14 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(13,8,19,0.56)] p-4 backdrop-blur-[4px]"
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
       <div
         className={cn(
-          "w-full max-w-lg rounded-2xl border border-neutral-200 bg-white p-6 shadow-xl dark:border-neutral-800 dark:bg-neutral-950",
+          "card-surface w-full max-w-lg rounded-[1.75rem] p-6",
         )}
       >
         <div className="mb-4 flex items-center justify-between">
@@ -51,7 +52,7 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-neutral-300 px-2 py-1 text-xs text-neutral-700 dark:border-neutral-700 dark:text-neutral-300"
+            className={buttonClassName({ variant: "secondary", size: "sm" })}
             aria-label="Close dialog"
           >
             Close

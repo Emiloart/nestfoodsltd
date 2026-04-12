@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { buttonClassName } from "@/components/ui/button";
 
 type EnquiryPayload = {
   name: string;
@@ -79,7 +80,7 @@ export function DistributorEnquiryPageClient() {
       <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
         <Card className="space-y-4">
           <p className="section-kicker">Distributor Enquiry</p>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
             Partner with Nest Foods for regional supply conversations.
           </h1>
           <p className="pretty-text text-sm leading-7 text-neutral-600 dark:text-neutral-300">
@@ -197,14 +198,17 @@ export function DistributorEnquiryPageClient() {
                   setForm((current) => ({ ...current, notes: event.target.value }))
                 }
                 placeholder="Share product interest, packaging needs, or delivery context."
-                className="min-h-32 w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 dark:text-neutral-100 dark:placeholder:text-neutral-400"
+                className="field-control min-h-32 px-4 py-3 text-sm"
               />
             </label>
             <div className="md:col-span-2">
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-6 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+                className={buttonClassName({
+                  variant: "primary",
+                  className: "disabled:cursor-not-allowed disabled:opacity-70",
+                })}
               >
                 {submitting ? "Submitting..." : "Submit Distributor Enquiry"}
               </button>

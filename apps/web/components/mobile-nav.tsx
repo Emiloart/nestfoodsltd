@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { buttonClassName } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -17,13 +18,13 @@ const navItems = [
 ];
 
 const quickActions = [
-  { href: "/b2b", label: "Distributor Portal" },
-  { href: "/contact", label: "Make Enquiry" },
+  { href: "/b2b", label: "Distributor Portal", variant: "primary" as const },
+  { href: "/contact", label: "Make Enquiry", variant: "secondary" as const },
 ];
 
 const resourceLinks = [
   { href: "/distributor-enquiry", label: "Distributor Enquiry" },
-  { href: "/recipes", label: "Ingredients" },
+  { href: "/recipes", label: "Bread Ideas" },
   { href: "/blog", label: "Insights" },
 ];
 
@@ -49,7 +50,7 @@ export function MobileNav() {
       <Button
         variant="ghost"
         size="icon"
-        className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)]"
+        className="h-9 w-9 border-white/14 bg-white/8 text-white hover:border-white/22 hover:bg-white/12"
         aria-label={open ? "Close navigation" : "Open navigation"}
         aria-expanded={open}
         aria-controls={panelId}
@@ -87,7 +88,7 @@ export function MobileNav() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-[rgba(25,19,13,0.18)] backdrop-blur-[2px]"
+              className="fixed inset-0 z-40 bg-[rgba(19,8,32,0.3)] backdrop-blur-[3px]"
               onClick={() => setOpen(false)}
             />
 
@@ -126,7 +127,11 @@ export function MobileNav() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-center text-sm font-medium text-neutral-800 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
+                      className={buttonClassName({
+                        variant: item.variant,
+                        size: "sm",
+                        className: "min-h-12 rounded-[1.1rem] text-center",
+                      })}
                       onClick={() => setOpen(false)}
                     >
                       {item.label}

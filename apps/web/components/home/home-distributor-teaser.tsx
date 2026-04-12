@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { buttonClassName } from "@/components/ui/button";
+
 const partnerHighlights = [
   "Distributor and retail enquiries",
   "Approved partner portal access",
@@ -35,7 +37,7 @@ export function HomeDistributorTeaser() {
 
           <Link
             href="/distributor-enquiry"
-            className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-6 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:brightness-105"
+            className={buttonClassName({ variant: "primary" })}
           >
             Distributor Enquiry
           </Link>

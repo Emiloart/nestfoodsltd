@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
+import { buttonClassName } from "@/components/ui/button";
 import { type CmsPage } from "@/lib/cms/types";
 
 type HomeContactSectionProps = {
@@ -27,7 +28,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
           actions={
             <Link
               href="/contact"
-              className="inline-flex rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:-translate-y-0.5 hover:brightness-105"
+              className={buttonClassName({ variant: "primary" })}
             >
               Contact Nest Foods
             </Link>
