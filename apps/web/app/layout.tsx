@@ -55,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a
           href="#main-content"
-          className="sr-only absolute left-4 top-4 z-[100] rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white focus:not-sr-only dark:bg-white dark:text-neutral-900"
+          className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[linear-gradient(135deg,var(--action-1),var(--action-2))] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_16px_34px_rgba(238,186,11,0.3)] focus:not-sr-only"
         >
           Skip to main content
         </a>

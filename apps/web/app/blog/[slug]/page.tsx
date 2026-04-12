@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/seo/json-ld";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { getBlogArticleBySlug, listBlogArticles } from "@/lib/blog/articles";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -61,6 +62,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     <section className="mx-auto w-full max-w-4xl space-y-8 px-4 py-16 md:px-6">
       <JsonLd id={`article-${article.slug}-ld`} data={articleStructuredData} />
       <header className="space-y-3">
+        <Badge>Insight</Badge>
         <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
           Published{" "}
           {new Date(article.publishedAt).toLocaleDateString("en-NG", {
@@ -69,7 +71,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             day: "numeric",
           })}
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
           {article.title}
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">{article.summary}</p>

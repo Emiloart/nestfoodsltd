@@ -63,7 +63,7 @@ export default function BlogPage() {
               {article.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-neutral-200 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-neutral-600 dark:text-neutral-300"
                 >
                   {tag}
                 </span>

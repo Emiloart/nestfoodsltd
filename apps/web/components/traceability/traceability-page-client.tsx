@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,8 +72,9 @@ export function TraceabilityPageClient() {
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <div className="space-y-3">
+        <Badge>Quality Access</Badge>
+        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
           Quality & Traceability
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
@@ -156,7 +158,7 @@ export function TraceabilityPageClient() {
                 {batch.certifications.map((cert) => (
                   <div
                     key={cert.id}
-                    className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                    className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                   >
                     <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                       {cert.name}
@@ -181,7 +183,7 @@ export function TraceabilityPageClient() {
               {batch.timeline.map((event) => (
                 <div
                   key={event.id}
-                  className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                  className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
@@ -218,7 +220,7 @@ export function TraceabilityPageClient() {
                 setCode(entry.batchCode);
                 void lookup(entry.batchCode);
               }}
-              className="rounded-xl border border-neutral-200 p-3 text-left transition hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900"
+              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3 text-left transition hover:-translate-y-0.5 hover:brightness-105"
             >
               <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                 {entry.batchCode}

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -189,8 +190,9 @@ export function RecipesPageClient() {
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <div className="space-y-3">
+        <Badge>Bread Ideas</Badge>
+        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
           Ingredients & Bread Ideas
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
@@ -224,7 +226,7 @@ export function RecipesPageClient() {
           {recipes.map((recipe) => (
             <div
               key={recipe.id}
-              className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
@@ -259,7 +261,7 @@ export function RecipesPageClient() {
           <select
             value={bundleVariantId}
             onChange={(event) => setBundleVariantId(event.target.value)}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="field-control h-11 px-3 text-sm"
           >
             <option value="">Select variant</option>
             {variantOptions.map((variant) => (
@@ -288,7 +290,7 @@ export function RecipesPageClient() {
             hydratedBundleItems.map((item) => (
               <div
                 key={item.variantId}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
               >
                 <p className="text-sm text-neutral-700 dark:text-neutral-200">
                   {item.productName} · {item.variantName} × {item.quantity}
@@ -311,7 +313,7 @@ export function RecipesPageClient() {
 
         {nutritionResult ? (
           <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+            <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3">
               <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                 Macro Summary
               </p>
@@ -328,7 +330,7 @@ export function RecipesPageClient() {
                 Fat: {nutritionResult.summary.fatG}g
               </p>
             </div>
-            <div className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+            <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3">
               <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                 Detailed Totals
               </p>
@@ -336,7 +338,7 @@ export function RecipesPageClient() {
                 {nutritionResult.summary.totals.map((entry) => (
                   <div
                     key={`${entry.label}-${entry.unit}`}
-                    className="rounded-lg border border-neutral-200 p-2 dark:border-neutral-800"
+                    className="rounded-[1rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-2"
                   >
                     <p className="text-xs text-neutral-500 dark:text-neutral-400">{entry.label}</p>
                     <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">

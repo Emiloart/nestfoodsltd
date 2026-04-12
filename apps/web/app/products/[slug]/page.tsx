@@ -115,7 +115,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               {product.variants.map((variant) => (
                 <div
                   key={variant.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div>
                     <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
@@ -212,7 +212,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           {product.nutritionTable.map((entry) => (
             <div
               key={entry.label}
-              className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
             >
               <p className="text-xs text-neutral-500 dark:text-neutral-400">{entry.label}</p>
               <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">

@@ -135,7 +135,7 @@ export function PrivacyPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>NDPR Privacy Center</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
           Privacy & Data Controls
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
@@ -153,7 +153,7 @@ export function PrivacyPageClient() {
               type="checkbox"
               checked
               disabled
-              className="h-4 w-4 rounded border-neutral-300"
+              className="h-4 w-4 rounded border-[color:var(--border-strong)] accent-[color:var(--brand-1)]"
             />
             Necessary cookies (always enabled)
           </label>
@@ -164,7 +164,7 @@ export function PrivacyPageClient() {
               onChange={(event) =>
                 setConsent((current) => ({ ...current, analytics: event.target.checked }))
               }
-              className="h-4 w-4 rounded border-neutral-300"
+              className="h-4 w-4 rounded border-[color:var(--border-strong)] accent-[color:var(--brand-1)]"
             />
             Analytics cookies
           </label>
@@ -175,7 +175,7 @@ export function PrivacyPageClient() {
               onChange={(event) =>
                 setConsent((current) => ({ ...current, personalization: event.target.checked }))
               }
-              className="h-4 w-4 rounded border-neutral-300"
+              className="h-4 w-4 rounded border-[color:var(--border-strong)] accent-[color:var(--brand-1)]"
             />
             Personalization cookies
           </label>
@@ -186,7 +186,7 @@ export function PrivacyPageClient() {
               onChange={(event) =>
                 setConsent((current) => ({ ...current, marketing: event.target.checked }))
               }
-              className="h-4 w-4 rounded border-neutral-300"
+              className="h-4 w-4 rounded border-[color:var(--border-strong)] accent-[color:var(--brand-1)]"
             />
             Marketing cookies
           </label>
@@ -214,7 +214,7 @@ export function PrivacyPageClient() {
           <select
             value={requestType}
             onChange={(event) => setRequestType(event.target.value as "export" | "delete")}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="field-control h-11 px-3 text-sm"
           >
             <option value="export">Export my data</option>
             <option value="delete">Delete my data</option>
@@ -223,7 +223,7 @@ export function PrivacyPageClient() {
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             placeholder="Additional request context (optional)"
-            className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="field-control min-h-24 px-3 py-2 text-sm"
           />
           <Button onClick={submitDataRequest} disabled={submittingRequest || !email.trim()}>
             {submittingRequest ? "Submitting..." : "Submit Data Request"}
