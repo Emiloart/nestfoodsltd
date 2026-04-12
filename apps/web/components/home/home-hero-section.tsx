@@ -14,7 +14,7 @@ type HomeHeroSectionProps = {
 const heroMetrics = [
   { value: "24h", label: "Quality review cycle" },
   { value: "4", label: "Supply regions in seed catalog" },
-  { value: "B2B", label: "Approved partner pathway" },
+  { value: "100%", label: "Catalog-led public experience" },
 ];
 
 export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {

@@ -1,13 +1,14 @@
-import { AccountPageClient } from "@/components/account/account-page-client";
+import { redirect } from "next/navigation";
+
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Account",
-  description: "Manage profile, addresses, preferences, and order history.",
+  title: "Account Closed",
+  description: "Nest Foods no longer exposes a public customer account flow.",
   path: "/account",
   noIndex: true,
 });
 
 export default function AccountPage() {
-  return <AccountPageClient />;
+  redirect("/contact");
 }

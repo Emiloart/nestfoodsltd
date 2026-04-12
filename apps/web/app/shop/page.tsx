@@ -1,19 +1,16 @@
 import Link from "next/link";
 
-import { AddToCartButton } from "@/components/cart/add-to-cart-button";
-import { AddToWishlistButton } from "@/components/customer/add-to-wishlist-button";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { formatCurrency } from "@/lib/commerce/format";
 import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
   title: "Products",
   description:
-    "Browse Nest Foods bread products with production specs, region availability, and distributor-ready order controls.",
+    "Browse Nest Foods bread products with production specs, availability, and enquiry-ready product information.",
   path: "/shop",
 });
 
@@ -25,7 +22,6 @@ type ShopPageProps = {
     tag?: string;
     region?: string;
     inStockOnly?: string;
-    sort?: string;
   }>;
 };
 
@@ -37,11 +33,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const tag = params.tag?.trim() || undefined;
   const region = params.region?.trim() || undefined;
   const inStockOnly = params.inStockOnly === "1";
-  const sort =
-    params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : undefined;
 
   const [products, facets] = await Promise.all([
-    listCommerceProducts({ search, category, allergenExclude, tag, region, inStockOnly, sort }),
+    listCommerceProducts({ search, category, allergenExclude, tag, region, inStockOnly }),
     listCommerceFacets(),
   ]);
 
@@ -55,8 +49,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </h1>
           <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
             Review the Nest Foods bread range by category, ingredient profile, service region, and
-            production availability. The catalog stays product-first, while ordering controls remain
-            available for approved commercial flows.
+            production availability. The catalog stays product-first and routes interested visitors
+            toward direct enquiries instead of self-serve transactions.
           </p>
         </div>
         <Card className="space-y-3">
@@ -147,18 +141,6 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               ))}
             </select>
           </label>
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Sort</span>
-            <select
-              name="sort"
-              defaultValue={sort ?? ""}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
-            >
-              <option value="">Relevance</option>
-              <option value="price_asc">Price per unit: low to high</option>
-              <option value="price_desc">Price per unit: high to low</option>
-            </select>
-          </label>
           <div className="flex items-end gap-3 md:col-span-2 lg:col-span-4">
             <label className="flex h-11 items-center gap-2 rounded-xl border border-neutral-300 px-3 text-sm dark:border-neutral-700">
               <input
@@ -168,7 +150,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 defaultChecked={inStockOnly}
                 className="h-4 w-4 rounded border-neutral-300"
               />
-              In stock only
+              Currently available
             </label>
             <button
               type="submit"
@@ -188,13 +170,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => {
-          const defaultVariant = product.variants[0];
-          if (!defaultVariant) {
-            return null;
-          }
-          const canOrder =
+          const isAvailable =
             product.availabilityStatus !== "unavailable" &&
-            defaultVariant.stockStatus !== "out_of_stock";
+            product.variants.some((variant) => variant.stockStatus !== "out_of_stock");
+
           return (
             <Card key={product.id} className="space-y-4">
               <Link href={`/products/${product.slug}`} className="block">
@@ -215,17 +194,17 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <p className="text-sm text-neutral-600 dark:text-neutral-300">
                   {product.shortDescription}
                 </p>
-                <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                  {formatCurrency(defaultVariant.currency, defaultVariant.priceMinor)}
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Availability: {product.availabilityStatus}
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Status: {product.availabilityStatus}
-                </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Production range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+                  Planning range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Regions: {product.availableRegions.join(", ")}
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Formats: {product.variants.length} option{product.variants.length === 1 ? "" : "s"}
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Shelf life: {product.shelfLifeDays} days
@@ -234,25 +213,24 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   Allergens: {product.allergens.join(", ")}
                 </p>
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <AddToCartButton
-                    variantId={defaultVariant.id}
-                    quantity={product.minimumOrderQuantity}
-                    disabled={!canOrder}
-                    label={
-                      canOrder
-                        ? `Add ${product.minimumOrderQuantity} units`
-                        : "Not available"
-                    }
-                  />
-                  <AddToWishlistButton productSlug={product.slug} />
-                </div>
+              <div className="flex flex-wrap items-center gap-2">
                 <Link
                   href={`/products/${product.slug}`}
                   className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
                 >
                   View Product
+                </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-neutral-900 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                >
+                  {isAvailable ? "Make Enquiry" : "Ask About Availability"}
+                </Link>
+                <Link
+                  href="/traceability"
+                  className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700 dark:border-neutral-700 dark:text-neutral-200"
+                >
+                  Trace Batch
                 </Link>
               </div>
             </Card>

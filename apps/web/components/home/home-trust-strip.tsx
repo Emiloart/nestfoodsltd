@@ -2,20 +2,20 @@ import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 
 const trustItems = [
   {
-    title: "Registered Manufacturer",
-    description: "Licensed bread production.",
+    title: "Registered Food Manufacturer",
+    description: "Licensed bread production with public-facing credibility.",
   },
   {
-    title: "Hygienic Standards",
-    description: "Clean workflow and QA control.",
+    title: "Hygienic Production Standards",
+    description: "Clean workflow, disciplined QA, and safe handling.",
   },
   {
-    title: "Reliable Supply",
-    description: "Regional supply readiness.",
+    title: "Reliable Distributor Supply",
+    description: "Regional supply readiness for partner conversations.",
   },
   {
-    title: "Quality Ingredients",
-    description: "Ingredient clarity across the range.",
+    title: "Premium Ingredients",
+    description: "Ingredient clarity across the product catalogue.",
   },
 ];
 

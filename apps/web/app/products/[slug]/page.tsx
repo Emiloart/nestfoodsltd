@@ -2,14 +2,11 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { AddToCartButton } from "@/components/cart/add-to-cart-button";
-import { AddToWishlistButton } from "@/components/customer/add-to-wishlist-button";
 import { RecentlyViewedTracker } from "@/components/customer/recently-viewed-tracker";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/commerce/format";
 import { getCommerceProductBySlug } from "@/lib/commerce/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProductStructuredData } from "@/lib/seo/structured-data";
@@ -88,17 +85,30 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               Availability: {product.availabilityStatus}
             </p>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              Production range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
+              Planning range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
             </p>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
               Regions: {product.availableRegions.join(", ")}
             </p>
-            <AddToWishlistButton productSlug={product.slug} />
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/contact"
+                className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+              >
+                Enquire About This Product
+              </Link>
+              <Link
+                href="/traceability"
+                className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+              >
+                Quality & Traceability
+              </Link>
+            </div>
           </div>
 
           <Card className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-              Variants
+              Formats
             </p>
             <div className="space-y-3">
               {product.variants.map((variant) => (
@@ -113,19 +123,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                     <p className="text-xs text-neutral-500 dark:text-neutral-400">
                       {variant.sku} · {variant.stockStatus.replace("_", " ")}
                     </p>
-                    <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                      {formatCurrency(variant.currency, variant.priceMinor)}
-                    </p>
                   </div>
-                  <AddToCartButton
-                    variantId={variant.id}
-                    quantity={product.minimumOrderQuantity}
-                    label={`Add ${product.minimumOrderQuantity} units`}
-                    disabled={
-                      variant.stockStatus === "out_of_stock" ||
-                      product.availabilityStatus === "unavailable"
-                    }
-                  />
+                  <Link
+                    href="/contact"
+                    className="inline-flex h-10 items-center rounded-full border border-neutral-300 px-4 text-xs font-medium uppercase tracking-[0.14em] text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+                  >
+                    {variant.stockStatus === "out_of_stock" ||
+                    product.availabilityStatus === "unavailable"
+                      ? "Ask About Restock"
+                      : "Ask About This Format"}
+                  </Link>
                 </div>
               ))}
             </div>
@@ -152,7 +159,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               </p>
               <p className="text-sm text-neutral-700 dark:text-neutral-200">
                 Review batch traceability, production checkpoints, and certification context before
-                distributor ordering.
+                product discussions.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Link
@@ -162,10 +169,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   Quality & Traceability
                 </Link>
                 <Link
-                  href="/b2b"
+                  href="/contact"
                   className="inline-flex h-10 items-center rounded-full bg-neutral-900 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
                 >
-                  Distributor Portal
+                  Contact Team
                 </Link>
               </div>
             </Card>

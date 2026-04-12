@@ -45,14 +45,14 @@ const conversationStorageKey = "nestfoodsltd_chat_conversation_id";
 const initialQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
   { label: "Trace a batch", prompt: "Help me verify a batch code." },
-  { label: "Track my order", prompt: "Help me check my order status." },
-  { label: "Distributor support", prompt: "I need distributor quote support." },
+  { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
+  { label: "Contact Nest Foods", prompt: "Help me contact the Nest Foods team." },
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
   { label: "Traceability", href: "/traceability" },
-  { label: "Distributor Portal", href: "/b2b" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function buildSessionId() {
@@ -125,7 +125,7 @@ export function ChatAgentWidget() {
       id: "welcome",
       role: "assistant",
       content:
-        "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, check orders, or guide distributor support.",
+        "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, or help you reach the team.",
       createdAt: new Date().toISOString(),
     },
   ]);
@@ -289,7 +289,7 @@ export function ChatAgentWidget() {
         id: "welcome",
         role: "assistant",
         content:
-          "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, check orders, or guide distributor support.",
+          "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, or help you reach the team.",
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -316,7 +316,7 @@ export function ChatAgentWidget() {
             <div className="space-y-1">
               <Badge>Nest Agent</Badge>
               <p className="hidden text-xs text-neutral-600 dark:text-neutral-300 md:block">
-                Product, traceability, order, and distributor assistant
+                Product, traceability, and enquiry assistant
               </p>
             </div>
             <div className="flex items-center gap-2">

@@ -3,7 +3,6 @@
 import { ThemeProvider } from "next-themes";
 import { type ReactNode } from "react";
 
-import { CartProvider } from "@/components/cart/cart-provider";
 import { ChatAgentWidget } from "@/components/chat/chat-agent-widget";
 import { ExperienceProvider } from "@/components/customer/experience-provider";
 import { ClientErrorReporter } from "@/components/performance/client-error-reporter";
@@ -18,13 +17,11 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <ExperienceProvider>
-        <CartProvider>
-          {children}
-          <ClientErrorReporter />
-          <WebVitalsReporter />
-          <PrivacyConsentBanner />
-          <ChatAgentWidget />
-        </CartProvider>
+        {children}
+        <ClientErrorReporter />
+        <WebVitalsReporter />
+        <PrivacyConsentBanner />
+        <ChatAgentWidget />
       </ExperienceProvider>
     </ThemeProvider>
   );

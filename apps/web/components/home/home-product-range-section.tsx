@@ -79,15 +79,15 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
         eyebrow="Bread Product Range"
-        title="Bread products for retail and partner supply."
-        description="Clear product cues first."
+        title="Bread products ready for review and enquiry."
+        description="Clear product cues first, without storefront mechanics."
         descriptionClassName="hidden md:block"
         actions={
           <Link
             href="/shop"
             className="inline-flex rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-neutral-900 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
           >
-            View All Products
+            Browse Catalog
           </Link>
         }
       />

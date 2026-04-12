@@ -1,13 +1,14 @@
-import { CheckoutPageClient } from "@/components/cart/checkout-page-client";
+import { redirect } from "next/navigation";
+
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Bulk Checkout",
-  description: "Bulk checkout flow with delivery-slot region validation and payment selection.",
+  title: "Checkout Closed",
+  description: "Nest Foods no longer exposes a public checkout flow.",
   path: "/checkout",
   noIndex: true,
 });
 
 export default function CheckoutPage() {
-  return <CheckoutPageClient />;
+  redirect("/contact");
 }

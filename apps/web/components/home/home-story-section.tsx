@@ -38,9 +38,9 @@ export function HomeStorySection({ aboutPage, visionPage }: HomeStorySectionProp
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
-        eyebrow="About & Vision"
-        title="Company story and direction."
-        description="Available when needed."
+        eyebrow="About Nest Foods"
+        title="Company story, mission, and direction."
+        description="Learn how Nest Foods presents its manufacturing credibility and long-term vision."
         descriptionClassName="hidden md:block"
       />
 

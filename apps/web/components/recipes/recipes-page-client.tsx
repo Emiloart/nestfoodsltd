@@ -2,10 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useExperience } from "@/components/customer/experience-provider";
 import { type RecipeSearchResult } from "@/lib/recipes/types";
 
 type RecipeSearchResponse = {
@@ -24,8 +23,6 @@ type ProductsResponse = {
     variants: {
       id: string;
       name: string;
-      currency: "NGN" | "USD";
-      priceMinor: number;
     }[];
   }[];
 };
@@ -57,8 +54,6 @@ type NutritionCalculatorResponse = {
 };
 
 export function RecipesPageClient() {
-  const { formatMinorAmount } = useExperience();
-
   const [ingredientsHint, setIngredientsHint] = useState<string[]>([]);
   const [recipes, setRecipes] = useState<RecipeSearchResult[]>([]);
   const [ingredientInput, setIngredientInput] = useState("");
@@ -70,8 +65,6 @@ export function RecipesPageClient() {
       id: string;
       productName: string;
       variantName: string;
-      currency: "NGN" | "USD";
-      priceMinor: number;
     }>
   >([]);
   const [bundleVariantId, setBundleVariantId] = useState("");
@@ -104,8 +97,6 @@ export function RecipesPageClient() {
             id: variant.id,
             productName: product.name,
             variantName: variant.name,
-            currency: variant.currency,
-            priceMinor: variant.priceMinor,
           })),
         );
         setVariantOptions(options);
@@ -204,7 +195,7 @@ export function RecipesPageClient() {
         </h1>
         <p className="text-sm text-neutral-600 dark:text-neutral-300">
           Explore ingredient-led bread ideas, then estimate nutrition totals for Nest Foods product
-          bundles used in planning or retail activation.
+          bundles used in planning, menu development, or internal review.
         </p>
       </div>
 
@@ -273,8 +264,7 @@ export function RecipesPageClient() {
             <option value="">Select variant</option>
             {variantOptions.map((variant) => (
               <option key={variant.id} value={variant.id}>
-                {variant.productName} · {variant.variantName} (
-                {formatMinorAmount(variant.priceMinor, variant.currency)})
+                {variant.productName} · {variant.variantName}
               </option>
             ))}
           </select>

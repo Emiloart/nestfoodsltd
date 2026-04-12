@@ -30,7 +30,7 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
               href="/shop"
               className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-3 text-center text-xs font-medium uppercase tracking-[0.15em] text-neutral-800 transition hover:-translate-y-0.5 hover:brightness-105 dark:text-neutral-100"
             >
-              Explore Products
+              View Product Range
             </Link>
             <Link
               href="/contact"
@@ -44,7 +44,7 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
         <div className="section-frame hidden px-5 py-6 lg:block">
           <p className="section-kicker">Next Step</p>
           <p className="pretty-text mt-4 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
-            {nextStep ?? "Continue to products or contact Nest Foods."}
+            {nextStep ?? "Continue to the product catalog or contact Nest Foods."}
           </p>
           <div className="mt-5 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">

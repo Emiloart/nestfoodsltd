@@ -13,16 +13,16 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6 md:py-10">
       <SectionHeading
-        eyebrow="Ingredients & Insights"
-        title="Keep the recipe capability, but present it as ingredient understanding and bread inspiration."
-        description="The route structure is preserved, but the public section now supports ingredient-led discovery and editorial credibility instead of looking like a generic food portal."
+        eyebrow="Insights & Bread Ideas"
+        title="Editorial credibility without turning the site into a content portal."
+        description="Preserve the existing blog and recipe routes, but present them as light supporting content around ingredients, quality, and bread usage."
       />
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
         <MockPanel
-          label="Ingredient Preview"
-          title="Bread ingredients and inspiration"
-          description="Placeholder surface for ingredient storytelling, bread usage ideas, and recipe-driven discovery."
+          label="Bread Ideas"
+          title="Ingredients, usage ideas, and product context"
+          description="Placeholder surface for ingredient storytelling, bread usage ideas, and light recipe support."
         >
           <div className="grid gap-3 sm:grid-cols-2">
             {["Wheat Flour", "Yeast", "Salt", "Butter Notes"].map((item) => (
@@ -44,7 +44,7 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
               href="/recipes"
               className="inline-flex rounded-full bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:-translate-y-0.5 hover:brightness-105"
             >
-              Open Ingredients
+              Open Bread Ideas
             </Link>
             <Link
               href="/blog"

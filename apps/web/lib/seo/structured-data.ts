@@ -20,17 +20,6 @@ function resolveImageUrl(imageUrl?: string) {
   return absoluteUrl(imageUrl ?? "/placeholders/section-image-placeholder.svg");
 }
 
-function formatPrice(minorAmount: number) {
-  return (minorAmount / 100).toFixed(2);
-}
-
-function normalizeAvailability(stockStatus: CommerceProduct["variants"][number]["stockStatus"]) {
-  if (stockStatus === "out_of_stock") {
-    return "https://schema.org/OutOfStock";
-  }
-  return "https://schema.org/InStock";
-}
-
 export function buildOrganizationStructuredData() {
   return {
     "@context": "https://schema.org",
@@ -51,10 +40,6 @@ export function buildOrganizationStructuredData() {
 }
 
 export function buildProductStructuredData(product: CommerceProduct) {
-  const prices = product.variants.map((variant) => variant.priceMinor);
-  const lowPrice = prices.length > 0 ? Math.min(...prices) : 0;
-  const highPrice = prices.length > 0 ? Math.max(...prices) : 0;
-  const defaultCurrency = product.variants[0]?.currency ?? "NGN";
   const defaultSku = product.variants[0]?.sku ?? product.id;
 
   return {
@@ -68,21 +53,6 @@ export function buildProductStructuredData(product: CommerceProduct) {
     brand: {
       "@type": "Brand",
       name: "Nest Foods Ltd",
-    },
-    offers: {
-      "@type": "AggregateOffer",
-      lowPrice: formatPrice(lowPrice),
-      highPrice: formatPrice(highPrice),
-      priceCurrency: defaultCurrency,
-      offerCount: product.variants.length,
-      offers: product.variants.map((variant) => ({
-        "@type": "Offer",
-        sku: variant.sku,
-        priceCurrency: variant.currency,
-        price: formatPrice(variant.priceMinor),
-        availability: normalizeAvailability(variant.stockStatus),
-        url: absoluteUrl(`/products/${product.slug}`),
-      })),
     },
     additionalProperty: product.nutritionTable.map((entry) => ({
       "@type": "PropertyValue",

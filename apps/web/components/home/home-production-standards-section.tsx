@@ -4,16 +4,16 @@ import { SectionHeading } from "@/components/home/section-heading";
 
 const standards = [
   {
-    title: "Industrial consistency",
-    description: "Uniform crumb, clean slicing, and stable shelf output.",
+    title: "Industrial baking process",
+    description: "Uniform crumb, clean slicing, and dependable output at scale.",
   },
   {
-    title: "Hygienic workflow",
-    description: "Production and QA stay visible ahead of storefront mechanics.",
+    title: "Clean production environment",
+    description: "Production and QA stay visible across the public experience.",
   },
   {
-    title: "Packaging integrity",
-    description: "Retail-ready packaging and confident downstream handling.",
+    title: "Consistent packaging standards",
+    description: "Packaging stays dependable for downstream handling and display.",
   },
 ];
 
@@ -34,8 +34,8 @@ export function HomeProductionStandardsSection() {
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <div className="section-frame px-5 py-5 sm:px-6 md:hidden">
         <SectionHeading
-          eyebrow="Production Standards"
-          title="Production standards buyers can scan quickly."
+          eyebrow="Production Process"
+          title="Industrial baking standards made visible."
           description="Process, hygiene, and packaging."
           descriptionClassName="hidden"
         />
@@ -60,9 +60,9 @@ export function HomeProductionStandardsSection() {
       <div className="hidden gap-5 md:grid lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
         <div className="section-frame px-5 py-5 sm:px-6">
           <SectionHeading
-            eyebrow="Production Standards"
-            title="Production standards that matter."
-            description="Production quality, hygiene, and packaging."
+            eyebrow="Production Process"
+            title="Industrial baking process, hygiene, and packaging."
+            description="Clean production environment with clear standards."
             descriptionClassName="hidden lg:block"
           />
 

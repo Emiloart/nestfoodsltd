@@ -4,27 +4,31 @@ const footerGroups = [
   {
     title: "Company",
     links: [
-      { href: "/", label: "Home" },
       { href: "/about", label: "About" },
       { href: "/vision", label: "Vision" },
       { href: "/careers", label: "Careers" },
-      { href: "/contact", label: "Contact" },
     ],
   },
   {
-    title: "Explore",
+    title: "Products",
     links: [
-      { href: "/shop", label: "Products" },
+      { href: "/shop", label: "Bread Range" },
       { href: "/traceability", label: "Quality & Traceability" },
+      { href: "/sustainability", label: "Sustainability" },
+    ],
+  },
+  {
+    title: "Partners",
+    links: [
+      { href: "/distributor-enquiry", label: "Distributor Enquiries" },
       { href: "/b2b", label: "Distributor Portal" },
     ],
   },
   {
-    title: "Resources",
+    title: "Insights",
     links: [
-      { href: "/recipes", label: "Ingredients" },
       { href: "/blog", label: "Insights" },
-      { href: "/contact", label: "Make Enquiry" },
+      { href: "/recipes", label: "Bread Ideas" },
     ],
   },
   {
@@ -32,7 +36,14 @@ const footerGroups = [
     links: [
       { href: "/privacy", label: "Privacy" },
       { href: "/terms", label: "Terms" },
-      { href: "/sustainability", label: "Sustainability" },
+    ],
+  },
+  {
+    title: "Contact",
+    links: [
+      { href: "/contact", label: "Contact Page" },
+      { href: "/contact", label: "Phone & Email" },
+      { href: "/contact", label: "Address & Hours" },
     ],
   },
 ];
@@ -45,7 +56,7 @@ export function Footer() {
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100">
-              Bread quality, made clear.
+              Bread quality and traceability, made clear.
             </h2>
           </div>
 
@@ -54,7 +65,7 @@ export function Footer() {
               { href: "/shop", label: "Products" },
               { href: "/traceability", label: "Traceability" },
               { href: "/contact", label: "Enquiry" },
-              { href: "/b2b", label: "Distributor" },
+              { href: "/distributor-enquiry", label: "Distributor" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -69,7 +80,7 @@ export function Footer() {
           <div className="grid gap-2">
             {[
               { href: "/about", label: "About Nest Foods" },
-              { href: "/recipes", label: "Ingredients" },
+              { href: "/shop", label: "Bread Range" },
               { href: "/blog", label: "Insights" },
             ].map((item) => (
               <Link
@@ -122,7 +133,7 @@ export function Footer() {
           <div>
             <p className="section-kicker">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
-              Bread quality, traceability, and supply you can verify.
+              Bread quality and traceability you can verify.
             </h2>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-xs text-neutral-700 dark:text-neutral-200">
@@ -135,9 +146,13 @@ export function Footer() {
                 Batch Traceability
               </span>
             </div>
+            <div className="mt-5 space-y-1.5 text-sm text-neutral-600 dark:text-neutral-300">
+              <p>Phone and email placeholders live on the contact page.</p>
+              <p>Address and business hours stay available for partner enquiries.</p>
+            </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {footerGroups.map((group) => (
               <div key={group.title}>
                 <p className="section-kicker">{group.title}</p>

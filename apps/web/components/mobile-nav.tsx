@@ -22,6 +22,7 @@ const quickActions = [
 ];
 
 const resourceLinks = [
+  { href: "/distributor-enquiry", label: "Distributor Enquiry" },
   { href: "/recipes", label: "Ingredients" },
   { href: "/blog", label: "Insights" },
 ];
@@ -119,7 +120,7 @@ export function MobileNav() {
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Partner access</p>
+                <p className="section-kicker">Quick links</p>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {quickActions.map((item) => (
                     <Link

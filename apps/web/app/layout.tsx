@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s | Nest Foods Ltd",
   },
   description:
-    "Premium bread manufacturing, quality traceability, and distributor supply infrastructure for growth across Africa.",
+    "Premium bread manufacturing, quality traceability, and product information for communities and partners across Africa.",
 };
 
 export const viewport: Viewport = {

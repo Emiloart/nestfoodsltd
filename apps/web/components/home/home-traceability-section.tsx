@@ -15,8 +15,8 @@ export function HomeTraceabilitySection() {
       <div className="section-frame hidden px-5 py-5 sm:px-6 md:block">
         <SectionHeading
           eyebrow="Quality & Traceability"
-          title="Check batch quality before purchase or enquiry."
-          description="Batch checks in one place."
+          title="Quality you can trace."
+          description="Verify production batches, ingredient sourcing, and release milestones in one place."
           descriptionClassName="hidden md:block"
           actionsClassName="w-full sm:w-auto"
           actions={
@@ -99,7 +99,7 @@ export function HomeTraceabilitySection() {
             <div>
               <p className="section-kicker">Quality & Traceability</p>
               <h2 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                Verify a batch in one short flow.
+                Quality you can trace.
               </h2>
             </div>
             <Link

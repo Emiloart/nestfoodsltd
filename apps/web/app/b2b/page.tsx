@@ -4,8 +4,9 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 export const metadata = buildPageMetadata({
   title: "Distributor Portal",
   description:
-    "B2B ordering portal for approved distributors with tiered pricing, quote requests, and account management.",
+    "Approved partner portal for distributor sign-in, quote requests, order visibility, and support.",
   path: "/b2b",
+  noIndex: true,
 });
 
 export default function B2BPage() {

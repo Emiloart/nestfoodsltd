@@ -10,7 +10,7 @@ type HomeContactSectionProps = {
 
 const contactBlocks = [
   { title: "Address", value: "Head office and facility location placeholder" },
-  { title: "Email", value: "Sales and partnership inbox placeholder" },
+  { title: "Email", value: "General enquiries and partnership inbox placeholder" },
   { title: "Phone", value: "Reception and support line placeholder" },
   { title: "Hours", value: "Weekday business hours placeholder" },
 ];

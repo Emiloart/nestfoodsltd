@@ -12,7 +12,7 @@ const articles = listBlogArticles();
 export const metadata = buildPageMetadata({
   title: "Insights",
   description:
-    "Corporate insights on bread production, quality systems, traceability discipline, and partner supply readiness.",
+    "Corporate insights on bread production, quality systems, traceability discipline, and product stewardship.",
   path: "/blog",
   openGraphType: "website",
 });
@@ -38,8 +38,8 @@ export default function BlogPage() {
           Operational Insights
         </h1>
         <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
-          Updates from Nest Foods on manufacturing quality, bread category development,
-          traceability, and distributor readiness.
+          Updates from Nest Foods on manufacturing quality, bread category development, and
+          traceability.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
