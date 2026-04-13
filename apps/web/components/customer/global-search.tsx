@@ -118,7 +118,7 @@ export function GlobalSearch() {
           className="section-frame absolute z-50 mt-3 w-full p-2"
         >
           {loading ? (
-            <p role="status" className="px-2 py-2 text-xs text-neutral-500 dark:text-neutral-400">
+            <p role="status" className="px-2 py-2 text-xs text-neutral-500">
               Searching...
             </p>
           ) : (
@@ -131,8 +131,8 @@ export function GlobalSearch() {
                   aria-selected="false"
                   className="block rounded-[1rem] px-3 py-2.5 transition hover:bg-[color:var(--surface-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                 >
-                  <p className="text-sm text-neutral-900 dark:text-neutral-100">{entry.title}</p>
-                  <p className="text-xs uppercase tracking-[0.12em] text-neutral-500 dark:text-neutral-400">
+                  <p className="text-sm text-neutral-900">{entry.title}</p>
+                  <p className="text-xs uppercase tracking-[0.12em] text-neutral-500">
                     {entry.subtitle ?? entry.type}
                   </p>
                 </Link>

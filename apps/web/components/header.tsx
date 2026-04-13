@@ -3,7 +3,6 @@ import Link from "next/link";
 import { BrandLogo } from "./brand-logo";
 import { GlobalSearch } from "./customer/global-search";
 import { MobileNav } from "./mobile-nav";
-import { ThemeToggle } from "./theme-toggle";
 import { buttonClassName } from "./ui/button";
 
 const navItems = [
@@ -38,7 +37,6 @@ export function Header() {
             >
               Distributor Portal
             </Link>
-            <ThemeToggle />
           </div>
         </div>
 

@@ -18,7 +18,7 @@ const colorTokens = [
   },
   {
     name: "Deep Purple",
-    role: "Depth color for gradients, footer chrome, and overlays.",
+    role: "Support color for footer chrome, restrained contrast, and internal framing.",
     hex: "#2E1245",
     className: "bg-[color:var(--brand-2)] text-white",
   },
@@ -30,7 +30,7 @@ const colorTokens = [
   },
   {
     name: "Gold Ochre",
-    role: "Supporting highlight for gradients and button depth.",
+    role: "Secondary accent for restrained highlights and data emphasis.",
     hex: "#EEBA0B",
     className: "bg-[color:var(--brand-4)] text-[color:var(--action-text)]",
   },
@@ -45,17 +45,17 @@ const colorTokens = [
 const typographyScale = [
   {
     label: "Display XL",
-    className: "display-heading text-5xl text-neutral-900 dark:text-neutral-50 sm:text-6xl",
+    className: "display-heading text-5xl text-neutral-900 sm:text-6xl",
     sample: "Bread production built for consistency.",
   },
   {
     label: "Section Heading",
-    className: "display-heading text-3xl text-neutral-900 dark:text-neutral-100",
+    className: "display-heading text-3xl text-neutral-900",
     sample: "Quality systems that look credible.",
   },
   {
     label: "Body",
-    className: "text-base leading-7 text-neutral-700 dark:text-neutral-300",
+    className: "text-base leading-7 text-neutral-700",
     sample:
       "Body copy should stay operational, concise, and institutional, with enough breathing room to feel premium.",
   },
@@ -79,12 +79,12 @@ export default function DesignSystemPage() {
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>Design System</Badge>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-5xl">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-5xl">
           Nest Foods UI Foundations
         </h1>
-        <p className="max-w-3xl text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-          A purple-gold corporate system built for a food manufacturer site: restrained surfaces,
-          warm neutrals, high-contrast action buttons, and structured editorial spacing.
+        <p className="max-w-3xl text-sm leading-7 text-neutral-600">
+          A restrained purple-gold corporate system built for a food manufacturer site: flat
+          surfaces, warm neutrals, selective action color, and structured editorial spacing.
         </p>
       </div>
 
@@ -92,8 +92,8 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Color System</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
-              Packaging-led palette
+            <h2 className="display-heading text-2xl text-neutral-900">
+              Brand palette
             </h2>
           </div>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -103,10 +103,10 @@ export default function DesignSystemPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.16em]">{token.hex}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  <p className="text-sm font-semibold text-neutral-900">
                     {token.name}
                   </p>
-                  <p className="text-xs leading-6 text-neutral-600 dark:text-neutral-300">
+                  <p className="text-xs leading-6 text-neutral-600">
                     {token.role}
                   </p>
                 </div>
@@ -118,7 +118,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Brand Chrome</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Header and footer treatment
             </h2>
           </div>
@@ -148,7 +148,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Typography</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Clear hierarchy
             </h2>
           </div>
@@ -167,7 +167,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Buttons</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Action language
             </h2>
           </div>
@@ -186,7 +186,7 @@ export default function DesignSystemPage() {
               Large CTA
             </Button>
           </div>
-          <p className="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm leading-7 text-neutral-600">
             Gold is reserved for the most important actions. Purple fill is available for brand-led
             emphasis. Neutral buttons should support navigation and low-pressure actions.
           </p>
@@ -197,7 +197,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Form Controls</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Input surfaces
             </h2>
           </div>
@@ -215,7 +215,7 @@ export default function DesignSystemPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <Badge>Premium</Badge>
-            <Badge className="text-[color:var(--brand-5)] dark:text-[color:var(--brand-4)]">
+            <Badge className="text-[color:var(--brand-5)]">
               Hygienic Production
             </Badge>
           </div>
@@ -224,7 +224,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Spacing & Layout</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Structured rhythm
             </h2>
           </div>
@@ -237,10 +237,10 @@ export default function DesignSystemPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
                   {token.name}
                 </p>
-                <p className="mt-2 display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+                <p className="mt-2 display-heading text-2xl text-neutral-900">
                   {token.value}
                 </p>
-                <p className="mt-2 text-xs leading-6 text-neutral-600 dark:text-neutral-300">
+                <p className="mt-2 text-xs leading-6 text-neutral-600">
                   {token.note}
                 </p>
               </div>
@@ -254,7 +254,7 @@ export default function DesignSystemPage() {
               {Array.from({ length: 12 }).map((_, index) => (
                 <div
                   key={index}
-                  className="h-12 rounded-xl bg-[linear-gradient(180deg,color-mix(in_srgb,var(--brand-1)_18%,transparent),color-mix(in_srgb,var(--brand-3)_20%,transparent))]"
+                  className="h-12 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-accent)]"
                 />
               ))}
             </div>
@@ -266,7 +266,7 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Loading States</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Calm placeholders
             </h2>
           </div>
@@ -280,11 +280,11 @@ export default function DesignSystemPage() {
         <Card className="space-y-4">
           <div className="space-y-2">
             <p className="section-kicker">Modal</p>
-            <h2 className="display-heading text-2xl text-neutral-900 dark:text-neutral-100">
+            <h2 className="display-heading text-2xl text-neutral-900">
               Reusable interaction layer
             </h2>
           </div>
-          <p className="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm leading-7 text-neutral-600">
             Use for confirmations, supporting detail, or operational disclosure without crowding the
             page shell.
           </p>
@@ -295,9 +295,9 @@ export default function DesignSystemPage() {
       </div>
 
       <Modal open={open} onClose={() => setOpen(false)} title="Nest Foods UI System">
-        <p className="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm leading-7 text-neutral-600">
           The brand system is tuned for a manufacturer identity: structural purple, selective gold,
-          warm neutrals, and direct action language.
+          warm neutrals, flat surfaces, and direct action language.
         </p>
       </Modal>
     </section>

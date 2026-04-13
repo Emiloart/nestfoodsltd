@@ -2,7 +2,6 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { RecentlyViewedTracker } from "@/components/customer/recently-viewed-tracker";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
@@ -51,7 +50,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <JsonLd id={`product-${product.slug}-ld`} data={productStructuredData} />
-      <RecentlyViewedTracker productSlug={product.slug} />
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-4">
           <ImagePlaceholder
@@ -76,19 +74,19 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <div className="space-y-6">
           <div className="space-y-3">
             <Badge>{product.category}</Badge>
-            <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+            <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
               {product.name}
             </h1>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               {product.longDescription}
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            <p className="text-xs text-neutral-500">
               Availability: {product.availabilityStatus}
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            <p className="text-xs text-neutral-500">
               Planning range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            <p className="text-xs text-neutral-500">
               Regions: {product.availableRegions.join(", ")}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -118,10 +116,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   className="flex flex-wrap items-center justify-between gap-3 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div>
-                    <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-sm font-semibold text-neutral-900">
                       {variant.name}
                     </p>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs text-neutral-500">
                       {variant.sku} · {variant.stockStatus.replace("_", " ")}
                     </p>
                   </div>
@@ -144,13 +142,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
                 Product specifications
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Category: {product.category}
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Shelf life: {product.shelfLifeDays} days
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Regions: {product.availableRegions.join(", ")}
               </p>
             </Card>
@@ -158,7 +156,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
                 Quality access
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Review batch traceability, production checkpoints, and certification context before
                 product discussions.
               </p>
@@ -186,7 +184,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
             Ingredients
           </p>
-          <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
+          <ul className="space-y-1 text-sm text-neutral-700">
             {product.ingredients.map((item) => (
               <li key={item}>• {item}</li>
             ))}
@@ -196,7 +194,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
             Allergens
           </p>
-          <ul className="space-y-1 text-sm text-neutral-700 dark:text-neutral-200">
+          <ul className="space-y-1 text-sm text-neutral-700">
             {product.allergens.map((item) => (
               <li key={item}>• {item}</li>
             ))}
@@ -214,8 +212,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               key={entry.label}
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
             >
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">{entry.label}</p>
-              <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              <p className="text-xs text-neutral-500">{entry.label}</p>
+              <p className="text-lg font-semibold text-neutral-900">
                 {entry.amount}
                 {entry.unit}
               </p>

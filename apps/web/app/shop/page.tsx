@@ -45,20 +45,20 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
         <div className="space-y-3">
           <Badge>Product Range</Badge>
-          <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+          <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
             Bread Products Built For Consistency
           </h1>
-          <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="max-w-3xl text-sm text-neutral-600">
             Review the Nest Foods bread range by category, ingredient profile, service region, and
-            production availability. The catalog stays product-first and routes interested visitors
-            toward direct enquiries instead of self-serve transactions.
+            production availability. The catalog stays product-first and supports direct enquiries
+            for product discussions and supply planning.
           </p>
         </div>
         <Card className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
             Quality access
           </p>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm text-neutral-600">
             Need batch verification before procurement or review?
           </p>
           <Link
@@ -189,28 +189,28 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                   {product.category}
                 </p>
-                <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                <h2 className="text-lg font-semibold text-neutral-900">
                   {product.name}
                 </h2>
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                <p className="text-sm text-neutral-600">
                   {product.shortDescription}
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Availability: {product.availabilityStatus}
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Planning range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Regions: {product.availableRegions.join(", ")}
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Formats: {product.variants.length} option{product.variants.length === 1 ? "" : "s"}
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Shelf life: {product.shelfLifeDays} days
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Allergens: {product.allergens.join(", ")}
                 </p>
               </div>
@@ -241,7 +241,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
       {products.length === 0 ? (
         <Card className="p-6">
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm text-neutral-600">
             No products matched your filters. Try another region, tag, or allergen setting.
           </p>
         </Card>

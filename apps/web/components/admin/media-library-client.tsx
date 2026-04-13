@@ -205,10 +205,10 @@ export function MediaLibraryClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Media Admin</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Media Library
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Manage image assets and inspect usage
           references.
         </p>
@@ -225,7 +225,7 @@ export function MediaLibraryClient() {
               const target = assets.find((entry) => entry.id === nextId);
               setForm(target ? toForm(target) : emptyForm);
             }}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
             <option value="">New media asset form</option>
             {assets.map((asset) => (
@@ -236,10 +236,10 @@ export function MediaLibraryClient() {
           </select>
 
           {selectedAsset ? (
-            <div className="space-y-3 rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+            <div className="space-y-3 rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>ID: {selectedAsset.id}</p>
               <p>Updated: {selectedAsset.updatedAt}</p>
-              <p className="font-semibold text-neutral-700 dark:text-neutral-300">Usage References</p>
+              <p className="font-semibold text-neutral-700">Usage References</p>
               {selectedAsset.usageReferences.length > 0 ? (
                 <ul className="space-y-1">
                   {selectedAsset.usageReferences.map((entry) => (
@@ -252,7 +252,7 @@ export function MediaLibraryClient() {
             </div>
           ) : null}
 
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs text-neutral-500">
             {assets.length} asset{assets.length === 1 ? "" : "s"} configured.
           </p>
           <Button variant="secondary" onClick={() => setForm(emptyForm)} disabled={saving}>
@@ -306,7 +306,7 @@ export function MediaLibraryClient() {
             >
               Delete Asset
             </Button>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+            <p className="text-xs text-neutral-500">{status}</p>
           </div>
         </Card>
       </div>

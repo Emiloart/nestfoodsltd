@@ -135,10 +135,10 @@ export function PrivacyPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>NDPR Privacy Center</Badge>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
           Privacy & Data Controls
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Manage optional consent preferences and submit NDPR data export or deletion requests.
         </p>
       </div>
@@ -148,7 +148,7 @@ export function PrivacyPageClient() {
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
             Consent Preferences
           </p>
-          <label className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-200">
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
             <input
               type="checkbox"
               checked
@@ -157,7 +157,7 @@ export function PrivacyPageClient() {
             />
             Necessary cookies (always enabled)
           </label>
-          <label className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-200">
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
             <input
               type="checkbox"
               checked={consent.analytics}
@@ -168,7 +168,7 @@ export function PrivacyPageClient() {
             />
             Analytics cookies
           </label>
-          <label className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-200">
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
             <input
               type="checkbox"
               checked={consent.personalization}
@@ -179,7 +179,7 @@ export function PrivacyPageClient() {
             />
             Personalization cookies
           </label>
-          <label className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-200">
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
             <input
               type="checkbox"
               checked={consent.marketing}
@@ -193,7 +193,7 @@ export function PrivacyPageClient() {
           <Button onClick={saveConsent} disabled={savingConsent}>
             {savingConsent ? "Saving..." : "Save Consent Preferences"}
           </Button>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{consentStatus}</p>
+          <p className="text-xs text-neutral-500">{consentStatus}</p>
         </Card>
 
         <Card className="space-y-4">
@@ -228,7 +228,7 @@ export function PrivacyPageClient() {
           <Button onClick={submitDataRequest} disabled={submittingRequest || !email.trim()}>
             {submittingRequest ? "Submitting..." : "Submit Data Request"}
           </Button>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{requestStatus}</p>
+          <p className="text-xs text-neutral-500">{requestStatus}</p>
         </Card>
       </div>
     </section>

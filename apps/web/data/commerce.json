@@ -69,8 +69,7 @@
           "sizeLabel": "800g",
           "stockStatus": "in_stock",
           "priceMinor": 320000,
-          "currency": "NGN",
-          "subscriptionEligible": true
+          "currency": "NGN"
         },
         {
           "id": "var-classic-loaf-400g",
@@ -79,8 +78,7 @@
           "sizeLabel": "400g",
           "stockStatus": "in_stock",
           "priceMinor": 180000,
-          "currency": "NGN",
-          "subscriptionEligible": true
+          "currency": "NGN"
         }
       ],
       "updatedAt": "2026-03-23T14:02:46.080Z"
@@ -151,8 +149,7 @@
           "sizeLabel": "700g",
           "stockStatus": "in_stock",
           "priceMinor": 420000,
-          "currency": "NGN",
-          "subscriptionEligible": true
+          "currency": "NGN"
         },
         {
           "id": "var-butter-loaf-350g",
@@ -161,8 +158,7 @@
           "sizeLabel": "350g",
           "stockStatus": "low_stock",
           "priceMinor": 240000,
-          "currency": "NGN",
-          "subscriptionEligible": false
+          "currency": "NGN"
         }
       ],
       "updatedAt": "2026-03-23T14:02:46.080Z"
@@ -236,8 +232,7 @@
           "sizeLabel": "750g",
           "stockStatus": "in_stock",
           "priceMinor": 390000,
-          "currency": "NGN",
-          "subscriptionEligible": true
+          "currency": "NGN"
         },
         {
           "id": "var-wholewheat-loaf-375g",
@@ -246,136 +241,10 @@
           "sizeLabel": "375g",
           "stockStatus": "in_stock",
           "priceMinor": 220000,
-          "currency": "NGN",
-          "subscriptionEligible": true
+          "currency": "NGN"
         }
       ],
       "updatedAt": "2026-03-23T14:02:46.080Z"
     }
-  ],
-  "promos": [
-    {
-      "code": "WELCOME10",
-      "label": "10% off first order",
-      "type": "percent",
-      "value": 10,
-      "currency": "NGN",
-      "minSubtotalMinor": 500000,
-      "active": true
-    },
-    {
-      "code": "BULK2500",
-      "label": "₦2,500 bulk discount",
-      "type": "fixed",
-      "value": 250000,
-      "currency": "NGN",
-      "minSubtotalMinor": 3000000,
-      "active": true
-    }
-  ],
-  "deliverySlots": [
-    {
-      "id": "slot-morning-lagos",
-      "label": "Morning Slot",
-      "startsAt": "2026-02-12T09:00:00.000Z",
-      "endsAt": "2026-02-12T12:00:00.000Z",
-      "region": "Lagos",
-      "feeMinor": 150000,
-      "currency": "NGN",
-      "active": true
-    },
-    {
-      "id": "slot-evening-lagos",
-      "label": "Evening Slot",
-      "startsAt": "2026-02-12T17:00:00.000Z",
-      "endsAt": "2026-02-12T20:00:00.000Z",
-      "region": "Lagos",
-      "feeMinor": 200000,
-      "currency": "NGN",
-      "active": true
-    }
-  ],
-  "orders": [
-    {
-      "id": "order-2026-0001",
-      "orderNumber": "NFL-2026-0001",
-      "customerEmail": "customer@example.com",
-      "customerName": "Demo Customer",
-      "shippingAddress": "Lekki Phase 1, Lagos, Nigeria",
-      "items": [
-        {
-          "productId": "prod-classic-sandwich-loaf",
-          "productName": "Classic Sandwich Loaf",
-          "productSlug": "classic-sandwich-loaf",
-          "productAvailabilityStatus": "available",
-          "availableRegions": [
-            "Lagos",
-            "Abuja",
-            "Port Harcourt",
-            "Kano"
-          ],
-          "minimumOrderQuantity": 40,
-          "maximumOrderQuantity": 6000,
-          "variantId": "var-classic-loaf-800g",
-          "variantName": "800g Family Loaf",
-          "quantity": 50,
-          "unitPriceMinor": 320000,
-          "lineTotalMinor": 16000000,
-          "currency": "NGN",
-          "imageUrl": "/placeholders/product-image-placeholder.svg"
-        }
-      ],
-      "summary": {
-        "currency": "NGN",
-        "subtotalMinor": 16000000,
-        "discountMinor": 1600000,
-        "deliveryFeeMinor": 150000,
-        "totalMinor": 14550000,
-        "promoCodeApplied": "WELCOME10"
-      },
-      "deliverySlotId": "slot-morning-lagos",
-      "paymentProvider": "paystack",
-      "paymentReference": "PAYSTACK-DEMO-2026-0001",
-      "status": "processing",
-      "timeline": [
-        {
-          "status": "created",
-          "at": "2026-03-23T14:02:46.080Z",
-          "note": "Order created."
-        },
-        {
-          "status": "payment_pending",
-          "at": "2026-03-23T14:02:46.080Z",
-          "note": "Awaiting payment confirmation."
-        },
-        {
-          "status": "paid",
-          "at": "2026-03-23T14:02:46.080Z",
-          "note": "Payment confirmed."
-        },
-        {
-          "status": "processing",
-          "at": "2026-03-23T14:02:46.080Z",
-          "note": "Order is being packed."
-        }
-      ],
-      "createdAt": "2026-03-23T14:02:46.080Z",
-      "updatedAt": "2026-03-23T14:02:46.080Z"
-    }
-  ],
-  "subscriptions": [
-    {
-      "id": "sub-2026-0001",
-      "customerEmail": "customer@example.com",
-      "variantId": "var-classic-loaf-800g",
-      "quantity": 40,
-      "frequency": "weekly",
-      "status": "active",
-      "nextChargeAt": "2026-03-10T10:00:00.000Z",
-      "provider": "paystack",
-      "createdAt": "2026-03-23T14:02:46.080Z",
-      "updatedAt": "2026-03-23T14:02:46.080Z"
-    }
-  ],
-  "webhookEvents": []
+  ]
 }

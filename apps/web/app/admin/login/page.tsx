@@ -139,10 +139,10 @@ export default function AdminLoginPage() {
         <div className="space-y-2">
           <Badge>Admin Access</Badge>
           <BrandLogo href={null} compact />
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">
             Secure Login
           </h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm text-neutral-600">
             Managed admin accounts are preferred. Role token login remains available as break-glass.
           </p>
         </div>
@@ -240,7 +240,7 @@ export default function AdminLoginPage() {
             >
               {submitting ? "Signing in..." : "Sign In"}
             </Button>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+            <p className="text-xs text-neutral-500">{status}</p>
           </form>
         ) : (
           <form onSubmit={handleActivation} className="space-y-4">
@@ -302,7 +302,7 @@ export default function AdminLoginPage() {
             >
               {submitting ? "Activating..." : "Activate Invite"}
             </Button>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+            <p className="text-xs text-neutral-500">{status}</p>
           </form>
         )}
       </Card>

@@ -71,11 +71,11 @@ export function PrivacyConsentBanner() {
 
   return (
     <div className="fixed inset-x-0 bottom-4 z-50 mx-auto w-full max-w-5xl px-4">
-      <Card className="space-y-3 border-neutral-300 shadow-xl dark:border-neutral-700">
-        <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+      <Card className="space-y-3 border-neutral-300 shadow-xl">
+        <p className="text-sm font-semibold text-neutral-900">
           Privacy Preferences
         </p>
-        <p className="text-xs text-neutral-600 dark:text-neutral-300">
+        <p className="text-xs text-neutral-600">
           We use essential cookies for platform operation and optional cookies for analytics,
           personalization, and marketing. You can update this anytime on the privacy page.
         </p>
@@ -100,7 +100,7 @@ export function PrivacyConsentBanner() {
             Essential Only
           </Button>
         </div>
-        {status ? <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p> : null}
+        {status ? <p className="text-xs text-neutral-500">{status}</p> : null}
       </Card>
     </div>
   );

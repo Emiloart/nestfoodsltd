@@ -71,19 +71,19 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             day: "numeric",
           })}
         </p>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
           {article.title}
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">{article.summary}</p>
+        <p className="text-sm text-neutral-600">{article.summary}</p>
       </header>
 
       <article className="space-y-4">
         {article.sections.map((section) => (
           <Card key={section.heading} className="space-y-2">
-            <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-lg font-semibold text-neutral-900">
               {section.heading}
             </h2>
-            <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm leading-relaxed text-neutral-600">
               {section.body}
             </p>
           </Card>

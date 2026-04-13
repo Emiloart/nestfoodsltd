@@ -34,7 +34,7 @@ export function SectionHeading({
         <p className="section-kicker">{eyebrow}</p>
         <h2
           className={cn(
-            "display-heading mt-3 text-[2rem] text-neutral-900 dark:text-neutral-100 sm:text-[2.5rem]",
+            "display-heading mt-3 text-[2rem] text-neutral-900 sm:text-[2.5rem]",
             titleClassName,
           )}
         >
@@ -46,7 +46,7 @@ export function SectionHeading({
           {description ? (
             <p
               className={cn(
-                "pretty-text text-sm leading-6 text-neutral-600 dark:text-neutral-300",
+                "pretty-text text-sm leading-6 text-neutral-600",
                 descriptionClassName,
               )}
             >

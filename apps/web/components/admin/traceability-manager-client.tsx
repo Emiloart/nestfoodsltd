@@ -322,10 +322,10 @@ export function TraceabilityManagerClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Traceability Admin</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Batch Ingestion & Editor
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Create, import, and edit traceability
           batches.
         </p>
@@ -346,7 +346,7 @@ export function TraceabilityManagerClient() {
                 setForm(toForm(target));
               }
             }}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
             <option value="">New batch form</option>
             {batches.map((batch) => (
@@ -357,7 +357,7 @@ export function TraceabilityManagerClient() {
           </select>
 
           {selectedBatch ? (
-            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>Created: {selectedBatch.createdAt}</p>
               <p>Updated: {selectedBatch.updatedAt}</p>
               <p>Status: {selectedBatch.status}</p>
@@ -404,7 +404,7 @@ export function TraceabilityManagerClient() {
               onChange={(event) =>
                 updateForm({ status: event.target.value as "active" | "recalled" | "sold_out" })
               }
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
             >
               <option value="active">active</option>
               <option value="recalled">recalled</option>
@@ -474,7 +474,7 @@ export function TraceabilityManagerClient() {
             <textarea
               value={form.certificationsText}
               onChange={(event) => updateForm({ certificationsText: event.target.value })}
-              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900"
             />
           </label>
 
@@ -486,7 +486,7 @@ export function TraceabilityManagerClient() {
             <textarea
               value={form.timelineText}
               onChange={(event) => updateForm({ timelineText: event.target.value })}
-              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900"
             />
           </label>
 
@@ -497,7 +497,7 @@ export function TraceabilityManagerClient() {
             <textarea
               value={form.adminNotes}
               onChange={(event) => updateForm({ adminNotes: event.target.value })}
-              className="min-h-20 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-20 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900"
             />
           </label>
 
@@ -516,14 +516,14 @@ export function TraceabilityManagerClient() {
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
           Bulk Import
         </p>
-        <p className="text-xs text-neutral-500 dark:text-neutral-400">
+        <p className="text-xs text-neutral-500">
           Paste JSON array matching batch schema and import in one operation.
         </p>
         <textarea
           value={bulkImportText}
           onChange={(event) => setBulkImportText(event.target.value)}
           placeholder='[{"batchCode":"NFL-...","qrCode":"https://...","productSlug":"...","productName":"..."}]'
-          className="min-h-40 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 font-mono text-xs text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+          className="min-h-40 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 font-mono text-xs text-neutral-900"
         />
         <Button
           variant="secondary"
@@ -534,7 +534,7 @@ export function TraceabilityManagerClient() {
         </Button>
       </Card>
 
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+      <p className="text-xs text-neutral-500">{status}</p>
     </section>
   );
 }

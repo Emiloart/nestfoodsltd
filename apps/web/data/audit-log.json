@@ -178,22 +178,6 @@
       }
     },
     {
-      "id": "08fc7c86-5bc9-43a8-9629-c3f266a99653",
-      "occurredAt": "2026-03-02T11:58:30.905Z",
-      "actorType": "admin",
-      "actorRole": "SUPER_ADMIN",
-      "action": "admin.orders.status.update",
-      "resourceType": "commerce.order",
-      "resourceId": "order-2026-0001",
-      "outcome": "failure",
-      "severity": "warning",
-      "ipAddress": "::1",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
-      "details": {
-        "reason": "Invalid status transition: processing -> delivered"
-      }
-    },
-    {
       "id": "a00d0b95-cfd4-4f33-9b7b-816ef06ea34a",
       "occurredAt": "2026-03-02T11:54:34.520Z",
       "actorType": "anonymous",

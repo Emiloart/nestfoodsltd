@@ -35,10 +35,10 @@ export default function BlogPage() {
       <JsonLd id="blog-articles-ld" data={articleStructuredData} />
       <div className="space-y-3">
         <Badge>Insights</Badge>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
           Operational Insights
         </h1>
-        <p className="max-w-3xl text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="max-w-3xl text-sm text-neutral-600">
           Updates from Nest Foods on manufacturing quality, bread category development, and
           traceability.
         </p>
@@ -54,16 +54,16 @@ export default function BlogPage() {
                   day: "numeric",
                 })}
               </p>
-              <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-lg font-semibold text-neutral-900">
                 {article.title}
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">{article.summary}</p>
+              <p className="text-sm text-neutral-600">{article.summary}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {article.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-neutral-600 dark:text-neutral-300"
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-neutral-600"
                 >
                   {tag}
                 </span>

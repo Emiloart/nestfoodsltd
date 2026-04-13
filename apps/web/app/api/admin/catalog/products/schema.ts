@@ -19,7 +19,6 @@ export const productVariantSchema = z.object({
   stockStatus: z.enum(["in_stock", "low_stock", "out_of_stock"]),
   priceMinor: z.number().int().min(0).max(10_000_000_000),
   currency: z.enum(["NGN", "USD"]),
-  subscriptionEligible: z.boolean(),
 });
 
 const baseProductSchema = z.object({

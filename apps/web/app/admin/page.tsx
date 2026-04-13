@@ -11,7 +11,6 @@ export default async function AdminPage() {
   const canManageMedia = role ? hasAdminPermission(role, "cms.media.read") : false;
   const canManageRecipes = role ? hasAdminPermission(role, "cms.recipes.read") : false;
   const canManageCatalog = role ? hasAdminPermission(role, "cms.catalog.read") : false;
-  const canManageOrders = role ? hasAdminPermission(role, "orders.read") : false;
   const canManageTraceability = role === "SUPER_ADMIN" || role === "SALES_MANAGER";
   const canManageUsers = role === "SUPER_ADMIN";
   const canViewAudit = role === "SUPER_ADMIN";
@@ -21,10 +20,10 @@ export default async function AdminPage() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>Admin Workspace</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Operations Dashboard
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Secure control plane for dynamic content, catalog management, media, and operations.
           Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
@@ -32,10 +31,10 @@ export default async function AdminPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
         <Link href="/admin/content" className="block transition hover:-translate-y-1">
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Content Manager
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Edit Home, About, Vision, Contact, Careers, and Sustainability content.
             </p>
           </Card>
@@ -43,20 +42,20 @@ export default async function AdminPage() {
         {canManageBanners ? (
           <Link href="/admin/banners" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Banner Manager
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Create, schedule, and order homepage hero banners and CTA surfaces.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Banner Manager
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `cms.pages.read` permission.
             </p>
           </Card>
@@ -64,20 +63,20 @@ export default async function AdminPage() {
         {canManageMedia ? (
           <Link href="/admin/media" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Media Library
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Manage asset metadata, folders, alt text, and usage references.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Media Library
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `cms.media.read` permission.
             </p>
           </Card>
@@ -85,20 +84,20 @@ export default async function AdminPage() {
         {canManageTraceability ? (
           <Link href="/admin/traceability" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Traceability Manager
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Create, import, and maintain batch journey records and certifications.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Traceability Manager
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `SUPER_ADMIN` or `SALES_MANAGER` role.
             </p>
           </Card>
@@ -106,10 +105,10 @@ export default async function AdminPage() {
         {canManageCatalog ? (
           <Link href="/admin/catalog" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Catalog Manager
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Manage products, variants, nutrition data, allergens, bulk quantity limits, region
                 availability, and publishing states.
               </p>
@@ -117,10 +116,10 @@ export default async function AdminPage() {
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Catalog Manager
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `cms.catalog.read` permission.
             </p>
           </Card>
@@ -128,62 +127,41 @@ export default async function AdminPage() {
         {canManageRecipes ? (
           <Link href="/admin/recipes" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Recipe Manager
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Create, edit, and publish recipe content with product-linked suggestions.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Recipe Manager
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `cms.recipes.read` permission.
-            </p>
-          </Card>
-        )}
-        {canManageOrders ? (
-          <Link href="/admin/orders" className="block transition hover:-translate-y-1">
-            <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                Order Control
-              </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
-                Manage order lifecycle states, timeline notes, and payment webhook event visibility.
-              </p>
-            </Card>
-          </Link>
-        ) : (
-          <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-              Order Control
-            </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
-              Requires `orders.read` permission.
             </p>
           </Card>
         )}
         {canManageUsers ? (
           <Link href="/admin/users" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 User Directory
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Invite, suspend, and update admin users with role and MFA policy controls.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               User Directory
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `SUPER_ADMIN` role.
             </p>
           </Card>
@@ -191,20 +169,20 @@ export default async function AdminPage() {
         {canViewAudit ? (
           <Link href="/admin/audit" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Audit Events
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Review security-sensitive actions, failures, and blocked requests.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Audit Events
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `SUPER_ADMIN` role.
             </p>
           </Card>
@@ -212,20 +190,20 @@ export default async function AdminPage() {
         {canViewOps ? (
           <Link href="/admin/ops" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="text-base font-semibold text-neutral-900">
                 Operations
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 Monitor runtime health, Core Web Vitals budget, and captured app errors.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-base font-semibold text-neutral-900">
               Operations
             </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Requires `SUPER_ADMIN` role.
             </p>
           </Card>

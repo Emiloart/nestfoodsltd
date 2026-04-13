@@ -273,10 +273,10 @@ export function AdminUsersClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Admin Access</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Admin User Directory
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Invite users, map roles, and enforce
           MFA policy.
         </p>
@@ -307,7 +307,7 @@ export function AdminUsersClient() {
               <select
                 value={inviteForm.role}
                 onChange={(event) => updateInviteForm({ role: event.target.value as AdminRole })}
-                className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               >
                 {roleOptions.map((entry) => (
                   <option key={entry} value={entry}>
@@ -330,7 +330,7 @@ export function AdminUsersClient() {
             </label>
           </div>
 
-          <label className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300">
+          <label className="flex items-center gap-2 text-sm text-neutral-600">
             <input
               type="checkbox"
               checked={inviteForm.mfaRequired}
@@ -354,11 +354,11 @@ export function AdminUsersClient() {
           </Button>
 
           {lastInviteToken ? (
-            <div className="space-y-2 rounded-xl border border-amber-200 bg-amber-50 p-3 dark:border-amber-900/70 dark:bg-amber-950/40">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-300">
+            <div className="space-y-2 rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-700">
                 One-time Invite Token
               </p>
-              <p className="break-all text-xs text-amber-800 dark:text-amber-200">
+              <p className="break-all text-xs text-amber-800">
                 {lastInviteToken}
               </p>
               <Button size="sm" variant="secondary" onClick={() => void copyInviteToken()}>
@@ -367,17 +367,17 @@ export function AdminUsersClient() {
             </div>
           ) : null}
 
-          <div className="space-y-2 rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+          <div className="space-y-2 rounded-xl border border-neutral-200 p-3">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
               Pending Invites
             </p>
             {invites.length === 0 ? (
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">No invites yet.</p>
+              <p className="text-xs text-neutral-500">No invites yet.</p>
             ) : (
               invites.slice(0, 8).map((invite) => (
                 <div
                   key={invite.id}
-                  className="rounded-lg border border-neutral-200 p-2 text-xs text-neutral-600 dark:border-neutral-800 dark:text-neutral-300"
+                  className="rounded-lg border border-neutral-200 p-2 text-xs text-neutral-600"
                 >
                   <p className="font-medium">{invite.email}</p>
                   <p>
@@ -412,7 +412,7 @@ export function AdminUsersClient() {
               const target = users.find((entry) => entry.id === nextId) ?? null;
               setUserForm(target ? toUserUpdateForm(target) : null);
             }}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
             <option value="">Select admin user</option>
             {users.map((user) => (
@@ -458,7 +458,7 @@ export function AdminUsersClient() {
                           : current,
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                    className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
                   >
                     {roleOptions.map((entry) => (
                       <option key={entry} value={entry}>
@@ -483,7 +483,7 @@ export function AdminUsersClient() {
                           : current,
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                    className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
                   >
                     <option value="active">active</option>
                     <option value="suspended">suspended</option>
@@ -511,7 +511,7 @@ export function AdminUsersClient() {
                 </label>
               </div>
 
-              <label className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300">
+              <label className="flex items-center gap-2 text-sm text-neutral-600">
                 <input
                   type="checkbox"
                   checked={userForm.mfaRequired}
@@ -544,7 +544,7 @@ export function AdminUsersClient() {
                 </Button>
               </div>
 
-              <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-600 dark:border-neutral-800 dark:text-neutral-300">
+              <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-600">
                 <p>Created: {formatDate(selectedUser.createdAt)}</p>
                 <p>Updated: {formatDate(selectedUser.updatedAt)}</p>
                 <p>Last login: {formatDate(selectedUser.lastLoginAt)}</p>
@@ -553,14 +553,14 @@ export function AdminUsersClient() {
               </div>
             </>
           ) : (
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            <p className="text-sm text-neutral-500">
               Select a user to manage.
             </p>
           )}
         </Card>
       </div>
 
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+      <p className="text-xs text-neutral-500">{status}</p>
     </section>
   );
 }

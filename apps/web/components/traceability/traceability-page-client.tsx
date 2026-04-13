@@ -74,10 +74,10 @@ export function TraceabilityPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>Quality Access</Badge>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
           Quality & Traceability
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Verify bread batch sourcing, production, packaging, certification, and dispatch
           milestones from a single lookup.
         </p>
@@ -95,14 +95,14 @@ export function TraceabilityPageClient() {
               {loading ? "Looking up..." : "Lookup Batch"}
             </Button>
           </div>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+          <p className="text-xs text-neutral-500">{status}</p>
         </Card>
 
         <Card className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
             Verification scope
           </p>
-          <p className="text-sm text-neutral-700 dark:text-neutral-200">
+          <p className="text-sm text-neutral-700">
             Confirm supplier origin, line production details, QA sign-off, packaging timestamps, and
             active certifications before release or delivery.
           </p>
@@ -115,32 +115,32 @@ export function TraceabilityPageClient() {
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
               Batch Details
             </p>
-            <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+            <p className="text-sm font-semibold text-neutral-900">
               {batch.batchCode} · {batch.productName}
             </p>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Status: <span className="font-semibold uppercase">{batch.status}</span>
             </p>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Production: {batch.productionDate} · Expiry: {batch.expiryDate}
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">QR: {batch.qrCode}</p>
+            <p className="text-xs text-neutral-500">QR: {batch.qrCode}</p>
           </Card>
 
           <Card className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
               Source & Processing
             </p>
-            <p className="text-sm text-neutral-700 dark:text-neutral-200">
+            <p className="text-sm text-neutral-700">
               Source: {batch.source.farmName}, {batch.source.region}, {batch.source.country}
             </p>
-            <p className="text-sm text-neutral-700 dark:text-neutral-200">
+            <p className="text-sm text-neutral-700">
               Lot: {batch.source.lotReference} · Harvested {batch.source.harvestedAt ?? "N/A"}
             </p>
-            <p className="text-sm text-neutral-700 dark:text-neutral-200">
+            <p className="text-sm text-neutral-700">
               Facility: {batch.processing.facilityName} ({batch.processing.lineName})
             </p>
-            <p className="text-sm text-neutral-700 dark:text-neutral-200">
+            <p className="text-sm text-neutral-700">
               QA Lead: {batch.processing.qaLead} · Packaged {batch.processing.packagedAt}
             </p>
           </Card>
@@ -150,7 +150,7 @@ export function TraceabilityPageClient() {
               Certifications
             </p>
             {batch.certifications.length === 0 ? (
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="text-sm text-neutral-600">
                 No certifications listed.
               </p>
             ) : (
@@ -160,13 +160,13 @@ export function TraceabilityPageClient() {
                     key={cert.id}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                   >
-                    <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-sm font-semibold text-neutral-900">
                       {cert.name}
                     </p>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs text-neutral-500">
                       {cert.issuer} · {cert.certificateCode}
                     </p>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs text-neutral-500">
                       Valid until: {cert.validUntil ?? "Not specified"}
                     </p>
                   </div>
@@ -186,17 +186,17 @@ export function TraceabilityPageClient() {
                   className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    <p className="text-sm font-semibold text-neutral-900">
                       {event.title}
                     </p>
                     <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                       {event.stage}
                     </p>
                   </div>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-300">
+                  <p className="text-sm text-neutral-600">
                     {event.description}
                   </p>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  <p className="text-xs text-neutral-500">
                     {event.location} · {event.startedAt}
                     {event.completedAt ? ` → ${event.completedAt}` : ""}
                   </p>
@@ -222,10 +222,10 @@ export function TraceabilityPageClient() {
               }}
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3 text-left transition hover:-translate-y-0.5 hover:brightness-105"
             >
-              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+              <p className="text-sm font-semibold text-neutral-900">
                 {entry.batchCode}
               </p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">{entry.productName}</p>
+              <p className="text-xs text-neutral-500">{entry.productName}</p>
             </button>
           ))}
         </div>

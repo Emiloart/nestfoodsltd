@@ -14,10 +14,10 @@ export function HomeCareersSection({ careersPage }: HomeCareersSectionProps) {
         <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-3xl">
             <p className="section-kicker">Careers</p>
-            <h2 className="display-heading mt-3 text-3xl text-neutral-900 dark:text-neutral-100 sm:text-4xl">
+            <h2 className="display-heading mt-3 text-3xl text-neutral-900 sm:text-4xl">
               {careersPage.headline}
             </h2>
-            <p className="pretty-text mt-4 hidden text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:block">
+            <p className="pretty-text mt-4 hidden text-sm leading-7 text-neutral-600 md:block">
               {careersPage.description}
             </p>
           </div>

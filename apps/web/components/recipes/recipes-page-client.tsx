@@ -192,10 +192,10 @@ export function RecipesPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-3">
         <Badge>Bread Ideas</Badge>
-        <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
           Ingredients & Bread Ideas
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Explore ingredient-led bread ideas, then estimate nutrition totals for Nest Foods product
           bundles used in planning, menu development, or internal review.
         </p>
@@ -218,7 +218,7 @@ export function RecipesPageClient() {
           />
         </div>
         <Button onClick={runRecipeSearch}>Find Ideas</Button>
-        <p className="text-xs text-neutral-500 dark:text-neutral-400">
+        <p className="text-xs text-neutral-500">
           Ingredient ideas: {ingredientsHint.slice(0, 8).join(", ")}
         </p>
 
@@ -229,23 +229,23 @@ export function RecipesPageClient() {
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                <p className="text-sm font-semibold text-neutral-900">
                   {recipe.title}
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Match {(recipe.matchScore * 100).toFixed(0)}%
                 </p>
               </div>
-              <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+              <p className="mt-1 text-sm text-neutral-600">
                 {recipe.description}
               </p>
-              <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="mt-2 text-xs text-neutral-500">
                 Matched: {recipe.matchedIngredients.join(", ") || "None"}
               </p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="text-xs text-neutral-500">
                 Missing: {recipe.missingIngredients.slice(0, 5).join(", ") || "None"}
               </p>
-              <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="mt-2 text-xs text-neutral-500">
                 {recipe.prepMinutes + recipe.cookMinutes} min total · serves {recipe.servings}
               </p>
             </div>
@@ -283,7 +283,7 @@ export function RecipesPageClient() {
 
         <div className="space-y-2">
           {hydratedBundleItems.length === 0 ? (
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               No product bundle items added yet.
             </p>
           ) : (
@@ -292,7 +292,7 @@ export function RecipesPageClient() {
                 key={item.variantId}
                 className="flex flex-wrap items-center justify-between gap-2 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
               >
-                <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                <p className="text-sm text-neutral-700">
                   {item.productName} · {item.variantName} × {item.quantity}
                 </p>
                 <Button size="sm" variant="ghost" onClick={() => removeBundleItem(item.variantId)}>
@@ -314,24 +314,24 @@ export function RecipesPageClient() {
         {nutritionResult ? (
           <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3">
-              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+              <p className="text-sm font-semibold text-neutral-900">
                 Macro Summary
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Calories: {nutritionResult.summary.calories}
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Protein: {nutritionResult.summary.proteinG}g
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Carbs: {nutritionResult.summary.carbsG}g
               </p>
-              <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <p className="text-sm text-neutral-700">
                 Fat: {nutritionResult.summary.fatG}g
               </p>
             </div>
             <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3">
-              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+              <p className="text-sm font-semibold text-neutral-900">
                 Detailed Totals
               </p>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
@@ -340,8 +340,8 @@ export function RecipesPageClient() {
                     key={`${entry.label}-${entry.unit}`}
                     className="rounded-[1rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-2"
                   >
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">{entry.label}</p>
-                    <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                    <p className="text-xs text-neutral-500">{entry.label}</p>
+                    <p className="text-sm font-medium text-neutral-900">
                       {entry.amount}
                       {entry.unit}
                     </p>
@@ -353,7 +353,7 @@ export function RecipesPageClient() {
         ) : null}
       </Card>
 
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+      <p className="text-xs text-neutral-500">{status}</p>
     </section>
   );
 }

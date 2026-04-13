@@ -48,7 +48,7 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
         )}
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{title}</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">{title}</h2>
           <button
             type="button"
             onClick={onClose}

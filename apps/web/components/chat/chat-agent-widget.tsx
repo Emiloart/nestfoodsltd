@@ -315,7 +315,7 @@ export function ChatAgentWidget() {
           <div className="shell-surface flex items-center justify-between border-b px-4 py-3">
             <div className="space-y-1">
               <Badge>Nest Agent</Badge>
-              <p className="hidden text-xs text-neutral-600 dark:text-neutral-300 md:block">
+              <p className="hidden text-xs text-neutral-600 md:block">
                 Product, traceability, and enquiry assistant
               </p>
             </div>
@@ -323,14 +323,14 @@ export function ChatAgentWidget() {
               <button
                 type="button"
                 onClick={resetConversation}
-                className="inline-flex items-center justify-center rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] font-medium text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-950/70"
+                className="inline-flex items-center justify-center rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] font-medium text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900"
               >
                 New Chat
               </button>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--border)] text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-950/70"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--border)] text-neutral-600 transition hover:bg-white/70 hover:text-neutral-900"
                 aria-label="Close chat"
               >
                 <CloseIcon />
@@ -347,8 +347,8 @@ export function ChatAgentWidget() {
                 <div
                   className={
                     entry.role === "user"
-                      ? "rounded-2xl rounded-br-md bg-[linear-gradient(135deg,var(--brand-1),var(--brand-2))] px-3 py-2 text-sm text-white"
-                      : "rounded-2xl rounded-bl-md border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-700 dark:text-neutral-200"
+                      ? "rounded-2xl rounded-br-md bg-[color:var(--brand-1)] px-3 py-2 text-sm text-white"
+                      : "rounded-2xl rounded-bl-md border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-700"
                   }
                 >
                   {entry.content}
@@ -356,7 +356,7 @@ export function ChatAgentWidget() {
               </div>
             ))}
             {sending ? (
-              <div className="mr-12 rounded-2xl rounded-bl-md border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-600 dark:text-neutral-300">
+              <div className="mr-12 rounded-2xl rounded-bl-md border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-600">
                 Thinking...
               </div>
             ) : null}
@@ -372,7 +372,7 @@ export function ChatAgentWidget() {
                   <Link
                     key={`${link.label}-${link.href}`}
                     href={link.href}
-                    className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-1 text-xs font-medium text-neutral-700 transition hover:brightness-105 dark:text-neutral-200"
+                    className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-1 text-xs font-medium text-neutral-700 transition hover:brightness-105"
                   >
                     {link.label}
                   </Link>
@@ -391,7 +391,7 @@ export function ChatAgentWidget() {
                   type="button"
                   key={action.prompt}
                   onClick={() => void sendMessage(action.prompt)}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-1 text-xs text-neutral-700 transition hover:brightness-105 dark:text-neutral-200"
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-1 text-xs text-neutral-700 transition hover:brightness-105"
                 >
                   {action.label}
                 </button>
@@ -401,13 +401,13 @@ export function ChatAgentWidget() {
 
           {handoffSuggested ? (
             <div className="border-t border-[color:var(--border)] px-4 py-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-300">
+              <p className="text-xs text-neutral-600">
                 {handoffReason || "Need a human follow-up? We can escalate this."}
               </p>
               <button
                 type="button"
                 onClick={() => setLeadFormOpen((current) => !current)}
-                className="mt-2 rounded-full border border-[color:var(--border)] px-3 py-1 text-xs font-medium text-neutral-700 transition hover:brightness-105 dark:text-neutral-200"
+                className="mt-2 rounded-full border border-[color:var(--border)] px-3 py-1 text-xs font-medium text-neutral-700 transition hover:brightness-105"
               >
                 {leadFormOpen ? "Hide Support Form" : "Request Human Support"}
               </button>
@@ -434,7 +434,7 @@ export function ChatAgentWidget() {
                   <textarea
                     value={leadMessage}
                     onChange={(event) => setLeadMessage(event.target.value)}
-                    className="min-h-20 w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:text-neutral-100 dark:placeholder:text-neutral-400"
+                    className="min-h-20 w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
                     placeholder="How can we help you?"
                     required
                   />
@@ -442,7 +442,7 @@ export function ChatAgentWidget() {
                     {leadSubmitting ? "Submitting..." : "Submit Support Request"}
                   </Button>
                   {leadStatus ? (
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">{leadStatus}</p>
+                    <p className="text-xs text-neutral-500">{leadStatus}</p>
                   ) : null}
                 </form>
               ) : null}
@@ -460,7 +460,7 @@ export function ChatAgentWidget() {
               <Input
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Ask about products, orders, traceability..."
+                placeholder="Ask about products, traceability, or distributor support..."
                 disabled={sending}
               />
               <Button size="sm" type="submit" disabled={!canSend}>
@@ -480,7 +480,7 @@ export function ChatAgentWidget() {
         <span className="hidden md:inline">{open ? "Close Agent" : "Chat with Nest Agent"}</span>
       </Button>
       {!open ? (
-        <span className="pointer-events-none mr-1 inline-flex items-center gap-1 text-[11px] text-neutral-500 dark:text-neutral-400">
+        <span className="pointer-events-none mr-1 inline-flex items-center gap-1 text-[11px] text-neutral-500">
           <AssistantIcon />
           <span className="hidden md:inline">Product + support assistant</span>
         </span>

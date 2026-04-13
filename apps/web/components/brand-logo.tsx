@@ -39,7 +39,7 @@ export function BrandLogo({
         </span>
         <span
           className={cn(
-            inverse ? "display-heading text-base text-white" : "display-heading text-base text-neutral-900 dark:text-neutral-100",
+            inverse ? "display-heading text-base text-white" : "display-heading text-base text-neutral-900",
             compact && "text-sm",
           )}
         >

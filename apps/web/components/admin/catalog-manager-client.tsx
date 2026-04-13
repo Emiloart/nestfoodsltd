@@ -64,7 +64,7 @@ const emptyFormState: CatalogFormState = {
   ingredientsText: "",
   shelfLifeDays: "30",
   nutritionText: "Energy | 0 | kcal",
-  variantsText: "default | Standard Pack | SKU-001 | Pack | in_stock | 0 | NGN | false",
+  variantsText: "default | Standard Pack | SKU-001 | Pack | in_stock | 0 | NGN",
 };
 
 const stockStatusOptions: ProductVariant["stockStatus"][] = [
@@ -88,17 +88,6 @@ function parseDelimitedLine(line: string) {
 
 function toTextList(items: string[]) {
   return items.join("\n");
-}
-
-function parseBoolean(value: string, lineNumber: number) {
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "true" || normalized === "1" || normalized === "yes") {
-    return true;
-  }
-  if (normalized === "false" || normalized === "0" || normalized === "no") {
-    return false;
-  }
-  throw new Error(`Variant row ${lineNumber}: subscription field must be true/false.`);
 }
 
 function parseNutritionTable(text: string): NutritionItem[] {
@@ -129,12 +118,12 @@ function parseVariants(text: string): ProductVariant[] {
   }
 
   return lines.map((line, index) => {
-    const [id, name, sku, sizeLabel, stockStatus, priceMinorRaw, currency, subscriptionRaw] =
+    const [id, name, sku, sizeLabel, stockStatus, priceMinorRaw, currency] =
       parseDelimitedLine(line);
 
-    if (!name || !sku || !stockStatus || !priceMinorRaw || !currency || !subscriptionRaw) {
+    if (!name || !sku || !stockStatus || !priceMinorRaw || !currency) {
       throw new Error(
-        `Variant row ${index + 1} must be: id | name | sku | size | stock | priceMinor | currency | subscription`,
+        `Variant row ${index + 1} must be: id | name | sku | size | stock | priceMinor | currency`,
       );
     }
 
@@ -159,7 +148,6 @@ function parseVariants(text: string): ProductVariant[] {
       stockStatus: stockStatus as ProductVariant["stockStatus"],
       priceMinor: Math.round(priceMinor),
       currency: currency as ProductVariant["currency"],
-      subscriptionEligible: parseBoolean(subscriptionRaw, index + 1),
     };
   });
 }
@@ -195,7 +183,6 @@ function toFormState(product: CommerceProduct): CatalogFormState {
           variant.stockStatus,
           variant.priceMinor,
           variant.currency,
-          variant.subscriptionEligible,
         ].join(" | "),
       )
       .join("\n"),
@@ -410,10 +397,10 @@ export function CatalogManagerClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Catalog Admin</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Product Catalog Manager
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Manage products, variants, nutrition,
           allergens, bulk ordering limits, and regional availability.
         </p>
@@ -432,7 +419,7 @@ export function CatalogManagerClient() {
               const target = products.find((entry) => entry.id === nextId);
               setForm(target ? toFormState(target) : emptyFormState);
             }}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
             <option value="">New product form</option>
             {products.map((product) => (
@@ -443,7 +430,7 @@ export function CatalogManagerClient() {
           </select>
 
           {selectedProduct ? (
-            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>ID: {selectedProduct.id}</p>
               <p>Updated: {selectedProduct.updatedAt}</p>
               <p>Variants: {selectedProduct.variants.length}</p>
@@ -455,7 +442,7 @@ export function CatalogManagerClient() {
             </div>
           ) : null}
 
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs text-neutral-500">
             {products.length} product{products.length === 1 ? "" : "s"} available.
           </p>
 
@@ -468,7 +455,7 @@ export function CatalogManagerClient() {
             </Button>
           </div>
 
-          <Link href="/b2b" className="text-xs text-neutral-500 underline dark:text-neutral-400">
+          <Link href="/b2b" className="text-xs text-neutral-500 underline">
             Open distributor portal
           </Link>
         </Card>
@@ -486,7 +473,7 @@ export function CatalogManagerClient() {
             <select
               value={form.status}
               onChange={(event) => updateForm({ status: event.target.value as ProductStatus })}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
             >
               <option value="draft">draft</option>
               <option value="published">published</option>
@@ -496,7 +483,7 @@ export function CatalogManagerClient() {
               onChange={(event) =>
                 updateForm({ availabilityStatus: event.target.value as ProductAvailabilityStatus })
               }
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
             >
               <option value="available">available</option>
               <option value="limited">limited</option>
@@ -547,7 +534,7 @@ export function CatalogManagerClient() {
             <textarea
               value={form.shortDescription}
               onChange={(event) => updateForm({ shortDescription: event.target.value })}
-              className="min-h-20 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-20 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
             />
           </label>
 
@@ -558,7 +545,7 @@ export function CatalogManagerClient() {
             <textarea
               value={form.longDescription}
               onChange={(event) => updateForm({ longDescription: event.target.value })}
-              className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
             />
           </label>
 
@@ -569,7 +556,7 @@ export function CatalogManagerClient() {
             <textarea
               value={form.availableRegionsText}
               onChange={(event) => updateForm({ availableRegionsText: event.target.value })}
-              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
             />
           </label>
 
@@ -581,7 +568,7 @@ export function CatalogManagerClient() {
               <textarea
                 value={form.galleryUrlsText}
                 onChange={(event) => updateForm({ galleryUrlsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -591,7 +578,7 @@ export function CatalogManagerClient() {
               <textarea
                 value={form.tagsText}
                 onChange={(event) => updateForm({ tagsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -601,7 +588,7 @@ export function CatalogManagerClient() {
               <textarea
                 value={form.allergensText}
                 onChange={(event) => updateForm({ allergensText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -611,7 +598,7 @@ export function CatalogManagerClient() {
               <textarea
                 value={form.ingredientsText}
                 onChange={(event) => updateForm({ ingredientsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
           </div>
@@ -623,18 +610,18 @@ export function CatalogManagerClient() {
             <textarea
               value={form.nutritionText}
               onChange={(event) => updateForm({ nutritionText: event.target.value })}
-              className="min-h-28 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-28 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
             />
           </label>
 
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Variant Rows (id | name | sku | size | stock | priceMinor | currency | subscription)
+              Variant Rows (id | name | sku | size | stock | priceMinor | currency)
             </span>
             <textarea
               value={form.variantsText}
               onChange={(event) => updateForm({ variantsText: event.target.value })}
-              className="min-h-36 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-36 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
             />
           </label>
 
@@ -656,7 +643,7 @@ export function CatalogManagerClient() {
             >
               Delete Product
             </Button>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+            <p className="text-xs text-neutral-500">{status}</p>
           </div>
         </Card>
       </div>

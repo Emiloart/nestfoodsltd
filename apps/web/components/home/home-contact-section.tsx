@@ -43,7 +43,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
                 className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5"
               >
                 <p className="section-kicker">{block.title}</p>
-                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
+                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">
                   {block.value}
                 </p>
               </div>
@@ -64,10 +64,10 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
                     key={item}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
                   >
-                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                       Placeholder
                     </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                    <p className="mt-2 text-sm font-medium text-neutral-900">
                       {item}
                     </p>
                   </div>

@@ -57,8 +57,8 @@ export function ImagePlaceholder({
           className="h-full w-full object-cover"
         />
       )}
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[rgba(25,14,36,0.52)] to-transparent" />
-      <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-[rgba(36,14,54,0.54)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)] backdrop-blur">
+      <div className="absolute inset-x-0 bottom-0 h-18 bg-[rgba(36,22,47,0.22)]" />
+      <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[rgba(36,14,54,0.78)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
         {label}
       </div>
     </div>

@@ -135,8 +135,8 @@ function MobileAutoCarouselInner({
                 className={cn(
                   "rounded-full transition-all duration-300",
                   active
-                    ? "h-1.5 w-7 bg-[color:var(--brand-1)] dark:bg-[color:var(--brand-3)]"
-                    : "h-1.5 w-2.5 bg-[color:var(--border-strong)] dark:bg-white/18",
+                    ? "h-1.5 w-7 bg-[color:var(--brand-1)]"
+                    : "h-1.5 w-2.5 bg-[color:var(--border-strong)]",
                 )}
               />
             );

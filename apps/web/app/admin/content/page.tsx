@@ -176,10 +176,10 @@ export default function AdminContentPage() {
     <section className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Admin CMS</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Content Manager
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Manage publishing state, scheduling, SEO,
           and visual placeholders.
         </p>
@@ -190,7 +190,7 @@ export default function AdminContentPage() {
           <label className="block space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Page</span>
             <select
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               value={selectedSlug ?? ""}
               onChange={(event) => setSelectedSlug(event.target.value as CmsPageSlug)}
             >
@@ -204,7 +204,7 @@ export default function AdminContentPage() {
           <label className="block space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Status</span>
             <select
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               value={form.status}
               onChange={(event) =>
                 setForm((current) => ({
@@ -244,7 +244,7 @@ export default function AdminContentPage() {
           <textarea
             value={form.description}
             onChange={(event) => setForm((s) => ({ ...s, description: event.target.value }))}
-            className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
           />
         </label>
 
@@ -337,10 +337,10 @@ export default function AdminContentPage() {
           <Button variant="secondary" onClick={signOut}>
             Sign Out
           </Button>
-          <Link href="/" className="text-xs text-neutral-500 underline dark:text-neutral-400">
+          <Link href="/" className="text-xs text-neutral-500 underline">
             Open live site
           </Link>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+          <p className="text-xs text-neutral-500">{status}</p>
         </div>
       </Card>
     </section>

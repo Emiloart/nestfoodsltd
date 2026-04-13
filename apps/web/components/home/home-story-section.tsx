@@ -16,10 +16,10 @@ function StoryCard({ page }: { page: CmsPage }) {
     <Card className="space-y-4">
       <div>
         <p className="section-kicker">{page.title}</p>
-        <h3 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+        <h3 className="mt-3 text-2xl font-semibold text-neutral-900">
           {page.headline}
         </h3>
-        <p className="pretty-text mt-4 line-clamp-4 text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:line-clamp-none">
+        <p className="pretty-text mt-4 line-clamp-4 text-sm leading-7 text-neutral-600 md:line-clamp-none">
           {page.description}
         </p>
       </div>

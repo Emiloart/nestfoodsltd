@@ -34,10 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#5a247a" },
-    { media: "(prefers-color-scheme: dark)", color: "#14091f" },
-  ],
+  themeColor: "#5a247a",
 };
 
 type RootLayoutProps = {
@@ -46,16 +43,12 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${bodyFont.variable} ${displayFont.variable}`}
-    >
+    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
       <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a
           href="#main-content"
-          className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[linear-gradient(135deg,var(--action-1),var(--action-2))] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_16px_34px_rgba(238,186,11,0.3)] focus:not-sr-only"
+          className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[color:var(--action-1)] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_10px_22px_rgba(238,186,11,0.2)] focus:not-sr-only"
         >
           Skip to main content
         </a>

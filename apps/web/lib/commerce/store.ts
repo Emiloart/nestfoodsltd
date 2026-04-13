@@ -20,11 +20,6 @@ function mergeCommerceData(input: Partial<CommerceData> | null | undefined): Com
 
   return {
     products: input.products ?? COMMERCE_SEED_DATA.products,
-    promos: input.promos ?? COMMERCE_SEED_DATA.promos,
-    deliverySlots: input.deliverySlots ?? COMMERCE_SEED_DATA.deliverySlots,
-    orders: input.orders ?? COMMERCE_SEED_DATA.orders,
-    subscriptions: input.subscriptions ?? COMMERCE_SEED_DATA.subscriptions,
-    webhookEvents: input.webhookEvents ?? COMMERCE_SEED_DATA.webhookEvents,
   };
 }
 

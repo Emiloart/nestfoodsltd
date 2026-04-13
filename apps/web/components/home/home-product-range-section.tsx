@@ -25,28 +25,28 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
       </Link>
       <div>
         <p className="section-kicker">{product.category}</p>
-        <h3 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100 md:text-2xl">
+        <h3 className="mt-3 text-xl font-semibold text-neutral-900 md:text-2xl">
           {product.name}
         </h3>
-        <p className="pretty-text mt-3 line-clamp-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300 md:line-clamp-none">
+        <p className="pretty-text mt-3 line-clamp-3 text-sm leading-7 text-neutral-600 md:line-clamp-none">
           {product.shortDescription}
         </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
             Shelf life
           </p>
-          <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+          <p className="mt-2 text-sm font-medium text-neutral-900">
             {product.shelfLifeDays} days
           </p>
         </div>
         <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
             Coverage
           </p>
-          <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+          <p className="mt-2 text-sm font-medium text-neutral-900">
             {product.availableRegions.length} regions
           </p>
         </div>
@@ -56,7 +56,7 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
         {product.tags.slice(0, 2).map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-300"
+            className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-neutral-600"
           >
             {tag}
           </span>

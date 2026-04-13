@@ -262,10 +262,10 @@ export function RecipeManagerClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Recipe Admin</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Recipe Manager
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Create, edit, and publish recipe
           content.
         </p>
@@ -282,7 +282,7 @@ export function RecipeManagerClient() {
               const target = recipes.find((entry) => entry.id === nextId);
               setForm(target ? toForm(target) : emptyForm);
             }}
-            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+            className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
             <option value="">New recipe form</option>
             {recipes.map((recipe) => (
@@ -293,14 +293,14 @@ export function RecipeManagerClient() {
           </select>
 
           {selectedRecipe ? (
-            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+            <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>ID: {selectedRecipe.id}</p>
               <p>Updated: {selectedRecipe.updatedAt}</p>
               <p>Related products: {selectedRecipe.relatedProductSlugs.length}</p>
             </div>
           ) : null}
 
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs text-neutral-500">
             {recipes.length} recipe{recipes.length === 1 ? "" : "s"} configured.
           </p>
           <Button variant="secondary" onClick={() => setForm(emptyForm)} disabled={saving}>
@@ -321,7 +321,7 @@ export function RecipeManagerClient() {
             <select
               value={form.status}
               onChange={(event) => updateForm({ status: event.target.value as RecipeStatus })}
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
             >
               <option value="draft">draft</option>
               <option value="published">published</option>
@@ -366,7 +366,7 @@ export function RecipeManagerClient() {
             <textarea
               value={form.description}
               onChange={(event) => updateForm({ description: event.target.value })}
-              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
             />
           </label>
 
@@ -378,7 +378,7 @@ export function RecipeManagerClient() {
               <textarea
                 value={form.ingredientsText}
                 onChange={(event) => updateForm({ ingredientsText: event.target.value })}
-                className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -388,7 +388,7 @@ export function RecipeManagerClient() {
               <textarea
                 value={form.stepsText}
                 onChange={(event) => updateForm({ stepsText: event.target.value })}
-                className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-32 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -398,7 +398,7 @@ export function RecipeManagerClient() {
               <textarea
                 value={form.relatedProductsText}
                 onChange={(event) => updateForm({ relatedProductsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
             <label className="space-y-2">
@@ -408,7 +408,7 @@ export function RecipeManagerClient() {
               <textarea
                 value={form.tagsText}
                 onChange={(event) => updateForm({ tagsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
               />
             </label>
           </div>
@@ -466,7 +466,7 @@ export function RecipeManagerClient() {
             >
               Delete Recipe
             </Button>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+            <p className="text-xs text-neutral-500">{status}</p>
           </div>
         </Card>
       </div>

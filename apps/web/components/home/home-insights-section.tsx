@@ -31,10 +31,10 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
                 key={item}
                 className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
               >
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                   Ingredient
                 </p>
-                <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                <p className="mt-2 text-sm font-medium text-neutral-900">
                   {item}
                 </p>
               </div>
@@ -61,10 +61,10 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
             <Card key={article.slug} className="space-y-4">
               <div>
                 <p className="section-kicker">Insight</p>
-                <h3 className="mt-3 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+                <h3 className="mt-3 text-xl font-semibold text-neutral-900">
                   {article.title}
                 </h3>
-                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">
                   {article.summary}
                 </p>
               </div>
@@ -72,7 +72,7 @@ export function HomeInsightsSection({ articles }: HomeInsightsSectionProps) {
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-300"
+                    className="rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600"
                   >
                     {tag}
                   </span>

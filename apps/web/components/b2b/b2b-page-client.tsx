@@ -468,7 +468,7 @@ export function B2BPageClient() {
     return (
       <section className="mx-auto w-full max-w-7xl px-4 py-16 md:px-6">
         <Card>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">Loading B2B portal session...</p>
+          <p className="text-sm text-neutral-600">Loading B2B portal session...</p>
         </Card>
       </section>
     );
@@ -478,10 +478,10 @@ export function B2BPageClient() {
     return (
       <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
         <div className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
             Distributor Portal
           </h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm text-neutral-600">
             Sign in or request approval to unlock bulk ordering, custom pricing tiers, and account-managed support.
           </p>
         </div>
@@ -496,7 +496,7 @@ export function B2BPageClient() {
               {loading ? "Submitting..." : "Continue to Portal"}
             </Button>
           </div>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400 md:col-span-2">{status}</p>
+          <p className="text-xs text-neutral-500 md:col-span-2">{status}</p>
         </Card>
       </section>
     );
@@ -506,8 +506,8 @@ export function B2BPageClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">B2B Portal</h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">B2B Portal</h1>
+          <p className="text-sm text-neutral-600">
             Bulk ordering, quote management, invoices, statements, and account-manager support.
           </p>
         </div>
@@ -522,7 +522,7 @@ export function B2BPageClient() {
           <Input value={companyName} onChange={(event) => setCompanyName(event.target.value)} placeholder="Company name" />
           <Input value={contactName} onChange={(event) => setContactName(event.target.value)} placeholder="Contact name" />
           <Input value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Phone number" />
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs text-neutral-500">
             Status: <span className="font-semibold uppercase">{account?.status ?? "unknown"}</span> · Tier: <span className="font-semibold uppercase">{account?.tier ?? "n/a"}</span>
           </p>
           <Button onClick={saveAccountProfile}>Save Profile</Button>
@@ -530,11 +530,11 @@ export function B2BPageClient() {
 
         <Card className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Account Manager</p>
-          <p className="text-sm text-neutral-700 dark:text-neutral-200">{accountManager?.name ?? "Pending assignment"}</p>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{accountManager?.email ?? "No manager email yet"}</p>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{accountManager?.phone ?? "No manager phone yet"}</p>
+          <p className="text-sm text-neutral-700">{accountManager?.name ?? "Pending assignment"}</p>
+          <p className="text-xs text-neutral-500">{accountManager?.email ?? "No manager email yet"}</p>
+          <p className="text-xs text-neutral-500">{accountManager?.phone ?? "No manager phone yet"}</p>
           {pricing ? (
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            <p className="text-xs text-neutral-500">
               Pricing Tier: {pricing.label} · {pricing.discountPercent}% discount · quote SLA {pricing.quoteReviewHours}h
             </p>
           ) : null}
@@ -543,8 +543,8 @@ export function B2BPageClient() {
 
       {account?.status !== "approved" ? (
         <Card className="space-y-3">
-          <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">Approval in progress</p>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm font-semibold text-neutral-900">Approval in progress</p>
+          <p className="text-sm text-neutral-600">
             Your distributor profile is pending review. Once approved by the sales team, bulk catalog pricing and quote tools will unlock automatically.
           </p>
         </Card>
@@ -574,7 +574,7 @@ export function B2BPageClient() {
                     });
                   }
                 }}
-                className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+                className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               >
                 <option value="">Select variant</option>
                 {variantOptions.map((variant) => (
@@ -603,7 +603,7 @@ export function B2BPageClient() {
               </Button>
             </div>
             {selectedVariant ? (
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              <p className="text-xs text-neutral-500">
                 Allowed quantity: {selectedVariant.minimumOrderQuantity} -{" "}
                 {selectedVariant.maximumOrderQuantity} · Regions:{" "}
                 {selectedVariant.productRegions.join(", ")}
@@ -611,12 +611,12 @@ export function B2BPageClient() {
             ) : null}
 
             {draftItemsHydrated.length === 0 ? (
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">No items added yet.</p>
+              <p className="text-sm text-neutral-600">No items added yet.</p>
             ) : (
               <div className="space-y-2">
                 {draftItemsHydrated.map((item) => (
-                  <div key={item.variantId} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
-                    <p className="text-sm text-neutral-800 dark:text-neutral-200">
+                  <div key={item.variantId} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-neutral-200 p-3">
+                    <p className="text-sm text-neutral-800">
                       {item.productName} · {item.variantName} × {item.quantity}
                     </p>
                     <div className="flex items-center gap-2">
@@ -645,11 +645,11 @@ export function B2BPageClient() {
             </div>
 
             {quotePreview ? (
-              <div className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
-                <p className="text-sm text-neutral-700 dark:text-neutral-200">
+              <div className="rounded-xl border border-neutral-200 p-3">
+                <p className="text-sm text-neutral-700">
                   Preview total: <span className="font-semibold">{formatMinorAmount(quotePreview.summary.totalMinor, quotePreview.summary.currency)}</span>
                 </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   Discount: {formatMinorAmount(quotePreview.summary.discountMinor, quotePreview.summary.currency)} · Estimated fulfillment: {quotePreview.summary.estimatedFulfillmentDays} days
                 </p>
               </div>
@@ -660,16 +660,16 @@ export function B2BPageClient() {
             <Card className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Quote Requests</p>
               {quotes.length === 0 ? (
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">No quote requests yet.</p>
+                <p className="text-sm text-neutral-600">No quote requests yet.</p>
               ) : (
                 <div className="space-y-2">
                   {quotes.map((quote) => (
-                    <div key={quote.id} className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+                    <div key={quote.id} className="rounded-xl border border-neutral-200 p-3">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold">{quote.quoteNumber}</p>
                         <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{quote.status}</p>
                       </div>
-                      <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                      <p className="text-sm text-neutral-700">
                         {formatMinorAmount(quote.summary.totalMinor, quote.summary.currency)}
                       </p>
                       {(quote.status === "quoted" || quote.status === "approved") ? (
@@ -686,19 +686,19 @@ export function B2BPageClient() {
             <Card className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Order Tracking</p>
               {orders.length === 0 ? (
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">No B2B orders yet.</p>
+                <p className="text-sm text-neutral-600">No B2B orders yet.</p>
               ) : (
                 <div className="space-y-2">
                   {orders.map((order) => (
-                    <div key={order.id} className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+                    <div key={order.id} className="rounded-xl border border-neutral-200 p-3">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold">{order.orderNumber}</p>
                         <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{order.status}</p>
                       </div>
-                      <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                      <p className="text-sm text-neutral-700">
                         {formatMinorAmount(order.summary.totalMinor, order.summary.currency)} · Tracking {order.trackingCode ?? "pending"}
                       </p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      <p className="text-xs text-neutral-500">
                         Expected delivery: {order.expectedDeliveryAt ? new Date(order.expectedDeliveryAt).toLocaleString("en-NG") : "TBD"}
                       </p>
                     </div>
@@ -712,13 +712,13 @@ export function B2BPageClient() {
             <Card className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Invoices</p>
               {invoices.length === 0 ? (
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">No invoices yet.</p>
+                <p className="text-sm text-neutral-600">No invoices yet.</p>
               ) : (
                 <div className="space-y-2">
                   {invoices.map((invoice) => (
-                    <div key={invoice.id} className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+                    <div key={invoice.id} className="rounded-xl border border-neutral-200 p-3">
                       <p className="text-sm font-semibold">{invoice.invoiceNumber}</p>
-                      <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                      <p className="text-sm text-neutral-700">
                         Amount {formatMinorAmount(invoice.amountMinor, invoice.currency)} · Balance {formatMinorAmount(invoice.balanceMinor, invoice.currency)}
                       </p>
                       <Button size="sm" variant="secondary" onClick={() => openInvoiceDownload(invoice.id)} className="mt-2">
@@ -733,7 +733,7 @@ export function B2BPageClient() {
             <Card className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Statements</p>
               {statements.length === 0 ? (
-                <p className="text-sm text-neutral-600 dark:text-neutral-300">No statements yet.</p>
+                <p className="text-sm text-neutral-600">No statements yet.</p>
               ) : (
                 <div className="space-y-2">
                   {statements.map((statement) => (
@@ -742,10 +742,10 @@ export function B2BPageClient() {
                       href={statement.fileUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="block rounded-xl border border-neutral-200 p-3 transition hover:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900"
+                      className="block rounded-xl border border-neutral-200 p-3 transition hover:bg-neutral-100"
                     >
-                      <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{statement.periodLabel}</p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      <p className="text-sm font-semibold text-neutral-900">{statement.periodLabel}</p>
+                      <p className="text-xs text-neutral-500">
                         Billed {formatMinorAmount(statement.totalBilledMinor, statement.currency)} · Paid {formatMinorAmount(statement.totalPaidMinor, statement.currency)}
                       </p>
                     </a>
@@ -767,7 +767,7 @@ export function B2BPageClient() {
               <select
                 value={ticketChannel}
                 onChange={(event) => setTicketChannel(event.target.value as typeof ticketChannel)}
-                className="h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm dark:border-neutral-700 dark:bg-neutral-950"
+                className="h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm"
               >
                 <option value="portal">Portal</option>
                 <option value="email">Email</option>
@@ -777,7 +777,7 @@ export function B2BPageClient() {
               <select
                 value={ticketPriority}
                 onChange={(event) => setTicketPriority(event.target.value as typeof ticketPriority)}
-                className="h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm dark:border-neutral-700 dark:bg-neutral-950"
+                className="h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm"
               >
                 <option value="low">Low</option>
                 <option value="normal">Normal</option>
@@ -790,12 +790,12 @@ export function B2BPageClient() {
 
             <div className="space-y-2">
               {tickets.map((ticket) => (
-                <div key={ticket.id} className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800">
+                <div key={ticket.id} className="rounded-xl border border-neutral-200 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold">{ticket.subject}</p>
                     <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{ticket.status}</p>
                   </div>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  <p className="text-xs text-neutral-500">
                     {ticket.channel} · {ticket.priority} · assigned {ticket.assignedTo ?? "pending"}
                   </p>
                 </div>
@@ -805,7 +805,7 @@ export function B2BPageClient() {
         </>
       )}
 
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+      <p className="text-xs text-neutral-500">{status}</p>
     </section>
   );
 }

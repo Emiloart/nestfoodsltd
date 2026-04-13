@@ -13,9 +13,7 @@ export type AdminPermission =
   | "cms.recipes.read"
   | "cms.recipes.write"
   | "cms.catalog.read"
-  | "cms.catalog.write"
-  | "orders.read"
-  | "orders.write";
+  | "cms.catalog.write";
 
 export type AdminAuthSource = "session_user" | "session_role_token" | "header_role_token";
 
@@ -39,8 +37,6 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.recipes.write",
     "cms.catalog.read",
     "cms.catalog.write",
-    "orders.read",
-    "orders.write",
   ],
   CONTENT_EDITOR: [
     "cms.pages.read",
@@ -57,8 +53,6 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.media.read",
     "cms.catalog.read",
     "cms.catalog.write",
-    "orders.read",
-    "orders.write",
   ],
 };
 

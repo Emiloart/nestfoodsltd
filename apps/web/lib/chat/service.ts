@@ -1,13 +1,8 @@
 import { unstable_noStore as noStore } from "next/cache";
 
 import { readB2BData } from "@/lib/b2b/store";
-import { formatCurrency } from "@/lib/commerce/format";
-import {
-  listCommerceFacets,
-  listCommerceProducts,
-  listOrdersByEmail,
-} from "@/lib/commerce/service";
-import { type CommerceProduct, type Order } from "@/lib/commerce/types";
+import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
+import { type CommerceProduct } from "@/lib/commerce/types";
 import { searchRecipes } from "@/lib/recipes/service";
 import { type RecipeSearchResult } from "@/lib/recipes/types";
 import { lookupTraceabilityBatch } from "@/lib/traceability/service";
@@ -58,8 +53,6 @@ type ProductSearchOptions = {
   tag?: string;
   region?: string;
   inStockOnly: boolean;
-  subscriptionOnly: boolean;
-  sort?: "price_asc" | "price_desc";
 };
 
 type RecipeSearchOptions = {
@@ -70,7 +63,6 @@ type RecipeSearchOptions = {
   maxCalories?: number;
 };
 
-type OrderReplyTopic = "summary" | "timeline" | "delivery" | "payment" | "items" | "address";
 type TraceabilityReplyTopic =
   | "summary"
   | "timeline"
@@ -128,14 +120,14 @@ export type CaptureChatLeadResult = {
 const defaultQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
   { label: "Trace a batch", prompt: "Help me verify a batch code." },
-  { label: "Track my order", prompt: "Help me check my order status." },
+  { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
   { label: "Distributor support", prompt: "I need distributor quote support." },
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
   { label: "Traceability", href: "/traceability" },
-  { label: "Distributor Portal", href: "/b2b" },
+  { label: "Contact Team", href: "/contact" },
 ];
 
 const stopWords = new Set([
@@ -176,16 +168,6 @@ const stopWords = new Set([
   "more",
   "stock",
   "available",
-  "subscriptions",
-  "subscription",
-  "eligible",
-  "price",
-  "prices",
-  "sort",
-  "lowest",
-  "highest",
-  "cheapest",
-  "expensive",
   "status",
   "timeline",
   "update",
@@ -229,10 +211,7 @@ const productKeywords = [
   "drink",
   "product",
   "shop",
-  "buy",
-  "price",
   "catalog",
-  "subscription",
   "in stock",
   "available in",
 ];
@@ -263,10 +242,6 @@ const traceabilityFollowUpKeywords = [
 const productFollowUpKeywords = [
   "in stock",
   "available",
-  "subscription",
-  "subscribe",
-  "cheapest",
-  "price",
   "region",
   "compare",
   "filter",
@@ -324,10 +299,6 @@ function includesAny(haystack: string, needles: string[]) {
 
 function formatLabel(value: string) {
   return value.replace(/_/g, " ");
-}
-
-function formatOrderStatus(status: string) {
-  return status.replace(/_/g, " ");
 }
 
 function buildConversationId() {
@@ -439,25 +410,9 @@ function summarizeStockStatus(product: CommerceProduct) {
   return "in stock";
 }
 
-function hasSubscriptionVariant(product: CommerceProduct) {
-  return product.variants.some((variant) => variant.subscriptionEligible);
-}
-
-function minimumVariantPrice(product: CommerceProduct) {
-  return Math.min(...product.variants.map((variant) => variant.priceMinor));
-}
-
-function maximumVariantPrice(product: CommerceProduct) {
-  return Math.max(...product.variants.map((variant) => variant.priceMinor));
-}
-
 function scoreTextMatch(text: string, tokens: string[]) {
   const normalized = normalizeToken(text);
   return tokens.reduce((score, token) => score + (normalized.includes(token) ? 1 : 0), 0);
-}
-
-function sortOrdersByUpdatedAt(orders: Order[]) {
-  return [...orders].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 }
 
 function findLatestConversationValue(
@@ -680,7 +635,7 @@ async function buildGreetingReply(): Promise<ChatReply> {
     intent: "greeting",
     confidence: 0.96,
     answer:
-      "Hi. I can compare products, filter allergens, suggest recipes, verify traceability, check order status, and guide distributor support.",
+      "Hi. I can compare products, filter allergens, suggest recipes, verify traceability, and guide distributor support.",
     quickActions: defaultQuickActions,
     suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: false,
@@ -706,21 +661,11 @@ function parseProductSearchOptions(
     tag: findMatchingFacet(message, facets.tags) ?? undefined,
     region: findMatchingFacet(message, facets.regions) ?? undefined,
     inStockOnly: includesAny(normalized, ["in stock", "available now", "ready stock"]),
-    subscriptionOnly: includesAny(normalized, ["subscription", "subscribe", "recurring"]),
-    sort: includesAny(normalized, ["cheapest", "lowest price", "budget"])
-      ? "price_asc"
-      : includesAny(normalized, ["premium", "highest price", "most expensive"])
-        ? "price_desc"
-        : undefined,
   };
 }
 
 function filterAndRankProducts(products: CommerceProduct[], options: ProductSearchOptions) {
   let rankedProducts = [...products];
-
-  if (options.subscriptionOnly) {
-    rankedProducts = rankedProducts.filter((product) => hasSubscriptionVariant(product));
-  }
 
   const tokens = options.searchTerm ? tokenizeSearchValue(options.searchTerm) : [];
   if (tokens.length > 0) {
@@ -744,16 +689,9 @@ function filterAndRankProducts(products: CommerceProduct[], options: ProductSear
         if (left.score !== right.score) {
           return right.score - left.score;
         }
-        return minimumVariantPrice(left.product) - minimumVariantPrice(right.product);
+        return left.product.name.localeCompare(right.product.name);
       })
       .map((entry) => entry.product);
-  }
-
-  if (options.sort === "price_asc") {
-    rankedProducts.sort((left, right) => minimumVariantPrice(left) - minimumVariantPrice(right));
-  }
-  if (options.sort === "price_desc") {
-    rankedProducts.sort((left, right) => maximumVariantPrice(right) - maximumVariantPrice(left));
   }
 
   return rankedProducts;
@@ -779,12 +717,12 @@ async function buildProductSearchReply(
       intent: "product_search",
       confidence: 0.58,
       answer:
-        "I could not find a strong product match yet. Try a bread type, region, price direction, or ask for in-stock or subscription-eligible options.",
+        "I could not find a strong product match yet. Try a bread type, region, category, or ask for currently available options.",
       quickActions: normalizeQuickActions([
         { label: "In-stock only", prompt: "Show in-stock bread options." },
         { label: "By region", prompt: "Show products available in Lagos." },
-        { label: "Subscriptions", prompt: "Which products support subscriptions?" },
-        ...defaultQuickActions.slice(1, 3),
+        { label: "Allergen filter", prompt: "Help me filter bread options by allergens." },
+        { label: "Traceability", prompt: "Help me verify a batch code." },
       ]),
       suggestedLinks: [{ label: "Open Products", href: "/shop" }],
       handoffSuggested: false,
@@ -796,20 +734,11 @@ async function buildProductSearchReply(
     options.tag,
     options.region,
     options.inStockOnly ? "in stock only" : "",
-    options.subscriptionOnly ? "subscription eligible" : "",
-    options.sort === "price_asc" ? "lowest price first" : "",
-    options.sort === "price_desc" ? "highest price first" : "",
   ].filter(Boolean);
 
   const productLines = topProducts.map((product) => {
-    const cheapestVariant = [...product.variants].sort(
-      (left, right) => left.priceMinor - right.priceMinor,
-    )[0];
-    const priceLabel = cheapestVariant
-      ? formatCurrency(cheapestVariant.currency, cheapestVariant.priceMinor)
-      : "Price on request";
-    const subscriptionLabel = hasSubscriptionVariant(product) ? "subscription ready" : "one-off only";
-    return `• ${product.name} — ${product.category} · ${summarizeStockStatus(product)} · MOQ ${product.minimumOrderQuantity}+ · ${subscriptionLabel} · from ${priceLabel}`;
+    const regionLabel = product.availableRegions.slice(0, 2).join(", ");
+    return `• ${product.name} — ${product.category} · ${summarizeStockStatus(product)} · MOQ ${product.minimumOrderQuantity}+ · ${product.variants.length} format${product.variants.length === 1 ? "" : "s"} · ${regionLabel}`;
   });
 
   const answerLines = [
@@ -823,10 +752,10 @@ async function buildProductSearchReply(
     answer: answerLines.join("\n\n"),
     quickActions: normalizeQuickActions([
       { label: "In-stock only", prompt: "Filter these to in-stock products only." },
-      { label: "Subscriptions", prompt: "Which of these support subscriptions?" },
-      { label: "Lowest price", prompt: "Sort these by lowest price." },
+      { label: "By region", prompt: "Filter these by region." },
       { label: "Allergen filter", prompt: "Help me filter these by allergens." },
       { label: "Recipe ideas", prompt: "Show recipe ideas for these products." },
+      { label: "Make enquiry", prompt: "Help me contact Nest Foods about these products." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       {
@@ -1072,171 +1001,29 @@ async function buildAllergenReply(message: string): Promise<ChatReply> {
   };
 }
 
-function resolveOrderReplyTopic(message: string): OrderReplyTopic {
-  const normalized = normalizeToken(message);
-  if (includesAny(normalized, ["timeline", "history", "events", "progress"])) {
-    return "timeline";
-  }
-  if (includesAny(normalized, ["delivery", "shipment", "shipping", "dispatch", "arrival"])) {
-    return "delivery";
-  }
-  if (includesAny(normalized, ["payment", "paid", "reference", "paystack", "flutterwave"])) {
-    return "payment";
-  }
-  if (includesAny(normalized, ["items", "products", "ordered", "contents"])) {
-    return "items";
-  }
-  if (includesAny(normalized, ["address", "destination", "ship to"])) {
-    return "address";
-  }
-  return "summary";
-}
-
-function buildOrderTimelineLines(order: Order) {
-  return [...order.timeline]
-    .sort((left, right) => right.at.localeCompare(left.at))
-    .slice(0, 3)
-    .map((entry) => `• ${formatDateTime(entry.at)} — ${formatOrderStatus(entry.status)}: ${entry.note}`);
-}
-
 async function buildOrderStatusReply(
-  message: string,
-  context: ConversationContext,
+  _message: string,
+  _context: ConversationContext,
 ): Promise<ChatReply> {
-  const email = extractEmail(message) ?? context.email;
-  const orderNumber = extractOrderNumber(message) ?? context.orderNumber;
-  const topic = resolveOrderReplyTopic(message);
-
-  if (!email && !orderNumber) {
-    return {
-      intent: "order_status",
-      confidence: 0.64,
-      answer:
-        "To check an order, share the order number and the checkout email. You can also send just the email first and I will list recent orders.",
-      quickActions: normalizeQuickActions([
-        { label: "How to track", prompt: "How can I track my order?" },
-        { label: "Recent orders", prompt: "Show recent orders for my email." },
-        { label: "Account dashboard", prompt: "Take me to my account dashboard." },
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account", href: "/account" },
-        { label: "Contact Support", href: "/contact" },
-      ]),
-      handoffSuggested: false,
-    };
-  }
-
-  if (email && !orderNumber) {
-    const orders = sortOrdersByUpdatedAt(await listOrdersByEmail(email));
-    if (orders.length === 0) {
-      return {
-        intent: "order_status",
-        confidence: 0.66,
-        answer: "I could not find recent orders for that email. Double-check the checkout email or request human support.",
-        quickActions: normalizeQuickActions([
-          { label: "Retry lookup", prompt: "Help me retry order tracking." },
-          { label: "Human support", prompt: "I need help with an order issue." },
-        ]),
-        suggestedLinks: normalizeSuggestedLinks([
-          { label: "Account", href: "/account" },
-          { label: "Contact Support", href: "/contact" },
-        ]),
-        handoffSuggested: true,
-        handoffReason: "No orders were found for the provided email.",
-      };
-    }
-
-    const orderLines = orders
-      .slice(0, 3)
-      .map((entry) => `• ${entry.orderNumber} — ${formatOrderStatus(entry.status)} · updated ${formatDate(entry.updatedAt)}`);
-
-    return {
-      intent: "order_status",
-      confidence: 0.86,
-      answer: `Here are the most recent orders for ${email}:\n${orderLines.join("\n")}`,
-      quickActions: normalizeQuickActions([
-        { label: "Order timeline", prompt: `Show the timeline for ${orders[0]!.orderNumber}.` },
-        { label: "Payment status", prompt: `Show payment details for ${orders[0]!.orderNumber}.` },
-        { label: "Delivery details", prompt: `Show delivery details for ${orders[0]!.orderNumber}.` },
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account", href: "/account" },
-        { label: "Checkout", href: "/checkout" },
-      ]),
-      handoffSuggested: false,
-    };
-  }
-
-  if (!email || !orderNumber) {
-    return {
-      intent: "order_status",
-      confidence: 0.68,
-      answer: "I have the order number, but I still need the checkout email to verify the order.",
-      quickActions: normalizeQuickActions([
-        { label: "Add email", prompt: `Track ${orderNumber ?? "my order"} with this checkout email:` },
-        { label: "Human support", prompt: "I need help with my order tracking." },
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account", href: "/account" },
-        { label: "Contact Support", href: "/contact" },
-      ]),
-      handoffSuggested: false,
-    };
-  }
-
-  const orders = await listOrdersByEmail(email);
-  const order = orders.find(
-    (entry) => normalizeToken(entry.orderNumber) === normalizeToken(orderNumber),
-  );
-
-  if (!order) {
-    return {
-      intent: "order_status",
-      confidence: 0.7,
-      answer:
-        "I could not verify that order with the details provided. Double-check the order number and email, or request human support.",
-      quickActions: normalizeQuickActions([
-        { label: "Retry order lookup", prompt: "Help me retry order tracking." },
-        { label: "Human support", prompt: "I need help with my order tracking." },
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        { label: "Account", href: "/account" },
-        { label: "Contact Support", href: "/contact" },
-      ]),
-      handoffSuggested: true,
-      handoffReason: "Order lookup failed with the provided order number and email.",
-    };
-  }
-
-  const latestEvent = [...order.timeline].sort((left, right) => right.at.localeCompare(left.at))[0];
-  const orderItems = order.items
-    .slice(0, 3)
-    .map((item) => `• ${item.productName} x${item.quantity}`)
-    .join("\n");
-  const replyByTopic: Record<OrderReplyTopic, string> = {
-    summary: `Order ${order.orderNumber} is currently "${formatOrderStatus(order.status)}". Last update: ${latestEvent?.note ?? "No timeline note yet."}`,
-    timeline: `Recent timeline for ${order.orderNumber}:\n${buildOrderTimelineLines(order).join("\n")}`,
-    delivery: `Delivery status for ${order.orderNumber}: ${formatOrderStatus(order.status)}.\nShipping address: ${order.shippingAddress}\nLatest delivery note: ${latestEvent?.note ?? "No delivery note yet."}`,
-    payment: `Payment for ${order.orderNumber}: ${order.paymentProvider}${order.paymentReference ? ` · ref ${order.paymentReference}` : ""}.\nCurrent order status: ${formatOrderStatus(order.status)}.`,
-    items: `Items in ${order.orderNumber}:\n${orderItems}`,
-    address: `Shipping address for ${order.orderNumber}:\n${order.shippingAddress}`,
-  };
-
+  void _message;
+  void _context;
   return {
     intent: "order_status",
-    confidence: 0.91,
-    answer: replyByTopic[topic],
+    confidence: 0.88,
+    answer:
+      "Nest Foods does not provide public online ordering or self-serve order tracking on this website. For delivery follow-up, distributor coordination, or product support, contact the team directly.",
     quickActions: normalizeQuickActions([
-      { label: "Timeline", prompt: `Show the timeline for ${order.orderNumber}.` },
-      { label: "Delivery", prompt: `Show delivery details for ${order.orderNumber}.` },
-      { label: "Payment", prompt: `Show payment details for ${order.orderNumber}.` },
-      { label: "Items", prompt: `Show the items for ${order.orderNumber}.` },
+      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+      { label: "Distributor support", prompt: "I need distributor support." },
+      { label: "Products", prompt: "Show me the Nest Foods product range." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Account", href: "/account" },
-      { label: "Checkout", href: "/checkout" },
+      { label: "Contact Team", href: "/contact" },
+      { label: "Distributor Portal", href: "/b2b" },
+      { label: "Products", href: "/shop" },
     ]),
-    handoffSuggested: false,
+    handoffSuggested: true,
+    handoffReason: "Public order tracking is not part of the corporate site.",
   };
 }
 
@@ -1427,12 +1214,12 @@ async function buildUnknownReply(context?: ConversationContext): Promise<ChatRep
     intent: "unknown",
     confidence: 0.45,
     answer:
-      "I do not have a strong match for that request yet. I can still help with products, allergens, recipes, traceability, orders, or distributor support.",
+      "I do not have a strong match for that request yet. I can still help with products, allergens, recipes, traceability, and distributor support.",
     quickActions: normalizeQuickActions([
       ...(contextualAction ? [contextualAction] : []),
       { label: "Product help", prompt: "Help me find the right products." },
-      { label: "Order support", prompt: "I need help with an order issue." },
       { label: "Traceability", prompt: "Help me verify a batch code." },
+      { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
       { label: "B2B help", prompt: "I need distributor support." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([

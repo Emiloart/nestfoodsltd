@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeProvider } from "next-themes";
 import { type ReactNode } from "react";
 
 import { ChatAgentWidget } from "@/components/chat/chat-agent-widget";
@@ -15,14 +14,12 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <ExperienceProvider>
-        {children}
-        <ClientErrorReporter />
-        <WebVitalsReporter />
-        <PrivacyConsentBanner />
-        <ChatAgentWidget />
-      </ExperienceProvider>
-    </ThemeProvider>
+    <ExperienceProvider>
+      {children}
+      <ClientErrorReporter />
+      <WebVitalsReporter />
+      <PrivacyConsentBanner />
+      <ChatAgentWidget />
+    </ExperienceProvider>
   );
 }

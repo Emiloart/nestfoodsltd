@@ -23,8 +23,8 @@ export function HomeProductionStandardsSection() {
       key={item.title}
       className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5"
     >
-      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{item.title}</h3>
-      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+      <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
+      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">
         {item.description}
       </p>
     </div>

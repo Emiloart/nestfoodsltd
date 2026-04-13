@@ -80,12 +80,12 @@ export function DistributorEnquiryPageClient() {
       <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
         <Card className="space-y-4">
           <p className="section-kicker">Distributor Enquiry</p>
-          <h1 className="display-heading text-4xl text-neutral-900 dark:text-neutral-100 sm:text-[3.15rem]">
+          <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
             Partner with Nest Foods for regional supply conversations.
           </h1>
-          <p className="pretty-text text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-            This public route replaces portal-led ordering. Use it to share your company details,
-            operating region, and expected volume so Nest Foods can respond directly.
+          <p className="pretty-text text-sm leading-7 text-neutral-600">
+            Use this form to share your company details, operating region, and expected volume so
+            Nest Foods can respond directly.
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -97,13 +97,13 @@ export function DistributorEnquiryPageClient() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 text-sm text-neutral-700 dark:text-neutral-200"
+                className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 text-sm text-neutral-700"
               >
                 {item}
               </div>
             ))}
           </div>
-          <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 text-sm text-neutral-700 dark:text-neutral-200">
+          <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 text-sm text-neutral-700">
             Approved partners can go directly to the{" "}
             <Link href="/b2b" className="underline">
               Distributor Portal
@@ -215,7 +215,7 @@ export function DistributorEnquiryPageClient() {
             </div>
           </form>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">{status}</p>
+          <p className="text-sm text-neutral-600">{status}</p>
         </Card>
       </div>
     </section>

@@ -30,10 +30,10 @@ export default function GlobalErrorPage({ error, reset }: GlobalErrorPageProps) 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-16 md:px-6">
       <Card className="max-w-2xl space-y-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">
           Something went wrong
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           We captured this incident for review. Please retry the action.
         </p>
         <Button onClick={reset}>Try again</Button>

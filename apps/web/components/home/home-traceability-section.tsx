@@ -41,10 +41,10 @@ export function HomeTraceabilitySection() {
           >
             <div className="space-y-3">
               <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                   Batch code
                 </p>
-                <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                <p className="mt-2 text-sm font-medium text-neutral-900">
                   NFL-BREAD-260301-A
                 </p>
               </div>
@@ -54,24 +54,24 @@ export function HomeTraceabilitySection() {
                     key={step}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
                   >
-                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                       Step {index + 1}
                     </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                    <p className="mt-2 text-sm font-medium text-neutral-900">
                       {step}
                     </p>
                   </div>
                 ))}
               </div>
               <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                   Certification block
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {["NAFDAC", "ISO 22000", "QA Release"].map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-300"
+                      className="rounded-full border border-[color:var(--border)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600"
                     >
                       {item}
                     </span>
@@ -88,7 +88,7 @@ export function HomeTraceabilitySection() {
                 className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
               >
                 <p className="section-kicker">Step {index + 1}</p>
-                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700 dark:text-neutral-200">
+                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">
                   {point}
                 </p>
               </div>
@@ -102,7 +102,7 @@ export function HomeTraceabilitySection() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="section-kicker">Quality & Traceability</p>
-              <h2 className="mt-3 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+              <h2 className="mt-3 text-2xl font-semibold text-neutral-900">
                 Quality you can trace.
               </h2>
             </div>
@@ -116,11 +116,11 @@ export function HomeTraceabilitySection() {
 
           <div className="mt-5 grid gap-3">
             <div className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
-              <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+              <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-500">
                 Batch code or QR value
               </p>
               <div className="mt-3 flex items-center gap-2">
-                <div className="min-w-0 flex-1 rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-3 text-sm font-medium text-neutral-900 dark:bg-[color:var(--surface-elevated)] dark:text-neutral-100">
+                <div className="min-w-0 flex-1 rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-3 text-sm font-medium text-neutral-900">
                   NFL-BREAD-260301-A
                 </div>
                 <Link
@@ -142,10 +142,10 @@ export function HomeTraceabilitySection() {
                   key={step.label}
                   className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-4"
                 >
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-500">
                     {step.label}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                  <p className="mt-2 text-sm font-medium text-neutral-900">
                     {step.value}
                   </p>
                 </div>
@@ -156,7 +156,7 @@ export function HomeTraceabilitySection() {
               {["NAFDAC", "ISO 22000"].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-300"
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-neutral-600"
                 >
                   {item}
                 </span>

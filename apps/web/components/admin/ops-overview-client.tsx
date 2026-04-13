@@ -66,10 +66,10 @@ export function OpsOverviewClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Operations</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
           Observability Dashboard
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600">
           Runtime health, Core Web Vitals budget performance, and captured application errors.
         </p>
       </div>
@@ -86,8 +86,8 @@ export function OpsOverviewClient() {
               }}
               className={`h-9 rounded-full px-4 text-xs font-semibold uppercase tracking-[0.14em] transition ${
                 windowHours === entry
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
-                  : "border border-neutral-300 text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-900"
+                  ? "bg-neutral-900 text-white"
+                  : "border border-neutral-300 text-neutral-700 hover:bg-neutral-100"
               }`}
             >
               {entry}h
@@ -101,32 +101,32 @@ export function OpsOverviewClient() {
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           <Card className="space-y-1">
             <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Web Vitals</p>
-            <p className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+            <p className="text-2xl font-semibold text-neutral-900">
               {summary?.summary.webVitals.total ?? 0}
             </p>
           </Card>
           <Card className="space-y-1">
             <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Over Budget</p>
-            <p className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+            <p className="text-2xl font-semibold text-neutral-900">
               {summary?.summary.webVitals.overBudget ?? 0}
             </p>
           </Card>
           <Card className="space-y-1">
             <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Errors</p>
-            <p className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+            <p className="text-2xl font-semibold text-neutral-900">
               {summary?.summary.errors.total ?? 0}
             </p>
           </Card>
           <Card className="space-y-1">
             <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Critical Errors</p>
-            <p className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+            <p className="text-2xl font-semibold text-neutral-900">
               {summary?.summary.errors.critical ?? 0}
             </p>
           </Card>
         </div>
 
         {runtime ? (
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs text-neutral-500">
             Runtime: {runtime.nodeEnv} · uptime {runtime.uptimeSeconds}s · generated{" "}
             {new Date(runtime.generatedAt).toLocaleString("en-NG")}
           </p>
@@ -139,24 +139,24 @@ export function OpsOverviewClient() {
             Recent Web Vitals
           </p>
           {vitalRows.length === 0 ? (
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               No web-vitals events in selected window.
             </p>
           ) : (
             vitalRows.slice(0, 12).map((entry) => (
               <div
                 key={entry.id}
-                className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                className="rounded-xl border border-neutral-200 p-3"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  <p className="text-sm font-semibold text-neutral-900">
                     {entry.metricName}: {formatMetricValue(entry.metricName, entry.value)}
                   </p>
                   <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                     {entry.status}
                   </p>
                 </div>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   {entry.route ?? "/"} · {new Date(entry.observedAt).toLocaleString("en-NG")}
                 </p>
               </div>
@@ -169,24 +169,24 @@ export function OpsOverviewClient() {
             Recent Errors
           </p>
           {errorRows.length === 0 ? (
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               No captured errors in selected window.
             </p>
           ) : (
             errorRows.slice(0, 12).map((entry) => (
               <div
                 key={entry.id}
-                className="rounded-xl border border-neutral-200 p-3 dark:border-neutral-800"
+                className="rounded-xl border border-neutral-200 p-3"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  <p className="text-sm font-semibold text-neutral-900">
                     {entry.message}
                   </p>
                   <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                     {entry.severity} · {entry.source}
                   </p>
                 </div>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   {entry.route ?? "/"} · {new Date(entry.occurredAt).toLocaleString("en-NG")}
                 </p>
               </div>
@@ -195,7 +195,7 @@ export function OpsOverviewClient() {
         </Card>
       </div>
 
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">{status}</p>
+      <p className="text-xs text-neutral-500">{status}</p>
     </section>
   );
 }
