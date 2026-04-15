@@ -90,9 +90,9 @@ export function GlobalSearch() {
           }}
           onFocus={() => setFocused(true)}
           onBlur={() => window.setTimeout(() => setFocused(false), 120)}
-          placeholder="Search bread products, ingredients, and insights..."
+          placeholder="Search bread products, ingredients, and pack sizes..."
           className="header-search h-10 rounded-full pl-10"
-          aria-label="Search Nest Foods products and insights"
+          aria-label="Search Nest Foods products and product information"
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={showResults}
@@ -112,11 +112,7 @@ export function GlobalSearch() {
       </form>
 
       {showResults ? (
-        <div
-          id={resultsId}
-          role="listbox"
-          className="section-frame absolute z-50 mt-3 w-full p-2"
-        >
+        <div id={resultsId} role="listbox" className="section-frame absolute z-50 mt-3 w-full p-2">
           {loading ? (
             <p role="status" className="px-2 py-2 text-xs text-neutral-500">
               Searching...

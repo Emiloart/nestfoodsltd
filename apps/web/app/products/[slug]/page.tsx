@@ -46,6 +46,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   }
 
   const productStructuredData = buildProductStructuredData(product);
+  const packSizes = product.variants
+    .map((variant) => variant.sizeLabel ?? variant.name)
+    .filter(Boolean)
+    .join(", ");
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
@@ -77,30 +81,22 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
               {product.name}
             </h1>
-            <p className="text-sm text-neutral-600">
-              {product.longDescription}
+            <p className="text-sm text-neutral-600">{product.longDescription}</p>
+            <p className="text-xs text-neutral-500">
+              Pack sizes: {packSizes || "Available on request"}
             </p>
             <p className="text-xs text-neutral-500">
-              Availability: {product.availabilityStatus}
-            </p>
-            <p className="text-xs text-neutral-500">
-              Planning range: {product.minimumOrderQuantity} - {product.maximumOrderQuantity} units
-            </p>
-            <p className="text-xs text-neutral-500">
-              Regions: {product.availableRegions.join(", ")}
+              Key ingredients: {product.ingredients.slice(0, 4).join(", ")}
             </p>
             <div className="flex flex-wrap gap-2">
-              <Link
-                href="/contact"
-                className={buttonClassName({ variant: "primary", size: "sm" })}
-              >
+              <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
                 Enquire About This Product
               </Link>
               <Link
-                href="/traceability"
+                href="/distributor-enquiry"
                 className={buttonClassName({ variant: "secondary", size: "sm" })}
               >
-                Quality & Traceability
+                Distributor Enquiry
               </Link>
             </div>
           </div>
@@ -117,20 +113,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 >
                   <div>
                     <p className="text-sm font-semibold text-neutral-900">
-                      {variant.name}
+                      {variant.sizeLabel ?? variant.name}
                     </p>
-                    <p className="text-xs text-neutral-500">
-                      {variant.sku} · {variant.stockStatus.replace("_", " ")}
-                    </p>
+                    <p className="text-xs text-neutral-500">{variant.name}</p>
                   </div>
                   <Link
                     href="/contact"
                     className={buttonClassName({ variant: "secondary", size: "sm" })}
                   >
-                    {variant.stockStatus === "out_of_stock" ||
-                    product.availabilityStatus === "unavailable"
-                      ? "Ask About Restock"
-                      : "Ask About This Format"}
+                    Enquire About This Format
                   </Link>
                 </div>
               ))}
@@ -142,36 +133,32 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
                 Product specifications
               </p>
+              <p className="text-sm text-neutral-700">Category: {product.category}</p>
+              <p className="text-sm text-neutral-700">Shelf life: {product.shelfLifeDays} days</p>
               <p className="text-sm text-neutral-700">
-                Category: {product.category}
-              </p>
-              <p className="text-sm text-neutral-700">
-                Shelf life: {product.shelfLifeDays} days
-              </p>
-              <p className="text-sm text-neutral-700">
-                Regions: {product.availableRegions.join(", ")}
+                Pack sizes: {packSizes || "Available on request"}
               </p>
             </Card>
             <Card className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                Quality access
+                Product enquiries
               </p>
               <p className="text-sm text-neutral-700">
-                Review batch traceability, production checkpoints, and certification context before
-                product discussions.
+                Use the contact route for product questions, packaging needs, and distributor
+                discussions.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Link
-                  href="/traceability"
+                  href="/contact"
                   className={buttonClassName({ variant: "secondary", size: "sm" })}
                 >
-                  Quality & Traceability
+                  Contact Team
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/distributor-enquiry"
                   className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
-                  Contact Team
+                  Distributor Enquiry
                 </Link>
               </div>
             </Card>

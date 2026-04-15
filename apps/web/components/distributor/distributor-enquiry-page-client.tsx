@@ -1,6 +1,4 @@
 "use client";
-
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 import { Card } from "@/components/ui/card";
@@ -30,7 +28,7 @@ const initialState: EnquiryPayload = {
 export function DistributorEnquiryPageClient() {
   const [form, setForm] = useState<EnquiryPayload>(initialState);
   const [status, setStatus] = useState(
-    "Share your company details and expected volume. Nest Foods will follow up directly.",
+    "Share your company details and product interest. Nest Foods will follow up directly.",
   );
   const [submitting, setSubmitting] = useState(false);
 
@@ -71,7 +69,7 @@ export function DistributorEnquiryPageClient() {
     }
 
     setForm(initialState);
-    setStatus("Distributor enquiry submitted. Nest Foods will follow up with your team.");
+    setStatus("Distributor enquiry submitted. Nest Foods will follow up with your team directly.");
     setSubmitting(false);
   }
 
@@ -81,19 +79,19 @@ export function DistributorEnquiryPageClient() {
         <Card className="space-y-4">
           <p className="section-kicker">Distributor Enquiry</p>
           <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
-            Partner with Nest Foods for regional supply conversations.
+            Introduce your business to Nest Foods.
           </h1>
           <p className="pretty-text text-sm leading-7 text-neutral-600">
-            Use this form to share your company details, operating region, and expected volume so
+            Use this form to share your company details, operating region, and product interest so
             Nest Foods can respond directly.
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2">
             {[
               "Product catalogue review",
-              "Regional supply planning",
-              "Expected volume alignment",
-              "Traceability and standards context",
+              "Regional coverage discussion",
+              "Packaging and pack format questions",
+              "Commercial follow-up",
             ].map((item) => (
               <div
                 key={item}
@@ -104,11 +102,8 @@ export function DistributorEnquiryPageClient() {
             ))}
           </div>
           <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 text-sm text-neutral-700">
-            Approved partners can go directly to the{" "}
-            <Link href="/b2b" className="underline">
-              Distributor Portal
-            </Link>
-            .
+            Nest Foods uses this enquiry route to start distributor conversations and coordinate
+            direct follow-up.
           </div>
         </Card>
 
@@ -189,9 +184,7 @@ export function DistributorEnquiryPageClient() {
               />
             </label>
             <label className="block space-y-2 md:col-span-2">
-              <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">
-                Notes
-              </span>
+              <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Notes</span>
               <textarea
                 value={form.notes}
                 onChange={(event) =>

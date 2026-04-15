@@ -9,19 +9,19 @@ export const CMS_SEED_DATA: CmsData = {
       title: "Nest Foods Ltd",
       headline: "Premium bread production built on quality, consistency, and trust.",
       description:
-        "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, disciplined production, traceability, and clear product information.",
+        "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, production standards, company credibility, and clear contact routes.",
       status: "published",
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
       ctaPrimaryHref: "/shop",
-      ctaSecondaryLabel: "Our Standards",
-      ctaSecondaryHref: "/traceability",
+      ctaSecondaryLabel: "Quality Standards",
+      ctaSecondaryHref: "/quality",
       heroImageUrl: "/placeholders/hero-image-placeholder.svg",
       logoImageUrl: "/placeholders/logo-placeholder.svg",
       seo: {
         title: "Nest Foods Ltd | Premium Bread Manufacturer",
         description:
-          "Premium bread manufacturing, traceability, and product information for communities and partners across Africa.",
+          "Premium bread manufacturing, production standards, and product information for communities and partners across Africa.",
         ogImageUrl: "/placeholders/hero-image-placeholder.svg",
       },
       updatedAt: now,
@@ -48,7 +48,8 @@ export const CMS_SEED_DATA: CmsData = {
     vision: {
       slug: "vision",
       title: "Vision & Mission",
-      headline: "Build a trusted African bread brand rooted in safe production and reliable distribution.",
+      headline:
+        "Build a trusted African bread brand rooted in safe production and reliable distribution.",
       description:
         "This section remains fully dynamic for mission statements, strategic pillars, expansion planning, and long-term quality commitments.",
       status: "published",
@@ -66,16 +67,18 @@ export const CMS_SEED_DATA: CmsData = {
     contact: {
       slug: "contact",
       title: "Contact & Locations",
-      headline: "Speak with Nest Foods teams about products, partnerships, and production questions.",
+      headline:
+        "Speak with Nest Foods teams about products, partnerships, and production questions.",
       description:
-        "Use this page for office details, partner inquiries, public contact routing, and future map/location content managed through the admin workspace.",
+        "Use this page for office details, product enquiries, distributor introductions, and direct contact with Nest Foods teams.",
       status: "published",
       publishAt: now,
       heroImageUrl: "/placeholders/section-image-placeholder.svg",
       logoImageUrl: "/placeholders/logo-placeholder.svg",
       seo: {
         title: "Contact Nest Foods Ltd",
-        description: "Reach Nest Foods Ltd teams and offices for enquiries, support, and partnerships.",
+        description:
+          "Reach Nest Foods Ltd teams and offices for enquiries, support, and partnerships.",
         ogImageUrl: "/placeholders/section-image-placeholder.svg",
       },
       updatedAt: now,
@@ -123,7 +126,7 @@ export const CMS_SEED_DATA: CmsData = {
       id: "banner-home-1",
       label: "Need Guidance?",
       headline:
-        "Review product details, traceability routes, and contact options from one public experience.",
+        "Review product details, company information, and contact options from one public experience.",
       ctaLabel: "Contact Team",
       ctaHref: "/contact",
       imageUrl: "/placeholders/hero-image-placeholder.svg",

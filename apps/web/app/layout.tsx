@@ -30,11 +30,11 @@ export const metadata: Metadata = {
     template: "%s | Nest Foods Ltd",
   },
   description:
-    "Premium bread manufacturing, quality traceability, and product information for communities and partners across Africa.",
+    "Premium bread manufacturing, product information, and company details for communities and partners across Africa.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#5a247a",
+  themeColor: "#4f3523",
 };
 
 type RootLayoutProps = {
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a
           href="#main-content"
-          className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[color:var(--action-1)] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_10px_22px_rgba(238,186,11,0.2)] focus:not-sr-only"
+          className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[color:var(--action-1)] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_10px_22px_rgba(201,151,59,0.2)] focus:not-sr-only"
         >
           Skip to main content
         </a>

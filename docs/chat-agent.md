@@ -2,21 +2,30 @@
 
 ## Purpose
 
-Provide a grounded, conversion-focused assistant for Nest Foods that supports:
+Provide a grounded assistant for Nest Foods that supports:
 
-- product discovery
+- company information
+- product information
 - allergen guidance
-- recipe suggestions
-- order status guidance
-- traceability lookup
-- B2B quote onboarding
+- quality standards overview
+- contact and enquiry guidance
+- distributor interest capture
+- careers guidance
+
+## Out of Scope
+
+- order status or payment tracking
+- traceability lookup or batch verification
+- quote, invoice, statement, or portal workflows
+- cart, checkout, account, or wishlist support
+- recipe guidance as a primary public feature
 
 ## UX Surface
 
-- Floating widget mounted globally from `apps/web/components/providers.tsx`.
-- Component: `apps/web/components/chat/chat-agent-widget.tsx`.
-- Quick-prompt chips and suggested links for fast intent routing.
-- Human handoff form when confidence is low or support is required.
+- Floating widget mounted globally from `apps/web/components/providers.tsx`
+- Component: `apps/web/components/chat/chat-agent-widget.tsx`
+- Quick prompts and suggested links focused on products, quality standards, contact, distributor enquiry, and careers
+- Human handoff form when confidence is low or direct follow-up is needed
 
 ## Backend
 
@@ -26,31 +35,20 @@ Provide a grounded, conversion-focused assistant for Nest Foods that supports:
   - supports `CHAT_STORAGE_DRIVER=json|postgres`
 - Chat service: `apps/web/lib/chat/service.ts`
   - rule-based intent resolution
-  - grounded data fetches from commerce/recipes/traceability modules
-  - conversation and lead persistence
+  - grounded fetches from product data and site navigation scope
+  - handoff capture for direct follow-up
 
 ## API
 
 - `POST /api/chat/ask`
-
   - payload: message + optional conversation/session IDs
-  - rate-limited and audit-logged
   - returns answer, intent, confidence, quick actions, suggested links
-
 - `POST /api/chat/leads`
   - payload: support lead details + optional conversation/session IDs
-  - rate-limited and audit-logged
   - creates handoff lead for human follow-up
 
-## Security and Reliability
+## Guardrails
 
-- Trusted-origin enforcement for write operations.
-- Rate limits on both ask and lead endpoints.
-- Audit events for success/failure/blocked requests.
-- Storage-driver compatibility with existing Postgres JSONB module strategy.
-
-## Next Iteration
-
-- Add admin chat inbox for lead triage and SLA tracking.
-- Add analytics dashboard for top intents and unresolved questions.
-- Add retrieval ranker and confidence calibration with production chat logs.
+- If a visitor asks about orders, traceability, or portal workflows, the assistant should explain that those are not part of the public corporate site and point the visitor to the appropriate contact route.
+- The assistant should not imply online purchase, batch lookup, quote tooling, or account workflows.
+- Public suggestions should stay within products, quality standards, contact, distributor enquiry, careers, and general company information.

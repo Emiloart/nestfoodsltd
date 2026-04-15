@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 
-import { listBlogArticles } from "@/lib/blog/articles";
 import { listCommerceProducts } from "@/lib/commerce/service";
 import { absoluteUrl } from "@/lib/seo/site";
 
@@ -8,21 +7,16 @@ const staticRoutes = [
   "",
   "/about",
   "/vision",
+  "/quality",
   "/shop",
-  "/recipes",
-  "/blog",
   "/contact",
-  "/distributor-enquiry",
-  "/traceability",
   "/careers",
-  "/sustainability",
   "/privacy",
   "/terms",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products] = await Promise.all([listCommerceProducts()]);
-  const articles = listBlogArticles();
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
@@ -39,14 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
-  const articleEntries: MetadataRoute.Sitemap = articles.map((article) => ({
-    url: absoluteUrl(`/blog/${article.slug}`),
-    lastModified: new Date(article.updatedAt),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
-  return [...staticEntries, ...productEntries, ...articleEntries].map((entry) => {
+  return [...staticEntries, ...productEntries].map((entry) => {
     const normalizedLastModified =
       entry.lastModified instanceof Date
         ? entry.lastModified

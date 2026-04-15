@@ -8,7 +8,7 @@ import { buttonClassName } from "./ui/button";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Products" },
-  { href: "/traceability", label: "Quality & Traceability" },
+  { href: "/quality", label: "Quality Standards" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },
@@ -28,14 +28,14 @@ export function Header() {
             <GlobalSearch />
             <MobileNav />
             <Link
-              href="/b2b"
+              href="/distributor-enquiry"
               className={buttonClassName({
                 variant: "primary",
                 size: "sm",
                 className: "hidden md:inline-flex",
               })}
             >
-              Distributor Portal
+              Distributor Enquiry
             </Link>
           </div>
         </div>
@@ -53,10 +53,7 @@ export function Header() {
             ))}
           </nav>
 
-          <Link
-            href="/contact"
-            className={buttonClassName({ variant: "secondary", size: "sm" })}
-          >
+          <Link href="/contact" className={buttonClassName({ variant: "secondary", size: "sm" })}>
             Make Enquiry
           </Link>
         </div>

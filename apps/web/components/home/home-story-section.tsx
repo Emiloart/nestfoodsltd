@@ -16,9 +16,7 @@ function StoryCard({ page }: { page: CmsPage }) {
     <Card className="space-y-4">
       <div>
         <p className="section-kicker">{page.title}</p>
-        <h3 className="mt-3 text-2xl font-semibold text-neutral-900">
-          {page.headline}
-        </h3>
+        <h3 className="mt-3 text-2xl font-semibold text-neutral-900">{page.headline}</h3>
         <p className="pretty-text mt-4 line-clamp-4 text-sm leading-7 text-neutral-600 md:line-clamp-none">
           {page.description}
         </p>
@@ -39,9 +37,9 @@ export function HomeStorySection({ aboutPage, visionPage }: HomeStorySectionProp
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
-        eyebrow="About Nest Foods"
-        title="Company story, mission, and direction."
-        description="Learn how Nest Foods presents its manufacturing credibility and long-term vision."
+        eyebrow="About & Vision"
+        title="The company story and long-term direction."
+        description="Learn how Nest Foods presents its manufacturing heritage, values, and growth ambition."
         descriptionClassName="hidden md:block"
       />
 

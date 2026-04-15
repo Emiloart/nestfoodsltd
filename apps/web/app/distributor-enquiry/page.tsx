@@ -4,8 +4,9 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 export const metadata = buildPageMetadata({
   title: "Distributor Enquiry",
   description:
-    "Public distributor enquiry route for regional supply discussions, expected volume planning, and partner follow-up.",
+    "Public distributor enquiry route for product introductions, regional coverage discussions, and partner follow-up.",
   path: "/distributor-enquiry",
+  noIndex: true,
 });
 
 export default function DistributorEnquiryPage() {

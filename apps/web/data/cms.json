@@ -4,18 +4,18 @@
       "slug": "home",
       "title": "Nest Foods Ltd",
       "headline": "Premium bread production built on quality, consistency, and trust.",
-      "description": "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, disciplined production, traceability, and clear product information.",
+      "description": "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, production standards, company credibility, and clear contact routes.",
       "status": "published",
       "publishAt": "2026-03-23T14:02:46.068Z",
       "ctaPrimaryLabel": "Explore Products",
       "ctaPrimaryHref": "/shop",
-      "ctaSecondaryLabel": "Our Standards",
-      "ctaSecondaryHref": "/traceability",
+      "ctaSecondaryLabel": "Quality Standards",
+      "ctaSecondaryHref": "/quality",
       "heroImageUrl": "/placeholders/hero-image-placeholder.svg",
       "logoImageUrl": "/placeholders/logo-placeholder.svg",
       "seo": {
         "title": "Nest Foods Ltd | Premium Bread Manufacturer",
-        "description": "Premium bread manufacturing, traceability, and product information for communities and partners across Africa.",
+        "description": "Premium bread manufacturing, production standards, and product information for communities and partners across Africa.",
         "ogImageUrl": "/placeholders/hero-image-placeholder.svg"
       },
       "updatedAt": "2026-03-23T14:02:46.068Z",
@@ -59,7 +59,7 @@
       "slug": "contact",
       "title": "Contact & Locations",
       "headline": "Speak with Nest Foods teams about products, partnerships, and production questions.",
-      "description": "Use this page for office details, partner inquiries, public contact routing, and future map/location content managed through the admin workspace.",
+      "description": "Use this page for office details, product enquiries, distributor introductions, and direct contact with Nest Foods teams.",
       "status": "published",
       "publishAt": "2026-03-23T14:02:46.068Z",
       "heroImageUrl": "/placeholders/section-image-placeholder.svg",
@@ -111,7 +111,7 @@
     {
       "id": "banner-home-1",
       "label": "Need Guidance?",
-      "headline": "Review product details, traceability routes, and contact options from one public experience.",
+      "headline": "Review product details, company information, and contact options from one public experience.",
       "ctaLabel": "Contact Team",
       "ctaHref": "/contact",
       "imageUrl": "/placeholders/hero-image-placeholder.svg",
@@ -149,9 +149,7 @@
       "status": "published",
       "imageUrl": "/placeholders/product-image-placeholder.svg",
       "nutritionSummary": "Nutritional values will be configured in catalog manager.",
-      "allergens": [
-        "None configured"
-      ],
+      "allergens": ["None configured"],
       "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ],
@@ -162,9 +160,7 @@
       "slug": "recipe-placeholder",
       "status": "draft",
       "imageUrl": "/placeholders/section-image-placeholder.svg",
-      "ingredients": [
-        "Ingredient data will be configured in admin."
-      ],
+      "ingredients": ["Ingredient data will be configured in admin."],
       "updatedAt": "2026-03-23T14:02:46.068Z"
     }
   ]

@@ -30,7 +30,6 @@ function consentCookieOptions() {
   return {
     httpOnly: false,
     sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 24 * 180,
   };
@@ -40,10 +39,18 @@ function subjectCookieOptions() {
   return {
     httpOnly: true,
     sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
   };
+}
+
+function shouldUseSecureCookies(request: NextRequest) {
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.trim().toLowerCase();
+  if (forwardedProto) {
+    return forwardedProto === "https";
+  }
+
+  return request.nextUrl.protocol === "https:";
 }
 
 export async function GET(request: NextRequest) {
@@ -107,12 +114,16 @@ export async function POST(request: NextRequest) {
       consentedAt: consent.consentedAt,
     },
   });
+  const secure = shouldUseSecureCookies(request);
   response.cookies.set(
     PRIVACY_CONSENT_COOKIE_NAME,
     encodePrivacyConsentCookie({ categories, consentedAt }),
-    consentCookieOptions(),
+    { ...consentCookieOptions(), secure },
   );
-  response.cookies.set(PRIVACY_SUBJECT_COOKIE_NAME, subjectId, subjectCookieOptions());
+  response.cookies.set(PRIVACY_SUBJECT_COOKIE_NAME, subjectId, {
+    ...subjectCookieOptions(),
+    secure,
+  });
   applyRateLimitHeaders(response, rateLimitResult);
   return response;
 }

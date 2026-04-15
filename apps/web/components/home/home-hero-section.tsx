@@ -13,10 +13,45 @@ type HomeHeroSectionProps = {
 };
 
 const heroMetrics = [
-  { value: "24h", label: "Quality review cycle" },
-  { value: "4", label: "Supply regions in seed catalog" },
-  { value: "100%", label: "Catalog-led public experience" },
+  { value: "Quality", label: "Daily product assurance checks" },
+  { value: "Hygiene", label: "Controlled production routines" },
+  { value: "Support", label: "Direct distributor enquiry follow-up" },
+  { value: "Consistency", label: "Dependable manufacturing standards" },
 ];
+
+function HeroMedia({ page }: { page: CmsPage }) {
+  if (page.heroVideoUrl) {
+    return (
+      <div className="relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
+        <video
+          className="aspect-[6/5] w-full object-cover sm:aspect-[5/4] lg:aspect-[4/5]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={page.heroVideoPosterUrl ?? page.heroImageUrl}
+        >
+          <source src={page.heroVideoUrl} />
+        </video>
+        <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_26%,transparent)]" />
+        <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
+          Production Video
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ImagePlaceholder
+      src={page.heroImageUrl ?? "/placeholders/hero-image-placeholder.svg"}
+      alt="Nest Foods production placeholder"
+      label="Production Visual Placeholder"
+      className="aspect-[6/5] sm:aspect-[5/4] lg:aspect-[4/5]"
+      priority
+    />
+  );
+}
 
 export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
   return (
@@ -25,7 +60,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
         <div className="max-w-3xl space-y-6">
           <div className="flex flex-wrap items-center gap-3">
             <p className="section-kicker">Premium Bread Production</p>
-            <Badge>Manufacturing credibility first</Badge>
+            <Badge>Manufacturer-first</Badge>
           </div>
 
           <BrandLogo href={null} />
@@ -47,10 +82,10 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
               {page.ctaPrimaryLabel ?? "Explore Products"}
             </Link>
             <Link
-              href={page.ctaSecondaryHref ?? "/traceability"}
+              href={page.ctaSecondaryHref ?? "/quality"}
               className={buttonClassName({ variant: "secondary" })}
             >
-              {page.ctaSecondaryLabel ?? "Our Standards"}
+              {page.ctaSecondaryLabel ?? "Quality Standards"}
             </Link>
           </div>
 
@@ -77,23 +112,15 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
         </div>
 
         <div className="section-frame p-4 sm:p-5">
-          <ImagePlaceholder
-            src={page.heroImageUrl ?? "/placeholders/hero-image-placeholder.svg"}
-            alt="Nest Foods production placeholder"
-            label="Production Visual Placeholder"
-            className="aspect-[6/5] sm:aspect-[5/4] lg:aspect-[4/5]"
-            priority
-          />
+          <HeroMedia page={page} />
 
-          <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
             {heroMetrics.map((metric) => (
               <div
                 key={metric.label}
-                className="rounded-[1.3rem] border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-4 py-3.5 shadow-[0_12px_26px_rgba(46,18,69,0.08)]"
+                className="rounded-[1.3rem] border border-[color:var(--border-strong)] bg-[color:var(--surface-strong)] px-4 py-3.5 shadow-[0_12px_26px_rgba(50,33,22,0.08)]"
               >
-                <p className="display-heading text-[1.75rem] text-neutral-900">
-                  {metric.value}
-                </p>
+                <p className="display-heading text-[1.75rem] text-neutral-900">{metric.value}</p>
                 <p className="mt-1.5 text-[11px] uppercase tracking-[0.14em] text-neutral-500">
                   {metric.label}
                 </p>

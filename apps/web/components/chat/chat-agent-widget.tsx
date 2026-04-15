@@ -44,14 +44,14 @@ const conversationStorageKey = "nestfoodsltd_chat_conversation_id";
 
 const initialQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "Trace a batch", prompt: "Help me verify a batch code." },
-  { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
+  { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+  { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
   { label: "Contact Nest Foods", prompt: "Help me contact the Nest Foods team." },
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
-  { label: "Traceability", href: "/traceability" },
+  { label: "Quality Standards", href: "/quality" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -125,7 +125,7 @@ export function ChatAgentWidget() {
       id: "welcome",
       role: "assistant",
       content:
-        "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, or help you reach the team.",
+        "I’m Nest Agent. Ask me about products, quality standards, distributor enquiries, careers, or how to reach the team.",
       createdAt: new Date().toISOString(),
     },
   ]);
@@ -289,7 +289,7 @@ export function ChatAgentWidget() {
         id: "welcome",
         role: "assistant",
         content:
-          "I’m Nest Agent. Ask me to compare products, filter allergens, suggest recipes, verify traceability, or help you reach the team.",
+          "I’m Nest Agent. Ask me about products, quality standards, distributor enquiries, careers, or how to reach the team.",
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -316,7 +316,7 @@ export function ChatAgentWidget() {
             <div className="space-y-1">
               <Badge>Nest Agent</Badge>
               <p className="hidden text-xs text-neutral-600 md:block">
-                Product, traceability, and enquiry assistant
+                Product, company, and enquiry assistant
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -441,9 +441,7 @@ export function ChatAgentWidget() {
                   <Button size="sm" type="submit" disabled={leadSubmitting}>
                     {leadSubmitting ? "Submitting..." : "Submit Support Request"}
                   </Button>
-                  {leadStatus ? (
-                    <p className="text-xs text-neutral-500">{leadStatus}</p>
-                  ) : null}
+                  {leadStatus ? <p className="text-xs text-neutral-500">{leadStatus}</p> : null}
                 </form>
               ) : null}
             </div>
@@ -460,7 +458,7 @@ export function ChatAgentWidget() {
               <Input
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Ask about products, traceability, or distributor support..."
+                placeholder="Ask about products, quality standards, careers, or distributor enquiries..."
                 disabled={sending}
               />
               <Button size="sm" type="submit" disabled={!canSend}>
@@ -482,7 +480,7 @@ export function ChatAgentWidget() {
       {!open ? (
         <span className="pointer-events-none mr-1 inline-flex items-center gap-1 text-[11px] text-neutral-500">
           <AssistantIcon />
-          <span className="hidden md:inline">Product + support assistant</span>
+          <span className="hidden md:inline">Products + enquiries assistant</span>
         </span>
       ) : null}
     </div>

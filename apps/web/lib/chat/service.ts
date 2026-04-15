@@ -1,12 +1,8 @@
 import { unstable_noStore as noStore } from "next/cache";
 
-import { readB2BData } from "@/lib/b2b/store";
 import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
 import { type CommerceProduct } from "@/lib/commerce/types";
-import { searchRecipes } from "@/lib/recipes/service";
 import { type RecipeSearchResult } from "@/lib/recipes/types";
-import { lookupTraceabilityBatch } from "@/lib/traceability/service";
-import { type TraceabilityBatch } from "@/lib/traceability/types";
 
 import { readChatData, writeChatData } from "./store";
 import {
@@ -119,14 +115,14 @@ export type CaptureChatLeadResult = {
 
 const defaultQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "Trace a batch", prompt: "Help me verify a batch code." },
-  { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
-  { label: "Distributor support", prompt: "I need distributor quote support." },
+  { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+  { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+  { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
-  { label: "Traceability", href: "/traceability" },
+  { label: "Quality Standards", href: "/quality" },
   { label: "Contact Team", href: "/contact" },
 ];
 
@@ -239,21 +235,8 @@ const traceabilityFollowUpKeywords = [
   "expiry",
   "production date",
 ];
-const productFollowUpKeywords = [
-  "in stock",
-  "available",
-  "region",
-  "compare",
-  "filter",
-];
-const recipeFollowUpKeywords = [
-  "quick",
-  "under",
-  "minutes",
-  "ingredient",
-  "protein",
-  "calorie",
-];
+const productFollowUpKeywords = ["in stock", "available", "region", "compare", "filter"];
+const recipeFollowUpKeywords = ["quick", "under", "minutes", "ingredient", "protein", "calorie"];
 const b2bFollowUpKeywords = [
   "quote",
   "approval",
@@ -373,41 +356,6 @@ function findMatchingFacet(message: string, values: string[]) {
 function hasShortFollowUpShape(message: string) {
   const tokens = tokenizeSearchValue(message);
   return tokens.length <= 4 || includesAny(normalizeToken(message), followUpKeywords);
-}
-
-function formatDate(value?: string) {
-  if (!value) {
-    return "Not available";
-  }
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-  return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
-}
-
-function formatDateTime(value?: string) {
-  if (!value) {
-    return "Not available";
-  }
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-  return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(date);
-}
-
-function summarizeStockStatus(product: CommerceProduct) {
-  if (product.variants.every((variant) => variant.stockStatus === "out_of_stock")) {
-    return "out of stock";
-  }
-  if (product.variants.some((variant) => variant.stockStatus === "low_stock")) {
-    return "limited stock";
-  }
-  return "in stock";
 }
 
 function scoreTextMatch(text: string, tokens: string[]) {
@@ -549,7 +497,11 @@ function resolveIntent(message: string, context?: ConversationContext): IntentRe
     return { intent: "product_search", confidence: 0.78 };
   }
 
-  if (context?.previousIntent && context.previousIntent !== "unknown" && hasShortFollowUpShape(message)) {
+  if (
+    context?.previousIntent &&
+    context.previousIntent !== "unknown" &&
+    hasShortFollowUpShape(message)
+  ) {
     return {
       intent: context.previousIntent,
       confidence: Math.max(0.58, Math.min(0.76, context.previousConfidence || 0.58)),
@@ -635,7 +587,7 @@ async function buildGreetingReply(): Promise<ChatReply> {
     intent: "greeting",
     confidence: 0.96,
     answer:
-      "Hi. I can compare products, filter allergens, suggest recipes, verify traceability, and guide distributor support.",
+      "Hi. I can help with products, allergen guidance, quality standards, distributor enquiries, careers, and how to contact Nest Foods.",
     quickActions: defaultQuickActions,
     suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: false,
@@ -654,13 +606,14 @@ function parseProductSearchOptions(
       : undefined;
 
   return {
-    searchTerm: followUpSearchTerm || context.previousProductMessage
-      ? followUpSearchTerm || toSearchTerm(context.previousProductMessage ?? "")
-      : undefined,
+    searchTerm:
+      followUpSearchTerm || context.previousProductMessage
+        ? followUpSearchTerm || toSearchTerm(context.previousProductMessage ?? "")
+        : undefined,
     category: findMatchingFacet(message, facets.categories) ?? undefined,
-    tag: findMatchingFacet(message, facets.tags) ?? undefined,
-    region: findMatchingFacet(message, facets.regions) ?? undefined,
-    inStockOnly: includesAny(normalized, ["in stock", "available now", "ready stock"]),
+    tag: undefined,
+    region: undefined,
+    inStockOnly: false,
   };
 }
 
@@ -705,9 +658,6 @@ async function buildProductSearchReply(
   const options = parseProductSearchOptions(message, context, facets);
   const products = await listCommerceProducts({
     category: options.category,
-    tag: options.tag,
-    region: options.region,
-    inStockOnly: options.inStockOnly,
   });
   const rankedProducts = filterAndRankProducts(products, options);
   const topProducts = rankedProducts.slice(0, 3);
@@ -717,28 +667,26 @@ async function buildProductSearchReply(
       intent: "product_search",
       confidence: 0.58,
       answer:
-        "I could not find a strong product match yet. Try a bread type, region, category, or ask for currently available options.",
+        "I could not find a strong product match yet. Try a bread type, category, ingredient, or pack size.",
       quickActions: normalizeQuickActions([
-        { label: "In-stock only", prompt: "Show in-stock bread options." },
-        { label: "By region", prompt: "Show products available in Lagos." },
+        { label: "Sliced bread", prompt: "Show sliced bread options." },
+        { label: "Premium range", prompt: "Show premium bread options." },
         { label: "Allergen filter", prompt: "Help me filter bread options by allergens." },
-        { label: "Traceability", prompt: "Help me verify a batch code." },
+        { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
       ]),
       suggestedLinks: [{ label: "Open Products", href: "/shop" }],
       handoffSuggested: false,
     };
   }
 
-  const activeFilters = [
-    options.category,
-    options.tag,
-    options.region,
-    options.inStockOnly ? "in stock only" : "",
-  ].filter(Boolean);
+  const activeFilters = [options.category].filter(Boolean);
 
   const productLines = topProducts.map((product) => {
-    const regionLabel = product.availableRegions.slice(0, 2).join(", ");
-    return `• ${product.name} — ${product.category} · ${summarizeStockStatus(product)} · MOQ ${product.minimumOrderQuantity}+ · ${product.variants.length} format${product.variants.length === 1 ? "" : "s"} · ${regionLabel}`;
+    const packSizes = product.variants
+      .map((variant) => variant.sizeLabel ?? variant.name)
+      .filter(Boolean)
+      .join(", ");
+    return `• ${product.name} — ${product.category} · pack sizes ${packSizes || "available on request"} · shelf life ${product.shelfLifeDays} days`;
   });
 
   const answerLines = [
@@ -751,16 +699,17 @@ async function buildProductSearchReply(
     confidence: rankedProducts.length > 0 ? 0.86 : 0.68,
     answer: answerLines.join("\n\n"),
     quickActions: normalizeQuickActions([
-      { label: "In-stock only", prompt: "Filter these to in-stock products only." },
-      { label: "By region", prompt: "Filter these by region." },
+      { label: "Category filter", prompt: "Filter these by category." },
       { label: "Allergen filter", prompt: "Help me filter these by allergens." },
-      { label: "Recipe ideas", prompt: "Show recipe ideas for these products." },
       { label: "Make enquiry", prompt: "Help me contact Nest Foods about these products." },
+      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       {
         label: "Products",
-        href: options.searchTerm ? `/shop?search=${encodeURIComponent(options.searchTerm)}` : "/shop",
+        href: options.searchTerm
+          ? `/shop?search=${encodeURIComponent(options.searchTerm)}`
+          : "/shop",
       },
       ...topProducts.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
     ]),
@@ -770,7 +719,9 @@ async function buildProductSearchReply(
 
 function extractMaxMinutes(message: string) {
   const normalized = normalizeToken(message);
-  const match = normalized.match(/\b(?:under|within|less than)\s+(\d{1,3})\s*(?:min|mins|minutes)\b/);
+  const match = normalized.match(
+    /\b(?:under|within|less than)\s+(\d{1,3})\s*(?:min|mins|minutes)\b/,
+  );
   if (match?.[1]) {
     return Number(match[1]);
   }
@@ -793,7 +744,10 @@ function extractMaxCalories(message: string) {
   return undefined;
 }
 
-function parseRecipeSearchOptions(message: string, context: ConversationContext): RecipeSearchOptions {
+function parseRecipeSearchOptions(
+  message: string,
+  context: ConversationContext,
+): RecipeSearchOptions {
   const normalized = normalizeToken(message);
   const searchTerm = toSearchTerm(message) || toSearchTerm(context.previousRecipeMessage ?? "");
   const ingredientsHint = extractIngredientHint(message);
@@ -802,7 +756,9 @@ function parseRecipeSearchOptions(message: string, context: ConversationContext)
     searchTerm: searchTerm || undefined,
     ingredientsHint: ingredientsHint || undefined,
     maxMinutes: extractMaxMinutes(message),
-    minProteinG: includesAny(normalized, ["high protein", "more protein", "protein"]) ? 15 : undefined,
+    minProteinG: includesAny(normalized, ["high protein", "more protein", "protein"])
+      ? 15
+      : undefined,
     maxCalories: extractMaxCalories(message),
   };
 }
@@ -855,46 +811,26 @@ function filterAndRankRecipes(recipes: RecipeSearchResult[], options: RecipeSear
 
 async function buildRecipeReply(message: string, context: ConversationContext): Promise<ChatReply> {
   const options = parseRecipeSearchOptions(message, context);
-  const recipes = await searchRecipes({
-    ingredients: options.ingredientsHint,
-  });
-  const topRecipes = filterAndRankRecipes(recipes, options).slice(0, 3);
-
-  if (topRecipes.length === 0) {
-    return {
-      intent: "recipe_help",
-      confidence: 0.6,
-      answer:
-        "I could not find a recipe match for that combination yet. Try ingredient names, a time target like under 20 minutes, or ask for higher-protein options.",
-      quickActions: normalizeQuickActions([
-        { label: "Quick recipes", prompt: "Show quick recipes under 20 minutes." },
-        { label: "High protein", prompt: "Show higher-protein recipe ideas." },
-        { label: "By ingredients", prompt: "Find recipes with tomatoes, onions, and peppers." },
-        ...defaultQuickActions.slice(0, 2),
-      ]),
-      suggestedLinks: [{ label: "Recipe Finder", href: "/recipes" }],
-      handoffSuggested: false,
-    };
-  }
-
-  const recipeLines = topRecipes.map((recipe) => {
-    const totalMinutes = recipe.prepMinutes + recipe.cookMinutes;
-    return `• ${recipe.title} — ${totalMinutes} mins · ${recipe.nutritionPerServing.proteinG}g protein · ${recipe.nutritionPerServing.calories} cal`;
-  });
+  filterAndRankRecipes([], options);
+  const ingredientHint = options.ingredientsHint
+    ? ` If you are evaluating products for ingredients like ${options.ingredientsHint}, I can point you to the closest bread options instead.`
+    : "";
 
   return {
     intent: "recipe_help",
-    confidence: 0.87,
-    answer: `Here are the strongest recipe matches:\n${recipeLines.join("\n")}`,
+    confidence: 0.78,
+    answer:
+      "Nest Foods no longer presents recipe guidance as a core public feature on this corporate site. I can still help you review products, ingredients, allergen information, quality standards, and contact routes." +
+      ingredientHint,
     quickActions: normalizeQuickActions([
-      { label: "Under 20 mins", prompt: "Show recipes under 20 minutes." },
-      { label: "High protein", prompt: "Show higher-protein recipe ideas." },
-      { label: "Lower calorie", prompt: "Show lower-calorie recipe ideas." },
-      { label: "By ingredients", prompt: "Find recipes with rice, tomato, and pepper." },
+      { label: "View products", prompt: "Show me the Nest Foods product range." },
+      { label: "Allergen help", prompt: "Help me filter products by allergens." },
+      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Recipes", href: "/recipes" },
-      ...topRecipes.map((recipe) => ({ label: recipe.title, href: `/recipes#${recipe.slug}` })),
+      { label: "Products", href: "/shop" },
+      { label: "Contact Team", href: "/contact" },
     ]),
     handoffSuggested: false,
   };
@@ -973,7 +909,10 @@ async function buildAllergenReply(message: string): Promise<ChatReply> {
         ...defaultQuickActions.slice(0, 1),
       ]),
       suggestedLinks: normalizeSuggestedLinks([
-        { label: "Filtered Products", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
+        {
+          label: "Filtered Products",
+          href: `/shop?allergenExclude=${encodeURIComponent(allergen)}`,
+        },
         { label: "Contact Team", href: "/contact" },
       ]),
       handoffSuggested: true,
@@ -1014,12 +953,12 @@ async function buildOrderStatusReply(
       "Nest Foods does not provide public online ordering or self-serve order tracking on this website. For delivery follow-up, distributor coordination, or product support, contact the team directly.",
     quickActions: normalizeQuickActions([
       { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      { label: "Distributor support", prompt: "I need distributor support." },
+      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
       { label: "Products", prompt: "Show me the Nest Foods product range." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Contact Team", href: "/contact" },
-      { label: "Distributor Portal", href: "/b2b" },
+      { label: "Distributor Enquiry", href: "/distributor-enquiry" },
       { label: "Products", href: "/shop" },
     ]),
     handoffSuggested: true,
@@ -1047,93 +986,43 @@ function resolveTraceabilityReplyTopic(message: string): TraceabilityReplyTopic 
   return "summary";
 }
 
-function buildTraceabilityTimelineLines(batch: TraceabilityBatch) {
-  return [...batch.timeline]
-    .slice(-4)
-    .map(
-      (entry) =>
-        `• ${formatDateTime(entry.startedAt)} — ${entry.title} (${formatLabel(entry.stage)}) at ${entry.location}`,
-    );
-}
-
 async function buildTraceabilityReply(
   message: string,
   context: ConversationContext,
 ): Promise<ChatReply> {
-  const lookupCode = extractBatchCode(message) ?? context.batchCode;
   const topic = resolveTraceabilityReplyTopic(message);
-
-  if (!lookupCode || lookupCode.length < 4) {
-    return {
-      intent: "traceability_lookup",
-      confidence: 0.6,
-      answer:
-        "Share the batch code or QR value and I will look up sourcing, processing, and certification details.",
-      quickActions: normalizeQuickActions([
-        { label: "Lookup a batch", prompt: "Lookup traceability for this batch code." },
-        { label: "Batch timeline", prompt: "Show the full timeline for this batch." },
-      ]),
-      suggestedLinks: [{ label: "Traceability", href: "/traceability" }],
-      handoffSuggested: false,
-    };
-  }
-
-  const batch = await lookupTraceabilityBatch(lookupCode);
-  if (!batch) {
-    return {
-      intent: "traceability_lookup",
-      confidence: 0.69,
-      answer:
-        "No traceability batch was found for that code yet. Check the code format or request support for manual verification.",
-      quickActions: normalizeQuickActions([
-        { label: "Retry lookup", prompt: "Help me retry batch traceability lookup." },
-        { label: "Human support", prompt: "I need human help verifying a batch code." },
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        { label: "Traceability", href: "/traceability" },
-        { label: "Contact Team", href: "/contact" },
-      ]),
-      handoffSuggested: true,
-      handoffReason: "Batch code was not found in traceability records.",
-    };
-  }
-
-  const latestTimeline = batch.timeline[batch.timeline.length - 1];
+  void message;
+  void context;
   const traceabilityReplyByTopic: Record<TraceabilityReplyTopic, string> = {
-    summary: `Batch ${batch.batchCode} for ${batch.productName} is "${batch.status}". Source: ${batch.source.farmName}, ${batch.source.region}. Latest stage: ${latestTimeline ? formatLabel(latestTimeline.stage) : "processing"}.`,
-    timeline: `Recent batch timeline for ${batch.batchCode}:\n${buildTraceabilityTimelineLines(batch).join("\n")}`,
+    summary:
+      "Nest Foods no longer exposes public batch traceability on this corporate site. Use the quality standards page for a high-level overview or contact the team for product enquiries.",
+    timeline:
+      "Public batch timelines are not part of the current Nest Foods website. The quality standards page summarizes production expectations at a high level.",
     certifications:
-      batch.certifications.length > 0
-        ? `Certifications for ${batch.batchCode}:\n${batch.certifications
-            .map(
-              (entry) =>
-                `• ${entry.name} · ${entry.issuer} · code ${entry.certificateCode}${entry.validUntil ? ` · valid until ${formatDate(entry.validUntil)}` : ""}`,
-            )
-            .join("\n")}`
-        : `No certifications are attached to ${batch.batchCode} yet.`,
-    source: `Source for ${batch.batchCode}: ${batch.source.farmName}, ${batch.source.region}, ${batch.source.country}. Lot reference: ${batch.source.lotReference}.${batch.source.harvestedAt ? ` Harvested ${formatDate(batch.source.harvestedAt)}.` : ""}`,
-    processing: `Processing details for ${batch.batchCode}: ${batch.processing.facilityName}, line ${batch.processing.lineName}. Packaged ${formatDateTime(batch.processing.packagedAt)}. QA lead: ${batch.processing.qaLead}.`,
-    dates: `Dates for ${batch.batchCode}: produced ${formatDate(batch.productionDate)}, packaged ${formatDate(batch.processing.packagedAt)}, expires ${formatDate(batch.expiryDate)}${batch.source.harvestedAt ? `, harvested ${formatDate(batch.source.harvestedAt)}` : ""}.`,
+      "Certification and quality discussions now sit under the broader quality standards narrative rather than a public batch lookup experience.",
+    source:
+      "Ingredient sourcing and production quality are presented as corporate quality standards rather than a public traceability tool.",
+    processing:
+      "Processing detail is summarized through the public quality standards page rather than a batch-by-batch lookup flow.",
+    dates:
+      "Production dates and batch histories are not exposed publicly on this corporate site. Contact the team if you need product guidance.",
   };
 
   return {
     intent: "traceability_lookup",
-    confidence: 0.95,
+    confidence: 0.9,
     answer: traceabilityReplyByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Timeline", prompt: `Show the full timeline for ${batch.batchCode}.` },
-      { label: "Source", prompt: `Show source details for ${batch.batchCode}.` },
-      { label: "Certifications", prompt: `Show certification details for ${batch.batchCode}.` },
-      { label: "Processing", prompt: `Show processing details for ${batch.batchCode}.` },
+      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+      { label: "Products", prompt: "Show me the Nest Foods product range." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      {
-        label: "Traceability",
-        href: `/traceability?code=${encodeURIComponent(batch.batchCode)}`,
-      },
-      { label: batch.productName, href: `/shop?search=${encodeURIComponent(batch.productName)}` },
+      { label: "Quality Standards", href: "/quality" },
+      { label: "Contact Team", href: "/contact" },
     ]),
-    handoffSuggested: false,
+    handoffSuggested: true,
+    handoffReason: "Public batch traceability is no longer part of the corporate site.",
   };
 }
 
@@ -1162,39 +1051,35 @@ function resolveB2BReplyTopic(message: string): B2BReplyTopic {
 
 async function buildB2BReply(message: string): Promise<ChatReply> {
   const topic = resolveB2BReplyTopic(message);
-  const b2bData = await readB2BData();
-  const tierSummary = b2bData.pricingTiers
-    .map((tier) => `• ${tier.label} — review target ${tier.quoteReviewHours}h`)
-    .join("\n");
 
   const answerByTopic: Record<B2BReplyTopic, string> = {
     overview:
-      "The distributor portal supports account onboarding, quote requests, quote-to-order conversion, invoice access, statements, and support tickets.",
+      "Nest Foods now handles distributor interest through a lightweight public enquiry route rather than a self-serve portal.",
     quote:
-      "For a bulk quote, submit company details, delivery region, product variants, quantities, preferred delivery date, and any handling notes through the distributor portal.",
+      "Distributor conversations now start with a simple enquiry form covering company details, operating region, and product interest.",
     approval:
-      "Distributor approval starts with company and contact details. Once reviewed, the team assigns your account tier, active regions, and account manager access.",
-    pricing: `Pricing is managed through account tiers. Current portal response windows:\n${tierSummary}`,
+      "The Nest Foods team reviews distributor introductions directly and follows up on fit, next steps, and contact routing.",
+    pricing:
+      "Public tiered pricing and quote tooling are not part of this corporate site. Use the distributor enquiry route to start a conversation.",
     invoice:
-      "Invoices are handled inside the distributor portal after quote approval and order conversion. Use the portal for invoice downloads, balance checks, and payment follow-up.",
+      "Invoices and operational account workflows are not exposed through the public website. Contact the team directly if you need help.",
     statement:
-      "Account statements are generated by period inside the distributor portal. Use the portal to review billed totals, payments, and outstanding balance.",
+      "Statements and account history are not presented through the public website. Distributor conversations begin with the enquiry route.",
     support:
-      "Distributor support runs through the portal or the sales team. You can open tickets for quoting, order issues, invoices, and account management follow-up.",
+      "Distributor support begins with the public enquiry route or direct contact with the Nest Foods team.",
   };
 
   return {
     intent: "b2b_quote",
-    confidence: 0.92,
+    confidence: 0.9,
     answer: answerByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Quote requirements", prompt: "What details are needed for a bulk quote?" },
-      { label: "Approval flow", prompt: "How does distributor approval work?" },
-      { label: "Invoices", prompt: "How do B2B invoices work?" },
-      { label: "Portal support", prompt: "I need distributor support." },
+      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+      { label: "Products", prompt: "Show me the Nest Foods product range." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Distributor Portal", href: "/b2b" },
+      { label: "Distributor Enquiry", href: "/distributor-enquiry" },
       { label: "Contact Sales", href: "/contact" },
     ]),
     handoffSuggested: false,
@@ -1214,18 +1099,18 @@ async function buildUnknownReply(context?: ConversationContext): Promise<ChatRep
     intent: "unknown",
     confidence: 0.45,
     answer:
-      "I do not have a strong match for that request yet. I can still help with products, allergens, recipes, traceability, and distributor support.",
+      "I do not have a strong match for that request yet. I can still help with products, allergen guidance, quality standards, distributor enquiries, careers, and contact routes.",
     quickActions: normalizeQuickActions([
       ...(contextualAction ? [contextualAction] : []),
       { label: "Product help", prompt: "Help me find the right products." },
-      { label: "Traceability", prompt: "Help me verify a batch code." },
-      { label: "Recipe help", prompt: "Suggest bread ideas based on ingredients I have." },
-      { label: "B2B help", prompt: "I need distributor support." },
+      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+      { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Contact Team", href: "/contact" },
       { label: "Products", href: "/shop" },
-      { label: "Traceability", href: "/traceability" },
+      { label: "Quality Standards", href: "/quality" },
     ]),
     handoffSuggested: true,
     handoffReason: "Low answer confidence for the current request.",

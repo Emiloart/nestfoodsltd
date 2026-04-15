@@ -3,10 +3,10 @@ import Link from "next/link";
 import { buttonClassName } from "@/components/ui/button";
 
 const partnerHighlights = [
-  "Distributor and retail enquiries",
-  "Approved partner portal access",
-  "Regional supply planning",
-  "Expected volume discussions",
+  "Distributor introductions",
+  "Product range discussions",
+  "Regional coverage conversations",
+  "Packaging and service enquiries",
 ];
 
 export function HomeDistributorTeaser() {
@@ -15,13 +15,13 @@ export function HomeDistributorTeaser() {
       <div className="section-frame px-5 py-5 sm:px-6">
         <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-3xl">
-            <p className="section-kicker">Distributor Partnership</p>
+            <p className="section-kicker">Distributor Enquiry</p>
             <h2 className="display-heading mt-3 text-3xl text-neutral-900 sm:text-4xl">
-              Partner with Nest Foods for distributor supply enquiries.
+              Start distributor conversations with the Nest Foods team.
             </h2>
             <p className="pretty-text mt-4 max-w-2xl text-sm leading-7 text-neutral-600">
-              Start with a public enquiry if you are exploring supply. Approved distributors can
-              continue through the partner portal for account coordination and support.
+              Use the enquiry route to introduce your business, operating region, and product
+              interest. Nest Foods will follow up directly on fit, next steps, and contact routing.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {partnerHighlights.map((item) => (
@@ -35,11 +35,8 @@ export function HomeDistributorTeaser() {
             </div>
           </div>
 
-          <Link
-            href="/distributor-enquiry"
-            className={buttonClassName({ variant: "primary" })}
-          >
-            Distributor Enquiry
+          <Link href="/distributor-enquiry" className={buttonClassName({ variant: "primary" })}>
+            Make Distributor Enquiry
           </Link>
         </div>
       </div>

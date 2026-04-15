@@ -1,8 +1,8 @@
 # Nest Foods Ltd Platform
 
-Build-ready manufacturer platform for Nest Foods Ltd with a bread-first public experience, secured admin tooling, commerce workflows, B2B distributor support, and traceability.
+Corporate website foundation for Nest Foods Ltd. The public product is intentionally limited to a manufacturer-first experience: homepage, product catalogue, quality standards, about, vision, careers, contact, and a lightweight distributor enquiry route.
 
-## Stack (Foundation)
+## Stack
 
 - `Next.js 16` (App Router)
 - `React 19`
@@ -16,8 +16,9 @@ Build-ready manufacturer platform for Nest Foods Ltd with a bread-first public e
 ```txt
 .
 ├─ apps/
-│  └─ web/                # Public website + isolated admin surface (host-gated)
-├─ CHECKLIST.md           # Master enterprise build checklist
+│  └─ web/                # Public website + host-gated admin surface
+├─ docs/                  # Product, admin, and operational notes
+├─ CHECKLIST.md           # Build checklist
 ├─ .env.example           # Environment contract
 ├─ package.json           # Workspace scripts
 └─ pnpm-workspace.yaml
@@ -30,71 +31,63 @@ Build-ready manufacturer platform for Nest Foods Ltd with a bread-first public e
    - pnpm `10.x`
 2. Install dependencies:
    - `pnpm install`
-   - if your network is unstable, retry with `pnpm install --registry=https://registry.npmmirror.com --no-optional`
-3. Run dev server:
+3. Run the public app:
    - `pnpm dev`
-4. Enable admin edits:
+4. Enable admin editing when needed:
    - copy `.env.example` to `.env.local`
-   - set at least `ADMIN_TOKEN_SUPER_ADMIN`
-   - set `ADMIN_APP_HOSTS` (for local dev use `admin.localhost:3000`)
-5. Sign in to admin:
-   - open `http://admin.localhost:3000/admin/login`
-   - use one configured role token
-6. Verify separation:
+   - set `ADMIN_TOKEN_SUPER_ADMIN`
+   - set `ADMIN_APP_HOSTS` for the host-gated admin surface
+5. Verify routes:
    - public site: `http://localhost:3000`
-   - admin site: `http://admin.localhost:3000/admin/login`
+   - admin login: `http://admin.localhost:3000/admin/login`
+
+## Current Product Scope
+
+- Public IA:
+  - `/` Home
+  - `/shop` Products
+  - `/products/[slug]` Product details
+  - `/quality` Quality Standards
+  - `/about`
+  - `/vision`
+  - `/careers`
+  - `/contact`
+- Supporting public route:
+  - `/distributor-enquiry` for lightweight distributor introductions
+- Product pages focus on descriptions, pack sizes, ingredients, allergens, and direct enquiry paths.
+- The admin surface remains host-gated for content and operational management.
+- Legacy commerce, portal, customer, and traceability modules may still exist in the codebase, but they are not part of the intended public website direction.
 
 ## Current Progress
 
-- Foundation checklist created in `CHECKLIST.md`.
-- Monorepo scaffolded.
-- Next.js app shell created with responsive dark/light mode support.
-- Design system baseline completed (tokens + UI primitives + motion foundations).
-- Core route placeholders added for all major product areas.
-- Dynamic CMS core added for key pages with secured admin editing API.
-- RBAC session login and protected admin routes are active.
-- CMS model now includes publication status, scheduling, SEO fields, and revisions.
-- Logo and image placeholders are wired in homepage and product sections.
-- Commerce core foundations are live (catalog, cart, checkout, orders, subscriptions, payment adapters).
-- Customer platform foundations are live (session auth, profile/preferences, wishlist, order history, personalization, search autocomplete).
-- B2B distributor portal foundations are live (approval flow, tiered pricing catalog, bulk quotes, quote-to-order conversion, invoices/statements, support tickets).
-- Traceability and food-tooling foundations are live (batch lookup timeline, admin batch ingestion, recipe finder, nutrition calculator).
-- Security/compliance foundations are live (signed sessions, rate limits, audit events, NDPR consent + data request flows).
-- Security operations runbook is documented in `docs/security-operations.md`.
-- Admin surface is isolated by host (`ADMIN_APP_HOSTS`) so public site navigation no longer exposes admin routes.
-- Performance/accessibility/SEO hardening is live (WCAG-focused critical flow upgrades, Core Web Vitals budgets + telemetry endpoint, canonical metadata, robots/sitemap expansion, and structured data).
-- Blog editorial foundation now includes index/detail routes with metadata and Article schema coverage.
-- DevOps/release operations foundations are live (CI quality gates, preview/staging/production deploy workflows, environment templates, release + launch runbooks).
-- SUPER_ADMIN operations dashboard is live (`/admin/ops`) with web-vitals and runtime error telemetry summaries.
-- Chat Agent v1 is live as a floating assistant widget (grounded intent responses + lead handoff).
-- Admin user management v1 is live (`/admin/users`) with invite activation, managed credentials, MFA policy, and break-glass token fallback.
-- Public IA now presents Nest Foods as a premium bread manufacturer first, with mobile-first homepage flows, lighter footer density, and traceability surfaced as a public trust layer.
-- Production build cleanup now includes local-safe typography, server-side admin page guards, and signed-session-only customer/B2B cookie reads.
+- Manufacturer-first public shell and homepage are in place.
+- Product catalogue and product detail routes have been simplified for a corporate website posture.
+- Public traceability positioning has been replaced by a static quality standards page.
+- Distributor conversations start through a lightweight public enquiry flow rather than a public portal.
+- Core CMS-managed pages remain editable through the admin surface.
+- Chat assistant scope is aligned to product, company, enquiry, and careers guidance.
+- SEO foundations remain in place through metadata, sitemap generation, and structured data.
 
 ## Build Hygiene
 
-- Production build has been validated on Node.js `22.14+`.
-- Full TypeScript validation passes on Node.js `22.14+`.
+- Production build should be validated on Node.js `22.14+`.
+- Run `pnpm lint` and `pnpm typecheck` before release work.
 - Generated runtime artifacts such as `.next-dev*.log` and `apps/web/tsconfig.tsbuildinfo` should remain local-only.
 - Telemetry state in `apps/web/data/observability.json` is runtime data, not release content.
-- `AUTH_SECRET` is required in production; the development fallback secret is no longer accepted there.
+- `AUTH_SECRET` is required in production.
 
-## Next Build Steps
+## Immediate Cleanup Direction
 
-1. Execute `apps/admin` split migration (`docs/admin-app-split-plan.md`).
-2. Upgrade admin MFA from static code to authenticator TOTP.
-3. Add browser security headers (CSP, HSTS, Referrer-Policy, Permissions-Policy).
-4. Harden customer auth to user-id based identity provider (NextAuth/Clerk).
-5. Implement inventory locking and transactional checkout.
+1. Continue archiving or deprecating legacy commerce, customer, B2B portal, and traceability modules that are no longer part of the public site.
+2. Keep public copy focused on manufacturing credibility, products, company story, careers, contact, and distributor introductions.
+3. Use placeholders only for media, not public-facing business copy.
 
 ## GitHub Setup
-
-After creating your GitHub repo:
 
 ```bash
 git init
 git add .
-git commit -m "chore: scaffold nestfoodsltd enterprise foundation"
+git commit -m "chore: scaffold nestfoodsltd corporate website foundation"
 git branch -M main
 git remote add origin <YOUR_GITHUB_REPO_URL>
 git push -u origin main

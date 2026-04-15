@@ -4,16 +4,19 @@ import { SectionHeading } from "@/components/home/section-heading";
 
 const standards = [
   {
-    title: "Industrial baking process",
-    description: "Uniform crumb, clean slicing, and dependable output at scale.",
+    title: "Controlled baking process",
+    description:
+      "Uniform crumb, dependable slicing, and repeatable output across daily production.",
   },
   {
-    title: "Clean production environment",
-    description: "Production and QA stay visible across the public experience.",
+    title: "Hygienic production routines",
+    description:
+      "Clean handling, routine checks, and disciplined quality oversight guide each shift.",
   },
   {
-    title: "Consistent packaging standards",
-    description: "Packaging stays dependable for downstream handling and display.",
+    title: "Packaging discipline",
+    description:
+      "Finished loaves are packed for consistent shelf presentation and dependable handling.",
   },
 ];
 
@@ -24,9 +27,7 @@ export function HomeProductionStandardsSection() {
       className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5"
     >
       <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
-      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">
-        {item.description}
-      </p>
+      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">{item.description}</p>
     </div>
   ));
 
@@ -34,9 +35,9 @@ export function HomeProductionStandardsSection() {
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <div className="section-frame px-5 py-5 sm:px-6 md:hidden">
         <SectionHeading
-          eyebrow="Production Process"
-          title="Industrial baking standards made visible."
-          description="Process, hygiene, and packaging."
+          eyebrow="Quality Standards"
+          title="Production standards built into daily operations."
+          description="Process control, hygiene, and packaging discipline."
           descriptionClassName="hidden"
         />
 
@@ -60,9 +61,9 @@ export function HomeProductionStandardsSection() {
       <div className="hidden gap-5 md:grid lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
         <div className="section-frame px-5 py-5 sm:px-6">
           <SectionHeading
-            eyebrow="Production Process"
-            title="Industrial baking process, hygiene, and packaging."
-            description="Clean production environment with clear standards."
+            eyebrow="Quality Standards"
+            title="Production process, hygiene, and packaging standards."
+            description="Nest Foods presents clear manufacturing standards without turning quality into a public product feature."
             descriptionClassName="hidden lg:block"
           />
 

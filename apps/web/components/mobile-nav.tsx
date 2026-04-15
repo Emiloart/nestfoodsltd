@@ -10,7 +10,7 @@ import { buttonClassName } from "@/components/ui/button";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Products" },
-  { href: "/traceability", label: "Quality & Traceability" },
+  { href: "/quality", label: "Quality Standards" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },
@@ -18,14 +18,14 @@ const navItems = [
 ];
 
 const quickActions = [
-  { href: "/b2b", label: "Distributor Portal", variant: "primary" as const },
-  { href: "/contact", label: "Make Enquiry", variant: "secondary" as const },
+  { href: "/contact", label: "Contact Team", variant: "primary" as const },
+  { href: "/distributor-enquiry", label: "Distributor Enquiry", variant: "secondary" as const },
 ];
 
 const resourceLinks = [
-  { href: "/distributor-enquiry", label: "Distributor Enquiry" },
-  { href: "/recipes", label: "Bread Ideas" },
-  { href: "/blog", label: "Insights" },
+  { href: "/about", label: "About Nest Foods" },
+  { href: "/vision", label: "Vision" },
+  { href: "/careers", label: "Careers" },
 ];
 
 export function MobileNav() {
@@ -88,7 +88,7 @@ export function MobileNav() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-[rgba(19,8,32,0.3)] backdrop-blur-[3px]"
+              className="fixed inset-0 z-40 bg-[color:color-mix(in_srgb,var(--brand-2)_30%,transparent)] backdrop-blur-[3px]"
               onClick={() => setOpen(false)}
             />
 
@@ -103,7 +103,7 @@ export function MobileNav() {
               aria-label="Mobile navigation"
               className="section-frame fixed inset-x-3 top-[5.5rem] z-50 max-h-[calc(100vh-6.5rem)] overflow-auto p-4"
             >
-              <p className="section-kicker">Browse Nest Foods</p>
+              <p className="section-kicker">Nest Foods Navigation</p>
               <div className="mt-4 grid gap-2">
                 {navItems.map((item) => (
                   <Link
@@ -114,14 +114,14 @@ export function MobileNav() {
                   >
                     <span>{item.label}</span>
                     <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
-                      Open
+                      View
                     </span>
                   </Link>
                 ))}
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Quick links</p>
+                <p className="section-kicker">Enquiries</p>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {quickActions.map((item) => (
                     <Link
@@ -141,18 +141,18 @@ export function MobileNav() {
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Resources</p>
+                <p className="section-kicker">Company</p>
                 <div className="mt-3 grid gap-2">
                   {resourceLinks.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
-                    onClick={() => setOpen(false)}
-                  >
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+                      onClick={() => setOpen(false)}
+                    >
                       <span>{item.label}</span>
                       <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
-                        Open
+                        View
                       </span>
                     </Link>
                   ))}

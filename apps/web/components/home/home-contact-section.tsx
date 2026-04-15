@@ -10,10 +10,22 @@ type HomeContactSectionProps = {
 };
 
 const contactBlocks = [
-  { title: "Address", value: "Head office and facility location placeholder" },
-  { title: "Email", value: "General enquiries and partnership inbox placeholder" },
-  { title: "Phone", value: "Reception and support line placeholder" },
-  { title: "Hours", value: "Weekday business hours placeholder" },
+  {
+    title: "Office Details",
+    value: "Head office and facility contact details are available on the contact page.",
+  },
+  {
+    title: "Email",
+    value: "General product, company, and distributor enquiries route through the central team.",
+  },
+  {
+    title: "Phone",
+    value: "Primary phone support remains available during published business hours.",
+  },
+  {
+    title: "Visits",
+    value: "Meetings, site visits, and follow-up discussions can be coordinated in advance.",
+  },
 ];
 
 export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
@@ -26,10 +38,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
           description={contactPage.description}
           descriptionClassName="hidden md:block"
           actions={
-            <Link
-              href="/contact"
-              className={buttonClassName({ variant: "primary" })}
-            >
+            <Link href="/contact" className={buttonClassName({ variant: "primary" })}>
               Contact Nest Foods
             </Link>
           }
@@ -43,17 +52,15 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
                 className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5"
               >
                 <p className="section-kicker">{block.title}</p>
-                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">
-                  {block.value}
-                </p>
+                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">{block.value}</p>
               </div>
             ))}
           </div>
 
           <MockPanel
-            label="Map Preview"
-            title="Facility / office map placeholder"
-            description="Reserved for public map content."
+            label="Location Overview"
+            title="Facility and office access"
+            description="Map, route, and access details can be published here when available."
             descriptionClassName="hidden md:block"
           >
             <div className="grid gap-3">
@@ -64,12 +71,8 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
                     key={item}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
                   >
-                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
-                      Placeholder
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900">
-                      {item}
-                    </p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Area</p>
+                    <p className="mt-2 text-sm font-medium text-neutral-900">{item}</p>
                   </div>
                 ))}
               </div>
