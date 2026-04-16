@@ -1,0 +1,11 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#2F241D"/>
+  <rect x="36" y="36" width="888" height="468" rx="24" fill="#4C382C" stroke="#D2B084" stroke-width="2"/>
+  <ellipse cx="792" cy="130" rx="128" ry="80" fill="#E0A443" fill-opacity="0.14"/>
+  <rect x="92" y="126" width="332" height="24" rx="8" fill="#FCF7F0" fill-opacity="0.14"/>
+  <rect x="92" y="168" width="286" height="20" rx="8" fill="#FCF7F0" fill-opacity="0.1"/>
+  <circle cx="480" cy="270" r="78" fill="#FCF7F0" fill-opacity="0.12"/>
+  <path d="M454 232C454 224.3 462.2 219.2 469.1 223L531.8 257C539 261 539 271.3 531.8 275.3L469.1 309.3C462.2 313.1 454 308 454 300.3V232Z" fill="#FCF7F0"/>
+  <path d="M122 426C208 382 295 360 386 362C486 364 574 427 670 433C746 438 828 412 924 370V504H122V426Z" fill="#E0A443" fill-opacity="0.16"/>
+  <text x="480" y="474" fill="#EADBC8" font-size="24" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1.8">PROCESS VIDEO PLACEHOLDER</text>
+</svg>

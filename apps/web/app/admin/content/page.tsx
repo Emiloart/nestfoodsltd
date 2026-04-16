@@ -7,7 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { type CmsPage, type CmsPageSlug, type CmsPublicationStatus } from "@/lib/cms/types";
+import {
+  type CmsHeroMediaKind,
+  type CmsPage,
+  type CmsPageSlug,
+  type CmsPublicationStatus,
+} from "@/lib/cms/types";
 
 type CmsPagesResponse = {
   pages: CmsPage[];
@@ -25,6 +30,7 @@ type SessionResponse = {
 };
 
 const statusOptions: CmsPublicationStatus[] = ["draft", "published", "scheduled"];
+const heroMediaOptions: CmsHeroMediaKind[] = ["image", "video"];
 
 const emptyFormState = {
   title: "",
@@ -36,7 +42,10 @@ const emptyFormState = {
   ctaPrimaryHref: "",
   ctaSecondaryLabel: "",
   ctaSecondaryHref: "",
+  heroMediaKind: "image" as CmsHeroMediaKind,
   heroImageUrl: "",
+  heroVideoUrl: "",
+  heroVideoPosterUrl: "",
   logoImageUrl: "",
   seoTitle: "",
   seoDescription: "",
@@ -119,7 +128,10 @@ export default function AdminContentPage() {
       ctaPrimaryHref: selectedPage.ctaPrimaryHref ?? "",
       ctaSecondaryLabel: selectedPage.ctaSecondaryLabel ?? "",
       ctaSecondaryHref: selectedPage.ctaSecondaryHref ?? "",
+      heroMediaKind: selectedPage.heroMediaKind ?? (selectedPage.heroVideoUrl ? "video" : "image"),
       heroImageUrl: selectedPage.heroImageUrl ?? "",
+      heroVideoUrl: selectedPage.heroVideoUrl ?? "",
+      heroVideoPosterUrl: selectedPage.heroVideoPosterUrl ?? "",
       logoImageUrl: selectedPage.logoImageUrl ?? "",
       seoTitle: selectedPage.seo.title ?? "",
       seoDescription: selectedPage.seo.description ?? "",
@@ -152,7 +164,9 @@ export default function AdminContentPage() {
       }
 
       const payload = (await response.json()) as CmsPageResponse;
-      setPages((current) => current.map((page) => (page.slug === payload.page.slug ? payload.page : page)));
+      setPages((current) =>
+        current.map((page) => (page.slug === payload.page.slug ? payload.page : page)),
+      );
       const liveStateMessage =
         payload.page.status === "published"
           ? "Live page refreshed."
@@ -176,19 +190,19 @@ export default function AdminContentPage() {
     <section className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Admin CMS</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Content Manager
-        </h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Content Manager</h1>
         <p className="text-sm text-neutral-600">
-          Role: <span className="font-semibold">{role}</span>. Manage publishing state, scheduling, SEO,
-          and visual placeholders.
+          Role: <span className="font-semibold">{role}</span>. Manage publishing state, scheduling,
+          SEO, and visual placeholders.
         </p>
       </div>
 
       <Card className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Page</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Page
+            </span>
             <select
               className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               value={selectedSlug ?? ""}
@@ -202,7 +216,9 @@ export default function AdminContentPage() {
             </select>
           </label>
           <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Status</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Status
+            </span>
             <select
               className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               value={form.status}
@@ -221,11 +237,18 @@ export default function AdminContentPage() {
             </select>
           </label>
           <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Title</span>
-            <Input value={form.title} onChange={(event) => setForm((s) => ({ ...s, title: event.target.value }))} />
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Title
+            </span>
+            <Input
+              value={form.title}
+              onChange={(event) => setForm((s) => ({ ...s, title: event.target.value }))}
+            />
           </label>
           <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Publish At</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Publish At
+            </span>
             <Input
               type="datetime-local"
               value={form.publishAt}
@@ -235,12 +258,19 @@ export default function AdminContentPage() {
         </div>
 
         <label className="block space-y-2">
-          <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Headline</span>
-          <Input value={form.headline} onChange={(event) => setForm((s) => ({ ...s, headline: event.target.value }))} />
+          <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+            Headline
+          </span>
+          <Input
+            value={form.headline}
+            onChange={(event) => setForm((s) => ({ ...s, headline: event.target.value }))}
+          />
         </label>
 
         <label className="block space-y-2">
-          <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">Description</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+            Description
+          </span>
           <textarea
             value={form.description}
             onChange={(event) => setForm((s) => ({ ...s, description: event.target.value }))}
@@ -273,7 +303,9 @@ export default function AdminContentPage() {
             </span>
             <Input
               value={form.ctaSecondaryLabel}
-              onChange={(event) => setForm((s) => ({ ...s, ctaSecondaryLabel: event.target.value }))}
+              onChange={(event) =>
+                setForm((s) => ({ ...s, ctaSecondaryLabel: event.target.value }))
+              }
             />
           </label>
           <label className="block space-y-2">
@@ -287,6 +319,27 @@ export default function AdminContentPage() {
           </label>
           <label className="block space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Hero Media
+            </span>
+            <select
+              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
+              value={form.heroMediaKind}
+              onChange={(event) =>
+                setForm((s) => ({
+                  ...s,
+                  heroMediaKind: event.target.value as CmsHeroMediaKind,
+                }))
+              }
+            >
+              {heroMediaOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
               Hero Image URL
             </span>
             <Input
@@ -294,6 +347,32 @@ export default function AdminContentPage() {
               onChange={(event) => setForm((s) => ({ ...s, heroImageUrl: event.target.value }))}
             />
           </label>
+          {form.heroMediaKind === "video" ? (
+            <>
+              <label className="block space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                  Hero Video URL
+                </span>
+                <Input
+                  value={form.heroVideoUrl}
+                  onChange={(event) => setForm((s) => ({ ...s, heroVideoUrl: event.target.value }))}
+                  placeholder="/media/hero/hero-loop.mp4"
+                />
+              </label>
+              <label className="block space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                  Hero Video Poster URL
+                </span>
+                <Input
+                  value={form.heroVideoPosterUrl}
+                  onChange={(event) =>
+                    setForm((s) => ({ ...s, heroVideoPosterUrl: event.target.value }))
+                  }
+                  placeholder="/placeholders/hero/hero-video-poster-placeholder.svg"
+                />
+              </label>
+            </>
+          ) : null}
           <label className="block space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
               Logo URL
@@ -304,7 +383,9 @@ export default function AdminContentPage() {
             />
           </label>
           <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">SEO Title</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              SEO Title
+            </span>
             <Input
               value={form.seoTitle}
               onChange={(event) => setForm((s) => ({ ...s, seoTitle: event.target.value }))}

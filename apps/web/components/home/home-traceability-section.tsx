@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+// Legacy homepage section retained temporarily for migration safety. The public
+// homepage no longer mounts this section and the website now presents quality
+// standards without a productized traceability experience.
+
 import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
 import { buttonClassName } from "@/components/ui/button";
@@ -41,12 +45,8 @@ export function HomeTraceabilitySection() {
           >
             <div className="space-y-3">
               <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
-                  Batch code
-                </p>
-                <p className="mt-2 text-sm font-medium text-neutral-900">
-                  NFL-BREAD-260301-A
-                </p>
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Batch code</p>
+                <p className="mt-2 text-sm font-medium text-neutral-900">NFL-BREAD-260301-A</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 {["Source", "QA", "Dispatch"].map((step, index) => (
@@ -57,9 +57,7 @@ export function HomeTraceabilitySection() {
                     <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">
                       Step {index + 1}
                     </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900">
-                      {step}
-                    </p>
+                    <p className="mt-2 text-sm font-medium text-neutral-900">{step}</p>
                   </div>
                 ))}
               </div>
@@ -88,9 +86,7 @@ export function HomeTraceabilitySection() {
                 className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
               >
                 <p className="section-kicker">Step {index + 1}</p>
-                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">
-                  {point}
-                </p>
+                <p className="pretty-text mt-3 text-sm leading-7 text-neutral-700">{point}</p>
               </div>
             ))}
           </div>
@@ -145,9 +141,7 @@ export function HomeTraceabilitySection() {
                   <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-500">
                     {step.label}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-neutral-900">
-                    {step.value}
-                  </p>
+                  <p className="mt-2 text-sm font-medium text-neutral-900">{step.value}</p>
                 </div>
               ))}
             </div>

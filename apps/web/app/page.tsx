@@ -2,6 +2,7 @@ import { HomeCareersSection } from "@/components/home/home-careers-section";
 import { HomeContactSection } from "@/components/home/home-contact-section";
 import { HomeDistributorTeaser } from "@/components/home/home-distributor-teaser";
 import { HomeHeroSection } from "@/components/home/home-hero-section";
+import { HomeProcessVideoSection } from "@/components/home/home-process-video-section";
 import { HomeProductionStandardsSection } from "@/components/home/home-production-standards-section";
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
@@ -30,6 +31,7 @@ export default async function HomePage() {
       <HomeTrustStrip />
       <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection />
+      <HomeProcessVideoSection />
       <HomeStorySection aboutPage={aboutPage} visionPage={visionPage} />
       <HomeDistributorTeaser />
       <HomeCareersSection careersPage={careersPage} />

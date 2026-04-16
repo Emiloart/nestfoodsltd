@@ -1,0 +1,11 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#F7EFE3"/>
+  <rect x="36" y="36" width="888" height="468" rx="24" fill="#FCF7F0" stroke="#D2B084" stroke-width="2"/>
+  <ellipse cx="778" cy="126" rx="116" ry="78" fill="#E8C88F" fill-opacity="0.55"/>
+  <ellipse cx="164" cy="426" rx="142" ry="94" fill="#D39A5D" fill-opacity="0.22"/>
+  <rect x="90" y="126" width="372" height="40" rx="10" fill="#7B5B3D" fill-opacity="0.18"/>
+  <rect x="90" y="188" width="490" height="22" rx="8" fill="#7B5B3D" fill-opacity="0.14"/>
+  <rect x="90" y="226" width="448" height="22" rx="8" fill="#7B5B3D" fill-opacity="0.14"/>
+  <path d="M590 397C643 315 705 258 776 227C806 214 840 210 874 213V438H590V397Z" fill="#A6632F" fill-opacity="0.18"/>
+  <text x="480" y="476" fill="#6F4E37" font-size="24" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1.8">SECTION IMAGE PLACEHOLDER</text>
+</svg>

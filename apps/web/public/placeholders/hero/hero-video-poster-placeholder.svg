@@ -1,0 +1,12 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#2F241D"/>
+  <rect x="52" y="52" width="1096" height="616" rx="30" fill="#4C382C"/>
+  <path d="M0 572C152 512 279 500 421 520C537 537 652 582 776 596C905 611 1035 581 1200 522V720H0V572Z" fill="#E0A443" fill-opacity="0.18"/>
+  <ellipse cx="928" cy="155" rx="210" ry="124" fill="#D6B36A" fill-opacity="0.16"/>
+  <rect x="152" y="168" width="354" height="28" rx="8" fill="#FCF7F0" fill-opacity="0.14"/>
+  <rect x="152" y="216" width="304" height="22" rx="8" fill="#FCF7F0" fill-opacity="0.12"/>
+  <rect x="152" y="390" width="896" height="1" fill="#FCF7F0" fill-opacity="0.12"/>
+  <circle cx="600" cy="320" r="82" fill="#FCF7F0" fill-opacity="0.12"/>
+  <path d="M575 281.5C575 274.1 582.9 269.3 589.6 272.9L651.5 306.4C658.5 310.2 658.5 320.1 651.5 323.9L589.6 357.4C582.9 361 575 356.2 575 348.8V281.5Z" fill="#FCF7F0"/>
+  <text x="600" y="610" fill="#EADBC8" font-size="28" text-anchor="middle" font-family="Georgia, serif" letter-spacing="2">HERO VIDEO POSTER</text>
+</svg>

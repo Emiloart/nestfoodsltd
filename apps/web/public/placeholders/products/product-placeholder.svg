@@ -1,0 +1,9 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="720" fill="#F7EFE3"/>
+  <rect x="48" y="48" width="624" height="624" rx="30" fill="#FCF7F0" stroke="#CDAA7D" stroke-width="2"/>
+  <rect x="192" y="160" width="336" height="360" rx="28" fill="#EADBC8"/>
+  <path d="M251 326C251 260.3 304.3 207 370 207C435.7 207 489 260.3 489 326V418C489 440.1 471.1 458 449 458H291C268.9 458 251 440.1 251 418V326Z" fill="#C9803C"/>
+  <path d="M282 296C282 250.2 319.2 213 365 213H374C419.8 213 457 250.2 457 296V317H282V296Z" fill="#E0A443"/>
+  <rect x="247" y="544" width="226" height="18" rx="9" fill="#8E6645" fill-opacity="0.24"/>
+  <text x="360" y="606" fill="#6F4E37" font-size="22" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1.6">PRODUCT PLACEHOLDER</text>
+</svg>

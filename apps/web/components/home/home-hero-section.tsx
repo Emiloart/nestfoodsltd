@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
-import { ImagePlaceholder } from "@/components/image-placeholder";
+import { HeroMedia } from "@/components/media/hero-media";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
@@ -18,40 +18,6 @@ const heroMetrics = [
   { value: "Support", label: "Direct distributor enquiry follow-up" },
   { value: "Consistency", label: "Dependable manufacturing standards" },
 ];
-
-function HeroMedia({ page }: { page: CmsPage }) {
-  if (page.heroVideoUrl) {
-    return (
-      <div className="relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
-        <video
-          className="aspect-[6/5] w-full object-cover sm:aspect-[5/4] lg:aspect-[4/5]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={page.heroVideoPosterUrl ?? page.heroImageUrl}
-        >
-          <source src={page.heroVideoUrl} />
-        </video>
-        <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_26%,transparent)]" />
-        <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-          Production Video
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <ImagePlaceholder
-      src={page.heroImageUrl ?? "/placeholders/hero-image-placeholder.svg"}
-      alt="Nest Foods production placeholder"
-      label="Production Visual Placeholder"
-      className="aspect-[6/5] sm:aspect-[5/4] lg:aspect-[4/5]"
-      priority
-    />
-  );
-}
 
 export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
   return (

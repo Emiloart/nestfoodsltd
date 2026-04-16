@@ -1,12 +1,6 @@
 import { type AdminRole } from "@/lib/admin/auth";
 
-export type CmsPageSlug =
-  | "home"
-  | "about"
-  | "vision"
-  | "contact"
-  | "careers"
-  | "sustainability";
+export type CmsPageSlug = "home" | "about" | "vision" | "contact" | "careers" | "sustainability";
 
 export type CmsPublicationStatus = "draft" | "published" | "scheduled";
 
@@ -15,6 +9,8 @@ export type CmsSeo = {
   description?: string;
   ogImageUrl?: string;
 };
+
+export type CmsHeroMediaKind = "image" | "video";
 
 export type CmsPageRevision = {
   id: string;
@@ -34,7 +30,10 @@ export type CmsPage = {
   ctaPrimaryHref?: string;
   ctaSecondaryLabel?: string;
   ctaSecondaryHref?: string;
+  heroMediaKind?: CmsHeroMediaKind;
   heroImageUrl?: string;
+  heroVideoUrl?: string;
+  heroVideoPosterUrl?: string;
   logoImageUrl?: string;
   seo: CmsSeo;
   updatedAt: string;
@@ -57,9 +56,10 @@ export type CmsBanner = {
 export type CmsMediaAsset = {
   id: string;
   label: string;
-  kind: "image";
+  kind: "image" | "video";
   url: string;
   altText?: string;
+  posterImageUrl?: string;
   folder: string;
   updatedAt: string;
 };

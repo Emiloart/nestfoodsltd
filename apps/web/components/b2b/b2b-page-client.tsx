@@ -1,12 +1,23 @@
 "use client";
 
+// Legacy portal module retained temporarily while the website migrates to a
+// lightweight distributor-enquiry model. The public /b2b route now redirects
+// to /distributor-enquiry and this component should stay out of the shell.
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useExperience } from "@/components/customer/experience-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { type B2BAccount, type B2BInvoice, type B2BOrder, type B2BQuoteRequest, type B2BStatement, type B2BSupportTicket } from "@/lib/b2b/types";
+import {
+  type B2BAccount,
+  type B2BInvoice,
+  type B2BOrder,
+  type B2BQuoteRequest,
+  type B2BStatement,
+  type B2BSupportTicket,
+} from "@/lib/b2b/types";
 
 type B2BSessionResponse = {
   authenticated: boolean;
@@ -91,7 +102,11 @@ export function B2BPageClient() {
   const [invoices, setInvoices] = useState<B2BInvoice[]>([]);
   const [statements, setStatements] = useState<B2BStatement[]>([]);
   const [tickets, setTickets] = useState<B2BSupportTicket[]>([]);
-  const [accountManager, setAccountManager] = useState<{ name: string; email?: string; phone?: string } | null>(null);
+  const [accountManager, setAccountManager] = useState<{
+    name: string;
+    email?: string;
+    phone?: string;
+  } | null>(null);
 
   const [draftVariantId, setDraftVariantId] = useState("");
   const [draftQuantity, setDraftQuantity] = useState(10);
@@ -101,9 +116,13 @@ export function B2BPageClient() {
   const [quotePreview, setQuotePreview] = useState<B2BQuotePreviewResponse["preview"] | null>(null);
 
   const [ticketSubject, setTicketSubject] = useState("Dispatch ETA request");
-  const [ticketDescription, setTicketDescription] = useState("Please share latest dispatch ETA and truck details.");
+  const [ticketDescription, setTicketDescription] = useState(
+    "Please share latest dispatch ETA and truck details.",
+  );
   const [ticketPriority, setTicketPriority] = useState<"low" | "normal" | "high">("normal");
-  const [ticketChannel, setTicketChannel] = useState<"portal" | "email" | "phone" | "whatsapp">("portal");
+  const [ticketChannel, setTicketChannel] = useState<"portal" | "email" | "phone" | "whatsapp">(
+    "portal",
+  );
 
   const variantOptions = useMemo(
     () =>
@@ -335,11 +354,15 @@ export function B2BPageClient() {
     }
     const normalizedQuantity = Math.floor(draftQuantity);
     if (normalizedQuantity < selected.minimumOrderQuantity) {
-      setStatus(`Minimum quantity for ${selected.productName} is ${selected.minimumOrderQuantity}.`);
+      setStatus(
+        `Minimum quantity for ${selected.productName} is ${selected.minimumOrderQuantity}.`,
+      );
       return;
     }
     if (normalizedQuantity > selected.maximumOrderQuantity) {
-      setStatus(`Maximum quantity for ${selected.productName} is ${selected.maximumOrderQuantity}.`);
+      setStatus(
+        `Maximum quantity for ${selected.productName} is ${selected.maximumOrderQuantity}.`,
+      );
       return;
     }
 
@@ -356,9 +379,7 @@ export function B2BPageClient() {
         return current;
       }
       return current.map((entry) =>
-        entry.variantId === draftVariantId
-          ? { ...entry, quantity: nextQuantity }
-          : entry,
+        entry.variantId === draftVariantId ? { ...entry, quantity: nextQuantity } : entry,
       );
     });
   }
@@ -482,17 +503,38 @@ export function B2BPageClient() {
             Distributor Portal
           </h1>
           <p className="text-sm text-neutral-600">
-            Sign in or request approval to unlock bulk ordering, custom pricing tiers, and account-managed support.
+            Sign in or request approval to unlock bulk ordering, custom pricing tiers, and
+            account-managed support.
           </p>
         </div>
 
         <Card className="grid gap-3 md:grid-cols-2">
-          <Input value={companyName} onChange={(event) => setCompanyName(event.target.value)} placeholder="Company name" />
-          <Input value={contactName} onChange={(event) => setContactName(event.target.value)} placeholder="Contact name" />
-          <Input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Business email" type="email" />
-          <Input value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Phone number" />
+          <Input
+            value={companyName}
+            onChange={(event) => setCompanyName(event.target.value)}
+            placeholder="Company name"
+          />
+          <Input
+            value={contactName}
+            onChange={(event) => setContactName(event.target.value)}
+            placeholder="Contact name"
+          />
+          <Input
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Business email"
+            type="email"
+          />
+          <Input
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            placeholder="Phone number"
+          />
           <div className="md:col-span-2">
-            <Button onClick={signInOrRequestAccess} disabled={loading || !companyName || !contactName || !email}>
+            <Button
+              onClick={signInOrRequestAccess}
+              disabled={loading || !companyName || !contactName || !email}
+            >
               {loading ? "Submitting..." : "Continue to Portal"}
             </Button>
           </div>
@@ -518,24 +560,46 @@ export function B2BPageClient() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Account</p>
-          <Input value={companyName} onChange={(event) => setCompanyName(event.target.value)} placeholder="Company name" />
-          <Input value={contactName} onChange={(event) => setContactName(event.target.value)} placeholder="Contact name" />
-          <Input value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Phone number" />
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Account
+          </p>
+          <Input
+            value={companyName}
+            onChange={(event) => setCompanyName(event.target.value)}
+            placeholder="Company name"
+          />
+          <Input
+            value={contactName}
+            onChange={(event) => setContactName(event.target.value)}
+            placeholder="Contact name"
+          />
+          <Input
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            placeholder="Phone number"
+          />
           <p className="text-xs text-neutral-500">
-            Status: <span className="font-semibold uppercase">{account?.status ?? "unknown"}</span> · Tier: <span className="font-semibold uppercase">{account?.tier ?? "n/a"}</span>
+            Status: <span className="font-semibold uppercase">{account?.status ?? "unknown"}</span>{" "}
+            · Tier: <span className="font-semibold uppercase">{account?.tier ?? "n/a"}</span>
           </p>
           <Button onClick={saveAccountProfile}>Save Profile</Button>
         </Card>
 
         <Card className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Account Manager</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Account Manager
+          </p>
           <p className="text-sm text-neutral-700">{accountManager?.name ?? "Pending assignment"}</p>
-          <p className="text-xs text-neutral-500">{accountManager?.email ?? "No manager email yet"}</p>
-          <p className="text-xs text-neutral-500">{accountManager?.phone ?? "No manager phone yet"}</p>
+          <p className="text-xs text-neutral-500">
+            {accountManager?.email ?? "No manager email yet"}
+          </p>
+          <p className="text-xs text-neutral-500">
+            {accountManager?.phone ?? "No manager phone yet"}
+          </p>
           {pricing ? (
             <p className="text-xs text-neutral-500">
-              Pricing Tier: {pricing.label} · {pricing.discountPercent}% discount · quote SLA {pricing.quoteReviewHours}h
+              Pricing Tier: {pricing.label} · {pricing.discountPercent}% discount · quote SLA{" "}
+              {pricing.quoteReviewHours}h
             </p>
           ) : null}
         </Card>
@@ -545,13 +609,16 @@ export function B2BPageClient() {
         <Card className="space-y-3">
           <p className="text-sm font-semibold text-neutral-900">Approval in progress</p>
           <p className="text-sm text-neutral-600">
-            Your distributor profile is pending review. Once approved by the sales team, bulk catalog pricing and quote tools will unlock automatically.
+            Your distributor profile is pending review. Once approved by the sales team, bulk
+            catalog pricing and quote tools will unlock automatically.
           </p>
         </Card>
       ) : (
         <>
           <Card className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Bulk Quote Builder</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              Bulk Quote Builder
+            </p>
             <div className="grid gap-3 md:grid-cols-[1fr_160px_auto]">
               <select
                 value={draftVariantId}
@@ -561,9 +628,7 @@ export function B2BPageClient() {
                   const nextVariant = variantOptions.find((entry) => entry.id === nextId) ?? null;
                   if (nextVariant) {
                     setDraftQuantity((current) => {
-                      const normalizedCurrent = Number.isFinite(current)
-                        ? Math.floor(current)
-                        : 0;
+                      const normalizedCurrent = Number.isFinite(current) ? Math.floor(current) : 0;
                       return Math.min(
                         nextVariant.maximumOrderQuantity,
                         Math.max(
@@ -579,7 +644,9 @@ export function B2BPageClient() {
                 <option value="">Select variant</option>
                 {variantOptions.map((variant) => (
                   <option key={variant.id} value={variant.id}>
-                    {variant.productName} · {variant.name} ({formatMinorAmount(variant.tierPriceMinor, variant.currency)}) · min {variant.minimumOrderQuantity}
+                    {variant.productName} · {variant.name} (
+                    {formatMinorAmount(variant.tierPriceMinor, variant.currency)}) · min{" "}
+                    {variant.minimumOrderQuantity}
                   </option>
                 ))}
               </select>
@@ -615,13 +682,22 @@ export function B2BPageClient() {
             ) : (
               <div className="space-y-2">
                 {draftItemsHydrated.map((item) => (
-                  <div key={item.variantId} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-neutral-200 p-3">
+                  <div
+                    key={item.variantId}
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-neutral-200 p-3"
+                  >
                     <p className="text-sm text-neutral-800">
                       {item.productName} · {item.variantName} × {item.quantity}
                     </p>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold">{formatMinorAmount(item.tierPriceMinor * item.quantity, item.currency)}</span>
-                      <Button size="sm" variant="ghost" onClick={() => removeDraftItem(item.variantId)}>
+                      <span className="text-sm font-semibold">
+                        {formatMinorAmount(item.tierPriceMinor * item.quantity, item.currency)}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => removeDraftItem(item.variantId)}
+                      >
                         Remove
                       </Button>
                     </div>
@@ -631,8 +707,16 @@ export function B2BPageClient() {
             )}
 
             <div className="grid gap-3 md:grid-cols-2">
-              <Input value={draftPreferredDate} onChange={(event) => setDraftPreferredDate(event.target.value)} placeholder="Preferred delivery date (YYYY-MM-DD)" />
-              <Input value={draftNotes} onChange={(event) => setDraftNotes(event.target.value)} placeholder="Quote notes (warehouses, split delivery, etc.)" />
+              <Input
+                value={draftPreferredDate}
+                onChange={(event) => setDraftPreferredDate(event.target.value)}
+                placeholder="Preferred delivery date (YYYY-MM-DD)"
+              />
+              <Input
+                value={draftNotes}
+                onChange={(event) => setDraftNotes(event.target.value)}
+                placeholder="Quote notes (warehouses, split delivery, etc.)"
+              />
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -647,10 +731,21 @@ export function B2BPageClient() {
             {quotePreview ? (
               <div className="rounded-xl border border-neutral-200 p-3">
                 <p className="text-sm text-neutral-700">
-                  Preview total: <span className="font-semibold">{formatMinorAmount(quotePreview.summary.totalMinor, quotePreview.summary.currency)}</span>
+                  Preview total:{" "}
+                  <span className="font-semibold">
+                    {formatMinorAmount(
+                      quotePreview.summary.totalMinor,
+                      quotePreview.summary.currency,
+                    )}
+                  </span>
                 </p>
                 <p className="text-xs text-neutral-500">
-                  Discount: {formatMinorAmount(quotePreview.summary.discountMinor, quotePreview.summary.currency)} · Estimated fulfillment: {quotePreview.summary.estimatedFulfillmentDays} days
+                  Discount:{" "}
+                  {formatMinorAmount(
+                    quotePreview.summary.discountMinor,
+                    quotePreview.summary.currency,
+                  )}{" "}
+                  · Estimated fulfillment: {quotePreview.summary.estimatedFulfillmentDays} days
                 </p>
               </div>
             ) : null}
@@ -658,7 +753,9 @@ export function B2BPageClient() {
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Quote Requests</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                Quote Requests
+              </p>
               {quotes.length === 0 ? (
                 <p className="text-sm text-neutral-600">No quote requests yet.</p>
               ) : (
@@ -667,13 +764,20 @@ export function B2BPageClient() {
                     <div key={quote.id} className="rounded-xl border border-neutral-200 p-3">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold">{quote.quoteNumber}</p>
-                        <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{quote.status}</p>
+                        <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                          {quote.status}
+                        </p>
                       </div>
                       <p className="text-sm text-neutral-700">
                         {formatMinorAmount(quote.summary.totalMinor, quote.summary.currency)}
                       </p>
-                      {(quote.status === "quoted" || quote.status === "approved") ? (
-                        <Button size="sm" variant="secondary" onClick={() => convertQuoteToOrder(quote.id)} className="mt-2">
+                      {quote.status === "quoted" || quote.status === "approved" ? (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => convertQuoteToOrder(quote.id)}
+                          className="mt-2"
+                        >
                           Convert to Order
                         </Button>
                       ) : null}
@@ -684,7 +788,9 @@ export function B2BPageClient() {
             </Card>
 
             <Card className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Order Tracking</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                Order Tracking
+              </p>
               {orders.length === 0 ? (
                 <p className="text-sm text-neutral-600">No B2B orders yet.</p>
               ) : (
@@ -693,13 +799,19 @@ export function B2BPageClient() {
                     <div key={order.id} className="rounded-xl border border-neutral-200 p-3">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold">{order.orderNumber}</p>
-                        <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{order.status}</p>
+                        <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                          {order.status}
+                        </p>
                       </div>
                       <p className="text-sm text-neutral-700">
-                        {formatMinorAmount(order.summary.totalMinor, order.summary.currency)} · Tracking {order.trackingCode ?? "pending"}
+                        {formatMinorAmount(order.summary.totalMinor, order.summary.currency)} ·
+                        Tracking {order.trackingCode ?? "pending"}
                       </p>
                       <p className="text-xs text-neutral-500">
-                        Expected delivery: {order.expectedDeliveryAt ? new Date(order.expectedDeliveryAt).toLocaleString("en-NG") : "TBD"}
+                        Expected delivery:{" "}
+                        {order.expectedDeliveryAt
+                          ? new Date(order.expectedDeliveryAt).toLocaleString("en-NG")
+                          : "TBD"}
                       </p>
                     </div>
                   ))}
@@ -710,7 +822,9 @@ export function B2BPageClient() {
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Invoices</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                Invoices
+              </p>
               {invoices.length === 0 ? (
                 <p className="text-sm text-neutral-600">No invoices yet.</p>
               ) : (
@@ -719,9 +833,15 @@ export function B2BPageClient() {
                     <div key={invoice.id} className="rounded-xl border border-neutral-200 p-3">
                       <p className="text-sm font-semibold">{invoice.invoiceNumber}</p>
                       <p className="text-sm text-neutral-700">
-                        Amount {formatMinorAmount(invoice.amountMinor, invoice.currency)} · Balance {formatMinorAmount(invoice.balanceMinor, invoice.currency)}
+                        Amount {formatMinorAmount(invoice.amountMinor, invoice.currency)} · Balance{" "}
+                        {formatMinorAmount(invoice.balanceMinor, invoice.currency)}
                       </p>
-                      <Button size="sm" variant="secondary" onClick={() => openInvoiceDownload(invoice.id)} className="mt-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => openInvoiceDownload(invoice.id)}
+                        className="mt-2"
+                      >
                         Download Invoice
                       </Button>
                     </div>
@@ -731,7 +851,9 @@ export function B2BPageClient() {
             </Card>
 
             <Card className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Statements</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                Statements
+              </p>
               {statements.length === 0 ? (
                 <p className="text-sm text-neutral-600">No statements yet.</p>
               ) : (
@@ -744,9 +866,12 @@ export function B2BPageClient() {
                       rel="noreferrer"
                       className="block rounded-xl border border-neutral-200 p-3 transition hover:bg-neutral-100"
                     >
-                      <p className="text-sm font-semibold text-neutral-900">{statement.periodLabel}</p>
+                      <p className="text-sm font-semibold text-neutral-900">
+                        {statement.periodLabel}
+                      </p>
                       <p className="text-xs text-neutral-500">
-                        Billed {formatMinorAmount(statement.totalBilledMinor, statement.currency)} · Paid {formatMinorAmount(statement.totalPaidMinor, statement.currency)}
+                        Billed {formatMinorAmount(statement.totalBilledMinor, statement.currency)} ·
+                        Paid {formatMinorAmount(statement.totalPaidMinor, statement.currency)}
                       </p>
                     </a>
                   ))}
@@ -756,9 +881,15 @@ export function B2BPageClient() {
           </div>
 
           <Card className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">Support</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              Support
+            </p>
             <div className="grid gap-3 md:grid-cols-2">
-              <Input value={ticketSubject} onChange={(event) => setTicketSubject(event.target.value)} placeholder="Subject" />
+              <Input
+                value={ticketSubject}
+                onChange={(event) => setTicketSubject(event.target.value)}
+                placeholder="Subject"
+              />
               <Input
                 value={ticketDescription}
                 onChange={(event) => setTicketDescription(event.target.value)}
@@ -793,7 +924,9 @@ export function B2BPageClient() {
                 <div key={ticket.id} className="rounded-xl border border-neutral-200 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold">{ticket.subject}</p>
-                    <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">{ticket.status}</p>
+                    <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                      {ticket.status}
+                    </p>
                   </div>
                   <p className="text-xs text-neutral-500">
                     {ticket.channel} · {ticket.priority} · assigned {ticket.assignedTo ?? "pending"}

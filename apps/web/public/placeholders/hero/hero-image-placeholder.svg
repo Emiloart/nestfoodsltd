@@ -1,0 +1,16 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#F7EFE3"/>
+  <rect x="52" y="52" width="1096" height="616" rx="30" fill="#E7D2B5"/>
+  <path d="M0 566C134 518 247 508 375 528C493 546 620 598 735 604C861 610 1006 560 1200 469V720H0V566Z" fill="#B36A36" fill-opacity="0.24"/>
+  <ellipse cx="940" cy="158" rx="208" ry="122" fill="#C48844" fill-opacity="0.24"/>
+  <ellipse cx="281" cy="183" rx="166" ry="102" fill="#E8C88F" fill-opacity="0.72"/>
+  <rect x="112" y="124" width="424" height="44" rx="12" fill="#6F4E37" fill-opacity="0.22"/>
+  <rect x="112" y="190" width="506" height="26" rx="8" fill="#6F4E37" fill-opacity="0.18"/>
+  <rect x="112" y="232" width="456" height="26" rx="8" fill="#6F4E37" fill-opacity="0.18"/>
+  <rect x="112" y="320" width="176" height="52" rx="26" fill="#A6632F"/>
+  <rect x="304" y="320" width="176" height="52" rx="26" stroke="#7B5B3D" stroke-width="2"/>
+  <rect x="702" y="122" width="352" height="428" rx="24" fill="#FCF7F0" stroke="#BE9B6B" stroke-width="2"/>
+  <rect x="747" y="181" width="262" height="246" rx="18" fill="#E0A443" fill-opacity="0.18"/>
+  <circle cx="878" cy="305" r="52" fill="#A6632F" fill-opacity="0.3"/>
+  <text x="600" y="628" fill="#6F4E37" font-size="28" text-anchor="middle" font-family="Georgia, serif" letter-spacing="2">HERO IMAGE PLACEHOLDER</text>
+</svg>

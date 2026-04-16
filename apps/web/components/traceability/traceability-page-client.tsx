@@ -1,5 +1,9 @@
 "use client";
 
+// Legacy public module retained temporarily while the website migrates to a
+// corporate manufacturer scope. The public /traceability route now redirects
+// to /quality and this component should not be reintroduced into the shell.
+
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -78,8 +82,8 @@ export function TraceabilityPageClient() {
           Quality & Traceability
         </h1>
         <p className="text-sm text-neutral-600">
-          Verify bread batch sourcing, production, packaging, certification, and dispatch
-          milestones from a single lookup.
+          Verify bread batch sourcing, production, packaging, certification, and dispatch milestones
+          from a single lookup.
         </p>
       </div>
 
@@ -150,9 +154,7 @@ export function TraceabilityPageClient() {
               Certifications
             </p>
             {batch.certifications.length === 0 ? (
-              <p className="text-sm text-neutral-600">
-                No certifications listed.
-              </p>
+              <p className="text-sm text-neutral-600">No certifications listed.</p>
             ) : (
               <div className="grid gap-3 md:grid-cols-2">
                 {batch.certifications.map((cert) => (
@@ -160,9 +162,7 @@ export function TraceabilityPageClient() {
                     key={cert.id}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                   >
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {cert.name}
-                    </p>
+                    <p className="text-sm font-semibold text-neutral-900">{cert.name}</p>
                     <p className="text-xs text-neutral-500">
                       {cert.issuer} · {cert.certificateCode}
                     </p>
@@ -186,16 +186,12 @@ export function TraceabilityPageClient() {
                   className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {event.title}
-                    </p>
+                    <p className="text-sm font-semibold text-neutral-900">{event.title}</p>
                     <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                       {event.stage}
                     </p>
                   </div>
-                  <p className="text-sm text-neutral-600">
-                    {event.description}
-                  </p>
+                  <p className="text-sm text-neutral-600">{event.description}</p>
                   <p className="text-xs text-neutral-500">
                     {event.location} · {event.startedAt}
                     {event.completedAt ? ` → ${event.completedAt}` : ""}
@@ -222,9 +218,7 @@ export function TraceabilityPageClient() {
               }}
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3 text-left transition hover:-translate-y-0.5 hover:brightness-105"
             >
-              <p className="text-sm font-semibold text-neutral-900">
-                {entry.batchCode}
-              </p>
+              <p className="text-sm font-semibold text-neutral-900">{entry.batchCode}</p>
               <p className="text-xs text-neutral-500">{entry.productName}</p>
             </button>
           ))}

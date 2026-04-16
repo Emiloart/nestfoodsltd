@@ -6,7 +6,12 @@ import { hasAdminPermission, resolveAdminRoleFromRequest } from "@/lib/admin/aut
 import { logAuditEvent } from "@/lib/audit/service";
 import { getCmsPage, updateCmsPage } from "@/lib/cms/service";
 import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
-import { CMS_PAGE_SLUGS, type CmsPageSlug, type CmsPublicationStatus } from "@/lib/cms/types";
+import {
+  CMS_PAGE_SLUGS,
+  type CmsHeroMediaKind,
+  type CmsPageSlug,
+  type CmsPublicationStatus,
+} from "@/lib/cms/types";
 
 const updatePageSchema = z.object({
   title: z.string().trim().min(2).max(120),
@@ -18,7 +23,10 @@ const updatePageSchema = z.object({
   ctaPrimaryHref: z.string().trim().max(200).optional(),
   ctaSecondaryLabel: z.string().trim().max(50).optional(),
   ctaSecondaryHref: z.string().trim().max(200).optional(),
+  heroMediaKind: z.enum(["image", "video"]).optional(),
   heroImageUrl: z.string().trim().max(200).optional(),
+  heroVideoUrl: z.string().trim().max(260).optional(),
+  heroVideoPosterUrl: z.string().trim().max(260).optional(),
   logoImageUrl: z.string().trim().max(200).optional(),
   seoTitle: z.string().trim().max(160).optional(),
   seoDescription: z.string().trim().max(220).optional(),
@@ -56,6 +64,17 @@ function normalizePublishAt(status: CmsPublicationStatus, value?: string) {
     return new Date(Date.now() + 15 * 60 * 1000).toISOString();
   }
   return parsedDate.toISOString();
+}
+
+function normalizeHeroMediaKind(input: {
+  heroMediaKind?: CmsHeroMediaKind;
+  heroVideoUrl?: string;
+}) {
+  if (input.heroMediaKind !== "video") {
+    return "image" as const;
+  }
+
+  return normalizeOptional(input.heroVideoUrl) ? "video" : "image";
 }
 
 function logCmsAuditEvent(
@@ -187,9 +206,12 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     return NextResponse.json({ error: "Forbidden: missing cms.pages.publish" }, { status: 403 });
   }
 
+  const heroMediaKind = normalizeHeroMediaKind(validated.data);
+
   const updated = await updateCmsPage(
     slug,
     {
+      heroMediaKind,
       title: validated.data.title,
       headline: validated.data.headline,
       description: validated.data.description,
@@ -200,6 +222,12 @@ export async function PUT(request: NextRequest, context: RouteContext) {
       ctaSecondaryLabel: normalizeOptional(validated.data.ctaSecondaryLabel),
       ctaSecondaryHref: normalizeOptional(validated.data.ctaSecondaryHref),
       heroImageUrl: normalizeOptional(validated.data.heroImageUrl),
+      heroVideoUrl:
+        heroMediaKind === "video" ? normalizeOptional(validated.data.heroVideoUrl) : undefined,
+      heroVideoPosterUrl:
+        heroMediaKind === "video"
+          ? normalizeOptional(validated.data.heroVideoPosterUrl)
+          : undefined,
       logoImageUrl: normalizeOptional(validated.data.logoImageUrl),
       seo: {
         title: normalizeOptional(validated.data.seoTitle),
