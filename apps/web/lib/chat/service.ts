@@ -115,14 +115,14 @@ export type CaptureChatLeadResult = {
 
 const defaultQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
-  { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+  { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
   { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
+  { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
-  { label: "Quality Standards", href: "/quality" },
+  { label: "About", href: "/about" },
   { label: "Contact Team", href: "/contact" },
 ];
 
@@ -587,7 +587,7 @@ async function buildGreetingReply(): Promise<ChatReply> {
     intent: "greeting",
     confidence: 0.96,
     answer:
-      "Hi. I can help with products, allergen guidance, quality standards, distributor enquiries, careers, and how to contact Nest Foods.",
+      "Hi. I can help with products, allergen guidance, company information, careers, and how to contact Nest Foods.",
     quickActions: defaultQuickActions,
     suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: false,
@@ -686,7 +686,7 @@ async function buildProductSearchReply(
       .map((variant) => variant.sizeLabel ?? variant.name)
       .filter(Boolean)
       .join(", ");
-    return `• ${product.name} — ${product.category} · pack sizes ${packSizes || "available on request"} · shelf life ${product.shelfLifeDays} days`;
+    return `• ${product.name} — ${product.category} · pack sizes ${packSizes || "available on request"}`;
   });
 
   const answerLines = [
@@ -702,7 +702,7 @@ async function buildProductSearchReply(
       { label: "Category filter", prompt: "Filter these by category." },
       { label: "Allergen filter", prompt: "Help me filter these by allergens." },
       { label: "Make enquiry", prompt: "Help me contact Nest Foods about these products." },
-      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       {
@@ -820,12 +820,12 @@ async function buildRecipeReply(message: string, context: ConversationContext): 
     intent: "recipe_help",
     confidence: 0.78,
     answer:
-      "Nest Foods no longer presents recipe guidance as a core public feature on this corporate site. I can still help you review products, ingredients, allergen information, quality standards, and contact routes." +
+      "Nest Foods no longer presents recipe guidance as a core public feature on this corporate site. I can still help you review products, ingredients, allergen information, company information, and contact routes." +
       ingredientHint,
     quickActions: normalizeQuickActions([
       { label: "View products", prompt: "Show me the Nest Foods product range." },
       { label: "Allergen help", prompt: "Help me filter products by allergens." },
-      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
       { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
@@ -950,15 +950,15 @@ async function buildOrderStatusReply(
     intent: "order_status",
     confidence: 0.88,
     answer:
-      "Nest Foods does not provide public online ordering or self-serve order tracking on this website. For delivery follow-up, distributor coordination, or product support, contact the team directly.",
+      "Nest Foods does not provide public online ordering or self-serve order tracking on this website. For any follow-up request, contact the team directly.",
     quickActions: normalizeQuickActions([
       { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
       { label: "Products", prompt: "Show me the Nest Foods product range." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Contact Team", href: "/contact" },
-      { label: "Distributor Enquiry", href: "/distributor-enquiry" },
+      { label: "About", href: "/about" },
       { label: "Products", href: "/shop" },
     ]),
     handoffSuggested: true,
@@ -995,15 +995,15 @@ async function buildTraceabilityReply(
   void context;
   const traceabilityReplyByTopic: Record<TraceabilityReplyTopic, string> = {
     summary:
-      "Nest Foods no longer exposes public batch traceability on this corporate site. Use the quality standards page for a high-level overview or contact the team for product enquiries.",
+      "Nest Foods no longer exposes public batch traceability on this corporate site. Use the contact page if you need help with a product enquiry.",
     timeline:
-      "Public batch timelines are not part of the current Nest Foods website. The quality standards page summarizes production expectations at a high level.",
+      "Public batch timelines are not part of the current Nest Foods website. Contact the team if you need product guidance.",
     certifications:
-      "Certification and quality discussions now sit under the broader quality standards narrative rather than a public batch lookup experience.",
+      "Certification and quality discussions are handled directly by the Nest Foods team rather than through a public batch lookup experience.",
     source:
-      "Ingredient sourcing and production quality are presented as corporate quality standards rather than a public traceability tool.",
+      "Ingredient sourcing and production quality are not exposed through a public traceability tool on this website.",
     processing:
-      "Processing detail is summarized through the public quality standards page rather than a batch-by-batch lookup flow.",
+      "Processing detail is not exposed through a public batch-by-batch lookup flow on this website.",
     dates:
       "Production dates and batch histories are not exposed publicly on this corporate site. Contact the team if you need product guidance.",
   };
@@ -1013,13 +1013,13 @@ async function buildTraceabilityReply(
     confidence: 0.9,
     answer: traceabilityReplyByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
       { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
       { label: "Products", prompt: "Show me the Nest Foods product range." },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Quality Standards", href: "/quality" },
       { label: "Contact Team", href: "/contact" },
+      { label: "About", href: "/about" },
     ]),
     handoffSuggested: true,
     handoffReason: "Public batch traceability is no longer part of the corporate site.",
@@ -1053,20 +1053,17 @@ async function buildB2BReply(message: string): Promise<ChatReply> {
   const topic = resolveB2BReplyTopic(message);
 
   const answerByTopic: Record<B2BReplyTopic, string> = {
-    overview:
-      "Nest Foods now handles distributor interest through a lightweight public enquiry route rather than a self-serve portal.",
+    overview: "Nest Foods does not expose partner or portal workflows on this public website.",
     quote:
-      "Distributor conversations now start with a simple enquiry form covering company details, operating region, and product interest.",
-    approval:
-      "The Nest Foods team reviews distributor introductions directly and follows up on fit, next steps, and contact routing.",
+      "Bulk quote and partner onboarding workflows are not part of the public website. Use the contact route if you need help.",
+    approval: "Public approval or partner onboarding workflows are not part of this website.",
     pricing:
-      "Public tiered pricing and quote tooling are not part of this corporate site. Use the distributor enquiry route to start a conversation.",
+      "Public tiered pricing and quote tooling are not part of this corporate site. Use the contact route to start a conversation.",
     invoice:
       "Invoices and operational account workflows are not exposed through the public website. Contact the team directly if you need help.",
-    statement:
-      "Statements and account history are not presented through the public website. Distributor conversations begin with the enquiry route.",
+    statement: "Statements and account history are not presented through the public website.",
     support:
-      "Distributor support begins with the public enquiry route or direct contact with the Nest Foods team.",
+      "Direct contact with the Nest Foods team is the correct path for follow-up on this public website.",
   };
 
   return {
@@ -1074,13 +1071,13 @@ async function buildB2BReply(message: string): Promise<ChatReply> {
     confidence: 0.9,
     answer: answerByTopic[topic],
     quickActions: normalizeQuickActions([
-      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
       { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
       { label: "Products", prompt: "Show me the Nest Foods product range." },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Distributor Enquiry", href: "/distributor-enquiry" },
-      { label: "Contact Sales", href: "/contact" },
+      { label: "Contact Team", href: "/contact" },
+      { label: "About", href: "/about" },
     ]),
     handoffSuggested: false,
   };
@@ -1099,18 +1096,18 @@ async function buildUnknownReply(context?: ConversationContext): Promise<ChatRep
     intent: "unknown",
     confidence: 0.45,
     answer:
-      "I do not have a strong match for that request yet. I can still help with products, allergen guidance, quality standards, distributor enquiries, careers, and contact routes.",
+      "I do not have a strong match for that request yet. I can still help with products, allergen guidance, company information, careers, and contact routes.",
     quickActions: normalizeQuickActions([
       ...(contextualAction ? [contextualAction] : []),
       { label: "Product help", prompt: "Help me find the right products." },
-      { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
-      { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
       { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
+      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Contact Team", href: "/contact" },
       { label: "Products", href: "/shop" },
-      { label: "Quality Standards", href: "/quality" },
+      { label: "About", href: "/about" },
     ]),
     handoffSuggested: true,
     handoffReason: "Low answer confidence for the current request.",

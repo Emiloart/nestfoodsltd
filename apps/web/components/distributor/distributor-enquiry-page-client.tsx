@@ -1,4 +1,8 @@
 "use client";
+
+// Legacy public enquiry module retained temporarily while the corporate site
+// converges on the primary contact route. The public /distributor-enquiry path
+// now redirects to /contact.
 import { FormEvent, useState } from "react";
 
 import { Card } from "@/components/ui/card";

@@ -7,9 +7,7 @@ Provide a grounded assistant for Nest Foods that supports:
 - company information
 - product information
 - allergen guidance
-- quality standards overview
 - contact and enquiry guidance
-- distributor interest capture
 - careers guidance
 
 ## Out of Scope
@@ -24,7 +22,7 @@ Provide a grounded assistant for Nest Foods that supports:
 
 - Floating widget mounted globally from `apps/web/components/providers.tsx`
 - Component: `apps/web/components/chat/chat-agent-widget.tsx`
-- Quick prompts and suggested links focused on products, quality standards, contact, distributor enquiry, and careers
+- Quick prompts and suggested links focused on products, company information, contact, and careers
 - Human handoff form when confidence is low or direct follow-up is needed
 
 ## Backend
@@ -49,6 +47,6 @@ Provide a grounded assistant for Nest Foods that supports:
 
 ## Guardrails
 
-- If a visitor asks about orders, traceability, or portal workflows, the assistant should explain that those are not part of the public corporate site and point the visitor to the appropriate contact route.
+- If a visitor asks about orders, traceability, or portal workflows, the assistant should explain that those are not part of the public corporate site and point the visitor to the contact route.
 - The assistant should not imply online purchase, batch lookup, quote tooling, or account workflows.
-- Public suggestions should stay within products, quality standards, contact, distributor enquiry, careers, and general company information.
+- Public suggestions should stay within products, contact, careers, and general company information.

@@ -5,7 +5,6 @@
 - `/` Home
 - `/shop` Products
 - `/products/[slug]` Product details
-- `/quality` Quality Standards
 - `/about` About
 - `/vision` Vision and mission
 - `/careers` Careers
@@ -13,14 +12,15 @@
 
 ## Supporting Public Routes
 
-- `/distributor-enquiry` Distributor enquiry form
 - `/privacy`
 - `/terms`
 
 ## Redirected Legacy Routes
 
-- `/traceability` redirects to `/quality`
-- `/b2b` redirects to `/distributor-enquiry`
+- `/quality` redirects to `/#production-standards`
+- `/traceability` redirects to `/#production-standards`
+- `/distributor-enquiry` redirects to `/contact`
+- `/b2b` redirects to `/contact`
 
 ## Admin / Internal Surface
 

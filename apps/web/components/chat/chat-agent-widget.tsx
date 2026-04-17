@@ -44,14 +44,14 @@ const conversationStorageKey = "nestfoodsltd_chat_conversation_id";
 
 const initialQuickActions: ChatQuickAction[] = [
   { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "Quality standards", prompt: "Tell me about Nest Foods quality standards." },
-  { label: "Distributor enquiry", prompt: "How do I make a distributor enquiry?" },
+  { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
+  { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
   { label: "Contact Nest Foods", prompt: "Help me contact the Nest Foods team." },
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
-  { label: "Quality Standards", href: "/quality" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -125,7 +125,7 @@ export function ChatAgentWidget() {
       id: "welcome",
       role: "assistant",
       content:
-        "I’m Nest Agent. Ask me about products, quality standards, distributor enquiries, careers, or how to reach the team.",
+        "I’m Nest Agent. Ask me about products, Nest Foods, careers, or how to reach the team.",
       createdAt: new Date().toISOString(),
     },
   ]);
@@ -289,7 +289,7 @@ export function ChatAgentWidget() {
         id: "welcome",
         role: "assistant",
         content:
-          "I’m Nest Agent. Ask me about products, quality standards, distributor enquiries, careers, or how to reach the team.",
+          "I’m Nest Agent. Ask me about products, Nest Foods, careers, or how to reach the team.",
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -458,7 +458,7 @@ export function ChatAgentWidget() {
               <Input
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Ask about products, quality standards, careers, or distributor enquiries..."
+                placeholder="Ask about products, Nest Foods, careers, or how to reach the team..."
                 disabled={sending}
               />
               <Button size="sm" type="submit" disabled={!canSend}>

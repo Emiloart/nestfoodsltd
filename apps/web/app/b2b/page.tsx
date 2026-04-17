@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function B2BPage() {
-  permanentRedirect("/distributor-enquiry");
+  permanentRedirect("/contact");
 }

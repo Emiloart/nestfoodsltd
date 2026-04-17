@@ -2,7 +2,8 @@
 
 // Legacy public module retained temporarily while the website migrates to a
 // corporate manufacturer scope. The public /traceability route now redirects
-// to /quality and this component should not be reintroduced into the shell.
+// to the homepage production-standards section and this component should not be
+// reintroduced into the shell.
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

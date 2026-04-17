@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function TraceabilityPage() {
-  permanentRedirect("/quality");
+  permanentRedirect("/#production-standards");
 }

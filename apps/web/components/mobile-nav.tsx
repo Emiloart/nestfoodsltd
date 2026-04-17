@@ -10,7 +10,6 @@ import { buttonClassName } from "@/components/ui/button";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Products" },
-  { href: "/quality", label: "Quality Standards" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },
@@ -18,8 +17,8 @@ const navItems = [
 ];
 
 const quickActions = [
-  { href: "/contact", label: "Contact Team", variant: "primary" as const },
-  { href: "/distributor-enquiry", label: "Distributor Enquiry", variant: "secondary" as const },
+  { href: "/shop", label: "View Products", variant: "secondary" as const },
+  { href: "/contact", label: "Make Enquiry", variant: "primary" as const },
 ];
 
 const resourceLinks = [
@@ -103,7 +102,7 @@ export function MobileNav() {
               aria-label="Mobile navigation"
               className="section-frame fixed inset-x-3 top-[5.5rem] z-50 max-h-[calc(100vh-6.5rem)] overflow-auto p-4"
             >
-              <p className="section-kicker">Nest Foods Navigation</p>
+              <p className="section-kicker">Nest Foods</p>
               <div className="mt-4 grid gap-2">
                 {navItems.map((item) => (
                   <Link
@@ -121,7 +120,7 @@ export function MobileNav() {
               </div>
 
               <div className="mt-5">
-                <p className="section-kicker">Enquiries</p>
+                <p className="section-kicker">Quick Actions</p>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {quickActions.map((item) => (
                     <Link

@@ -13,6 +13,11 @@ type HomeProductRangeSectionProps = {
 };
 
 function ProductPreviewCard({ product }: { product: CommerceProduct }) {
+  const packSizes = product.variants
+    .map((variant) => variant.sizeLabel ?? variant.name)
+    .filter(Boolean)
+    .join(", ");
+
   return (
     <Card className="h-full space-y-4">
       <Link href={`/products/${product.slug}`} className="block">
@@ -29,38 +34,22 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
         <p className="pretty-text mt-3 line-clamp-3 text-sm leading-7 text-neutral-600 md:line-clamp-none">
           {product.shortDescription}
         </p>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Shelf life</p>
-          <p className="mt-2 text-sm font-medium text-neutral-900">{product.shelfLifeDays} days</p>
-        </div>
-        <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3.5 py-3.5">
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Pack formats</p>
-          <p className="mt-2 text-sm font-medium text-neutral-900">
-            {product.variants.length} option{product.variants.length === 1 ? "" : "s"}
-          </p>
-        </div>
+        <p className="mt-3 text-xs text-neutral-500">
+          Pack sizes: {packSizes || "Available on request"}
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {product.ingredients.slice(0, 2).map((ingredient) => (
-          <span
-            key={ingredient}
-            className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-neutral-600"
-          >
-            {ingredient}
-          </span>
-        ))}
+        <Link
+          href={`/products/${product.slug}`}
+          className={buttonClassName({ variant: "secondary", size: "sm" })}
+        >
+          View Product
+        </Link>
+        <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
+          Make Enquiry
+        </Link>
       </div>
-
-      <Link
-        href={`/products/${product.slug}`}
-        className={buttonClassName({ variant: "secondary", size: "sm" })}
-      >
-        View Product
-      </Link>
     </Card>
   );
 }

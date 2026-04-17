@@ -1,8 +1,8 @@
 "use client";
 
 // Legacy portal module retained temporarily while the website migrates to a
-// lightweight distributor-enquiry model. The public /b2b route now redirects
-// to /distributor-enquiry and this component should stay out of the shell.
+// corporate manufacturer scope. The public /b2b route now redirects to
+// /contact and this component should stay out of the shell.
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 

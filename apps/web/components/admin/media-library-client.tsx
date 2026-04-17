@@ -24,9 +24,10 @@ type MediaAssetResponse = {
 
 type MediaFormState = {
   label: string;
-  kind: "image";
+  kind: "image" | "video";
   url: string;
   altText: string;
+  posterImageUrl: string;
   folder: string;
 };
 
@@ -35,15 +36,17 @@ const emptyForm: MediaFormState = {
   kind: "image",
   url: "/placeholders/section-image-placeholder.svg",
   altText: "",
+  posterImageUrl: "",
   folder: "general",
 };
 
 function toForm(asset: CmsMediaAsset): MediaFormState {
   return {
     label: asset.label,
-    kind: "image",
+    kind: asset.kind,
     url: asset.url,
     altText: asset.altText ?? "",
+    posterImageUrl: asset.posterImageUrl ?? "",
     folder: asset.folder,
   };
 }
@@ -51,9 +54,10 @@ function toForm(asset: CmsMediaAsset): MediaFormState {
 function buildPayload(form: MediaFormState) {
   return {
     label: form.label.trim(),
-    kind: "image" as const,
+    kind: form.kind,
     url: form.url.trim(),
     altText: form.altText.trim() || undefined,
+    posterImageUrl: form.posterImageUrl.trim() || undefined,
     folder: form.folder.trim(),
   };
 }
@@ -209,8 +213,7 @@ export function MediaLibraryClient() {
           Media Library
         </h1>
         <p className="text-sm text-neutral-600">
-          Role: <span className="font-semibold">{role}</span>. Manage image assets and inspect usage
-          references.
+          Role: <span className="font-semibold">{role}</span>. Manage image and video assets and inspect usage references.
         </p>
       </div>
 
@@ -238,6 +241,10 @@ export function MediaLibraryClient() {
           {selectedAsset ? (
             <div className="space-y-3 rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>ID: {selectedAsset.id}</p>
+              <p>Kind: {selectedAsset.kind}</p>
+              <p>Folder: {selectedAsset.folder}</p>
+              <p>URL: {selectedAsset.url}</p>
+              {selectedAsset.posterImageUrl ? <p>Poster: {selectedAsset.posterImageUrl}</p> : null}
               <p>Updated: {selectedAsset.updatedAt}</p>
               <p className="font-semibold text-neutral-700">Usage References</p>
               {selectedAsset.usageReferences.length > 0 ? (
@@ -265,6 +272,22 @@ export function MediaLibraryClient() {
             Media Form
           </p>
           <div className="grid gap-3 md:grid-cols-2">
+            <select
+              value={form.kind}
+              onChange={(event) =>
+                updateForm({
+                  kind: event.target.value as MediaFormState["kind"],
+                  url:
+                    event.target.value === "video" && form.url.startsWith("/placeholders/")
+                      ? "/media/home/hero/hero-video.mp4"
+                      : form.url,
+                })
+              }
+              className="h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
+            >
+              <option value="image">Image</option>
+              <option value="video">Video</option>
+            </select>
             <Input
               value={form.label}
               onChange={(event) => updateForm({ label: event.target.value })}
@@ -280,8 +303,14 @@ export function MediaLibraryClient() {
               onChange={(event) => updateForm({ url: event.target.value })}
               placeholder="Asset URL"
             />
-            <Input value={form.kind} disabled />
           </div>
+          {form.kind === "video" ? (
+            <Input
+              value={form.posterImageUrl}
+              onChange={(event) => updateForm({ posterImageUrl: event.target.value })}
+              placeholder="Poster image URL (optional)"
+            />
+          ) : null}
           <Input
             value={form.altText}
             onChange={(event) => updateForm({ altText: event.target.value })}

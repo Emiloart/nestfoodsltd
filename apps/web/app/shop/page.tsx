@@ -53,8 +53,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             Need guidance?
           </p>
           <p className="text-sm text-neutral-600">
-            Contact Nest Foods for product questions, pack format guidance, or distributor
-            introductions.
+            Contact Nest Foods for product questions, pack format guidance, or general enquiries.
           </p>
           <Link href="/contact" className={buttonClassName({ variant: "secondary", size: "sm" })}>
             Contact Team
@@ -140,17 +139,6 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <p className="text-sm text-neutral-600">{product.shortDescription}</p>
                 <p className="text-xs text-neutral-500">
                   Pack sizes: {packSizes || "Available on request"}
-                </p>
-                <p className="text-xs text-neutral-500">
-                  Key ingredients: {product.ingredients.slice(0, 3).join(", ")}
-                </p>
-                <p className="text-xs text-neutral-500">
-                  Formats: {product.variants.length} option
-                  {product.variants.length === 1 ? "" : "s"}
-                </p>
-                <p className="text-xs text-neutral-500">Shelf life: {product.shelfLifeDays} days</p>
-                <p className="text-xs text-neutral-500">
-                  Allergens: {product.allergens.join(", ")}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">

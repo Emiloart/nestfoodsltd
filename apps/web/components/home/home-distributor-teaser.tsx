@@ -2,6 +2,10 @@ import Link from "next/link";
 
 import { buttonClassName } from "@/components/ui/button";
 
+// Legacy homepage section retained temporarily for migration safety. The
+// corporate homepage no longer mounts this section and distributor-first
+// messaging should not return to the public shell.
+
 const partnerHighlights = [
   "Distributor introductions",
   "Product range discussions",

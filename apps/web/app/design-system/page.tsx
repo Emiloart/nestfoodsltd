@@ -23,22 +23,28 @@ const colorTokens = [
     className: "bg-[color:var(--brand-2)] text-white",
   },
   {
-    name: "Warm Gold",
-    role: "Primary CTA fill and high-contrast action accent.",
+    name: "Accent Yellow",
+    role: "Primary CTA fill and selective attention accent.",
     hex: "#F4E409",
-    className: "bg-[color:var(--brand-3)] text-[color:var(--action-text)]",
+    className: "bg-[color:var(--action-1)] text-[color:var(--action-text)]",
   },
   {
-    name: "Gold Ochre",
-    role: "Secondary accent for restrained highlights and data emphasis.",
+    name: "Support Gold",
+    role: "Secondary accent for restrained highlights, labels, and supporting emphasis.",
     hex: "#EEBA0B",
     className: "bg-[color:var(--brand-4)] text-[color:var(--action-text)]",
   },
   {
-    name: "Warm Neutral",
-    role: "Primary page canvas and card balance tone.",
-    hex: "#FAF6EF",
+    name: "Milk Canvas",
+    role: "Primary page background for light, food-friendly section rhythm.",
+    hex: "#F5EFE6",
     className: "bg-[color:var(--surface)] text-[color:var(--foreground)]",
+  },
+  {
+    name: "Warm White",
+    role: "Elevated card and form surface that keeps the shared UI breathable.",
+    hex: "#FCF7F0",
+    className: "bg-[color:var(--surface-elevated)] text-[color:var(--foreground)]",
   },
 ];
 
@@ -83,8 +89,9 @@ export default function DesignSystemPage() {
           Nest Foods UI Foundations
         </h1>
         <p className="max-w-3xl text-sm leading-7 text-neutral-600">
-          A restrained purple-gold corporate system built for a food manufacturer site: flat
-          surfaces, warm neutrals, selective action color, and structured editorial spacing.
+          A restrained purple-and-gold manufacturer system built on milk and white surfaces. The
+          same token layer drives the public website and the admin CMS, so shell color stays
+          branded while forms and cards remain light.
         </p>
       </div>
 
@@ -96,7 +103,7 @@ export default function DesignSystemPage() {
               Brand palette
             </h2>
           </div>
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
             {colorTokens.map((token) => (
               <div key={token.name} className="space-y-3">
                 <div className={`rounded-[1.4rem] px-4 py-10 shadow-[0_16px_34px_rgba(46,18,69,0.12)] ${token.className}`}>
@@ -125,13 +132,13 @@ export default function DesignSystemPage() {
           <div className="brand-shell rounded-[1.75rem] border p-5">
             <div className="flex items-center justify-between gap-3 rounded-[1.1rem] border border-white/10 bg-white/6 px-4 py-3">
               <div>
-                <p className="section-kicker text-[color:var(--brand-3)]">Nest Foods Ltd</p>
+                <p className="section-kicker text-[color:var(--brand-4)]">Nest Foods Ltd</p>
                 <p className="text-sm text-white">Premium bread manufacturing.</p>
               </div>
-              <Button size="sm">Distributor Portal</Button>
+              <Button size="sm">Make Enquiry</Button>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
-              {["Products", "Traceability", "About", "Contact"].map((item) => (
+              {["Products", "About", "Careers", "Contact"].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/78"
@@ -187,8 +194,8 @@ export default function DesignSystemPage() {
             </Button>
           </div>
           <p className="text-sm leading-7 text-neutral-600">
-            Gold is reserved for the most important actions. Purple fill is available for brand-led
-            emphasis. Neutral buttons should support navigation and low-pressure actions.
+            Milk and white should dominate the viewport. Yellow is reserved for the main action,
+            while purple fill stays limited to brand-led emphasis and shell moments.
           </p>
         </Card>
       </div>
@@ -202,22 +209,20 @@ export default function DesignSystemPage() {
             </h2>
           </div>
           <div className="space-y-3">
-            <Input placeholder="Search products, ingredients, or certifications..." />
+            <Input placeholder="Search products, pages, or CMS content..." />
             <select className="field-control h-11 px-3 text-sm">
-              <option>Distributor region</option>
-              <option>South East</option>
-              <option>South South</option>
+              <option>Pack format</option>
+              <option>Large loaf</option>
+              <option>Family sliced</option>
             </select>
             <textarea
               className="field-control min-h-28 px-4 py-3 text-sm"
-              placeholder="Share expected volume, route, and packaging requirements."
+              placeholder="Capture a product enquiry, editorial note, or CMS handoff."
             />
           </div>
           <div className="flex flex-wrap gap-2">
             <Badge>Premium</Badge>
-            <Badge className="text-[color:var(--brand-5)]">
-              Hygienic Production
-            </Badge>
+            <Badge className="text-[color:var(--brand-1)]">Controlled Production</Badge>
           </div>
         </Card>
 
@@ -296,8 +301,8 @@ export default function DesignSystemPage() {
 
       <Modal open={open} onClose={() => setOpen(false)} title="Nest Foods UI System">
         <p className="text-sm leading-7 text-neutral-600">
-          The brand system is tuned for a manufacturer identity: structural purple, selective gold,
-          warm neutrals, flat surfaces, and direct action language.
+          The shared system is tuned for a manufacturer identity: structural purple shells,
+          milk-first surfaces, restrained gold support, and direct action language.
         </p>
       </Modal>
     </section>

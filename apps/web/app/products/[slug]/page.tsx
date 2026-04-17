@@ -90,13 +90,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </p>
             <div className="flex flex-wrap gap-2">
               <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
-                Enquire About This Product
-              </Link>
-              <Link
-                href="/distributor-enquiry"
-                className={buttonClassName({ variant: "secondary", size: "sm" })}
-              >
-                Distributor Enquiry
+                Make Enquiry
               </Link>
             </div>
           </div>
@@ -134,7 +128,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 Product specifications
               </p>
               <p className="text-sm text-neutral-700">Category: {product.category}</p>
-              <p className="text-sm text-neutral-700">Shelf life: {product.shelfLifeDays} days</p>
               <p className="text-sm text-neutral-700">
                 Pack sizes: {packSizes || "Available on request"}
               </p>
@@ -144,21 +137,14 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 Product enquiries
               </p>
               <p className="text-sm text-neutral-700">
-                Use the contact route for product questions, packaging needs, and distributor
-                discussions.
+                Use the contact route for product questions, packaging needs, and general follow-up.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Link
                   href="/contact"
-                  className={buttonClassName({ variant: "secondary", size: "sm" })}
-                >
-                  Contact Team
-                </Link>
-                <Link
-                  href="/distributor-enquiry"
                   className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
-                  Distributor Enquiry
+                  Make Enquiry
                 </Link>
               </div>
             </Card>

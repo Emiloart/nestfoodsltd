@@ -10,8 +10,8 @@ const trustItems = [
     description: "Clean workflow, disciplined QA, and safe handling.",
   },
   {
-    title: "Reliable Distributor Supply",
-    description: "Regional supply readiness for partner conversations.",
+    title: "Reliable Daily Output",
+    description: "Consistent production routines support dependable bread availability.",
   },
   {
     title: "Premium Ingredients",
@@ -23,12 +23,8 @@ export function HomeTrustStrip() {
   const slides = trustItems.map((item) => (
     <div key={item.title} className="section-frame px-4 py-4.5 sm:px-5">
       <p className="section-kicker">Trust Signal</p>
-      <h2 className="mt-3 text-lg font-semibold text-neutral-900">
-        {item.title}
-      </h2>
-      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">
-        {item.description}
-      </p>
+      <h2 className="mt-3 text-lg font-semibold text-neutral-900">{item.title}</h2>
+      <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">{item.description}</p>
     </div>
   ));
 

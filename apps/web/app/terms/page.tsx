@@ -3,8 +3,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
   title: "Terms of Service",
-  description:
-    "Terms covering website use, product information, enquiries, and partner communications.",
+  description: "Terms covering website use, product information, and enquiries.",
   path: "/terms",
 });
 

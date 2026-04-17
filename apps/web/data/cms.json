@@ -9,15 +9,15 @@
       "publishAt": "2026-03-23T14:02:46.068Z",
       "ctaPrimaryLabel": "Explore Products",
       "ctaPrimaryHref": "/shop",
-      "ctaSecondaryLabel": "Quality Standards",
-      "ctaSecondaryHref": "/quality",
+      "ctaSecondaryLabel": "Contact Team",
+      "ctaSecondaryHref": "/contact",
       "heroMediaKind": "image",
       "heroImageUrl": "/placeholders/hero/hero-image-placeholder.svg",
       "heroVideoPosterUrl": "/placeholders/hero/hero-video-poster-placeholder.svg",
       "logoImageUrl": "/brand/logos/logo-primary.svg",
       "seo": {
         "title": "Nest Foods Ltd | Premium Bread Manufacturer",
-        "description": "Premium bread manufacturing, production standards, and product information for communities and partners across Africa.",
+        "description": "Premium bread manufacturing, production standards, and product information for communities across Africa.",
         "ogImageUrl": "/placeholders/hero/hero-image-placeholder.svg"
       },
       "updatedAt": "2026-03-23T14:02:46.068Z",
@@ -62,8 +62,8 @@
     "contact": {
       "slug": "contact",
       "title": "Contact & Locations",
-      "headline": "Speak with Nest Foods teams about products, partnerships, and production questions.",
-      "description": "Use this page for office details, product enquiries, distributor introductions, and direct contact with Nest Foods teams.",
+      "headline": "Speak with Nest Foods teams about products, company details, and enquiries.",
+      "description": "Use this page for office details, product enquiries, careers follow-up, and direct contact with Nest Foods teams.",
       "status": "published",
       "publishAt": "2026-03-23T14:02:46.068Z",
       "heroMediaKind": "image",
@@ -71,7 +71,7 @@
       "logoImageUrl": "/brand/logos/logo-primary.svg",
       "seo": {
         "title": "Contact Nest Foods Ltd",
-        "description": "Reach Nest Foods Ltd teams and offices for enquiries, support, and partnerships.",
+        "description": "Reach Nest Foods Ltd teams and offices for enquiries and support.",
         "ogImageUrl": "/placeholders/sections/section-image-placeholder.svg"
       },
       "updatedAt": "2026-03-23T14:02:46.068Z",

@@ -3,9 +3,11 @@ import Link from "next/link";
 import { buttonClassName } from "./ui/button";
 
 const socialPlaceholders = [
-  "Facebook placeholder",
-  "Instagram placeholder",
-  "LinkedIn placeholder",
+  "Facebook",
+  "X",
+  "Instagram",
+  "TikTok",
+  "YouTube",
 ];
 
 const footerGroups = [
@@ -14,22 +16,19 @@ const footerGroups = [
     links: [
       { href: "/about", label: "About" },
       { href: "/vision", label: "Vision" },
-      { href: "/careers", label: "Careers" },
     ],
   },
   {
     title: "Products",
-    links: [
-      { href: "/shop", label: "Products" },
-      { href: "/quality", label: "Quality Standards" },
-    ],
+    links: [{ href: "/shop", label: "Products" }],
   },
   {
-    title: "Enquiries",
-    links: [
-      { href: "/contact", label: "Contact Team" },
-      { href: "/distributor-enquiry", label: "Distributor Enquiries" },
-    ],
+    title: "Careers",
+    links: [{ href: "/careers", label: "Careers" }],
+  },
+  {
+    title: "Contact",
+    links: [{ href: "/contact", label: "Contact" }],
   },
   {
     title: "Legal",
@@ -46,27 +45,24 @@ export function Footer() {
       <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
         <div className="space-y-5 px-4 py-5 md:hidden">
           <div>
-            <p className="section-kicker text-[color:var(--brand-3)]">Nest Foods Ltd</p>
+            <p className="section-kicker text-[color:var(--brand-4)]">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-white">
-              Bread quality and production standards you can trust.
+              Premium bread manufacturing with a clear public catalogue and enquiry route.
             </h2>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             {[
               { href: "/shop", label: "Products" },
-              { href: "/quality", label: "Quality" },
+              { href: "/about", label: "About" },
+              { href: "/careers", label: "Careers" },
               { href: "/contact", label: "Contact" },
-              { href: "/distributor-enquiry", label: "Distributor" },
             ].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={buttonClassName({
-                  variant:
-                    item.label === "Contact" || item.label === "Distributor"
-                      ? "primary"
-                      : "secondary",
+                  variant: item.label === "Contact" ? "primary" : "secondary",
                   size: "sm",
                   className: "min-h-12 rounded-[1.1rem] text-center",
                 })}
@@ -94,7 +90,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {["Registered Manufacturer", "Hygienic Production", "Quality Standards"].map((item) => (
+            {["Registered Manufacturer", "Controlled Production", "Contact Ready"].map((item) => (
               <span
                 key={item}
                 className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[11px] text-white/84"
@@ -105,7 +101,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-2">
-            <p className="section-kicker text-[color:var(--brand-3)]">Socials</p>
+            <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
             <div className="flex flex-wrap gap-2">
               {socialPlaceholders.map((item) => (
                 <span
@@ -130,19 +126,19 @@ export function Footer() {
 
         <div className="hidden gap-8 px-5 py-8 md:grid md:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p className="section-kicker text-[color:var(--brand-3)]">Nest Foods Ltd</p>
+            <p className="section-kicker text-[color:var(--brand-4)]">Nest Foods Ltd</p>
             <h2 className="display-heading mt-3 text-3xl text-white sm:text-4xl">
-              Bread quality and production standards you can trust.
+              Premium bread manufacturing with restrained public presentation.
             </h2>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
                 Registered Manufacturer
               </span>
               <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
-                Hygienic Production
+                Controlled Production
               </span>
               <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
-                Quality Standards
+                Direct Enquiry Route
               </span>
             </div>
             <div className="mt-5 space-y-1.5 text-sm text-white/68">
@@ -150,12 +146,9 @@ export function Footer() {
                 Product questions, company enquiries, and careers follow-up route through the
                 contact page.
               </p>
-              <p>
-                Distributor interest starts with a simple enquiry route rather than a public portal.
-              </p>
             </div>
             <div className="mt-5 space-y-2">
-              <p className="section-kicker text-[color:var(--brand-3)]">Socials</p>
+              <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
               <div className="flex flex-wrap gap-2">
                 {socialPlaceholders.map((item) => (
                   <span
@@ -169,10 +162,10 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {footerGroups.map((group) => (
               <div key={group.title}>
-                <p className="section-kicker text-[color:var(--brand-3)]">{group.title}</p>
+                <p className="section-kicker text-[color:var(--brand-4)]">{group.title}</p>
                 <nav
                   aria-label={`${group.title} footer links`}
                   className="mt-4 flex flex-col gap-3"

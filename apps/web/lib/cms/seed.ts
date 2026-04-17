@@ -14,8 +14,8 @@ export const CMS_SEED_DATA: CmsData = {
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
       ctaPrimaryHref: "/shop",
-      ctaSecondaryLabel: "Quality Standards",
-      ctaSecondaryHref: "/quality",
+      ctaSecondaryLabel: "Contact Team",
+      ctaSecondaryHref: "/contact",
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/hero/hero-image-placeholder.svg",
       heroVideoPosterUrl: "/placeholders/hero/hero-video-poster-placeholder.svg",
@@ -23,7 +23,7 @@ export const CMS_SEED_DATA: CmsData = {
       seo: {
         title: "Nest Foods Ltd | Premium Bread Manufacturer",
         description:
-          "Premium bread manufacturing, production standards, and product information for communities and partners across Africa.",
+          "Premium bread manufacturing, production standards, and product information for communities across Africa.",
         ogImageUrl: "/placeholders/hero/hero-image-placeholder.svg",
       },
       updatedAt: now,
@@ -71,10 +71,9 @@ export const CMS_SEED_DATA: CmsData = {
     contact: {
       slug: "contact",
       title: "Contact & Locations",
-      headline:
-        "Speak with Nest Foods teams about products, partnerships, and production questions.",
+      headline: "Speak with Nest Foods teams about products, company details, and enquiries.",
       description:
-        "Use this page for office details, product enquiries, distributor introductions, and direct contact with Nest Foods teams.",
+        "Use this page for office details, product enquiries, careers follow-up, and direct contact with Nest Foods teams.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -82,8 +81,7 @@ export const CMS_SEED_DATA: CmsData = {
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
         title: "Contact Nest Foods Ltd",
-        description:
-          "Reach Nest Foods Ltd teams and offices for enquiries, support, and partnerships.",
+        description: "Reach Nest Foods Ltd teams and offices for enquiries and support.",
         ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       },
       updatedAt: now,

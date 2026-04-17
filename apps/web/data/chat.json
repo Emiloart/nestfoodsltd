@@ -26,7 +26,7 @@
       "id": "5a87f67b-b44c-4bd6-b55b-5f86ed028491",
       "conversationId": "chat-a6e96a0c-96ff-4f0a-9ecf-2b706f80cc63",
       "role": "assistant",
-      "content": "Hi — I can help with product discovery, allergens, recipes, order tracking, traceability, and distributor support.",
+      "content": "Hi — I can help with products, allergens, company information, careers, and how to contact Nest Foods.",
       "intent": "greeting",
       "confidence": 0.96,
       "createdAt": "2026-02-21T08:56:25.213Z"

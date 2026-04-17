@@ -73,29 +73,37 @@ export function PrivacyPageClient() {
 
   async function saveConsent() {
     setSavingConsent(true);
-    const response = await fetch("/api/privacy/consent", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        source: "privacy-page",
-        categories: consent,
-      }),
-    });
+    setConsentStatus("Saving preferences...");
 
-    if (!response.ok) {
-      const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setConsentStatus(body?.error ?? "Failed to save consent.");
+    try {
+      const response = await fetch("/api/privacy/consent", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          source: "privacy-page",
+          locale: typeof navigator !== "undefined" ? navigator.language : undefined,
+          categories: consent,
+        }),
+      });
+
+      if (!response.ok) {
+        const body = (await response.json().catch(() => null)) as { error?: string } | null;
+        setConsentStatus(body?.error ?? "Failed to save consent.");
+        return;
+      }
+
+      const data = (await response.json()) as ConsentResponse;
+      setConsentStatus(
+        data.consent
+          ? `Saved ${new Date(data.consent.consentedAt).toLocaleString("en-NG")}`
+          : "Saved.",
+      );
+    } catch {
+      setConsentStatus("Unable to save consent right now.");
+    } finally {
       setSavingConsent(false);
-      return;
     }
-
-    const data = (await response.json()) as ConsentResponse;
-    setConsentStatus(
-      data.consent
-        ? `Saved ${new Date(data.consent.consentedAt).toLocaleString("en-NG")}`
-        : "Saved.",
-    );
-    setSavingConsent(false);
   }
 
   async function submitDataRequest() {

@@ -8,7 +8,6 @@ import { buttonClassName } from "./ui/button";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Products" },
-  { href: "/quality", label: "Quality Standards" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },
@@ -28,14 +27,14 @@ export function Header() {
             <GlobalSearch />
             <MobileNav />
             <Link
-              href="/distributor-enquiry"
+              href="/contact"
               className={buttonClassName({
                 variant: "primary",
                 size: "sm",
                 className: "hidden md:inline-flex",
               })}
             >
-              Distributor Enquiry
+              Make Enquiry
             </Link>
           </div>
         </div>
@@ -46,7 +45,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-4 py-2 text-sm text-white/76 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+                className="rounded-full px-4 py-2 text-sm text-white/76 transition hover:bg-white/10 hover:text-[color:var(--brand-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
               >
                 {item.label}
               </Link>

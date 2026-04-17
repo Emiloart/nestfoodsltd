@@ -16,7 +16,7 @@ const contactBlocks = [
   },
   {
     title: "Email",
-    value: "General product, company, and distributor enquiries route through the central team.",
+    value: "General product, company, and careers enquiries route through the central team.",
   },
   {
     title: "Phone",

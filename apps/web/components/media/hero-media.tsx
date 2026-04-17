@@ -66,7 +66,7 @@ export function HeroMedia({ page }: HeroMediaProps) {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
+    <div className="relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border-strong)] bg-[color:var(--surface-overlay)]">
       <video
         className={heroMediaClassName + " w-full object-cover"}
         autoPlay
@@ -78,8 +78,15 @@ export function HeroMedia({ page }: HeroMediaProps) {
       >
         <source src={page.heroVideoUrl} />
       </video>
-      <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_26%,transparent)]" />
-      <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[color:color-mix(in_srgb,var(--brand-2)_24%,transparent)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-20 bg-[color:color-mix(in_srgb,var(--brand-2)_38%,transparent)]"
+      />
+      <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_84%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-4)]">
         Production Video
       </div>
     </div>

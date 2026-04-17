@@ -1,6 +1,6 @@
 # Nest Foods Ltd Platform
 
-Corporate website foundation for Nest Foods Ltd. The public product is intentionally limited to a manufacturer-first experience: homepage, product catalogue, quality standards, about, vision, careers, contact, and a lightweight distributor enquiry route.
+Corporate website foundation for Nest Foods Ltd. The public product is intentionally limited to a manufacturer-first experience: homepage, product catalogue, production standards within the homepage, about, vision, careers, contact, and a restrained enquiry path.
 
 ## Stack
 
@@ -47,13 +47,10 @@ Corporate website foundation for Nest Foods Ltd. The public product is intention
   - `/` Home
   - `/shop` Products
   - `/products/[slug]` Product details
-  - `/quality` Quality Standards
   - `/about`
   - `/vision`
   - `/careers`
   - `/contact`
-- Supporting public route:
-  - `/distributor-enquiry` for lightweight distributor introductions
 - Product pages focus on descriptions, pack sizes, ingredients, allergens, and direct enquiry paths.
 - The admin surface remains host-gated for content and operational management.
 - Legacy commerce, portal, customer, and traceability modules may still exist in the codebase, but they are not part of the intended public website direction.
@@ -62,8 +59,8 @@ Corporate website foundation for Nest Foods Ltd. The public product is intention
 
 - Manufacturer-first public shell and homepage are in place.
 - Product catalogue and product detail routes have been simplified for a corporate website posture.
-- Public traceability positioning has been replaced by a static quality standards page.
-- Distributor conversations start through a lightweight public enquiry flow rather than a public portal.
+- Production standards are presented as homepage content rather than a feature-heavy public module.
+- Legacy distributor and traceability routes now redirect to core public pages.
 - Core CMS-managed pages remain editable through the admin surface.
 - Chat assistant scope is aligned to product, company, enquiry, and careers guidance.
 - SEO foundations remain in place through metadata, sitemap generation, and structured data.
@@ -79,7 +76,7 @@ Corporate website foundation for Nest Foods Ltd. The public product is intention
 ## Immediate Cleanup Direction
 
 1. Continue archiving or deprecating legacy commerce, customer, B2B portal, and traceability modules that are no longer part of the public site.
-2. Keep public copy focused on manufacturing credibility, products, company story, careers, contact, and distributor introductions.
+2. Keep public copy focused on manufacturing credibility, products, company story, careers, and contact.
 3. Use placeholders only for media, not public-facing business copy.
 
 ## GitHub Setup

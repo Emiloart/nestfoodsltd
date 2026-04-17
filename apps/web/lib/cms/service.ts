@@ -86,12 +86,22 @@ function buildMediaAssetId(label: string) {
   return `media-${prefix || "item"}-${crypto.randomUUID().slice(0, 8)}`;
 }
 
-function collectMediaUsageReferences(assetUrl: string, data: Awaited<ReturnType<typeof readCmsData>>) {
+function collectMediaUsageReferences(
+  assetUrl: string,
+  data: Awaited<ReturnType<typeof readCmsData>>,
+  options?: { excludeMediaId?: string },
+) {
   const refs: string[] = [];
 
   for (const [slug, page] of Object.entries(data.pages)) {
     if (page.heroImageUrl === assetUrl) {
       refs.push(`page:${slug}.heroImageUrl`);
+    }
+    if (page.heroVideoUrl === assetUrl) {
+      refs.push(`page:${slug}.heroVideoUrl`);
+    }
+    if (page.heroVideoPosterUrl === assetUrl) {
+      refs.push(`page:${slug}.heroVideoPosterUrl`);
     }
     if (page.logoImageUrl === assetUrl) {
       refs.push(`page:${slug}.logoImageUrl`);
@@ -116,6 +126,18 @@ function collectMediaUsageReferences(assetUrl: string, data: Awaited<ReturnType<
   for (const recipe of data.recipes) {
     if (recipe.imageUrl === assetUrl) {
       refs.push(`cms-recipe:${recipe.id}.imageUrl`);
+    }
+  }
+
+  for (const asset of data.media) {
+    if (asset.id === options?.excludeMediaId) {
+      continue;
+    }
+    if (asset.url === assetUrl) {
+      refs.push(`media:${asset.id}.url`);
+    }
+    if (asset.posterImageUrl === assetUrl) {
+      refs.push(`media:${asset.id}.posterImageUrl`);
     }
   }
 
@@ -304,7 +326,7 @@ export async function getCmsMediaAssetsWithUsage(): Promise<CmsMediaAssetWithUsa
   const data = await readCmsData();
   return data.media.map((asset) => ({
     ...asset,
-    usageReferences: collectMediaUsageReferences(asset.url, data),
+    usageReferences: collectMediaUsageReferences(asset.url, data, { excludeMediaId: asset.id }),
   }));
 }
 
@@ -323,7 +345,7 @@ export async function getCmsMediaAssetByIdWithUsage(mediaId: string): Promise<Cm
   }
   return {
     ...asset,
-    usageReferences: collectMediaUsageReferences(asset.url, data),
+    usageReferences: collectMediaUsageReferences(asset.url, data, { excludeMediaId: asset.id }),
   };
 }
 
@@ -337,9 +359,10 @@ export async function createCmsMediaAsset(input: CreateCmsMediaAssetInput) {
   const asset: CmsMediaAsset = {
     id: mediaId,
     label: input.label.trim(),
-    kind: "image",
+    kind: input.kind,
     url: input.url.trim(),
     altText: input.altText?.trim() || undefined,
+    posterImageUrl: input.posterImageUrl?.trim() || undefined,
     folder: input.folder.trim(),
     updatedAt: new Date().toISOString(),
   };
@@ -365,10 +388,15 @@ export async function updateCmsMediaAsset(mediaId: string, input: UpdateCmsMedia
   if (input.altText !== undefined) {
     asset.altText = input.altText.trim() || undefined;
   }
+  if (input.posterImageUrl !== undefined) {
+    asset.posterImageUrl = input.posterImageUrl.trim() || undefined;
+  }
   if (input.folder !== undefined) {
     asset.folder = input.folder.trim();
   }
-  asset.kind = "image";
+  if (input.kind !== undefined) {
+    asset.kind = input.kind;
+  }
   asset.updatedAt = new Date().toISOString();
 
   await writeCmsData(data);
@@ -386,7 +414,9 @@ export async function deleteCmsMediaAsset(mediaId: string) {
   if (!asset) {
     throw new Error("Media asset not found.");
   }
-  const usageReferences = collectMediaUsageReferences(asset.url, data);
+  const usageReferences = collectMediaUsageReferences(asset.url, data, {
+    excludeMediaId: asset.id,
+  });
   if (usageReferences.length > 0) {
     throw new Error("Cannot delete media asset while it is still referenced.");
   }

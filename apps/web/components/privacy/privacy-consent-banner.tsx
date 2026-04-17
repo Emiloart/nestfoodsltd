@@ -44,25 +44,31 @@ export function PrivacyConsentBanner() {
     setSaving(true);
     setStatus("Saving preferences...");
 
-    const response = await fetch("/api/privacy/consent", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        source: "banner",
-        categories: input,
-      }),
-    });
+    try {
+      const response = await fetch("/api/privacy/consent", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          source: "banner",
+          locale: typeof navigator !== "undefined" ? navigator.language : undefined,
+          categories: input,
+        }),
+      });
 
-    if (!response.ok) {
-      const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setStatus(body?.error ?? "Unable to save consent.");
+      if (!response.ok) {
+        const body = (await response.json().catch(() => null)) as { error?: string } | null;
+        setStatus(body?.error ?? "Unable to save consent.");
+        return;
+      }
+
+      setStatus("Consent saved.");
+      setVisible(false);
+    } catch {
+      setStatus("Unable to save consent right now.");
+    } finally {
       setSaving(false);
-      return;
     }
-
-    setStatus("Consent saved.");
-    setSaving(false);
-    setVisible(false);
   }
 
   if (!visible) {
@@ -72,9 +78,7 @@ export function PrivacyConsentBanner() {
   return (
     <div className="fixed inset-x-0 bottom-4 z-50 mx-auto w-full max-w-5xl px-4">
       <Card className="space-y-3 border-neutral-300 shadow-xl">
-        <p className="text-sm font-semibold text-neutral-900">
-          Privacy Preferences
-        </p>
+        <p className="text-sm font-semibold text-neutral-900">Privacy Preferences</p>
         <p className="text-xs text-neutral-600">
           We use essential cookies for platform operation and optional cookies for analytics,
           personalization, and marketing. You can update this anytime on the privacy page.

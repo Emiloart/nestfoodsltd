@@ -32,10 +32,13 @@ export function HomeProductionStandardsSection() {
   ));
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+    <section
+      id="production-standards"
+      className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9"
+    >
       <div className="section-frame px-5 py-5 sm:px-6 md:hidden">
         <SectionHeading
-          eyebrow="Quality Standards"
+          eyebrow="Production Standards"
           title="Production standards built into daily operations."
           description="Process control, hygiene, and packaging discipline."
           descriptionClassName="hidden"
@@ -43,7 +46,7 @@ export function HomeProductionStandardsSection() {
 
         <div className="placeholder-panel mt-5 p-3">
           <ImagePlaceholder
-            src="/placeholders/section-image-placeholder.svg"
+            src="/placeholders/sections/section-image-placeholder.svg"
             alt="Production process placeholder"
             label="Factory / Process Placeholder"
             className="aspect-[16/11]"
@@ -61,7 +64,7 @@ export function HomeProductionStandardsSection() {
       <div className="hidden gap-5 md:grid lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
         <div className="section-frame px-5 py-5 sm:px-6">
           <SectionHeading
-            eyebrow="Quality Standards"
+            eyebrow="Production Standards"
             title="Production process, hygiene, and packaging standards."
             description="Nest Foods presents clear manufacturing standards without turning quality into a public product feature."
             descriptionClassName="hidden lg:block"
@@ -72,7 +75,7 @@ export function HomeProductionStandardsSection() {
 
         <div className="section-frame p-4 sm:p-5">
           <ImagePlaceholder
-            src="/placeholders/section-image-placeholder.svg"
+            src="/placeholders/sections/section-image-placeholder.svg"
             alt="Production process placeholder"
             label="Factory / Process Placeholder"
             className="aspect-[6/5] sm:aspect-[16/11]"
