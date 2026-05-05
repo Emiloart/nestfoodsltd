@@ -10,8 +10,6 @@ export type AdminPermission =
   | "cms.pages.publish"
   | "cms.media.read"
   | "cms.media.write"
-  | "cms.recipes.read"
-  | "cms.recipes.write"
   | "cms.catalog.read"
   | "cms.catalog.write";
 
@@ -33,8 +31,6 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.pages.publish",
     "cms.media.read",
     "cms.media.write",
-    "cms.recipes.read",
-    "cms.recipes.write",
     "cms.catalog.read",
     "cms.catalog.write",
   ],
@@ -43,8 +39,6 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.pages.write",
     "cms.media.read",
     "cms.media.write",
-    "cms.recipes.read",
-    "cms.recipes.write",
     "cms.catalog.read",
     "cms.catalog.write",
   ],

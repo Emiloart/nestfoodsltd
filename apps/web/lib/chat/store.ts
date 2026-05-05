@@ -99,7 +99,7 @@ function normalizeLead(input: Partial<ChatLead> | null | undefined): ChatLead | 
     email,
     phone: input.phone?.trim() || undefined,
     company: input.company?.trim() || undefined,
-    message: input.message?.trim() || "Customer requested support.",
+    message: input.message?.trim() || "Visitor requested an enquiry follow-up.",
     sourceIntent,
     status,
     createdAt: input.createdAt?.trim() || new Date().toISOString(),

@@ -1,0 +1,126 @@
+import { type CatalogueData } from "./types";
+
+const sharedIngredients = [
+  "Enriched wheat flour",
+  "Water",
+  "Sugar",
+  "Vegetable oil",
+  "Yeast",
+  "Salt",
+  "Milk",
+  "Butter",
+];
+
+const sharedAllergens = [
+  "Contains wheat (gluten)",
+  "Contains milk",
+  "May contain traces of soya",
+];
+
+const sharedNutritionNotes = [
+  {
+    label: "Nutrition profile",
+    value: "Prepared as a soft, satisfying wheat bread for everyday meals.",
+  },
+];
+
+export const CATALOGUE_SEED_DATA: CatalogueData = {
+  products: [
+    {
+      id: "catalogue-de-nest-family-jumbo-bread",
+      slug: "de-nest-family-jumbo-bread",
+      status: "published",
+      name: "De-Nest Family Jumbo Bread",
+      category: "Family Bread",
+      shortDescription:
+        "A generous family loaf made for shared breakfasts, sandwiches, and everyday table moments.",
+      longDescription:
+        "De-Nest Family Jumbo Bread is the largest loaf in the De-Nest range. It is baked for families and group settings that need a soft, wholesome loaf with satisfying portions and a familiar wheat bread taste.",
+      imageUrl: "/placeholders/products/product-placeholder.svg",
+      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "jumbo-1-5kg",
+          label: "Approx. 1.5kg jumbo loaf",
+          sku: "DENEST-JUMBO",
+        },
+      ],
+      updatedAt: "2026-05-05T00:00:00.000Z",
+    },
+    {
+      id: "catalogue-de-nest-family-loaf-bread",
+      slug: "de-nest-family-loaf-bread",
+      status: "published",
+      name: "De-Nest Family Loaf Bread",
+      category: "Family Bread",
+      shortDescription:
+        "A classic household loaf with a balanced texture, rich taste, and dependable everyday use.",
+      longDescription:
+        "De-Nest Family Loaf Bread is the classic 1kg family loaf. It is produced with selected ingredients for a familiar, satisfying bread experience suitable for breakfast, packed meals, meetings, and family tables.",
+      imageUrl: "/placeholders/products/product-placeholder.svg",
+      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "family-loaf-1kg",
+          label: "Approx. 1kg family loaf",
+          sku: "DENEST-FAMILY-1KG",
+        },
+      ],
+      updatedAt: "2026-05-05T00:00:00.000Z",
+    },
+    {
+      id: "catalogue-de-nest-midi-bread",
+      slug: "de-nest-midi-bread",
+      status: "published",
+      name: "De-Nest Midi Bread",
+      category: "Midi Bread",
+      shortDescription:
+        "A medium-sized loaf for individuals, couples, small families, and light meal occasions.",
+      longDescription:
+        "De-Nest Midi Bread offers a practical balance of size, softness, and satisfaction. The loaf is suited to smaller households, workplace meals, school feeding needs, and everyday snacking.",
+      imageUrl: "/placeholders/products/product-placeholder.svg",
+      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "midi-430g",
+          label: "Approx. 430g midi loaf",
+          sku: "DENEST-MIDI-430G",
+        },
+      ],
+      updatedAt: "2026-05-05T00:00:00.000Z",
+    },
+    {
+      id: "catalogue-de-nest-mini-bread",
+      slug: "de-nest-mini-bread",
+      status: "published",
+      name: "De-Nest Mini Bread",
+      category: "Mini Bread",
+      shortDescription:
+        "A compact, soft loaf for quick breakfasts, snacks, and individually portioned bread moments.",
+      longDescription:
+        "De-Nest Mini Bread is a small everyday loaf made for convenience, softness, and affordability. It works well for quick meals, light refreshment, and simple on-the-go bread occasions.",
+      imageUrl: "/placeholders/products/product-placeholder.svg",
+      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "mini-220g",
+          label: "Approx. 220g mini loaf",
+          sku: "DENEST-MINI-220G",
+        },
+      ],
+      updatedAt: "2026-05-05T00:00:00.000Z",
+    },
+  ],
+};

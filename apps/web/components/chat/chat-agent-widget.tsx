@@ -43,10 +43,10 @@ const sessionStorageKey = "nestfoodsltd_chat_session_id";
 const conversationStorageKey = "nestfoodsltd_chat_conversation_id";
 
 const initialQuickActions: ChatQuickAction[] = [
-  { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-  { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
-  { label: "Contact Nest Foods", prompt: "Help me contact the Nest Foods team." },
+  { label: "Products", prompt: "Show me the De-Nest Bread product range." },
+  { label: "About", prompt: "Tell me about Nest Foods Limited." },
+  { label: "Careers", prompt: "How can I learn about careers?" },
+  { label: "Contact", prompt: "Help me contact the team." },
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
@@ -125,7 +125,7 @@ export function ChatAgentWidget() {
       id: "welcome",
       role: "assistant",
       content:
-        "I’m Nest Agent. Ask me about products, Nest Foods, careers, or how to reach the team.",
+        "I’m Nest Agent. Ask me about De-Nest Bread products, Nest Foods Limited, careers, or how to reach the team.",
       createdAt: new Date().toISOString(),
     },
   ]);
@@ -243,7 +243,7 @@ export function ChatAgentWidget() {
     }
 
     setLeadSubmitting(true);
-    setLeadStatus("Submitting support request...");
+    setLeadStatus("Submitting enquiry...");
 
     const response = await fetch("/api/chat/leads", {
       method: "POST",
@@ -261,7 +261,7 @@ export function ChatAgentWidget() {
 
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setLeadStatus(body?.error ?? "Failed to submit support request.");
+      setLeadStatus(body?.error ?? "Failed to submit enquiry.");
       setLeadSubmitting(false);
       return;
     }
@@ -272,7 +272,7 @@ export function ChatAgentWidget() {
     window.localStorage.setItem(conversationStorageKey, data.conversationId);
     window.localStorage.setItem(sessionStorageKey, data.sessionId);
 
-    setLeadStatus("Support request submitted. Our team will contact you.");
+    setLeadStatus("Enquiry submitted. Our team will contact you.");
     setLeadSubmitting(false);
     setLeadFormOpen(false);
   }
@@ -289,7 +289,7 @@ export function ChatAgentWidget() {
         id: "welcome",
         role: "assistant",
         content:
-          "I’m Nest Agent. Ask me about products, Nest Foods, careers, or how to reach the team.",
+          "I’m Nest Agent. Ask me about De-Nest Bread products, Nest Foods Limited, careers, or how to reach the team.",
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -402,14 +402,14 @@ export function ChatAgentWidget() {
           {handoffSuggested ? (
             <div className="border-t border-[color:var(--border)] px-4 py-3">
               <p className="text-xs text-neutral-600">
-                {handoffReason || "Need a human follow-up? We can escalate this."}
+                {handoffReason || "Need a human follow-up? Share your enquiry details."}
               </p>
               <button
                 type="button"
                 onClick={() => setLeadFormOpen((current) => !current)}
                 className="mt-2 rounded-full border border-[color:var(--border)] px-3 py-1 text-xs font-medium text-neutral-700 transition hover:brightness-105"
               >
-                {leadFormOpen ? "Hide Support Form" : "Request Human Support"}
+                {leadFormOpen ? "Hide Enquiry Form" : "Submit Enquiry"}
               </button>
 
               {leadFormOpen ? (
@@ -439,7 +439,7 @@ export function ChatAgentWidget() {
                     required
                   />
                   <Button size="sm" type="submit" disabled={leadSubmitting}>
-                    {leadSubmitting ? "Submitting..." : "Submit Support Request"}
+                    {leadSubmitting ? "Submitting..." : "Submit Enquiry"}
                   </Button>
                   {leadStatus ? <p className="text-xs text-neutral-500">{leadStatus}</p> : null}
                 </form>
@@ -458,7 +458,7 @@ export function ChatAgentWidget() {
               <Input
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Ask about products, Nest Foods, careers, or how to reach the team..."
+                placeholder="Ask about products, De-Nest Bread, careers, or how to reach the team..."
                 disabled={sending}
               />
               <Button size="sm" type="submit" disabled={!canSend}>

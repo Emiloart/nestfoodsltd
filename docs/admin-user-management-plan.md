@@ -17,7 +17,7 @@ Replace environment token-only admin access with managed enterprise user identit
 - Role assignment per user, with optional scoped permissions.
 - MFA enforcement for privileged roles.
 - Session lifecycle controls (device/session list, forced revocation).
-- Full audit traceability on login, role changes, and critical actions.
+- Full audit history on login, role changes, and critical actions.
 
 ## Delivery Phases
 

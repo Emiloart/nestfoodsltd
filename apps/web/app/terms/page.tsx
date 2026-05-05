@@ -2,7 +2,7 @@ import { PageShell } from "@/components/page-shell";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  title: "Terms of Service",
+  title: "Terms of Use",
   description: "Terms covering website use, product information, and enquiries.",
   path: "/terms",
 });
@@ -10,9 +10,9 @@ export const metadata = buildPageMetadata({
 export default function TermsPage() {
   return (
     <PageShell
-      title="Terms of Service"
+      title="Terms of Use"
       description="Scaffold for website terms, product information disclaimers, and enquiry handling policies."
-      nextStep="Attach legal templates + versioned publishing"
+      nextStep="Attach legal templates and versioned publishing"
     />
   );
 }

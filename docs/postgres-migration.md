@@ -14,8 +14,9 @@
   - `cms_page_revision`
   - `cms_banner`
   - `cms_media_asset`
-  - `cms_product_model`
-  - `cms_recipe_model`
+  - `catalogue_product`
+  - `privacy_record`
+  - `audit_event`
 
 ## Migration Steps
 

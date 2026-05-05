@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -8,72 +7,52 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  type CommerceProduct,
-  type NutritionItem,
-  type ProductAvailabilityStatus,
-  type ProductStatus,
-  type ProductVariant,
-} from "@/lib/commerce/types";
+  type CatalogueNutritionNote,
+  type CataloguePackFormat,
+  type CatalogueProduct,
+  type CatalogueProductStatus,
+} from "@/lib/catalog/types";
 
 type CatalogProductsResponse = {
   role: string;
-  products: CommerceProduct[];
+  products: CatalogueProduct[];
 };
 
 type CatalogProductResponse = {
   role: string;
-  product: CommerceProduct;
+  product: CatalogueProduct;
 };
 
 type CatalogFormState = {
   slug: string;
-  status: ProductStatus;
-  availabilityStatus: ProductAvailabilityStatus;
-  availableRegionsText: string;
-  minimumOrderQuantity: string;
-  maximumOrderQuantity: string;
+  status: CatalogueProductStatus;
   name: string;
   category: string;
   shortDescription: string;
   longDescription: string;
   imageUrl: string;
   galleryUrlsText: string;
-  tagsText: string;
   allergensText: string;
   ingredientsText: string;
-  shelfLifeDays: string;
-  nutritionText: string;
-  variantsText: string;
+  nutritionNotesText: string;
+  packFormatsText: string;
 };
 
 const emptyFormState: CatalogFormState = {
   slug: "",
   status: "draft",
-  availabilityStatus: "available",
-  availableRegionsText: "Lagos",
-  minimumOrderQuantity: "10",
-  maximumOrderQuantity: "10000",
   name: "",
   category: "",
   shortDescription: "",
   longDescription: "",
-  imageUrl: "/placeholders/product-hero.jpg",
-  galleryUrlsText: "/placeholders/product-hero.jpg",
-  tagsText: "",
-  allergensText: "",
-  ingredientsText: "",
-  shelfLifeDays: "30",
-  nutritionText: "Energy | 0 | kcal",
-  variantsText: "default | Standard Pack | SKU-001 | Pack | in_stock | 0 | NGN",
+  imageUrl: "/placeholders/products/product-placeholder.svg",
+  galleryUrlsText: "/placeholders/products/product-placeholder.svg",
+  allergensText: "Contains wheat (gluten)\nContains milk\nMay contain traces of soya",
+  ingredientsText: "Enriched wheat flour\nWater\nSugar\nVegetable oil\nYeast\nSalt\nMilk\nButter",
+  nutritionNotesText:
+    "Nutrition profile | Prepared as a soft, satisfying wheat bread for everyday meals.",
+  packFormatsText: "default | Standard loaf | DENEST-STANDARD",
 };
-
-const stockStatusOptions: ProductVariant["stockStatus"][] = [
-  "in_stock",
-  "low_stock",
-  "out_of_stock",
-];
-
-const currencyOptions: ProductVariant["currency"][] = ["NGN", "USD"];
 
 function parseLines(text: string) {
   return text
@@ -90,152 +69,80 @@ function toTextList(items: string[]) {
   return items.join("\n");
 }
 
-function parseNutritionTable(text: string): NutritionItem[] {
-  const lines = parseLines(text);
-  if (lines.length === 0) {
-    throw new Error("Nutrition table requires at least one row.");
-  }
-
-  return lines.map((line, index) => {
-    const [label, amountRaw, unit] = parseDelimitedLine(line);
-    if (!label || !amountRaw || !unit) {
-      throw new Error(`Nutrition row ${index + 1} must be: label | amount | unit`);
+function parseNutritionNotes(text: string): CatalogueNutritionNote[] {
+  return parseLines(text).map((line, index) => {
+    const [label, value] = parseDelimitedLine(line);
+    if (!label || !value) {
+      throw new Error(`Nutrition note ${index + 1} must be: label | value`);
     }
-
-    const amount = Number(amountRaw);
-    if (!Number.isFinite(amount) || amount < 0) {
-      throw new Error(`Nutrition row ${index + 1} has invalid amount.`);
-    }
-
-    return { label, amount, unit };
+    return { label, value };
   });
 }
 
-function parseVariants(text: string): ProductVariant[] {
+function parsePackFormats(text: string): CataloguePackFormat[] {
   const lines = parseLines(text);
   if (lines.length === 0) {
-    throw new Error("At least one variant row is required.");
+    throw new Error("At least one pack or size format is required.");
   }
 
   return lines.map((line, index) => {
-    const [id, name, sku, sizeLabel, stockStatus, priceMinorRaw, currency] =
-      parseDelimitedLine(line);
-
-    if (!name || !sku || !stockStatus || !priceMinorRaw || !currency) {
-      throw new Error(
-        `Variant row ${index + 1} must be: id | name | sku | size | stock | priceMinor | currency`,
-      );
+    const [id, label, sku] = parseDelimitedLine(line);
+    if (!label) {
+      throw new Error(`Pack format ${index + 1} must be: id | label | sku`);
     }
-
-    if (!stockStatusOptions.includes(stockStatus as ProductVariant["stockStatus"])) {
-      throw new Error(`Variant row ${index + 1} has invalid stock status.`);
-    }
-
-    if (!currencyOptions.includes(currency as ProductVariant["currency"])) {
-      throw new Error(`Variant row ${index + 1} has invalid currency.`);
-    }
-
-    const priceMinor = Number(priceMinorRaw);
-    if (!Number.isFinite(priceMinor) || priceMinor < 0) {
-      throw new Error(`Variant row ${index + 1} has invalid price.`);
-    }
-
     return {
       id: id || "",
-      name,
-      sku,
-      sizeLabel: sizeLabel || undefined,
-      stockStatus: stockStatus as ProductVariant["stockStatus"],
-      priceMinor: Math.round(priceMinor),
-      currency: currency as ProductVariant["currency"],
+      label,
+      sku: sku || undefined,
     };
   });
 }
 
-function toFormState(product: CommerceProduct): CatalogFormState {
+function toFormState(product: CatalogueProduct): CatalogFormState {
   return {
     slug: product.slug,
     status: product.status,
-    availabilityStatus: product.availabilityStatus,
-    availableRegionsText: toTextList(product.availableRegions),
-    minimumOrderQuantity: String(product.minimumOrderQuantity),
-    maximumOrderQuantity: String(product.maximumOrderQuantity),
     name: product.name,
     category: product.category,
     shortDescription: product.shortDescription,
     longDescription: product.longDescription,
     imageUrl: product.imageUrl,
     galleryUrlsText: toTextList(product.galleryUrls),
-    tagsText: toTextList(product.tags),
     allergensText: toTextList(product.allergens),
     ingredientsText: toTextList(product.ingredients),
-    shelfLifeDays: String(product.shelfLifeDays),
-    nutritionText: product.nutritionTable
-      .map((entry) => [entry.label, entry.amount, entry.unit].join(" | "))
+    nutritionNotesText: product.nutritionNotes
+      .map((entry) => [entry.label, entry.value].join(" | "))
       .join("\n"),
-    variantsText: product.variants
-      .map((variant) =>
-        [
-          variant.id,
-          variant.name,
-          variant.sku,
-          variant.sizeLabel ?? "",
-          variant.stockStatus,
-          variant.priceMinor,
-          variant.currency,
-        ].join(" | "),
-      )
+    packFormatsText: product.packFormats
+      .map((format) => [format.id, format.label, format.sku ?? ""].join(" | "))
       .join("\n"),
   };
 }
 
 function buildProductPayload(form: CatalogFormState) {
-  const shelfLifeDays = Number(form.shelfLifeDays);
-  if (!Number.isFinite(shelfLifeDays) || shelfLifeDays < 1) {
-    throw new Error("Shelf life must be a valid positive number.");
-  }
-  const minimumOrderQuantity = Number(form.minimumOrderQuantity);
-  if (!Number.isFinite(minimumOrderQuantity) || minimumOrderQuantity < 1) {
-    throw new Error("Minimum order quantity must be a valid positive number.");
-  }
-  const maximumOrderQuantity = Number(form.maximumOrderQuantity);
-  if (!Number.isFinite(maximumOrderQuantity) || maximumOrderQuantity < minimumOrderQuantity) {
-    throw new Error("Maximum order quantity must be greater than or equal to minimum order quantity.");
-  }
-  const availableRegions = parseLines(form.availableRegionsText);
-  if (availableRegions.length === 0) {
-    throw new Error("At least one available region is required.");
-  }
-
   return {
     slug: form.slug.trim(),
     status: form.status,
-    availabilityStatus: form.availabilityStatus,
-    availableRegions,
-    minimumOrderQuantity: Math.round(minimumOrderQuantity),
-    maximumOrderQuantity: Math.round(maximumOrderQuantity),
     name: form.name.trim(),
     category: form.category.trim(),
     shortDescription: form.shortDescription.trim(),
     longDescription: form.longDescription.trim(),
     imageUrl: form.imageUrl.trim(),
     galleryUrls: parseLines(form.galleryUrlsText),
-    tags: parseLines(form.tagsText),
     allergens: parseLines(form.allergensText),
     ingredients: parseLines(form.ingredientsText),
-    shelfLifeDays: Math.round(shelfLifeDays),
-    nutritionTable: parseNutritionTable(form.nutritionText),
-    variants: parseVariants(form.variantsText),
+    nutritionNotes: parseNutritionNotes(form.nutritionNotesText),
+    packFormats: parsePackFormats(form.packFormatsText),
   };
 }
 
 export function CatalogManagerClient() {
   const [role, setRole] = useState("Unknown");
-  const [products, setProducts] = useState<CommerceProduct[]>([]);
+  const [products, setProducts] = useState<CatalogueProduct[]>([]);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [form, setForm] = useState<CatalogFormState>(emptyFormState);
   const [saving, setSaving] = useState(false);
-  const [status, setStatus] = useState("Loading catalog...");
+  const [status, setStatus] = useState("Loading catalogue...");
 
   const selectedProduct = useMemo(
     () => products.find((entry) => entry.id === selectedProductId) ?? null,
@@ -247,7 +154,7 @@ export function CatalogManagerClient() {
     const response = await fetch("/api/admin/catalog/products", { cache: "no-store" });
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setStatus(body?.error ?? "Failed to load catalog products.");
+      setStatus(body?.error ?? "Failed to load catalogue products.");
       return;
     }
 
@@ -267,14 +174,11 @@ export function CatalogManagerClient() {
       setForm(emptyFormState);
     }
 
-    setStatus("Catalog manager ready.");
+    setStatus("Catalogue manager ready.");
   }, []);
 
   useEffect(() => {
-    const timeoutId = window.setTimeout(() => {
-      void reloadProducts();
-    }, 0);
-    return () => window.clearTimeout(timeoutId);
+    void reloadProducts();
   }, [reloadProducts]);
 
   function updateForm(partial: Partial<CatalogFormState>) {
@@ -396,13 +300,13 @@ export function CatalogManagerClient() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <Badge>Catalog Admin</Badge>
+        <Badge>Catalogue Admin</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Product Catalog Manager
+          Product Catalogue Manager
         </h1>
         <p className="text-sm text-neutral-600">
-          Role: <span className="font-semibold">{role}</span>. Manage products, variants, nutrition,
-          allergens, bulk ordering limits, and regional availability.
+          Role: <span className="font-semibold">{role}</span>. Manage product names, descriptions,
+          images, ingredients, allergens, nutrition notes, and pack or size formats.
         </p>
       </div>
 
@@ -433,17 +337,12 @@ export function CatalogManagerClient() {
             <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-500">
               <p>ID: {selectedProduct.id}</p>
               <p>Updated: {selectedProduct.updatedAt}</p>
-              <p>Variants: {selectedProduct.variants.length}</p>
-              <p>Availability: {selectedProduct.availabilityStatus}</p>
-              <p>
-                Bulk range: {selectedProduct.minimumOrderQuantity} -{" "}
-                {selectedProduct.maximumOrderQuantity}
-              </p>
+              <p>Formats: {selectedProduct.packFormats.length}</p>
             </div>
           ) : null}
 
           <p className="text-xs text-neutral-500">
-            {products.length} product{products.length === 1 ? "" : "s"} available.
+            {products.length} product{products.length === 1 ? "" : "s"} in the catalogue.
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -454,10 +353,6 @@ export function CatalogManagerClient() {
               Sign Out
             </Button>
           </div>
-
-          <Link href="/b2b" className="text-xs text-neutral-500 underline">
-            Open distributor portal
-          </Link>
         </Card>
 
         <Card className="space-y-4">
@@ -472,22 +367,13 @@ export function CatalogManagerClient() {
             />
             <select
               value={form.status}
-              onChange={(event) => updateForm({ status: event.target.value as ProductStatus })}
+              onChange={(event) =>
+                updateForm({ status: event.target.value as CatalogueProductStatus })
+              }
               className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
             >
               <option value="draft">draft</option>
               <option value="published">published</option>
-            </select>
-            <select
-              value={form.availabilityStatus}
-              onChange={(event) =>
-                updateForm({ availabilityStatus: event.target.value as ProductAvailabilityStatus })
-              }
-              className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
-            >
-              <option value="available">available</option>
-              <option value="limited">limited</option>
-              <option value="unavailable">unavailable</option>
             </select>
             <Input
               value={form.name}
@@ -504,27 +390,6 @@ export function CatalogManagerClient() {
               onChange={(event) => updateForm({ imageUrl: event.target.value })}
               placeholder="Primary image URL"
             />
-            <Input
-              type="number"
-              min={1}
-              value={form.minimumOrderQuantity}
-              onChange={(event) => updateForm({ minimumOrderQuantity: event.target.value })}
-              placeholder="Minimum order quantity"
-            />
-            <Input
-              type="number"
-              min={1}
-              value={form.maximumOrderQuantity}
-              onChange={(event) => updateForm({ maximumOrderQuantity: event.target.value })}
-              placeholder="Maximum order quantity"
-            />
-            <Input
-              type="number"
-              min={1}
-              value={form.shelfLifeDays}
-              onChange={(event) => updateForm({ shelfLifeDays: event.target.value })}
-              placeholder="Shelf life (days)"
-            />
           </div>
 
           <label className="space-y-2">
@@ -540,7 +405,7 @@ export function CatalogManagerClient() {
 
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Long Description
+              Detailed Description
             </span>
             <textarea
               value={form.longDescription}
@@ -549,21 +414,10 @@ export function CatalogManagerClient() {
             />
           </label>
 
-          <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Available Regions (one per line)
-            </span>
-            <textarea
-              value={form.availableRegionsText}
-              onChange={(event) => updateForm({ availableRegionsText: event.target.value })}
-              className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
-            />
-          </label>
-
           <div className="grid gap-3 md:grid-cols-2">
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-                Gallery URLs (one per line)
+                Gallery URLs
               </span>
               <textarea
                 value={form.galleryUrlsText}
@@ -573,17 +427,18 @@ export function CatalogManagerClient() {
             </label>
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-                Tags (one per line)
+                Pack / Size Formats
               </span>
               <textarea
-                value={form.tagsText}
-                onChange={(event) => updateForm({ tagsText: event.target.value })}
-                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
+                value={form.packFormatsText}
+                onChange={(event) => updateForm({ packFormatsText: event.target.value })}
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
               />
+              <span className="text-xs text-neutral-500">Format: id | label | sku</span>
             </label>
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-                Allergens (one per line)
+                Allergens
               </span>
               <textarea
                 value={form.allergensText}
@@ -593,7 +448,7 @@ export function CatalogManagerClient() {
             </label>
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-                Ingredients (one per line)
+                Ingredients
               </span>
               <textarea
                 value={form.ingredientsText}
@@ -605,24 +460,14 @@ export function CatalogManagerClient() {
 
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Nutrition Rows (label | amount | unit)
+              Nutrition Notes
             </span>
             <textarea
-              value={form.nutritionText}
-              onChange={(event) => updateForm({ nutritionText: event.target.value })}
+              value={form.nutritionNotesText}
+              onChange={(event) => updateForm({ nutritionNotesText: event.target.value })}
               className="min-h-28 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
             />
-          </label>
-
-          <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Variant Rows (id | name | sku | size | stock | priceMinor | currency)
-            </span>
-            <textarea
-              value={form.variantsText}
-              onChange={(event) => updateForm({ variantsText: event.target.value })}
-              className="min-h-36 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
-            />
+            <span className="text-xs text-neutral-500">Format: label | value</span>
           </label>
 
           <div className="flex flex-wrap items-center gap-3">

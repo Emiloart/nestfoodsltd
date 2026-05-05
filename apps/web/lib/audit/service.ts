@@ -61,7 +61,7 @@ export async function logAuditEvent(
 export async function listAuditEvents(filters?: {
   action?: string;
   outcome?: "success" | "failure" | "blocked";
-  actorType?: "admin" | "customer" | "b2b" | "system" | "anonymous";
+  actorType?: "admin" | "system" | "anonymous";
   severity?: "info" | "warning" | "critical";
   search?: string;
   limit?: number;

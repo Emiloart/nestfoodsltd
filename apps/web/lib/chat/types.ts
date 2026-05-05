@@ -1,11 +1,10 @@
 export const chatIntentValues = [
   "greeting",
-  "product_search",
-  "recipe_help",
-  "allergen_help",
-  "order_status",
-  "traceability_lookup",
-  "b2b_quote",
+  "product_info",
+  "allergen_info",
+  "company_info",
+  "careers",
+  "contact_enquiry",
   "unknown",
 ] as const;
 

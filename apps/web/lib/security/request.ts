@@ -25,11 +25,13 @@ export function resolveUserAgent(request: NextRequest) {
 }
 
 function resolveRequestHost(request: NextRequest) {
-  return (
-    request.headers.get("x-forwarded-host")?.trim() ||
-    request.headers.get("host")?.trim() ||
-    undefined
-  );
+  const forwardedHost = request.headers
+    .get("x-forwarded-host")
+    ?.split(",")
+    .map((entry) => entry.trim())
+    .find(Boolean);
+
+  return forwardedHost || request.headers.get("host")?.trim() || request.nextUrl.host || undefined;
 }
 
 function normalizeHost(input?: string | null) {

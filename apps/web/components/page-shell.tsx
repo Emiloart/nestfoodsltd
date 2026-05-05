@@ -46,7 +46,7 @@ export function PageShell({ title, headline, description, nextStep }: PageShellP
         <div className="section-frame hidden px-5 py-6 lg:block">
           <p className="section-kicker">Next Step</p>
           <p className="pretty-text mt-4 text-sm leading-7 text-neutral-700">
-            {nextStep ?? "Continue to the product catalog or contact Nest Foods."}
+            {nextStep ?? "Continue to the product catalogue or contact Nest Foods Limited."}
           </p>
           <div className="mt-5 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">

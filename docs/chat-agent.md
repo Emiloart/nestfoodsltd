@@ -1,52 +1,29 @@
-# Chat Agent v1
+# Chat Agent Scope
 
-## Purpose
+The chat assistant is a lightweight corporate website helper.
 
-Provide a grounded assistant for Nest Foods that supports:
+## Supported Intents
 
-- company information
+- greeting
 - product information
-- allergen guidance
-- contact and enquiry guidance
+- allergen information
+- company information
 - careers guidance
+- contact and enquiry handoff
 
-## Out of Scope
+## Allowed Answers
 
-- order status or payment tracking
-- traceability lookup or batch verification
-- quote, invoice, statement, or portal workflows
-- cart, checkout, account, or wishlist support
-- recipe guidance as a primary public feature
+- De-Nest Bread product names, descriptions, ingredients, allergens, nutrition notes, and size formats
+- Nest Foods Limited company information
+- mission, vision, values, and production standards
+- HR contact and application guidance
+- official phones, emails, WhatsApp numbers, and contact page handoff
 
-## UX Surface
+## Implementation
 
-- Floating widget mounted globally from `apps/web/components/providers.tsx`
-- Component: `apps/web/components/chat/chat-agent-widget.tsx`
-- Quick prompts and suggested links focused on products, company information, contact, and careers
-- Human handoff form when confidence is low or direct follow-up is needed
+- Types live in `apps/web/lib/chat/types.ts`.
+- Service logic lives in `apps/web/lib/chat/service.ts`.
+- Widget UI lives in `apps/web/components/chat/chat-agent-widget.tsx`.
+- Runtime data lives in `apps/web/data/chat.json` for the JSON driver.
 
-## Backend
-
-- Domain types: `apps/web/lib/chat/types.ts`
-- Seed data: `apps/web/lib/chat/seed.ts`
-- Storage adapter: `apps/web/lib/chat/store.ts`
-  - supports `CHAT_STORAGE_DRIVER=json|postgres`
-- Chat service: `apps/web/lib/chat/service.ts`
-  - rule-based intent resolution
-  - grounded fetches from product data and site navigation scope
-  - handoff capture for direct follow-up
-
-## API
-
-- `POST /api/chat/ask`
-  - payload: message + optional conversation/session IDs
-  - returns answer, intent, confidence, quick actions, suggested links
-- `POST /api/chat/leads`
-  - payload: support lead details + optional conversation/session IDs
-  - creates handoff lead for human follow-up
-
-## Guardrails
-
-- If a visitor asks about orders, traceability, or portal workflows, the assistant should explain that those are not part of the public corporate site and point the visitor to the contact route.
-- The assistant should not imply online purchase, batch lookup, quote tooling, or account workflows.
-- Public suggestions should stay within products, contact, careers, and general company information.
+The assistant should stay concise and hand off to `/contact` when confidence is low.

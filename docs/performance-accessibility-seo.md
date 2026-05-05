@@ -1,33 +1,22 @@
-# Performance, Accessibility, and SEO Hardening
+# Performance, Accessibility, And SEO
 
-## Scope Completed
+## Performance
 
-- WCAG-focused upgrades on critical flows:
-  - skip-to-content link in root layout
-  - stronger keyboard focus states for primary nav actions
-  - semantic labels for header/footer/mobile navigation
-  - improved search combobox/listbox semantics
-  - mobile-first homepage density reduction (carousel sections, compressed traceability entry, and simplified footer)
-- Core Web Vitals budget model with telemetry intake:
-  - budgets: `LCP <= 2500`, `INP <= 200`, `CLS <= 0.1`
-  - client reporter: `apps/web/components/performance/web-vitals-reporter.tsx`
-  - API intake: `apps/web/app/api/telemetry/web-vitals/route.ts`
-- Media baseline:
-  - `next/image` responsive handling for image placeholders and brand logo
-  - `next.config.ts` image device sizes and remote patterns
-- Technical SEO:
-  - canonical metadata helper (`apps/web/lib/seo/metadata.ts`)
-  - site URL utility (`apps/web/lib/seo/site.ts`)
-  - expanded dynamic sitemap (`apps/web/app/sitemap.ts`)
-  - robots disallow rules for sensitive routes (`apps/web/app/robots.ts`)
-- Structured data:
-  - Organization (global layout)
-  - FAQ (home)
-  - Product (product detail)
-  - Article (blog listing + blog detail)
+- Keep hero video self-hosted, short, muted, looped, and poster-backed.
+- Use static fallback for reduced motion, mobile, save-data, and constrained connections.
+- Keep product cards image-first.
+- Lazy-load non-critical media.
 
-## Notes
+## Accessibility
 
-- Current telemetry endpoint is ingestion-first (JSON response + over-budget logging).
-- Budget history persistence can be added in the observability phase (Section 9).
-- Mobile UI cleanup reduced first-scroll density, but runtime CLS/LCP telemetry should continue to be reviewed in `/admin/ops`.
+- Maintain keyboard focus states.
+- Keep text contrast high on purple and hero overlays.
+- Preserve semantic headings on public pages.
+- Keep form controls labelled through visible text or accessible labels.
+
+## SEO
+
+- Sitemap includes only approved public pages and product detail pages.
+- Organization structured data uses Nest Foods Limited with De-Nest Bread as alternate name.
+- Product structured data uses De-Nest Bread as brand.
+- Product pages should have unique metadata from the catalogue entry.

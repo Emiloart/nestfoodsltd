@@ -34,12 +34,12 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
       <div className="section-frame px-5 py-5 sm:px-6">
         <SectionHeading
           eyebrow="Contact"
-          title="Reach Nest Foods."
+          title="Reach Nest Foods Limited."
           description={contactPage.description}
           descriptionClassName="hidden md:block"
           actions={
             <Link href="/contact" className={buttonClassName({ variant: "primary" })}>
-              Contact Nest Foods
+              Contact Nest Foods Limited
             </Link>
           }
         />
@@ -60,13 +60,13 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
           <MockPanel
             label="Location Overview"
             title="Facility and office access"
-            description="Map, route, and access details can be published here when available."
+            description="Map and office access details can be published here when available."
             descriptionClassName="hidden md:block"
           >
             <div className="grid gap-3">
               <div className="h-48 rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)]" />
               <div className="grid gap-3 sm:grid-cols-3">
-                {["Production site", "Distribution route", "Office access"].map((item) => (
+                {["Production site", "Head office", "Office access"].map((item) => (
                   <div
                     key={item}
                     className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"

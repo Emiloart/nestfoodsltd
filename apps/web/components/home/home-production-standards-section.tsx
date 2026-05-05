@@ -16,7 +16,7 @@ const standards = [
   {
     title: "Packaging discipline",
     description:
-      "Finished loaves are packed for consistent shelf presentation and dependable handling.",
+      "Finished loaves are packed for clear presentation and dependable handling.",
   },
 ];
 
@@ -66,7 +66,7 @@ export function HomeProductionStandardsSection() {
           <SectionHeading
             eyebrow="Production Standards"
             title="Production process, hygiene, and packaging standards."
-            description="Nest Foods presents clear manufacturing standards without turning quality into a public product feature."
+            description="Nest Foods Limited presents clear manufacturing standards without turning quality into a public product feature."
             descriptionClassName="hidden lg:block"
           />
 

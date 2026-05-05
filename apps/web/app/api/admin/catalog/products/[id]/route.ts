@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { hasAdminPermission, resolveAdminRoleFromRequest } from "@/lib/admin/auth";
 import { logAuditEvent } from "@/lib/audit/service";
 import {
-  deleteAdminCommerceProduct,
-  getAdminCommerceProductById,
-  updateAdminCommerceProduct,
-} from "@/lib/commerce/service";
+  deleteAdminCatalogueProduct,
+  getAdminCatalogueProductById,
+  updateAdminCatalogueProduct,
+} from "@/lib/catalog/service";
 import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 
 import { updateProductSchema } from "../schema";
@@ -31,7 +31,7 @@ function logCatalogAuditEvent(
     actorType: "admin",
     actorRole: input.actorRole,
     action: input.action,
-    resourceType: "commerce.product",
+    resourceType: "catalogue.product",
     resourceId: input.resourceId,
     outcome: input.outcome,
     severity: input.severity,
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   }
 
   const { id } = await Promise.resolve(context.params);
-  const product = await getAdminCommerceProductById(id);
+  const product = await getAdminCatalogueProductById(id);
   if (!product) {
     return NextResponse.json({ error: "Product not found." }, { status: 404 });
   }
@@ -125,10 +125,9 @@ export async function PUT(request: NextRequest, context: RouteContext) {
   }
 
   try {
-    const existingProduct = await getAdminCommerceProductById(id);
-    const product = await updateAdminCommerceProduct(id, validated.data);
+    const existingProduct = await getAdminCatalogueProductById(id);
+    const product = await updateAdminCatalogueProduct(id, validated.data);
     revalidatePath("/shop");
-    revalidatePath("/b2b");
     if (existingProduct?.slug && existingProduct.slug !== product.slug) {
       revalidatePath(`/products/${existingProduct.slug}`);
     }
@@ -197,10 +196,9 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
   }
 
   try {
-    const existingProduct = await getAdminCommerceProductById(id);
-    const product = await deleteAdminCommerceProduct(id);
+    const existingProduct = await getAdminCatalogueProductById(id);
+    const product = await deleteAdminCatalogueProduct(id);
     revalidatePath("/shop");
-    revalidatePath("/b2b");
     if (existingProduct?.slug) {
       revalidatePath(`/products/${existingProduct.slug}`);
     } else {

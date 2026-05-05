@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { listCommerceProducts } from "@/lib/commerce/service";
+import { listCatalogueProducts } from "@/lib/catalog/service";
 import { absoluteUrl } from "@/lib/seo/site";
 
 const staticRoutes = [
@@ -15,7 +15,7 @@ const staticRoutes = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [products] = await Promise.all([listCommerceProducts()]);
+  const [products] = await Promise.all([listCatalogueProducts()]);
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({

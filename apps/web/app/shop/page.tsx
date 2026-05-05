@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
+import { listCatalogueFacets, listCatalogueProducts } from "@/lib/catalog/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
   title: "Products",
   description:
-    "Browse Nest Foods bread products with pack sizes, ingredients, and direct enquiry-ready product information.",
+    "Browse De-Nest Bread products with ingredients, allergens, sizes, and enquiry-ready product information.",
   path: "/shop",
 });
 
@@ -30,8 +30,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const allergenExclude = params.allergenExclude?.trim() || undefined;
 
   const [products, facets] = await Promise.all([
-    listCommerceProducts({ search, category, allergenExclude }),
-    listCommerceFacets(),
+    listCatalogueProducts({ search, category, allergenExclude }),
+    listCatalogueFacets(),
   ]);
 
   return (
@@ -40,12 +40,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         <div className="space-y-3">
           <Badge>Product Range</Badge>
           <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
-            Bread Products Built For Consistency
+            De-Nest Bread Product Catalogue
           </h1>
           <p className="max-w-3xl text-sm text-neutral-600">
-            Review the Nest Foods bread range by category, ingredient profile, pack size, and
-            product notes. The catalogue stays product-first and supports direct enquiries without
-            retail or operational workflow language.
+            Review the De-Nest Bread range by category, ingredient profile, size, and product
+            notes. The catalogue stays product-first and supports direct enquiries only.
           </p>
         </div>
         <Card className="space-y-3">
@@ -53,7 +52,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             Need guidance?
           </p>
           <p className="text-sm text-neutral-600">
-            Contact Nest Foods for product questions, pack format guidance, or general enquiries.
+            Contact Nest Foods Limited for product questions, size guidance, or general enquiries.
           </p>
           <Link href="/contact" className={buttonClassName({ variant: "secondary", size: "sm" })}>
             Contact Team
@@ -116,10 +115,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => {
-          const packSizes = product.variants
-            .map((variant) => variant.sizeLabel ?? variant.name)
+          const packSizes = product.packFormats
+            .map((format) => format.label)
             .filter(Boolean)
             .join(", ");
+          const ingredients = product.ingredients.slice(0, 4).join(", ");
+          const allergens = product.allergens.join(", ");
 
           return (
             <Card key={product.id} className="space-y-4">
@@ -138,7 +139,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <h2 className="text-lg font-semibold text-neutral-900">{product.name}</h2>
                 <p className="text-sm text-neutral-600">{product.shortDescription}</p>
                 <p className="text-xs text-neutral-500">
-                  Pack sizes: {packSizes || "Available on request"}
+                  Size: {packSizes || "Available on request"}
+                </p>
+                <p className="text-xs text-neutral-500">
+                  Ingredients: {ingredients || "Available on request"}
+                </p>
+                <p className="text-xs text-neutral-500">
+                  Allergens: {allergens || "Available on request"}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">

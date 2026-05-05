@@ -42,7 +42,7 @@ export function buildPageMetadata(input: BuildPageMetadataInput): Metadata {
       title: input.title,
       description: input.description,
       url: absoluteUrl(canonicalPath),
-      siteName: "Nest Foods Ltd",
+      siteName: "De-Nest Bread",
       images: [{ url: absoluteUrl(imageUrl) }],
     },
     twitter: {

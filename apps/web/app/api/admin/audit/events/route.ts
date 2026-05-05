@@ -26,8 +26,6 @@ export async function GET(request: NextRequest) {
       : undefined;
   const actorType =
     actorTypeParam === "admin" ||
-    actorTypeParam === "customer" ||
-    actorTypeParam === "b2b" ||
     actorTypeParam === "system" ||
     actorTypeParam === "anonymous"
       ? actorTypeParam

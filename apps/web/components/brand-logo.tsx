@@ -21,7 +21,7 @@ export function BrandLogo({
     <span className={cn("inline-flex items-center gap-3", className)}>
       <Image
         src="/placeholders/logo-placeholder.svg"
-        alt="Nest Foods logo placeholder"
+        alt="De-Nest Bread logo placeholder"
         width={compact ? 32 : 36}
         height={compact ? 32 : 36}
         priority
@@ -35,7 +35,7 @@ export function BrandLogo({
       />
       <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
         <span className={cn("section-kicker text-[0.58rem]", inverse && "text-[color:var(--brand-3)]")}>
-          Nest Foods Ltd
+          De-Nest Bread
         </span>
         <span
           className={cn(
@@ -43,7 +43,7 @@ export function BrandLogo({
             compact && "text-sm",
           )}
         >
-          Premium bread manufacturing.
+          Nest Foods Limited
         </span>
       </span>
     </span>
@@ -56,7 +56,7 @@ export function BrandLogo({
   return (
     <Link
       href={href}
-      aria-label="Nest Foods home"
+      aria-label="De-Nest Bread home"
       className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
     >
       {content}

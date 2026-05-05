@@ -22,7 +22,7 @@ const quickActions = [
 ];
 
 const resourceLinks = [
-  { href: "/about", label: "About Nest Foods" },
+  { href: "/about", label: "About Nest Foods Limited" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },
 ];
@@ -102,7 +102,7 @@ export function MobileNav() {
               aria-label="Mobile navigation"
               className="section-frame fixed inset-x-3 top-[5.5rem] z-50 max-h-[calc(100vh-6.5rem)] overflow-auto p-4"
             >
-              <p className="section-kicker">Nest Foods</p>
+              <p className="section-kicker">De-Nest Bread</p>
               <div className="mt-4 grid gap-2">
                 {navItems.map((item) => (
                   <Link

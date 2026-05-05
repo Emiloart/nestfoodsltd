@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   applyRateLimitHeaders(response, rateLimitResult);
 
   void logAuditEvent({
-    actorType: "customer",
+    actorType: "anonymous",
     actorId: dataRequest.email,
     action: "privacy.data_request.create",
     resourceType: "privacy.data_request",

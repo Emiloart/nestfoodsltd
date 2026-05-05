@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "./brand-logo";
-import { GlobalSearch } from "./customer/global-search";
+import { GlobalSearch } from "./global-search";
 import { MobileNav } from "./mobile-nav";
 import { buttonClassName } from "./ui/button";
 

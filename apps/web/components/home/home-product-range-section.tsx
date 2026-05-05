@@ -6,17 +6,19 @@ import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Card } from "@/components/ui/card";
 import { buttonClassName } from "@/components/ui/button";
 import { SectionHeading } from "@/components/home/section-heading";
-import { type CommerceProduct } from "@/lib/commerce/types";
+import { type CatalogueProduct } from "@/lib/catalog/types";
 
 type HomeProductRangeSectionProps = {
-  products: CommerceProduct[];
+  products: CatalogueProduct[];
 };
 
-function ProductPreviewCard({ product }: { product: CommerceProduct }) {
-  const packSizes = product.variants
-    .map((variant) => variant.sizeLabel ?? variant.name)
+function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
+  const packSizes = product.packFormats
+    .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
+  const ingredients = product.ingredients.slice(0, 4).join(", ");
+  const allergens = product.allergens.join(", ");
 
   return (
     <Card className="h-full space-y-4">
@@ -35,7 +37,13 @@ function ProductPreviewCard({ product }: { product: CommerceProduct }) {
           {product.shortDescription}
         </p>
         <p className="mt-3 text-xs text-neutral-500">
-          Pack sizes: {packSizes || "Available on request"}
+          Size: {packSizes || "Available on request"}
+        </p>
+        <p className="mt-2 text-xs text-neutral-500">
+          Ingredients: {ingredients || "Available on request"}
+        </p>
+        <p className="mt-2 text-xs text-neutral-500">
+          Allergens: {allergens || "Available on request"}
         </p>
       </div>
 
@@ -62,7 +70,7 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
       <SectionHeading
         eyebrow="Bread Product Range"
         title="Bread products ready for review and enquiry."
-        description="Review the range by category, pack size, and product notes without storefront mechanics."
+        description="Review the De-Nest Bread range by category, size, ingredients, allergens, and product notes."
         descriptionClassName="hidden md:block"
         actions={
           <Link href="/shop" className={buttonClassName({ variant: "secondary" })}>

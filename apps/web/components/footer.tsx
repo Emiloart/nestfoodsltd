@@ -3,11 +3,11 @@ import Link from "next/link";
 import { buttonClassName } from "./ui/button";
 
 const socialPlaceholders = [
-  "Facebook",
-  "X",
-  "Instagram",
-  "TikTok",
-  "YouTube",
+  "Facebook: nest foods limited",
+  "X: placeholder",
+  "Instagram: placeholder",
+  "TikTok: placeholder",
+  "YouTube: placeholder",
 ];
 
 const footerGroups = [
@@ -45,9 +45,9 @@ export function Footer() {
       <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
         <div className="space-y-5 px-4 py-5 md:hidden">
           <div>
-            <p className="section-kicker text-[color:var(--brand-4)]">Nest Foods Ltd</p>
+            <p className="section-kicker text-[color:var(--brand-4)]">De-Nest Bread</p>
             <h2 className="display-heading mt-3 text-3xl text-white">
-              Premium bread manufacturing with a clear public catalogue and enquiry route.
+              Premium bread manufacturing by Nest Foods Limited.
             </h2>
           </div>
 
@@ -74,7 +74,7 @@ export function Footer() {
 
           <div className="grid gap-2">
             {[
-              { href: "/about", label: "About Nest Foods" },
+              { href: "/about", label: "About Nest Foods Limited" },
               { href: "/vision", label: "Vision" },
               { href: "/careers", label: "Careers" },
             ].map((item) => (
@@ -126,9 +126,9 @@ export function Footer() {
 
         <div className="hidden gap-8 px-5 py-8 md:grid md:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p className="section-kicker text-[color:var(--brand-4)]">Nest Foods Ltd</p>
+            <p className="section-kicker text-[color:var(--brand-4)]">De-Nest Bread</p>
             <h2 className="display-heading mt-3 text-3xl text-white sm:text-4xl">
-              Premium bread manufacturing with restrained public presentation.
+              Premium bread manufacturing by Nest Foods Limited.
             </h2>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">

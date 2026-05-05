@@ -26,11 +26,11 @@ const displayFont = Sora({
 export const metadata: Metadata = {
   metadataBase: new URL(resolveSiteUrl()),
   title: {
-    default: "Nest Foods Ltd",
-    template: "%s | Nest Foods Ltd",
+    default: "De-Nest Bread",
+    template: "%s | De-Nest Bread",
   },
   description:
-    "Premium bread manufacturing, product information, and company details for communities across Africa.",
+    "Premium bread manufacturing, product information, and company details from Nest Foods Limited.",
 };
 
 export const viewport: Viewport = {

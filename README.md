@@ -1,91 +1,74 @@
-# Nest Foods Ltd Platform
+# De-Nest Bread Corporate Website
 
-Corporate website foundation for Nest Foods Ltd. The public product is intentionally limited to a manufacturer-first experience: homepage, product catalogue, production standards within the homepage, about, vision, careers, contact, and a restrained enquiry path.
+Corporate website for Nest Foods Limited, using De-Nest Bread as the public brand.
+
+This project is not an online sales platform. The public site is limited to company credibility, bread product information, production standards, about, vision, careers, contact, privacy, and terms.
 
 ## Stack
 
-- `Next.js 16` (App Router)
-- `React 19`
-- `TypeScript` (strict)
-- `Tailwind CSS 4`
-- `Framer Motion`
-- `pnpm` workspaces monorepo structure
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- pnpm workspaces
 
-## Repo Structure
+## Public Routes
 
-```txt
-.
-├─ apps/
-│  └─ web/                # Public website + host-gated admin surface
-├─ docs/                  # Product, admin, and operational notes
-├─ CHECKLIST.md           # Build checklist
-├─ .env.example           # Environment contract
-├─ package.json           # Workspace scripts
-└─ pnpm-workspace.yaml
-```
+- `/`
+- `/shop`
+- `/products/[slug]`
+- `/about`
+- `/vision`
+- `/careers`
+- `/contact`
+- `/privacy`
+- `/terms`
+
+## Product Catalogue
+
+Products are managed as catalogue entries only. Public and admin product fields are limited to:
+
+- name
+- slug
+- status
+- category
+- short and detailed descriptions
+- image and gallery placeholders
+- ingredients
+- allergens
+- nutrition notes
+- pack or size formats
+
+Seeded products from the cleaned PDF source:
+
+- De-Nest Family Jumbo Bread
+- De-Nest Family Loaf Bread
+- De-Nest Midi Bread
+- De-Nest Mini Bread
+
+## Admin Scope
+
+The admin surface is host-gated and keeps only the modules needed for a corporate website:
+
+- content pages
+- banners
+- media library
+- product catalogue
+- admin users
+- audit events
+- operations overview
 
 ## Quick Start
 
-1. Install prerequisites:
-   - Node.js `22.14+`
-   - pnpm `10.x`
-2. Install dependencies:
-   - `pnpm install`
-3. Run the public app:
-   - `pnpm dev`
-4. Enable admin editing when needed:
-   - copy `.env.example` to `.env.local`
-   - set `ADMIN_TOKEN_SUPER_ADMIN`
-   - set `ADMIN_APP_HOSTS` for the host-gated admin surface
-5. Verify routes:
-   - public site: `http://localhost:3000`
-   - admin login: `http://admin.localhost:3000/admin/login`
+1. Install Node.js `22.14+`.
+2. Install dependencies with `pnpm install`.
+3. Start the app with `pnpm dev`.
+4. Copy `.env.example` to `.env.local` and set admin secrets when using `/admin`.
 
-## Current Product Scope
-
-- Public IA:
-  - `/` Home
-  - `/shop` Products
-  - `/products/[slug]` Product details
-  - `/about`
-  - `/vision`
-  - `/careers`
-  - `/contact`
-- Product pages focus on descriptions, pack sizes, ingredients, allergens, and direct enquiry paths.
-- The admin surface remains host-gated for content and operational management.
-- Legacy commerce, portal, customer, and traceability modules may still exist in the codebase, but they are not part of the intended public website direction.
-
-## Current Progress
-
-- Manufacturer-first public shell and homepage are in place.
-- Product catalogue and product detail routes have been simplified for a corporate website posture.
-- Production standards are presented as homepage content rather than a feature-heavy public module.
-- Legacy distributor and traceability routes now redirect to core public pages.
-- Core CMS-managed pages remain editable through the admin surface.
-- Chat assistant scope is aligned to product, company, enquiry, and careers guidance.
-- SEO foundations remain in place through metadata, sitemap generation, and structured data.
-
-## Build Hygiene
-
-- Production build should be validated on Node.js `22.14+`.
-- Run `pnpm lint` and `pnpm typecheck` before release work.
-- Generated runtime artifacts such as `.next-dev*.log` and `apps/web/tsconfig.tsbuildinfo` should remain local-only.
-- Telemetry state in `apps/web/data/observability.json` is runtime data, not release content.
-- `AUTH_SECRET` is required in production.
-
-## Immediate Cleanup Direction
-
-1. Continue archiving or deprecating legacy commerce, customer, B2B portal, and traceability modules that are no longer part of the public site.
-2. Keep public copy focused on manufacturing credibility, products, company story, careers, and contact.
-3. Use placeholders only for media, not public-facing business copy.
-
-## GitHub Setup
+## Verification
 
 ```bash
-git init
-git add .
-git commit -m "chore: scaffold nestfoodsltd corporate website foundation"
-git branch -M main
-git remote add origin <YOUR_GITHUB_REPO_URL>
-git push -u origin main
+pnpm --filter @nestfoodsltd/web typecheck
+pnpm --filter @nestfoodsltd/web build
 ```

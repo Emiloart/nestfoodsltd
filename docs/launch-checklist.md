@@ -1,41 +1,33 @@
-# Launch Checklist + SLA Monitoring
+# Launch Checklist
 
-## Go-Live Checklist
+## Content
 
-- [ ] DNS and TLS verified for primary and admin domains
-- [ ] Production secrets configured and validated
-- [ ] Payment providers in live mode with webhook verification
-- [ ] Backup/restore test completed within last 7 days
-- [ ] Legal pages and privacy flows verified
-- [ ] Traceability lookup and batch data validated
-- [ ] Core flows pass smoke test:
-  - [ ] Browse + product details
-  - [ ] Cart + checkout
-  - [ ] Customer account
-  - [ ] B2B quote flow
-  - [ ] Admin content update
-- [ ] Observability and alert channels active
+- [ ] Public brand reads De-Nest Bread.
+- [ ] Legal contexts read Nest Foods Limited.
+- [ ] Product catalogue includes the four cleaned PDF products.
+- [ ] Contact page includes phones, emails, WhatsApp numbers, contact locations, and social placeholders.
+- [ ] Careers page includes HR email, HR phone, roles, application guidance, and equal opportunity statement.
+- [ ] Terms and privacy copy reviewed by the business.
 
-## SLA Baseline
+## Technical
 
-- Availability target: `99.9%` monthly
-- Incident response:
-  - P1 acknowledge within 15 minutes
-  - P2 acknowledge within 30 minutes
-  - P3 acknowledge within 4 hours
-- Error budget:
-  - monthly downtime budget aligned with 99.9% target
+- [ ] `pnpm --filter @nestfoodsltd/web typecheck`
+- [ ] `pnpm --filter @nestfoodsltd/web build`
+- [ ] Sitemap contains only approved public pages and product detail pages.
+- [ ] Admin dashboard links only to retained modules.
+- [ ] Catalogue manager exposes only corporate catalogue fields.
+- [ ] Privacy preference save works from banner and privacy page.
+- [ ] Mobile nav and footer match the simplified route map.
 
-## Monitoring Signals
+## Media
 
-- API health endpoint uptime (`/api/health`)
-- Core Web Vitals budget violations (LCP/INP/CLS)
-- Captured client/server error event volume
-- Checkout and payment failure rates
-- Traceability lookup failure rates
+- [ ] Hero poster is present.
+- [ ] Hero video is compressed, muted, looped, and self-hosted if used.
+- [ ] Product images use placeholders until final assets are available.
 
-## Post-Launch Cadence
+## Deployment
 
-- First 24 hours: hourly checks
-- First 7 days: daily reliability summary
-- Ongoing: weekly ops review + monthly SLA report
+- [ ] `AUTH_SECRET` is set.
+- [ ] Admin hosts are configured.
+- [ ] Storage driver choices are confirmed.
+- [ ] Error monitoring and web vitals intake are reviewed.

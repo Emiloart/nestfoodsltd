@@ -117,18 +117,6 @@ function collectMediaUsageReferences(
     }
   }
 
-  for (const product of data.products) {
-    if (product.imageUrl === assetUrl) {
-      refs.push(`cms-product:${product.id}.imageUrl`);
-    }
-  }
-
-  for (const recipe of data.recipes) {
-    if (recipe.imageUrl === assetUrl) {
-      refs.push(`cms-recipe:${recipe.id}.imageUrl`);
-    }
-  }
-
   for (const asset of data.media) {
     if (asset.id === options?.excludeMediaId) {
       continue;

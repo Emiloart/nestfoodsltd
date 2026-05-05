@@ -1,4 +1,4 @@
-export type AuditActorType = "admin" | "customer" | "b2b" | "system" | "anonymous";
+export type AuditActorType = "admin" | "system" | "anonymous";
 
 export type AuditOutcome = "success" | "failure" | "blocked";
 

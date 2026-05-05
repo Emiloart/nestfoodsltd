@@ -5,9 +5,9 @@ import { HomeProductionStandardsSection } from "@/components/home/home-productio
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
 import { HomeTrustStrip } from "@/components/home/home-trust-strip";
+import { listCatalogueProducts } from "@/lib/catalog/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsBanners, getCmsPage } from "@/lib/cms/service";
-import { listCommerceProducts } from "@/lib/commerce/service";
 
 export default async function HomePage() {
   const [homePage, aboutPage, visionPage, contactPage, careersPage, banners, products] =
@@ -18,7 +18,7 @@ export default async function HomePage() {
       getCmsPage("contact"),
       getCmsPage("careers"),
       getCmsBanners(),
-      listCommerceProducts(),
+      listCatalogueProducts(),
     ]);
 
   const featuredBanner = banners[0];

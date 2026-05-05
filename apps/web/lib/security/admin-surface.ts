@@ -52,7 +52,6 @@ export function isAdminSurfacePath(pathname: string) {
   return (
     pathname.startsWith("/admin") ||
     pathname.startsWith("/api/admin") ||
-    pathname.startsWith("/api/cms") ||
-    pathname.startsWith("/api/b2b/admin")
+    pathname.startsWith("/api/cms")
   );
 }

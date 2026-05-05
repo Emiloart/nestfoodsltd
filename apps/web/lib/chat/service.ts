@@ -1,8 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 
-import { listCommerceFacets, listCommerceProducts } from "@/lib/commerce/service";
-import { type CommerceProduct } from "@/lib/commerce/types";
-import { type RecipeSearchResult } from "@/lib/recipes/types";
+import { listCatalogueProducts } from "@/lib/catalog/service";
 
 import { readChatData, writeChatData } from "./store";
 import {
@@ -35,45 +33,7 @@ type ConversationContext = {
   conversation: ChatConversation;
   recentMessages: ChatMessage[];
   previousIntent: ChatIntent;
-  previousConfidence: number;
-  email?: string;
-  orderNumber?: string;
-  batchCode?: string;
-  previousProductMessage?: string;
-  previousRecipeMessage?: string;
 };
-
-type ProductSearchOptions = {
-  searchTerm?: string;
-  category?: string;
-  tag?: string;
-  region?: string;
-  inStockOnly: boolean;
-};
-
-type RecipeSearchOptions = {
-  searchTerm?: string;
-  ingredientsHint?: string;
-  maxMinutes?: number;
-  minProteinG?: number;
-  maxCalories?: number;
-};
-
-type TraceabilityReplyTopic =
-  | "summary"
-  | "timeline"
-  | "certifications"
-  | "source"
-  | "processing"
-  | "dates";
-type B2BReplyTopic =
-  | "overview"
-  | "quote"
-  | "approval"
-  | "pricing"
-  | "invoice"
-  | "statement"
-  | "support";
 
 export type AskChatAgentInput = {
   message: string;
@@ -113,160 +73,24 @@ export type CaptureChatLeadResult = {
   lead: ChatLead;
 };
 
+const intentSet = new Set<ChatIntent>(chatIntentValues);
+
 const defaultQuickActions: ChatQuickAction[] = [
-  { label: "Compare breads", prompt: "Compare your bread options for me." },
-  { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-  { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
-  { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+  { label: "Products", prompt: "Show me the De-Nest Bread product range." },
+  { label: "About", prompt: "Tell me about Nest Foods Limited." },
+  { label: "Careers", prompt: "How can I learn about careers?" },
+  { label: "Contact", prompt: "Help me contact the team." },
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
   { label: "Products", href: "/shop" },
   { label: "About", href: "/about" },
-  { label: "Contact Team", href: "/contact" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact", href: "/contact" },
 ];
-
-const stopWords = new Set([
-  "the",
-  "and",
-  "for",
-  "with",
-  "that",
-  "this",
-  "from",
-  "have",
-  "please",
-  "help",
-  "need",
-  "show",
-  "about",
-  "what",
-  "which",
-  "where",
-  "when",
-  "into",
-  "your",
-  "our",
-  "just",
-  "want",
-  "some",
-  "any",
-  "find",
-  "give",
-  "products",
-  "product",
-  "options",
-  "option",
-  "catalog",
-  "details",
-  "detail",
-  "full",
-  "more",
-  "stock",
-  "available",
-  "status",
-  "timeline",
-  "update",
-  "updates",
-  "info",
-  "information",
-]);
-
-const greetingKeywords = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"];
-const b2bKeywords = [
-  "distributor",
-  "wholesale",
-  "bulk",
-  "retailer",
-  "b2b",
-  "quote",
-  "reseller",
-  "invoice",
-  "statement",
-  "account manager",
-  "partner portal",
-];
-const orderKeywords = ["order", "tracking", "track", "delivery", "shipment", "payment status"];
-const traceabilityKeywords = ["trace", "traceability", "batch", "qr", "lot", "certification"];
-const allergenKeywords = [
-  "allergen",
-  "allergy",
-  "gluten",
-  "dairy",
-  "milk",
-  "soy",
-  "nut",
-  "peanut",
-  "egg",
-  "sesame",
-];
-const recipeKeywords = ["recipe", "cook", "meal", "ingredient", "prep", "protein", "calorie"];
-const productKeywords = [
-  "bread",
-  "beverage",
-  "drink",
-  "product",
-  "shop",
-  "catalog",
-  "in stock",
-  "available in",
-];
-const orderFollowUpKeywords = [
-  "delivery",
-  "shipment",
-  "shipping",
-  "payment",
-  "paid",
-  "reference",
-  "items",
-  "address",
-  "where is it",
-  "timeline",
-];
-const traceabilityFollowUpKeywords = [
-  "timeline",
-  "history",
-  "source",
-  "farm",
-  "processing",
-  "facility",
-  "certification",
-  "certificate",
-  "expiry",
-  "production date",
-];
-const productFollowUpKeywords = ["in stock", "available", "region", "compare", "filter"];
-const recipeFollowUpKeywords = ["quick", "under", "minutes", "ingredient", "protein", "calorie"];
-const b2bFollowUpKeywords = [
-  "quote",
-  "approval",
-  "invoice",
-  "statement",
-  "support",
-  "ticket",
-  "pricing",
-  "portal",
-];
-const followUpKeywords = [
-  "this",
-  "that",
-  "it",
-  "those",
-  "these",
-  "same",
-  "more",
-  "details",
-  "full",
-];
-
-const intentSet = new Set<ChatIntent>(chatIntentValues);
-
-function normalizeToken(value: string) {
-  return value.trim().toLowerCase();
-}
 
 function sanitizeMessage(value: string) {
-  return value.replace(/\s+/g, " ").trim().slice(0, 1200);
+  return value.replace(/\s+/g, " ").trim();
 }
 
 function clipConfidence(value: number) {
@@ -276,239 +100,35 @@ function clipConfidence(value: number) {
   return Math.max(0, Math.min(1, value));
 }
 
-function includesAny(haystack: string, needles: string[]) {
-  return needles.some((needle) => haystack.includes(needle));
-}
-
-function formatLabel(value: string) {
-  return value.replace(/_/g, " ");
-}
-
-function buildConversationId() {
-  return `chat-${crypto.randomUUID()}`;
-}
-
-function buildSessionId() {
-  return `chat-session-${crypto.randomUUID()}`;
-}
-
-function extractEmail(value: string) {
-  const match = value.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
-  return match?.[0]?.toLowerCase();
-}
-
-function extractOrderNumber(value: string) {
-  const match = value.match(/\bNFL-\d{4}-\d{4}\b/i);
-  return match?.[0]?.toUpperCase();
-}
-
-function extractBatchCode(value: string) {
-  const orderNumber = extractOrderNumber(value);
-  const match = value.toUpperCase().match(/\b[A-Z]{2,8}-[A-Z0-9]{2,}(?:-[A-Z0-9]{1,})+\b/);
-  if (!match?.[0]) {
-    return null;
-  }
-  if (orderNumber && match[0] === orderNumber) {
-    return null;
-  }
-  return match[0];
-}
-
-function tokenizeSearchValue(value: string) {
-  return normalizeToken(value)
-    .split(/[^a-z0-9]+/)
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 2 && !stopWords.has(entry));
-}
-
-function toSearchTerm(message: string) {
-  return tokenizeSearchValue(message).slice(0, 7).join(" ");
-}
-
-function extractIngredientHint(message: string) {
-  const normalized = normalizeToken(message);
-  if (normalized.includes(",")) {
-    const entries = normalized
-      .split(",")
-      .map((entry) => entry.trim())
-      .filter((entry) => entry.length > 2);
-    if (entries.length > 0) {
-      return entries.slice(0, 6).join(",");
+function normalizeQuickActions(actions: ChatQuickAction[]) {
+  const seen = new Set<string>();
+  const normalized: ChatQuickAction[] = [];
+  for (const action of actions) {
+    const label = action.label.trim();
+    const prompt = action.prompt.trim();
+    const key = `${label}:${prompt}`.toLowerCase();
+    if (!label || !prompt || seen.has(key)) {
+      continue;
     }
+    seen.add(key);
+    normalized.push({ label, prompt });
   }
-
-  const withMatch = normalized.match(/\bwith\s+([a-z0-9,\s-]{3,})/);
-  if (!withMatch?.[1]) {
-    return "";
-  }
-  const entries = withMatch[1]
-    .split(/,| and /)
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 2);
-  return entries.slice(0, 6).join(",");
+  return normalized.slice(0, 4);
 }
 
-function findMatchingFacet(message: string, values: string[]) {
-  const normalized = normalizeToken(message);
-  return values.find((entry) => normalized.includes(normalizeToken(entry))) ?? null;
-}
-
-function hasShortFollowUpShape(message: string) {
-  const tokens = tokenizeSearchValue(message);
-  return tokens.length <= 4 || includesAny(normalizeToken(message), followUpKeywords);
-}
-
-function scoreTextMatch(text: string, tokens: string[]) {
-  const normalized = normalizeToken(text);
-  return tokens.reduce((score, token) => score + (normalized.includes(token) ? 1 : 0), 0);
-}
-
-function findLatestConversationValue(
-  messages: ChatMessage[],
-  extractor: (value: string) => string | null | undefined,
-) {
-  for (let index = messages.length - 1; index >= 0; index -= 1) {
-    const value = extractor(messages[index]?.content ?? "");
-    if (value) {
-      return value;
+function normalizeSuggestedLinks(links: ChatSuggestedLink[]) {
+  const seen = new Set<string>();
+  const normalized: ChatSuggestedLink[] = [];
+  for (const link of links) {
+    const label = link.label.trim();
+    const href = link.href.trim();
+    if (!label || !href || seen.has(href)) {
+      continue;
     }
+    seen.add(href);
+    normalized.push({ label, href });
   }
-  return undefined;
-}
-
-function findLatestIntentMessage(messages: ChatMessage[], intent: ChatIntent) {
-  for (let index = messages.length - 1; index >= 0; index -= 1) {
-    const message = messages[index];
-    if (message?.role === "user" && message.intent === intent) {
-      return message.content;
-    }
-  }
-  return undefined;
-}
-
-function getConversationMessages(data: ChatData, conversationId: string) {
-  return data.messages
-    .filter((entry) => entry.conversationId === conversationId)
-    .sort((left, right) => left.createdAt.localeCompare(right.createdAt));
-}
-
-function buildConversationContext(
-  data: ChatData,
-  conversation: ChatConversation,
-): ConversationContext {
-  const recentMessages = getConversationMessages(data, conversation.id).slice(-18);
-  const recentUserMessages = recentMessages.filter((entry) => entry.role === "user");
-
-  return {
-    conversation,
-    recentMessages,
-    previousIntent: conversation.lastIntent,
-    previousConfidence: conversation.lastConfidence,
-    email: findLatestConversationValue(recentUserMessages, extractEmail),
-    orderNumber: findLatestConversationValue(recentUserMessages, extractOrderNumber),
-    batchCode: findLatestConversationValue(recentUserMessages, extractBatchCode),
-    previousProductMessage: findLatestIntentMessage(recentMessages, "product_search"),
-    previousRecipeMessage: findLatestIntentMessage(recentMessages, "recipe_help"),
-  };
-}
-
-function resolveFollowUpIntent(
-  message: string,
-  context?: ConversationContext,
-): IntentResolution | null {
-  if (!context || context.previousIntent === "unknown") {
-    return null;
-  }
-
-  const normalized = normalizeToken(message);
-  const followUpMessage = hasShortFollowUpShape(message);
-
-  if (
-    context.previousIntent === "order_status" &&
-    (includesAny(normalized, orderFollowUpKeywords) ||
-      (followUpMessage && Boolean(context.orderNumber || context.email)))
-  ) {
-    return { intent: "order_status", confidence: 0.78 };
-  }
-
-  if (
-    context.previousIntent === "traceability_lookup" &&
-    (includesAny(normalized, traceabilityFollowUpKeywords) ||
-      (followUpMessage && Boolean(context.batchCode)))
-  ) {
-    return { intent: "traceability_lookup", confidence: 0.8 };
-  }
-
-  if (
-    context.previousIntent === "product_search" &&
-    (includesAny(normalized, productFollowUpKeywords) || followUpMessage)
-  ) {
-    return { intent: "product_search", confidence: 0.72 };
-  }
-
-  if (
-    context.previousIntent === "recipe_help" &&
-    (includesAny(normalized, recipeFollowUpKeywords) || followUpMessage)
-  ) {
-    return { intent: "recipe_help", confidence: 0.72 };
-  }
-
-  if (
-    context.previousIntent === "b2b_quote" &&
-    (includesAny(normalized, b2bFollowUpKeywords) || followUpMessage)
-  ) {
-    return { intent: "b2b_quote", confidence: 0.74 };
-  }
-
-  return null;
-}
-
-function resolveIntent(message: string, context?: ConversationContext): IntentResolution {
-  const normalized = normalizeToken(message);
-  if (!normalized) {
-    return { intent: "unknown", confidence: 0.2 };
-  }
-
-  if (extractOrderNumber(message) || includesAny(normalized, orderKeywords)) {
-    return { intent: "order_status", confidence: 0.88 };
-  }
-  if (extractBatchCode(message) || includesAny(normalized, traceabilityKeywords)) {
-    return { intent: "traceability_lookup", confidence: 0.9 };
-  }
-  if (includesAny(normalized, b2bKeywords)) {
-    return { intent: "b2b_quote", confidence: 0.9 };
-  }
-  if (includesAny(normalized, allergenKeywords)) {
-    return { intent: "allergen_help", confidence: 0.86 };
-  }
-  if (includesAny(normalized, recipeKeywords)) {
-    return { intent: "recipe_help", confidence: 0.83 };
-  }
-
-  const followUpIntent = resolveFollowUpIntent(message, context);
-  if (followUpIntent) {
-    return followUpIntent;
-  }
-
-  if (includesAny(normalized, greetingKeywords) && normalized.split(" ").length <= 7) {
-    return { intent: "greeting", confidence: 0.94 };
-  }
-  if (includesAny(normalized, productKeywords)) {
-    return { intent: "product_search", confidence: 0.78 };
-  }
-
-  if (
-    context?.previousIntent &&
-    context.previousIntent !== "unknown" &&
-    hasShortFollowUpShape(message)
-  ) {
-    return {
-      intent: context.previousIntent,
-      confidence: Math.max(0.58, Math.min(0.76, context.previousConfidence || 0.58)),
-    };
-  }
-
-  return { intent: "unknown", confidence: 0.44 };
+  return normalized.slice(0, 4);
 }
 
 function resolveConversation(
@@ -516,18 +136,17 @@ function resolveConversation(
   input: { conversationId?: string; sessionId?: string },
 ): ChatConversation {
   const requestedId = input.conversationId?.trim();
-  if (requestedId) {
-    const existing = data.conversations.find((entry) => entry.id === requestedId);
-    if (existing) {
-      return existing;
-    }
+  const existing = requestedId
+    ? data.conversations.find((entry) => entry.id === requestedId)
+    : null;
+  if (existing) {
+    return existing;
   }
 
   const now = new Date().toISOString();
-  const sessionId = input.sessionId?.trim() || buildSessionId();
   const conversation: ChatConversation = {
-    id: buildConversationId(),
-    sessionId,
+    id: `chat-${crypto.randomUUID()}`,
+    sessionId: input.sessionId?.trim() || `chat-session-${crypto.randomUUID()}`,
     channel: "web_widget",
     status: "open",
     lastIntent: "unknown",
@@ -540,575 +159,233 @@ function resolveConversation(
   return conversation;
 }
 
-function trimConversationMessages(data: ChatData, conversationId: string, maxMessages = 120) {
-  const scopedMessages = data.messages.filter((entry) => entry.conversationId === conversationId);
-  if (scopedMessages.length <= maxMessages) {
-    return;
-  }
+function buildConversationContext(data: ChatData, conversation: ChatConversation): ConversationContext {
+  const recentMessages = data.messages
+    .filter((entry) => entry.conversationId === conversation.id)
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
+    .slice(-8);
 
-  const keepMessageIds = new Set(scopedMessages.slice(-maxMessages).map((entry) => entry.id));
+  return {
+    conversation,
+    recentMessages,
+    previousIntent: conversation.lastIntent,
+  };
+}
+
+function trimConversationMessages(data: ChatData, conversationId: string) {
+  const conversationMessages = data.messages
+    .filter((entry) => entry.conversationId === conversationId)
+    .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+  const keepIds = new Set(conversationMessages.slice(0, 40).map((entry) => entry.id));
   data.messages = data.messages.filter(
-    (entry) => entry.conversationId !== conversationId || keepMessageIds.has(entry.id),
+    (entry) => entry.conversationId !== conversationId || keepIds.has(entry.id),
   );
 }
 
-function normalizeSuggestedLinks(input: ChatSuggestedLink[]) {
-  const seen = new Set<string>();
-  return input
-    .filter((entry) => entry.label.trim() && entry.href.trim())
-    .filter((entry) => {
-      const key = `${entry.label.trim().toLowerCase()}::${entry.href.trim()}`;
-      if (seen.has(key)) {
-        return false;
-      }
-      seen.add(key);
-      return true;
-    })
-    .slice(0, 6);
+function includesAny(message: string, keywords: string[]) {
+  return keywords.some((keyword) => message.includes(keyword));
 }
 
-function normalizeQuickActions(input: ChatQuickAction[]) {
-  const seen = new Set<string>();
-  return input
-    .filter((entry) => entry.label.trim() && entry.prompt.trim())
-    .filter((entry) => {
-      const key = entry.prompt.trim().toLowerCase();
-      if (seen.has(key)) {
-        return false;
-      }
-      seen.add(key);
-      return true;
-    })
-    .slice(0, 5);
+function resolveIntent(message: string, context: ConversationContext): IntentResolution {
+  const normalized = message.toLowerCase();
+
+  if (/^(hi|hello|hey|good morning|good afternoon|good evening)\b/.test(normalized)) {
+    return { intent: "greeting", confidence: 0.95 };
+  }
+
+  if (includesAny(normalized, ["career", "job", "hiring", "vacancy", "cv", "hr", "work"])) {
+    return { intent: "careers", confidence: 0.9 };
+  }
+
+  if (
+    includesAny(normalized, [
+      "contact",
+      "phone",
+      "call",
+      "email",
+      "whatsapp",
+      "address",
+      "location",
+      "social",
+      "enquiry",
+      "reach",
+    ])
+  ) {
+    return { intent: "contact_enquiry", confidence: 0.9 };
+  }
+
+  if (includesAny(normalized, ["allergen", "allergy", "gluten", "wheat", "milk", "soya"])) {
+    return { intent: "allergen_info", confidence: 0.86 };
+  }
+
+  if (
+    includesAny(normalized, [
+      "product",
+      "bread",
+      "loaf",
+      "jumbo",
+      "family",
+      "midi",
+      "mini",
+      "size",
+      "ingredient",
+    ])
+  ) {
+    return { intent: "product_info", confidence: 0.86 };
+  }
+
+  if (
+    includesAny(normalized, [
+      "about",
+      "company",
+      "founder",
+      "mission",
+      "vision",
+      "value",
+      "quality",
+      "standard",
+      "nafdac",
+      "son",
+      "nesrea",
+    ])
+  ) {
+    return { intent: "company_info", confidence: 0.86 };
+  }
+
+  if (context.previousIntent !== "unknown") {
+    return { intent: context.previousIntent, confidence: 0.58 };
+  }
+
+  return { intent: "unknown", confidence: 0.44 };
 }
 
-async function buildGreetingReply(): Promise<ChatReply> {
+function buildGreetingReply(): ChatReply {
   return {
     intent: "greeting",
     confidence: 0.96,
     answer:
-      "Hi. I can help with products, allergen guidance, company information, careers, and how to contact Nest Foods.",
+      "Hi. I can help with De-Nest Bread products, ingredients, allergen notes, company information, careers, and contact details.",
     quickActions: defaultQuickActions,
     suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: false,
   };
 }
 
-function parseProductSearchOptions(
-  message: string,
-  context: ConversationContext,
-  facets: Awaited<ReturnType<typeof listCommerceFacets>>,
-): ProductSearchOptions {
-  const normalized = normalizeToken(message);
-  const followUpSearchTerm =
-    !includesAny(normalized, productFollowUpKeywords) && tokenizeSearchValue(message).length > 0
-      ? toSearchTerm(message)
-      : undefined;
+async function buildProductReply(message: string): Promise<ChatReply> {
+  const products = await listCatalogueProducts({ search: message });
+  const fallbackProducts = products.length > 0 ? products : await listCatalogueProducts();
+  const summary = fallbackProducts
+    .slice(0, 4)
+    .map((product) => {
+      const sizes = product.packFormats.map((format) => format.label).join(", ");
+      return `${product.name}: ${product.shortDescription} Size: ${sizes}.`;
+    })
+    .join("\n");
 
   return {
-    searchTerm:
-      followUpSearchTerm || context.previousProductMessage
-        ? followUpSearchTerm || toSearchTerm(context.previousProductMessage ?? "")
-        : undefined,
-    category: findMatchingFacet(message, facets.categories) ?? undefined,
-    tag: undefined,
-    region: undefined,
-    inStockOnly: false,
-  };
-}
-
-function filterAndRankProducts(products: CommerceProduct[], options: ProductSearchOptions) {
-  let rankedProducts = [...products];
-
-  const tokens = options.searchTerm ? tokenizeSearchValue(options.searchTerm) : [];
-  if (tokens.length > 0) {
-    rankedProducts = rankedProducts
-      .map((product) => ({
-        product,
-        score: scoreTextMatch(
-          [
-            product.name,
-            product.category,
-            product.shortDescription,
-            product.longDescription,
-            product.tags.join(" "),
-            product.availableRegions.join(" "),
-          ].join(" "),
-          tokens,
-        ),
-      }))
-      .filter((entry) => entry.score > 0)
-      .sort((left, right) => {
-        if (left.score !== right.score) {
-          return right.score - left.score;
-        }
-        return left.product.name.localeCompare(right.product.name);
-      })
-      .map((entry) => entry.product);
-  }
-
-  return rankedProducts;
-}
-
-async function buildProductSearchReply(
-  message: string,
-  context: ConversationContext,
-): Promise<ChatReply> {
-  const facets = await listCommerceFacets();
-  const options = parseProductSearchOptions(message, context, facets);
-  const products = await listCommerceProducts({
-    category: options.category,
-  });
-  const rankedProducts = filterAndRankProducts(products, options);
-  const topProducts = rankedProducts.slice(0, 3);
-
-  if (topProducts.length === 0) {
-    return {
-      intent: "product_search",
-      confidence: 0.58,
-      answer:
-        "I could not find a strong product match yet. Try a bread type, category, ingredient, or pack size.",
-      quickActions: normalizeQuickActions([
-        { label: "Sliced bread", prompt: "Show sliced bread options." },
-        { label: "Premium range", prompt: "Show premium bread options." },
-        { label: "Allergen filter", prompt: "Help me filter bread options by allergens." },
-        { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      ]),
-      suggestedLinks: [{ label: "Open Products", href: "/shop" }],
-      handoffSuggested: false,
-    };
-  }
-
-  const activeFilters = [options.category].filter(Boolean);
-
-  const productLines = topProducts.map((product) => {
-    const packSizes = product.variants
-      .map((variant) => variant.sizeLabel ?? variant.name)
-      .filter(Boolean)
-      .join(", ");
-    return `• ${product.name} — ${product.category} · pack sizes ${packSizes || "available on request"}`;
-  });
-
-  const answerLines = [
-    `I found ${rankedProducts.length} product match${rankedProducts.length === 1 ? "" : "es"}${activeFilters.length > 0 ? ` for ${activeFilters.join(", ")}` : ""}.`,
-    productLines.join("\n"),
-  ];
-
-  return {
-    intent: "product_search",
-    confidence: rankedProducts.length > 0 ? 0.86 : 0.68,
-    answer: answerLines.join("\n\n"),
-    quickActions: normalizeQuickActions([
-      { label: "Category filter", prompt: "Filter these by category." },
-      { label: "Allergen filter", prompt: "Help me filter these by allergens." },
-      { label: "Make enquiry", prompt: "Help me contact Nest Foods about these products." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-    ]),
-    suggestedLinks: normalizeSuggestedLinks([
-      {
-        label: "Products",
-        href: options.searchTerm
-          ? `/shop?search=${encodeURIComponent(options.searchTerm)}`
-          : "/shop",
-      },
-      ...topProducts.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
-    ]),
-    handoffSuggested: false,
-  };
-}
-
-function extractMaxMinutes(message: string) {
-  const normalized = normalizeToken(message);
-  const match = normalized.match(
-    /\b(?:under|within|less than)\s+(\d{1,3})\s*(?:min|mins|minutes)\b/,
-  );
-  if (match?.[1]) {
-    return Number(match[1]);
-  }
-  const compactMatch = normalized.match(/\b(\d{1,3})\s*(?:min|mins|minutes)\b/);
-  if (compactMatch?.[1] && includesAny(normalized, ["under", "quick", "fast"])) {
-    return Number(compactMatch[1]);
-  }
-  return undefined;
-}
-
-function extractMaxCalories(message: string) {
-  const normalized = normalizeToken(message);
-  const match = normalized.match(/\b(?:under|below|less than)\s+(\d{2,4})\s*cal/);
-  if (match?.[1]) {
-    return Number(match[1]);
-  }
-  if (includesAny(normalized, ["lower calorie", "low calorie", "lighter"])) {
-    return 450;
-  }
-  return undefined;
-}
-
-function parseRecipeSearchOptions(
-  message: string,
-  context: ConversationContext,
-): RecipeSearchOptions {
-  const normalized = normalizeToken(message);
-  const searchTerm = toSearchTerm(message) || toSearchTerm(context.previousRecipeMessage ?? "");
-  const ingredientsHint = extractIngredientHint(message);
-
-  return {
-    searchTerm: searchTerm || undefined,
-    ingredientsHint: ingredientsHint || undefined,
-    maxMinutes: extractMaxMinutes(message),
-    minProteinG: includesAny(normalized, ["high protein", "more protein", "protein"])
-      ? 15
-      : undefined,
-    maxCalories: extractMaxCalories(message),
-  };
-}
-
-function filterAndRankRecipes(recipes: RecipeSearchResult[], options: RecipeSearchOptions) {
-  let rankedRecipes = [...recipes];
-
-  if (options.searchTerm) {
-    const tokens = tokenizeSearchValue(options.searchTerm);
-    if (tokens.length > 0) {
-      rankedRecipes = rankedRecipes
-        .map((recipe) => ({
-          recipe,
-          score:
-            recipe.matchScore +
-            scoreTextMatch(
-              [
-                recipe.title,
-                recipe.description,
-                recipe.tags.join(" "),
-                recipe.ingredients.join(" "),
-              ].join(" "),
-              tokens,
-            ),
-        }))
-        .filter((entry) => entry.score > 0)
-        .sort((left, right) => right.score - left.score)
-        .map((entry) => entry.recipe);
-    }
-  }
-
-  if (options.maxMinutes !== undefined) {
-    rankedRecipes = rankedRecipes.filter(
-      (recipe) => recipe.prepMinutes + recipe.cookMinutes <= options.maxMinutes!,
-    );
-  }
-  if (options.minProteinG !== undefined) {
-    rankedRecipes = rankedRecipes.filter(
-      (recipe) => recipe.nutritionPerServing.proteinG >= options.minProteinG!,
-    );
-  }
-  if (options.maxCalories !== undefined) {
-    rankedRecipes = rankedRecipes.filter(
-      (recipe) => recipe.nutritionPerServing.calories <= options.maxCalories!,
-    );
-  }
-
-  return rankedRecipes;
-}
-
-async function buildRecipeReply(message: string, context: ConversationContext): Promise<ChatReply> {
-  const options = parseRecipeSearchOptions(message, context);
-  filterAndRankRecipes([], options);
-  const ingredientHint = options.ingredientsHint
-    ? ` If you are evaluating products for ingredients like ${options.ingredientsHint}, I can point you to the closest bread options instead.`
-    : "";
-
-  return {
-    intent: "recipe_help",
-    confidence: 0.78,
+    intent: "product_info",
+    confidence: fallbackProducts.length > 0 ? 0.88 : 0.58,
     answer:
-      "Nest Foods no longer presents recipe guidance as a core public feature on this corporate site. I can still help you review products, ingredients, allergen information, company information, and contact routes." +
-      ingredientHint,
+      summary ||
+      "The De-Nest Bread catalogue is being prepared. Use the contact page for product enquiries.",
     quickActions: normalizeQuickActions([
-      { label: "View products", prompt: "Show me the Nest Foods product range." },
-      { label: "Allergen help", prompt: "Help me filter products by allergens." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+      { label: "Allergens", prompt: "Show allergen notes for the products." },
+      { label: "Contact", prompt: "Help me contact the team." },
+      ...defaultQuickActions,
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "Products", href: "/shop" },
-      { label: "Contact Team", href: "/contact" },
+      { label: "Contact", href: "/contact" },
     ]),
     handoffSuggested: false,
   };
 }
 
-function resolveAllergen(message: string, knownAllergens: string[]) {
-  const normalized = normalizeToken(message);
-  const allergenAliases = [
-    "gluten",
-    "wheat",
-    "dairy",
-    "milk",
-    "soy",
-    "nut",
-    "nuts",
-    "peanut",
-    "egg",
-    "sesame",
-  ];
-
-  for (const alias of allergenAliases) {
-    if (!normalized.includes(alias)) {
-      continue;
-    }
-    const match = knownAllergens.find((entry) => normalizeToken(entry).includes(alias));
-    return match ?? alias;
-  }
-
-  const direct = knownAllergens.find((entry) => normalized.includes(normalizeToken(entry)));
-  return direct ?? null;
-}
-
-function tokenizeAllergen(allergen: string) {
-  return normalizeToken(allergen)
-    .split(/[^a-z0-9]+/)
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 2);
-}
-
-async function buildAllergenReply(message: string): Promise<ChatReply> {
-  const [facets, products] = await Promise.all([listCommerceFacets(), listCommerceProducts()]);
-  const allergen = resolveAllergen(message, facets.allergens);
-
-  if (!allergen) {
-    return {
-      intent: "allergen_help",
-      confidence: 0.62,
-      answer:
-        "Tell me the allergen to exclude, such as gluten, soy, dairy, nuts, sesame, or egg, and I will narrow the products.",
-      quickActions: normalizeQuickActions([
-        { label: "Gluten-safe", prompt: "Show products that avoid gluten." },
-        { label: "Soy-safe", prompt: "Show products that avoid soy." },
-        { label: "Dairy-safe", prompt: "Show products that avoid dairy." },
-      ]),
-      suggestedLinks: [{ label: "Products", href: "/shop" }],
-      handoffSuggested: false,
-    };
-  }
-
-  const allergenTokens = tokenizeAllergen(allergen);
-  const safeProducts = products.filter((product) =>
-    product.allergens.every((entry) => {
-      const entryToken = normalizeToken(entry);
-      return allergenTokens.every((token) => !entryToken.includes(token));
-    }),
-  );
-
-  if (safeProducts.length === 0) {
-    return {
-      intent: "allergen_help",
-      confidence: 0.72,
-      answer: `I did not find safe matches for "${allergen}" right now. A specialist should confirm alternatives and handling details.`,
-      quickActions: normalizeQuickActions([
-        { label: "Try another allergen", prompt: "Help me filter by another allergen." },
-        { label: "Human support", prompt: "I need human support for allergen guidance." },
-        ...defaultQuickActions.slice(0, 1),
-      ]),
-      suggestedLinks: normalizeSuggestedLinks([
-        {
-          label: "Filtered Products",
-          href: `/shop?allergenExclude=${encodeURIComponent(allergen)}`,
-        },
-        { label: "Contact Team", href: "/contact" },
-      ]),
-      handoffSuggested: true,
-      handoffReason: "No safe products found for the selected allergen.",
-    };
-  }
-
-  const topSafe = safeProducts.slice(0, 3);
-  const safeLines = topSafe.map((product) => `• ${product.name} (${product.category})`);
+async function buildAllergenReply(): Promise<ChatReply> {
+  const products = await listCatalogueProducts();
+  const allergens = [...new Set(products.flatMap((product) => product.allergens))].join(", ");
 
   return {
-    intent: "allergen_help",
-    confidence: 0.83,
-    answer: `Top options excluding "${allergen}":\n${safeLines.join("\n")}`,
-    quickActions: normalizeQuickActions([
-      { label: "Filter in products", prompt: `Show products excluding ${allergen}.` },
-      { label: "Compare ingredients", prompt: "Compare ingredient details for these products." },
-      ...defaultQuickActions.slice(0, 1),
-    ]),
-    suggestedLinks: normalizeSuggestedLinks([
-      { label: "Filtered Products", href: `/shop?allergenExclude=${encodeURIComponent(allergen)}` },
-      ...topSafe.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
-    ]),
-    handoffSuggested: false,
-  };
-}
-
-async function buildOrderStatusReply(
-  _message: string,
-  _context: ConversationContext,
-): Promise<ChatReply> {
-  void _message;
-  void _context;
-  return {
-    intent: "order_status",
+    intent: "allergen_info",
     confidence: 0.88,
     answer:
-      "Nest Foods does not provide public online ordering or self-serve order tracking on this website. For any follow-up request, contact the team directly.",
+      allergens.length > 0
+        ? `Current product allergen notes: ${allergens}. Review each product page or contact Nest Foods Limited for specific product guidance.`
+        : "Allergen notes are being prepared for the catalogue. Use the contact page for specific product guidance.",
     quickActions: normalizeQuickActions([
-      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-      { label: "Products", prompt: "Show me the Nest Foods product range." },
+      { label: "Products", prompt: "Show me the De-Nest Bread product range." },
+      { label: "Contact", prompt: "Help me contact the team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Contact Team", href: "/contact" },
-      { label: "About", href: "/about" },
       { label: "Products", href: "/shop" },
-    ]),
-    handoffSuggested: true,
-    handoffReason: "Public order tracking is not part of the corporate site.",
-  };
-}
-
-function resolveTraceabilityReplyTopic(message: string): TraceabilityReplyTopic {
-  const normalized = normalizeToken(message);
-  if (includesAny(normalized, ["timeline", "history", "stages"])) {
-    return "timeline";
-  }
-  if (includesAny(normalized, ["certification", "certificate", "certified"])) {
-    return "certifications";
-  }
-  if (includesAny(normalized, ["source", "farm", "origin", "lot reference"])) {
-    return "source";
-  }
-  if (includesAny(normalized, ["processing", "facility", "packaged", "qa"])) {
-    return "processing";
-  }
-  if (includesAny(normalized, ["production date", "expiry", "dates", "harvested"])) {
-    return "dates";
-  }
-  return "summary";
-}
-
-async function buildTraceabilityReply(
-  message: string,
-  context: ConversationContext,
-): Promise<ChatReply> {
-  const topic = resolveTraceabilityReplyTopic(message);
-  void message;
-  void context;
-  const traceabilityReplyByTopic: Record<TraceabilityReplyTopic, string> = {
-    summary:
-      "Nest Foods no longer exposes public batch traceability on this corporate site. Use the contact page if you need help with a product enquiry.",
-    timeline:
-      "Public batch timelines are not part of the current Nest Foods website. Contact the team if you need product guidance.",
-    certifications:
-      "Certification and quality discussions are handled directly by the Nest Foods team rather than through a public batch lookup experience.",
-    source:
-      "Ingredient sourcing and production quality are not exposed through a public traceability tool on this website.",
-    processing:
-      "Processing detail is not exposed through a public batch-by-batch lookup flow on this website.",
-    dates:
-      "Production dates and batch histories are not exposed publicly on this corporate site. Contact the team if you need product guidance.",
-  };
-
-  return {
-    intent: "traceability_lookup",
-    confidence: 0.9,
-    answer: traceabilityReplyByTopic[topic],
-    quickActions: normalizeQuickActions([
-      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      { label: "Products", prompt: "Show me the Nest Foods product range." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-    ]),
-    suggestedLinks: normalizeSuggestedLinks([
-      { label: "Contact Team", href: "/contact" },
-      { label: "About", href: "/about" },
-    ]),
-    handoffSuggested: true,
-    handoffReason: "Public batch traceability is no longer part of the corporate site.",
-  };
-}
-
-function resolveB2BReplyTopic(message: string): B2BReplyTopic {
-  const normalized = normalizeToken(message);
-  if (includesAny(normalized, ["quote", "quotation", "pricing request", "bulk order"])) {
-    return "quote";
-  }
-  if (includesAny(normalized, ["approval", "approved", "application"])) {
-    return "approval";
-  }
-  if (includesAny(normalized, ["pricing", "tier", "discount", "minimum order"])) {
-    return "pricing";
-  }
-  if (includesAny(normalized, ["invoice", "billing", "due"])) {
-    return "invoice";
-  }
-  if (includesAny(normalized, ["statement", "account statement"])) {
-    return "statement";
-  }
-  if (includesAny(normalized, ["support", "ticket", "account manager", "issue"])) {
-    return "support";
-  }
-  return "overview";
-}
-
-async function buildB2BReply(message: string): Promise<ChatReply> {
-  const topic = resolveB2BReplyTopic(message);
-
-  const answerByTopic: Record<B2BReplyTopic, string> = {
-    overview: "Nest Foods does not expose partner or portal workflows on this public website.",
-    quote:
-      "Bulk quote and partner onboarding workflows are not part of the public website. Use the contact route if you need help.",
-    approval: "Public approval or partner onboarding workflows are not part of this website.",
-    pricing:
-      "Public tiered pricing and quote tooling are not part of this corporate site. Use the contact route to start a conversation.",
-    invoice:
-      "Invoices and operational account workflows are not exposed through the public website. Contact the team directly if you need help.",
-    statement: "Statements and account history are not presented through the public website.",
-    support:
-      "Direct contact with the Nest Foods team is the correct path for follow-up on this public website.",
-  };
-
-  return {
-    intent: "b2b_quote",
-    confidence: 0.9,
-    answer: answerByTopic[topic],
-    quickActions: normalizeQuickActions([
-      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
-      { label: "Products", prompt: "Show me the Nest Foods product range." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-    ]),
-    suggestedLinks: normalizeSuggestedLinks([
-      { label: "Contact Team", href: "/contact" },
-      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
     ]),
     handoffSuggested: false,
   };
 }
 
-async function buildUnknownReply(context?: ConversationContext): Promise<ChatReply> {
-  const contextualAction =
-    context?.previousIntent && context.previousIntent !== "unknown"
-      ? {
-          label: "Continue previous topic",
-          prompt: "Continue with the previous topic.",
-        }
-      : null;
-
+function buildCompanyReply(): ChatReply {
   return {
-    intent: "unknown",
-    confidence: 0.45,
+    intent: "company_info",
+    confidence: 0.88,
     answer:
-      "I do not have a strong match for that request yet. I can still help with products, allergen guidance, company information, careers, and contact routes.",
+      "De-Nest Bread is the public brand of Nest Foods Limited. The company was incorporated on 18 November 2022, operates from Awka, Anambra State, and focuses on hygienic bread production, selected ingredients, quality control, and consistent bakery products.",
     quickActions: normalizeQuickActions([
-      ...(contextualAction ? [contextualAction] : []),
-      { label: "Product help", prompt: "Help me find the right products." },
-      { label: "About Nest Foods", prompt: "Tell me about Nest Foods." },
-      { label: "Careers", prompt: "How can I learn about careers at Nest Foods?" },
-      { label: "Contact team", prompt: "Help me contact the Nest Foods team." },
+      { label: "Vision", prompt: "Tell me about the company vision." },
+      { label: "Products", prompt: "Show me the De-Nest Bread product range." },
+      { label: "Contact", prompt: "Help me contact the team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Contact Team", href: "/contact" },
-      { label: "Products", href: "/shop" },
       { label: "About", href: "/about" },
+      { label: "Vision", href: "/vision" },
+      { label: "Contact", href: "/contact" },
     ]),
+    handoffSuggested: false,
+  };
+}
+
+function buildCareersReply(): ChatReply {
+  return {
+    intent: "careers",
+    confidence: 0.9,
+    answer:
+      "Nest Foods Limited accepts career enquiries for production, management, accounting, sales, marketing, driving, cleaning, and operations support roles. HR contact: hrsupport@nestfoodsltd.com or 09116337168.",
+    quickActions: normalizeQuickActions([
+      { label: "Careers page", prompt: "Open careers guidance." },
+      { label: "Contact", prompt: "Help me contact the team." },
+    ]),
+    suggestedLinks: normalizeSuggestedLinks([
+      { label: "Careers", href: "/careers" },
+      { label: "Contact", href: "/contact" },
+    ]),
+    handoffSuggested: false,
+  };
+}
+
+function buildContactReply(): ChatReply {
+  return {
+    intent: "contact_enquiry",
+    confidence: 0.9,
+    answer:
+      "You can contact Nest Foods Limited by phone on 07066898953, 08064107897, or 09116337168. Official emails are info@nestfoodsltd.com, sales@nestfoodsltd.com, hrsupport@nestfoodsltd.com, and adminsupport@nestfoodsltd.com.",
+    quickActions: normalizeQuickActions([
+      { label: "Products", prompt: "Show me the De-Nest Bread product range." },
+      { label: "Careers", prompt: "How can I learn about careers?" },
+    ]),
+    suggestedLinks: normalizeSuggestedLinks([{ label: "Contact", href: "/contact" }]),
+    handoffSuggested: true,
+    handoffReason: "Contact details are the right next step for this request.",
+  };
+}
+
+function buildUnknownReply(): ChatReply {
+  return {
+    intent: "unknown",
+    confidence: 0.44,
+    answer:
+      "I do not have a strong match for that request. I can help with De-Nest Bread products, ingredients, allergen notes, company information, careers, and contact details.",
+    quickActions: defaultQuickActions,
+    suggestedLinks: defaultSuggestedLinks,
     handoffSuggested: true,
     handoffReason: "Low answer confidence for the current request.",
   };
@@ -1117,28 +394,25 @@ async function buildUnknownReply(context?: ConversationContext): Promise<ChatRep
 async function buildReply(input: {
   message: string;
   intent: ChatIntent;
-  confidence: number;
   context: ConversationContext;
 }) {
   const normalizedIntent = intentSet.has(input.intent) ? input.intent : "unknown";
   switch (normalizedIntent) {
     case "greeting":
       return buildGreetingReply();
-    case "product_search":
-      return buildProductSearchReply(input.message, input.context);
-    case "recipe_help":
-      return buildRecipeReply(input.message, input.context);
-    case "allergen_help":
-      return buildAllergenReply(input.message);
-    case "order_status":
-      return buildOrderStatusReply(input.message, input.context);
-    case "traceability_lookup":
-      return buildTraceabilityReply(input.message, input.context);
-    case "b2b_quote":
-      return buildB2BReply(input.message);
+    case "product_info":
+      return buildProductReply(input.message);
+    case "allergen_info":
+      return buildAllergenReply();
+    case "company_info":
+      return buildCompanyReply();
+    case "careers":
+      return buildCareersReply();
+    case "contact_enquiry":
+      return buildContactReply();
     case "unknown":
     default:
-      return buildUnknownReply(input.context);
+      return buildUnknownReply();
   }
 }
 
@@ -1158,7 +432,6 @@ export async function askChatAgent(input: AskChatAgentInput): Promise<AskChatAge
   const reply = await buildReply({
     message,
     intent: intentResolution.intent,
-    confidence: intentResolution.confidence,
     context,
   });
 

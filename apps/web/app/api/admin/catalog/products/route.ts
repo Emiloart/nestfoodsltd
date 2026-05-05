@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { hasAdminPermission, resolveAdminRoleFromRequest } from "@/lib/admin/auth";
 import { logAuditEvent } from "@/lib/audit/service";
-import { createAdminCommerceProduct, listAdminCommerceProducts } from "@/lib/commerce/service";
+import { createAdminCatalogueProduct, listAdminCatalogueProducts } from "@/lib/catalog/service";
 import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 import { createProductSchema } from "./schema";
 
@@ -22,7 +22,7 @@ function logCatalogAuditEvent(
     actorType: "admin",
     actorRole: input.actorRole,
     action: input.action,
-    resourceType: "commerce.product",
+    resourceType: "catalogue.product",
     resourceId: input.resourceId,
     outcome: input.outcome,
     severity: input.severity,
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden: missing cms.catalog.read" }, { status: 403 });
   }
 
-  const products = await listAdminCommerceProducts();
+  const products = await listAdminCatalogueProducts();
   return NextResponse.json({ role, products });
 }
 
@@ -95,9 +95,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const product = await createAdminCommerceProduct(validated.data);
+    const product = await createAdminCatalogueProduct(validated.data);
     revalidatePath("/shop");
-    revalidatePath("/b2b");
     revalidatePath(`/products/${product.slug}`);
     logCatalogAuditEvent(request, {
       actorRole: role,

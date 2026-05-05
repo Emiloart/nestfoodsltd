@@ -6,10 +6,10 @@ export const CMS_SEED_DATA: CmsData = {
   pages: {
     home: {
       slug: "home",
-      title: "Nest Foods Ltd",
-      headline: "Premium bread production built on quality, consistency, and trust.",
+      title: "De-Nest Bread",
+      headline: "Baking memories, one slice at a time.",
       description:
-        "Nest Foods Ltd presents a manufacturer-first public experience focused on dependable bread products, production standards, company credibility, and clear contact routes.",
+        "De-Nest Bread is the public bread brand of Nest Foods Limited, a corporate bakery focused on hygienic production, consistent quality, and dependable product information.",
       status: "published",
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
@@ -21,9 +21,9 @@ export const CMS_SEED_DATA: CmsData = {
       heroVideoPosterUrl: "/placeholders/hero/hero-video-poster-placeholder.svg",
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
-        title: "Nest Foods Ltd | Premium Bread Manufacturer",
+        title: "De-Nest Bread | Premium Bread Manufacturer",
         description:
-          "Premium bread manufacturing, production standards, and product information for communities across Africa.",
+          "Premium bread products, production standards, and company information from Nest Foods Limited.",
         ogImageUrl: "/placeholders/hero/hero-image-placeholder.svg",
       },
       updatedAt: now,
@@ -31,18 +31,18 @@ export const CMS_SEED_DATA: CmsData = {
     },
     about: {
       slug: "about",
-      title: "About Nest Foods Ltd",
-      headline: "A bread manufacturer built to earn trust through daily consistency.",
+      title: "About Nest Foods Limited",
+      headline: "A bread manufacturer built on quality, consistency, and trust.",
       description:
-        "This CMS-driven page supports brand story, manufacturing credibility, leadership narrative, and the operational milestones behind trusted bread supply.",
+        "Nest Foods Limited was incorporated on 18 November 2022 and operates De-Nest Bread from Awka, Anambra State with a focus on hygienic production and affordable quality bakery products.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
-        title: "About Nest Foods Ltd",
-        description: "Learn about Nest Foods Ltd mission, values, and growth strategy.",
+        title: "About Nest Foods Limited",
+        description: "Learn about Nest Foods Limited, the company behind De-Nest Bread.",
         ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       },
       updatedAt: now,
@@ -51,18 +51,17 @@ export const CMS_SEED_DATA: CmsData = {
     vision: {
       slug: "vision",
       title: "Vision & Mission",
-      headline:
-        "Build a trusted African bread brand rooted in safe production and reliable distribution.",
+      headline: "To become a leading bakery and confectionery company.",
       description:
-        "This section remains fully dynamic for mission statements, strategic pillars, expansion planning, and long-term quality commitments.",
+        "Nest Foods Limited produces baked products and confectioneries under hygienic conditions using selected ingredients for human nourishment.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
-        title: "Vision & Mission | Nest Foods Ltd",
-        description: "Explore the long-term vision and strategic mission behind Nest Foods Ltd.",
+        title: "Vision & Mission | De-Nest Bread",
+        description: "Explore the mission, vision, and values behind De-Nest Bread.",
         ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       },
       updatedAt: now,
@@ -70,18 +69,18 @@ export const CMS_SEED_DATA: CmsData = {
     },
     contact: {
       slug: "contact",
-      title: "Contact & Locations",
-      headline: "Speak with Nest Foods teams about products, company details, and enquiries.",
+      title: "Contact Nest Foods Limited",
+      headline: "Speak with the Nest Foods Limited team.",
       description:
-        "Use this page for office details, product enquiries, careers follow-up, and direct contact with Nest Foods teams.",
+        "Use this page for product enquiries, office contacts, social placeholders, and career contact details.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
-        title: "Contact Nest Foods Ltd",
-        description: "Reach Nest Foods Ltd teams and offices for enquiries and support.",
+        title: "Contact Nest Foods Limited",
+        description: "Reach Nest Foods Limited for De-Nest Bread product and company enquiries.",
         ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       },
       updatedAt: now,
@@ -90,36 +89,17 @@ export const CMS_SEED_DATA: CmsData = {
     careers: {
       slug: "careers",
       title: "Careers",
-      headline: "Join the teams shaping production, quality, and reliable distribution.",
+      headline: "Join the team behind De-Nest Bread.",
       description:
-        "This page supports dynamic openings across production, quality assurance, operations, commercial, and support roles.",
+        "Nest Foods Limited welcomes career enquiries across production, management, accounting, sales, marketing, driving, cleaning, and operations support roles.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       logoImageUrl: "/brand/logos/logo-primary.svg",
       seo: {
-        title: "Careers at Nest Foods Ltd",
-        description: "Build your career with an ambitious food manufacturing platform.",
-        ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
-      },
-      updatedAt: now,
-      revisions: [],
-    },
-    sustainability: {
-      slug: "sustainability",
-      title: "Sustainability",
-      headline: "Responsible sourcing, efficient baking, and accountable distribution.",
-      description:
-        "Publish transparent impact metrics, sourcing standards, packaging improvements, and certification milestones.",
-      status: "published",
-      publishAt: now,
-      heroMediaKind: "image",
-      heroImageUrl: "/placeholders/sections/section-image-placeholder.svg",
-      logoImageUrl: "/brand/logos/logo-primary.svg",
-      seo: {
-        title: "Sustainability | Nest Foods Ltd",
-        description: "Track sustainability commitments and measurable impact initiatives.",
+        title: "Careers at Nest Foods Limited",
+        description: "Career guidance and HR contacts for Nest Foods Limited.",
         ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
       },
       updatedAt: now,
@@ -129,9 +109,8 @@ export const CMS_SEED_DATA: CmsData = {
   banners: [
     {
       id: "banner-home-1",
-      label: "Need Guidance?",
-      headline:
-        "Review product details, company information, and contact options from one public experience.",
+      label: "Product Guidance",
+      headline: "Review De-Nest Bread products and contact Nest Foods Limited from one place.",
       ctaLabel: "Contact Team",
       ctaHref: "/contact",
       imageUrl: "/placeholders/hero/hero-image-placeholder.svg",
@@ -147,7 +126,7 @@ export const CMS_SEED_DATA: CmsData = {
       label: "Primary Logo Placeholder",
       kind: "image",
       url: "/brand/logos/logo-primary.svg",
-      altText: "Nest Foods Ltd logo placeholder",
+      altText: "De-Nest Bread logo placeholder",
       folder: "branding",
       updatedAt: now,
     },
@@ -167,29 +146,6 @@ export const CMS_SEED_DATA: CmsData = {
       url: "/placeholders/hero/hero-video-poster-placeholder.svg",
       altText: "Hero video poster placeholder",
       folder: "homepage",
-      updatedAt: now,
-    },
-  ],
-  products: [
-    {
-      id: "prod-placeholder-1",
-      name: "Signature Blend Placeholder",
-      slug: "signature-blend-placeholder",
-      status: "published",
-      imageUrl: "/placeholders/products/product-placeholder.svg",
-      nutritionSummary: "Nutritional values will be configured in catalog manager.",
-      allergens: ["None configured"],
-      updatedAt: now,
-    },
-  ],
-  recipes: [
-    {
-      id: "recipe-placeholder-1",
-      title: "Recipe Placeholder",
-      slug: "recipe-placeholder",
-      status: "draft",
-      imageUrl: "/placeholders/sections/section-image-placeholder.svg",
-      ingredients: ["Ingredient data will be configured in admin."],
       updatedAt: now,
     },
   ],

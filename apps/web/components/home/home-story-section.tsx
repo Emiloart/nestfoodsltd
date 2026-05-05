@@ -39,7 +39,7 @@ export function HomeStorySection({ aboutPage, visionPage }: HomeStorySectionProp
       <SectionHeading
         eyebrow="About & Vision"
         title="The company story and long-term direction."
-        description="Learn how Nest Foods presents its manufacturing heritage, values, and growth ambition."
+        description="Learn how Nest Foods Limited presents its manufacturing values and growth ambition."
         descriptionClassName="hidden md:block"
       />
 

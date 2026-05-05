@@ -15,7 +15,7 @@ type HomeHeroSectionProps = {
 const heroMetrics = [
   { value: "Quality", label: "Daily product assurance checks" },
   { value: "Hygiene", label: "Controlled production routines" },
-  { value: "Support", label: "Direct enquiry follow-up" },
+  { value: "Enquiry", label: "Direct contact follow-up" },
   { value: "Consistency", label: "Dependable manufacturing standards" },
 ];
 
@@ -26,7 +26,7 @@ export function HomeHeroSection({ page, banner }: HomeHeroSectionProps) {
         <div className="max-w-3xl space-y-6">
           <div className="flex flex-wrap items-center gap-3">
             <p className="section-kicker">Premium Bread Production</p>
-            <Badge>Manufacturer-first</Badge>
+          <Badge>De-Nest Bread</Badge>
           </div>
 
           <BrandLogo href={null} />

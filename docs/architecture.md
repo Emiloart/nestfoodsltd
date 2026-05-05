@@ -1,59 +1,64 @@
-# Architecture Blueprint
+# Architecture
 
-## Target Shape
+## Application
 
-- `apps/web`: customer-facing experience and initial admin surface.
-- Future split:
-  - `apps/admin`: dedicated operations dashboard (if separated later).
-  - `packages/ui`: shared design system.
-  - `packages/domain`: business logic (catalog, orders, traceability, B2B).
-  - `packages/config`: shared lint/ts/format configs.
+- `apps/web` contains the public corporate website and host-gated admin surface.
+- Public content is rendered with Next.js App Router.
+- Shared UI primitives live in `apps/web/components/ui`.
+- CMS-backed pages, banners, media, and hero media settings live under `apps/web/lib/cms`.
+- Product catalogue data lives under `apps/web/lib/catalog`.
 
-## Runtime Model
+## Public Website
 
-- Frontend: Next.js App Router with server-first rendering.
-- Data: JSON storage drivers today with PostgreSQL JSON adapters available for admin-critical modules.
-- Content: dynamic CMS layer with JSON storage driver and PostgreSQL migration path.
-- Payments: adapter layer for Paystack and Flutterwave.
-- Media: Cloudinary or equivalent CDN-backed optimizer.
-- Commerce: cart quote engine + checkout + order timeline + subscriptions foundation.
-- Customer: session-based profile, wishlist, preferences, personalization, and autocomplete APIs.
-- B2B: distributor account approval flow, tiered pricing catalog, quote-to-order conversion, and invoice/statement APIs.
-- Traceability: batch ingestion, QR/code lookup, and timeline journey APIs with JSON storage driver.
-- Recipes: ingredient search and nutrition bundle calculator APIs backed by recipe + catalog data.
-- SEO: canonical metadata helpers, dynamic sitemap, and robots hardening for sensitive paths.
-- Performance telemetry: Core Web Vitals budget reporting (`LCP`, `INP`, `CLS`) via client reporter + API ingestion.
-- Observability: JSON-driver event ingestion for web-vitals and runtime errors, plus SUPER_ADMIN operations summary endpoint.
+The public website exposes only the corporate routes listed in `docs/route-map.md`.
 
-## Security Baseline
+The homepage order is:
 
-- RBAC across admin actions.
-- Host-gated admin protection enforced at the Next.js edge proxy layer.
-- Server-side admin page guards redirect unauthenticated access before admin UI renders.
-- Signed session-token model for admin/customer/B2B cookies with expiry and server-side verification.
-- Trusted-origin enforcement on sensitive state-changing routes.
-- In-memory rate limits on auth, checkout, and traceability lookup routes.
-- Audit logs for sensitive events with role, IP, user-agent, and outcome metadata.
-- NDPR consent and data-request APIs with consent persistence and request intake workflow.
-- Webhook signature validation for payment providers.
+- Hero with image or short video support
+- Trust strip
+- Product range
+- Production standards
+- About
+- Vision
+- Careers
+- Contact
 
-## Internationalization Baseline
+## Admin Surface
 
-- Default locale: `en-NG`.
-- Locale-aware route strategy prepared for Hausa/Yoruba/Igbo and French expansion.
-- Currency model centered on `NGN` with exchange-ready adapter.
-- Client-side locale/currency switcher with persistent cookies/local storage.
+Admin routes are protected by:
 
-## Experience Quality Baseline
+- admin host allow-list
+- signed admin session cookie
+- role permissions
+- origin checks on writes
+- audit logging
 
-- Accessibility: skip-to-content, keyboard focus rings, semantic nav labels, improved mobile nav dialog semantics.
-- Media: responsive `next/image` usage for primary placeholders and logo surfaces.
-- Structured data: Organization (global), FAQ (home), Product (detail), Article (blog list/detail).
+Retained admin modules:
 
-## DevOps Baseline
+- content pages
+- banners
+- media
+- catalogue
+- users
+- audit
+- operations
 
-- CI workflow validates format, lint, typecheck, and build.
-- Preview deployment workflow for pull requests (Vercel-backed when secrets are configured).
-- Dedicated staging (`staging` branch) and production (`main` branch) deploy workflows.
-- Environment templates for development, staging, and production.
-- Release and launch operations documented with rollback and SLA guidance.
+## Storage
+
+The app currently supports JSON storage drivers for local development and Postgres JSON storage for deployable persistence.
+
+Current data files:
+
+- `apps/web/data/cms.json`
+- `apps/web/data/catalog.json`
+- `apps/web/data/chat.json`
+- `apps/web/data/privacy.json`
+- `apps/web/data/audit-log.json`
+- `apps/web/data/admin-users.json`
+- `apps/web/data/observability.json`
+
+## SEO
+
+- Metadata is generated per page.
+- Sitemap includes approved public routes and product detail pages.
+- Structured data includes Organization and Product schemas.

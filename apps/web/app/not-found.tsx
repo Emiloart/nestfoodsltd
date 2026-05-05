@@ -10,7 +10,7 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="mt-3 text-sm text-neutral-600">
-        The requested page is unavailable. Return to the Nest Foods homepage.
+        The requested page is unavailable. Return to the De-Nest Bread homepage.
       </p>
       <Link
         href="/"

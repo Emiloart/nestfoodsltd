@@ -57,7 +57,7 @@ export function HeroMedia({ page }: HeroMediaProps) {
     return (
       <ImagePlaceholder
         src={wantsVideo ? posterImage : fallbackImage}
-        alt="Nest Foods production visual"
+        alt="De-Nest Bread production visual"
         label={wantsVideo ? "Production Video" : "Production Visual"}
         className={heroMediaClassName}
         priority

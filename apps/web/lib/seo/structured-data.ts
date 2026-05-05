@@ -1,4 +1,4 @@
-import { type CommerceProduct } from "@/lib/commerce/types";
+import { type CatalogueProduct } from "@/lib/catalog/types";
 import { absoluteUrl } from "@/lib/seo/site";
 
 type ArticleStructuredDataInput = {
@@ -24,14 +24,15 @@ export function buildOrganizationStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Nest Foods Ltd",
+    name: "Nest Foods Limited",
+    alternateName: "De-Nest Bread",
     url: absoluteUrl("/"),
     logo: absoluteUrl("/placeholders/logo-placeholder.svg"),
     sameAs: ["https://web.facebook.com/nest.foods.2025"],
     contactPoint: [
       {
         "@type": "ContactPoint",
-        contactType: "customer support",
+        contactType: "general enquiries",
         areaServed: "NG",
         availableLanguage: ["English"],
       },
@@ -39,8 +40,8 @@ export function buildOrganizationStructuredData() {
   };
 }
 
-export function buildProductStructuredData(product: CommerceProduct) {
-  const defaultSku = product.variants[0]?.sku ?? product.id;
+export function buildProductStructuredData(product: CatalogueProduct) {
+  const defaultSku = product.packFormats[0]?.sku ?? product.id;
 
   return {
     "@context": "https://schema.org",
@@ -52,12 +53,12 @@ export function buildProductStructuredData(product: CommerceProduct) {
     category: product.category,
     brand: {
       "@type": "Brand",
-      name: "Nest Foods Ltd",
+      name: "De-Nest Bread",
     },
-    additionalProperty: product.nutritionTable.map((entry) => ({
+    additionalProperty: product.nutritionNotes.map((entry) => ({
       "@type": "PropertyValue",
       name: entry.label,
-      value: `${entry.amount}${entry.unit}`,
+      value: entry.value,
     })),
   };
 }
@@ -74,11 +75,11 @@ export function buildArticleStructuredData(input: ArticleStructuredDataInput) {
     dateModified: input.dateModified ?? input.datePublished,
     author: {
       "@type": "Organization",
-      name: input.authorName ?? "Nest Foods Editorial Team",
+      name: input.authorName ?? "Nest Foods Limited",
     },
     publisher: {
       "@type": "Organization",
-      name: "Nest Foods Ltd",
+      name: "Nest Foods Limited",
       logo: {
         "@type": "ImageObject",
         url: absoluteUrl("/placeholders/logo-placeholder.svg"),

@@ -36,8 +36,6 @@ function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
     pages: mergedPages,
     banners: input.banners ?? CMS_SEED_DATA.banners,
     media: input.media ?? CMS_SEED_DATA.media,
-    products: input.products ?? CMS_SEED_DATA.products,
-    recipes: input.recipes ?? CMS_SEED_DATA.recipes,
   };
 }
 

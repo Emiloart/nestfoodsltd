@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getCommerceProductBySlug } from "@/lib/commerce/service";
+import { getCatalogueProductBySlug } from "@/lib/catalog/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProductStructuredData } from "@/lib/seo/structured-data";
 
@@ -17,7 +17,7 @@ type ProductDetailPageProps = {
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { slug } = await Promise.resolve(params);
-  const product = await getCommerceProductBySlug(slug);
+  const product = await getCatalogueProductBySlug(slug);
 
   if (!product) {
     return buildPageMetadata({
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await Promise.resolve(params);
-  const product = await getCommerceProductBySlug(slug);
+  const product = await getCatalogueProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -46,8 +46,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   }
 
   const productStructuredData = buildProductStructuredData(product);
-  const packSizes = product.variants
-    .map((variant) => variant.sizeLabel ?? variant.name)
+  const packSizes = product.packFormats
+    .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
 
@@ -83,7 +83,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </h1>
             <p className="text-sm text-neutral-600">{product.longDescription}</p>
             <p className="text-xs text-neutral-500">
-              Pack sizes: {packSizes || "Available on request"}
+              Size: {packSizes || "Available on request"}
             </p>
             <p className="text-xs text-neutral-500">
               Key ingredients: {product.ingredients.slice(0, 4).join(", ")}
@@ -100,22 +100,22 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               Formats
             </p>
             <div className="space-y-3">
-              {product.variants.map((variant) => (
+              {product.packFormats.map((format) => (
                 <div
-                  key={variant.id}
+                  key={format.id}
                   className="flex flex-wrap items-center justify-between gap-3 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
                 >
                   <div>
                     <p className="text-sm font-semibold text-neutral-900">
-                      {variant.sizeLabel ?? variant.name}
+                      {format.label}
                     </p>
-                    <p className="text-xs text-neutral-500">{variant.name}</p>
+                    {format.sku ? <p className="text-xs text-neutral-500">{format.sku}</p> : null}
                   </div>
                   <Link
                     href="/contact"
                     className={buttonClassName({ variant: "secondary", size: "sm" })}
                   >
-                    Enquire About This Format
+                    Make Enquiry
                   </Link>
                 </div>
               ))}
@@ -129,7 +129,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               </p>
               <p className="text-sm text-neutral-700">Category: {product.category}</p>
               <p className="text-sm text-neutral-700">
-                Pack sizes: {packSizes || "Available on request"}
+                Size: {packSizes || "Available on request"}
               </p>
             </Card>
             <Card className="space-y-2">
@@ -137,7 +137,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 Product enquiries
               </p>
               <p className="text-sm text-neutral-700">
-                Use the contact route for product questions, packaging needs, and general follow-up.
+                Use the contact route for product questions, size guidance, and general follow-up.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Link
@@ -177,19 +177,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
       <Card className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-          Nutrition Facts
+          Nutrition Notes
         </p>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {product.nutritionTable.map((entry) => (
+          {product.nutritionNotes.map((entry) => (
             <div
               key={entry.label}
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
             >
               <p className="text-xs text-neutral-500">{entry.label}</p>
-              <p className="text-lg font-semibold text-neutral-900">
-                {entry.amount}
-                {entry.unit}
-              </p>
+              <p className="text-sm font-semibold text-neutral-900">{entry.value}</p>
             </div>
           ))}
         </div>
