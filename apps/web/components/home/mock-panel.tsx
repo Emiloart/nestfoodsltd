@@ -24,7 +24,7 @@ export function MockPanel({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="section-kicker">{label}</p>
         <span className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-500">
-          Placeholder
+          Contact Info
         </span>
       </div>
       <h3 className="mt-4 text-xl font-semibold text-neutral-900">{title}</h3>

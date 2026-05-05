@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 
 import { absoluteUrl } from "@/lib/seo/site";
 
-const DEFAULT_OG_IMAGE = "/placeholders/section-image-placeholder.svg";
+const DEFAULT_OG_IMAGE = "/seo/og/default-og.svg";
 
 type BuildPageMetadataInput = {
   title: string;

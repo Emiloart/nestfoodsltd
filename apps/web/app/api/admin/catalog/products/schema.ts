@@ -13,7 +13,6 @@ export const packFormatSchema = z.object({
     .optional()
     .transform((value) => value ?? ""),
   label: z.string().trim().min(2).max(140),
-  sku: z.string().trim().max(120).optional(),
 });
 
 const baseProductSchema = z.object({

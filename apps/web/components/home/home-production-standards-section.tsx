@@ -45,12 +45,12 @@ export function HomeProductionStandardsSection() {
         />
 
         <div className="placeholder-panel mt-5 p-3">
-          <ImagePlaceholder
-            src="/placeholders/sections/section-image-placeholder.svg"
-            alt="Production process placeholder"
-            label="Factory / Process Placeholder"
-            className="aspect-[16/11]"
-          />
+            <ImagePlaceholder
+              src="/placeholders/sections/section-image-placeholder.svg"
+              alt="Production process visual"
+              label="Production Process"
+              className="aspect-[16/11]"
+            />
         </div>
 
         <MobileAutoCarousel
@@ -76,8 +76,8 @@ export function HomeProductionStandardsSection() {
         <div className="section-frame p-4 sm:p-5">
           <ImagePlaceholder
             src="/placeholders/sections/section-image-placeholder.svg"
-            alt="Production process placeholder"
-            label="Factory / Process Placeholder"
+            alt="Production process visual"
+            label="Production Process"
             className="aspect-[6/5] sm:aspect-[16/11]"
           />
         </div>

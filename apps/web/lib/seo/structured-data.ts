@@ -17,7 +17,7 @@ type FaqEntry = {
 };
 
 function resolveImageUrl(imageUrl?: string) {
-  return absoluteUrl(imageUrl ?? "/placeholders/section-image-placeholder.svg");
+  return absoluteUrl(imageUrl ?? "/seo/og/default-og.svg");
 }
 
 export function buildOrganizationStructuredData() {
@@ -27,8 +27,8 @@ export function buildOrganizationStructuredData() {
     name: "Nest Foods Limited",
     alternateName: "De-Nest Bread",
     url: absoluteUrl("/"),
-    logo: absoluteUrl("/placeholders/logo-placeholder.svg"),
-    sameAs: ["https://web.facebook.com/nest.foods.2025"],
+    logo: absoluteUrl("/brand/logos/logo-primary.svg"),
+    sameAs: [],
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -41,15 +41,12 @@ export function buildOrganizationStructuredData() {
 }
 
 export function buildProductStructuredData(product: CatalogueProduct) {
-  const defaultSku = product.packFormats[0]?.sku ?? product.id;
-
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.longDescription,
     image: [product.imageUrl, ...product.galleryUrls].map((entry) => resolveImageUrl(entry)),
-    sku: defaultSku,
     category: product.category,
     brand: {
       "@type": "Brand",
@@ -82,7 +79,7 @@ export function buildArticleStructuredData(input: ArticleStructuredDataInput) {
       name: "Nest Foods Limited",
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/placeholders/logo-placeholder.svg"),
+        url: absoluteUrl("/brand/logos/logo-primary.svg"),
       },
     },
   };

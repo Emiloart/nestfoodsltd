@@ -4,22 +4,40 @@ import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
 
 const values = [
-  "Quality First",
-  "Integrity",
-  "Customer Focus",
-  "Innovation",
-  "Consistency",
-  "Teamwork",
+  {
+    title: "Quality First",
+    body: "Ensuring every loaf of De-Nest Family bread meets top standards.",
+  },
+  {
+    title: "Integrity",
+    body: "Upholding honesty and accountability in all operations.",
+  },
+  {
+    title: "Customer Focus",
+    body: "Delivering satisfaction through consistent product excellence.",
+  },
+  {
+    title: "Innovation",
+    body: "Improving baking techniques and product presentation.",
+  },
+  {
+    title: "Consistency",
+    body: "Maintaining uniform taste, quality, and premium service delivery across the company.",
+  },
+  {
+    title: "Teamwork",
+    body: "Building a strong and dedicated workforce.",
+  },
 ];
 
 const pillars = [
   {
     title: "Mission",
-    body: "To produce baked products and confectioneries under the most hygienic conditions with selected natural ingredients for human nourishment.",
+    body: "To produce baked products and confectioneries under the most hygienic conditions with best natural ingredients for human nourishment.",
   },
   {
     title: "Vision",
-    body: "To become a leading company in the bakery and confectionery industry.",
+    body: "To become the leading company in bakery and confectioneries industry.",
   },
 ];
 
@@ -52,10 +70,11 @@ export default async function VisionPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {values.map((value) => (
             <div
-              key={value}
-              className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm font-semibold text-neutral-800"
+              key={value.title}
+              className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3"
             >
-              {value}
+              <h2 className="text-sm font-semibold text-neutral-900">{value.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">{value.body}</p>
             </div>
           ))}
         </div>

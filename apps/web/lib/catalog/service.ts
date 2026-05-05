@@ -96,7 +96,6 @@ function normalizePackFormats(productSlug: string, input: CataloguePackFormat[])
     return {
       id,
       label: entry.label.trim(),
-      sku: entry.sku?.trim() || undefined,
     };
   });
 }

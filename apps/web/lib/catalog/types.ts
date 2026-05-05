@@ -3,7 +3,6 @@ export type CatalogueProductStatus = "draft" | "published";
 export type CataloguePackFormat = {
   id: string;
   label: string;
-  sku?: string;
 };
 
 export type CatalogueNutritionNote = {

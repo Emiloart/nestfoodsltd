@@ -58,8 +58,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <div className="space-y-4">
           <ImagePlaceholder
             src={product.imageUrl}
-            alt={`${product.name} image placeholder`}
-            label="Product Image Placeholder"
+            alt={`${product.name} product image`}
+            label="Product Image"
             className="aspect-square"
           />
           <div className="grid grid-cols-2 gap-3">
@@ -67,7 +67,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <ImagePlaceholder
                 key={`${entry}-${index}`}
                 src={entry}
-                alt={`${product.name} gallery placeholder`}
+                alt={`${product.name} gallery image ${index + 1}`}
                 label={`Gallery ${index + 1}`}
                 className="aspect-square"
               />
@@ -86,7 +86,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               Size: {packSizes || "Available on request"}
             </p>
             <p className="text-xs text-neutral-500">
-              Key ingredients: {product.ingredients.slice(0, 4).join(", ")}
+              Ingredients: {product.ingredients.join(", ")}
             </p>
             <div className="flex flex-wrap gap-2">
               <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
@@ -109,7 +109,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                     <p className="text-sm font-semibold text-neutral-900">
                       {format.label}
                     </p>
-                    {format.sku ? <p className="text-xs text-neutral-500">{format.sku}</p> : null}
                   </div>
                   <Link
                     href="/contact"

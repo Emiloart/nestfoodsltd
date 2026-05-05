@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 type ImagePlaceholderProps = {
   src: string;
   alt: string;
-  label: string;
+  label?: string;
   className?: string;
   priority?: boolean;
   sizes?: string;
@@ -58,9 +58,11 @@ export function ImagePlaceholder({
         />
       )}
       <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_26%,transparent)]" />
-      <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-        {label}
-      </div>
+      {label ? (
+        <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
+          {label}
+        </div>
+      ) : null}
     </div>
   );
 }

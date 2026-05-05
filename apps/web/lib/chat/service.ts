@@ -349,7 +349,7 @@ function buildCareersReply(): ChatReply {
     intent: "careers",
     confidence: 0.9,
     answer:
-      "Nest Foods Limited accepts career enquiries for production, management, accounting, sales, marketing, driving, cleaning, and operations support roles. HR contact: hrsupport@nestfoodsltd.com or 09116337168.",
+      "Nest Foods Limited accepts career enquiries for production, management, accounting, sales, marketing and distribution, driving, cleaning, and support roles. HR contact: hrsupport@nestfoodsltd.com or 09116337168.",
     quickActions: normalizeQuickActions([
       { label: "Careers page", prompt: "Open careers guidance." },
       { label: "Contact", prompt: "Help me contact the team." },

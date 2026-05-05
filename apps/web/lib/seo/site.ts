@@ -1,4 +1,4 @@
-const PRODUCTION_SITE_URL = "https://nestfoodsltd.com";
+const PRODUCTION_SITE_URL = "https://nestfoodsltd-web.vercel.app";
 
 function ensureLeadingSlash(path: string) {
   return path.startsWith("/") ? path : `/${path}`;

@@ -7,5 +7,5 @@
   <circle cx="480" cy="270" r="78" fill="#FCF7F0" fill-opacity="0.12"/>
   <path d="M454 232C454 224.3 462.2 219.2 469.1 223L531.8 257C539 261 539 271.3 531.8 275.3L469.1 309.3C462.2 313.1 454 308 454 300.3V232Z" fill="#FCF7F0"/>
   <path d="M122 426C208 382 295 360 386 362C486 364 574 427 670 433C746 438 828 412 924 370V504H122V426Z" fill="#E0A443" fill-opacity="0.16"/>
-  <text x="480" y="474" fill="#EADBC8" font-size="24" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1.8">PROCESS VIDEO PLACEHOLDER</text>
+  <text x="480" y="474" fill="#EADBC8" font-size="24" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1.8">PRODUCTION PROCESS</text>
 </svg>

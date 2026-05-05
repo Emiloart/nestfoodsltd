@@ -51,7 +51,7 @@ const emptyFormState: CatalogFormState = {
   ingredientsText: "Enriched wheat flour\nWater\nSugar\nVegetable oil\nYeast\nSalt\nMilk\nButter",
   nutritionNotesText:
     "Nutrition profile | Prepared as a soft, satisfying wheat bread for everyday meals.",
-  packFormatsText: "default | Standard loaf | DENEST-STANDARD",
+  packFormatsText: "default | Standard loaf",
 };
 
 function parseLines(text: string) {
@@ -86,14 +86,13 @@ function parsePackFormats(text: string): CataloguePackFormat[] {
   }
 
   return lines.map((line, index) => {
-    const [id, label, sku] = parseDelimitedLine(line);
+    const [id, label] = parseDelimitedLine(line);
     if (!label) {
-      throw new Error(`Pack format ${index + 1} must be: id | label | sku`);
+      throw new Error(`Pack format ${index + 1} must be: id | label`);
     }
     return {
       id: id || "",
       label,
-      sku: sku || undefined,
     };
   });
 }
@@ -114,7 +113,7 @@ function toFormState(product: CatalogueProduct): CatalogFormState {
       .map((entry) => [entry.label, entry.value].join(" | "))
       .join("\n"),
     packFormatsText: product.packFormats
-      .map((format) => [format.id, format.label, format.sku ?? ""].join(" | "))
+      .map((format) => [format.id, format.label].join(" | "))
       .join("\n"),
   };
 }
@@ -434,7 +433,7 @@ export function CatalogManagerClient() {
                 onChange={(event) => updateForm({ packFormatsText: event.target.value })}
                 className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
               />
-              <span className="text-xs text-neutral-500">Format: id | label | sku</span>
+              <span className="text-xs text-neutral-500">Format: id | label</span>
             </label>
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">

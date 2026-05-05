@@ -9,7 +9,7 @@ export const CMS_SEED_DATA: CmsData = {
       title: "De-Nest Bread",
       headline: "Baking memories, one slice at a time.",
       description:
-        "De-Nest Bread is the public bread brand of Nest Foods Limited, a corporate bakery focused on hygienic production, consistent quality, and dependable product information.",
+        "De-Nest Bread is the public bread brand of Nest Foods Limited. Baking memories, one slice at a time. Every loaf is a testament of our commitment to quality.",
       status: "published",
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
@@ -24,7 +24,7 @@ export const CMS_SEED_DATA: CmsData = {
         title: "De-Nest Bread | Premium Bread Manufacturer",
         description:
           "Premium bread products, production standards, and company information from Nest Foods Limited.",
-        ogImageUrl: "/placeholders/hero/hero-image-placeholder.svg",
+        ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,
       revisions: [],
@@ -32,9 +32,9 @@ export const CMS_SEED_DATA: CmsData = {
     about: {
       slug: "about",
       title: "About Nest Foods Limited",
-      headline: "A bread manufacturer built on quality, consistency, and trust.",
+      headline: "A Nigerian bakery built on quality, consistency, and trust.",
       description:
-        "Nest Foods Limited was incorporated on 18 November 2022 and operates De-Nest Bread from Awka, Anambra State with a focus on hygienic production and affordable quality bakery products.",
+        "Nest Foods Limited Awka was established in 2022 to meet demand for locally produced, affordable, rich, and quality bakery products.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -43,7 +43,7 @@ export const CMS_SEED_DATA: CmsData = {
       seo: {
         title: "About Nest Foods Limited",
         description: "Learn about Nest Foods Limited, the company behind De-Nest Bread.",
-        ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
+        ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,
       revisions: [],
@@ -51,9 +51,9 @@ export const CMS_SEED_DATA: CmsData = {
     vision: {
       slug: "vision",
       title: "Vision & Mission",
-      headline: "To become a leading bakery and confectionery company.",
+      headline: "To become the leading company in bakery and confectioneries industry.",
       description:
-        "Nest Foods Limited produces baked products and confectioneries under hygienic conditions using selected ingredients for human nourishment.",
+        "Nest Foods Limited produces baked products and confectioneries under the most hygienic conditions with best natural ingredients for human nourishment.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -62,7 +62,7 @@ export const CMS_SEED_DATA: CmsData = {
       seo: {
         title: "Vision & Mission | De-Nest Bread",
         description: "Explore the mission, vision, and values behind De-Nest Bread.",
-        ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
+        ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,
       revisions: [],
@@ -72,7 +72,7 @@ export const CMS_SEED_DATA: CmsData = {
       title: "Contact Nest Foods Limited",
       headline: "Speak with the Nest Foods Limited team.",
       description:
-        "Use this page for product enquiries, office contacts, social placeholders, and career contact details.",
+        "Use this page for product enquiries, office contacts, confirmed social channels, and career contact details.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -81,7 +81,7 @@ export const CMS_SEED_DATA: CmsData = {
       seo: {
         title: "Contact Nest Foods Limited",
         description: "Reach Nest Foods Limited for De-Nest Bread product and company enquiries.",
-        ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
+        ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,
       revisions: [],
@@ -91,7 +91,7 @@ export const CMS_SEED_DATA: CmsData = {
       title: "Careers",
       headline: "Join the team behind De-Nest Bread.",
       description:
-        "Nest Foods Limited welcomes career enquiries across production, management, accounting, sales, marketing, driving, cleaning, and operations support roles.",
+        "Nest Foods Limited welcomes career enquiries across production, management, accounting, sales, marketing and distribution, driving, cleaning, and support roles.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -100,7 +100,7 @@ export const CMS_SEED_DATA: CmsData = {
       seo: {
         title: "Careers at Nest Foods Limited",
         description: "Career guidance and HR contacts for Nest Foods Limited.",
-        ogImageUrl: "/placeholders/sections/section-image-placeholder.svg",
+        ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,
       revisions: [],

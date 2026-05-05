@@ -119,7 +119,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             .map((format) => format.label)
             .filter(Boolean)
             .join(", ");
-          const ingredients = product.ingredients.slice(0, 4).join(", ");
+          const ingredients = product.ingredients.join(", ");
           const allergens = product.allergens.join(", ");
 
           return (
@@ -127,8 +127,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
               <Link href={`/products/${product.slug}`} className="block">
                 <ImagePlaceholder
                   src={product.imageUrl}
-                  alt={`${product.name} image placeholder`}
-                  label="Product Placeholder"
+                  alt={`${product.name} product image`}
+                  label="Product Image"
                   className="aspect-square"
                 />
               </Link>

@@ -2,13 +2,7 @@ import Link from "next/link";
 
 import { buttonClassName } from "./ui/button";
 
-const socialPlaceholders = [
-  "Facebook: nest foods limited",
-  "X: placeholder",
-  "Instagram: placeholder",
-  "TikTok: placeholder",
-  "YouTube: placeholder",
-];
+const socialChannels = ["Facebook: nest foods limited"];
 
 const footerGroups = [
   {
@@ -103,7 +97,7 @@ export function Footer() {
           <div className="space-y-2">
             <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
             <div className="flex flex-wrap gap-2">
-              {socialPlaceholders.map((item) => (
+              {socialChannels.map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[11px] text-white/84"
@@ -112,6 +106,9 @@ export function Footer() {
                 </span>
               ))}
             </div>
+            <p className="text-xs text-white/58">
+              More official channels will be added after confirmation.
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/58">
@@ -150,7 +147,7 @@ export function Footer() {
             <div className="mt-5 space-y-2">
               <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
               <div className="flex flex-wrap gap-2">
-                {socialPlaceholders.map((item) => (
+                {socialChannels.map((item) => (
                   <span
                     key={item}
                     className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84"
@@ -159,6 +156,9 @@ export function Footer() {
                   </span>
                 ))}
               </div>
+              <p className="mt-2 text-xs text-white/58">
+                More official channels will be added after confirmation.
+              </p>
             </div>
           </div>
 

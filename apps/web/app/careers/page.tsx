@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CareerApplicationForm } from "@/components/careers/career-application-form";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,10 +12,10 @@ const roles = [
   "Management workers",
   "Accountants",
   "Sales personnel",
-  "Marketing workers",
+  "Marketing and distribution workers",
   "Drivers",
   "Cleaners",
-  "Operations support",
+  "Other support roles",
 ];
 
 const applicationItems = [
@@ -89,11 +90,26 @@ export default async function CareersPage() {
         <Card className="space-y-3">
           <p className="section-kicker">Equal Opportunity</p>
           <p className="text-sm leading-7 text-neutral-700">
-            Nest Foods Limited welcomes applicants from all backgrounds. Employment decisions are
-            based on business needs, merit, qualifications, skills, and experience.
+            Nest Foods Limited hires across different backgrounds of education, skills, experiences,
+            and exposure. The company is committed to a diverse and inclusive workplace where
+            employees are treated with fairness and respect.
+          </p>
+          <p className="text-sm leading-7 text-neutral-700">
+            Employment decisions are based on business needs and merit, while recognising
+            qualifications, skills, and previous experience where applicable and necessary.
           </p>
         </Card>
       </div>
+
+      <Card className="space-y-4">
+        <p className="section-kicker">Online Application</p>
+        <p className="text-sm leading-7 text-neutral-700">
+          Applicants outside Anambra State can prepare an HR email from this form. Attach your CV
+          and application letter before sending. Drivers should also attach a driver's license or
+          cover letter where applicable.
+        </p>
+        <CareerApplicationForm />
+      </Card>
     </section>
   );
 }

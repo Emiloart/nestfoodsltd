@@ -1,84 +1,188 @@
 # Nest Foods Limited Website Source Notes
 
-Cleaned source summary from the Nest Foods Limited website PDF.
+Cleaned source notes extracted from `NEST FOODS LTD WEBSITE-1.pdf`.
+
+This document keeps the PDF facts visible for implementation, while the public website must still follow the approved corporate-only brief: no ecommerce, cart, checkout, account, payment, public traceability, distributor portal, bulk quote workflow, public shelf-life display, or public region-coverage display.
 
 ## Brand And Legal
 
-- Public brand: De-Nest Bread
-- Legal company name: Nest Foods Limited
-- RC: 2001646
-- Incorporated: 18 November 2022
-- Registered office: No 1 Nest Foods Limited, Okpuno, Awka
-- Head office: No. 1 Nest Foods Street, Okochime Okpuno, Awka South, Anambra State
-- Founder: Mr. Obinna Paulinus Nwosu
-- Motto: Baking memories, one slice at a time.
+- Public brand name: De-Nest Bread.
+- Legal company name: Nest Foods Limited.
+- Google Business name: Nest Foods Limited Awka.
+- RC number: 2001646.
+- Date of incorporation: 18 November 2022.
+- Registered office: No 1 Nest Foods Limited Okpuno Awka.
+- Head office: No 1 Nest Foods Limited Okpuno Awka.
+- Head office contact address: No. 1 Nest Foods Street, Okochime Okpuno, Awka South, Anambra State.
+- Branch/contact locations from PDF: Port Harcourt, Owerri, Umuahia, Benin, Aba, Akwa-Ibom.
+- Founder: Mr. Obinna Paulinus Nwosu.
+- Registered slogan/motto: Baking memories, one slice at a time.
+- Second approved slogan: Every loaf is a testament of our commitment to quality.
+
+## Brand Assets And Media
+
+- Primary logo required.
+- Horizontal logo variation required.
+- Brand color codes were requested in the PDF but not supplied in the PDF text.
+- Approved fonts were requested in the PDF but not supplied in the PDF text.
+- One high-quality promotional video in MP4, minimum 1080p, is requested.
+- Video should represent brand identity, factory, production, products, operational addresses, lifestyle use, and related company visuals.
+- Product images required: 2-6 high-quality images per product, minimum 1000px width, clean background preferred, multiple angles.
 
 ## Products
 
-Use only cleaned catalogue fields. Do not include pricing, operational quantities, storage instructions, public fulfilment instructions, or public logistics notes.
+Public catalogue fields should use product name, description, ingredients, allergens, nutrition notes/placeholders, and size/pack formats.
+
+Do not expose price, shelf life, storage instructions, stock, payment, online purchase, public delivery operations, public distributor workflows, or bulk quote workflows on the public site unless the business brief changes.
 
 ### De-Nest Family Jumbo Bread
 
-- Size: Approx. 1.5kg jumbo loaf
-- Description: Largest family loaf for shared breakfasts, sandwiches, family meals, meetings, travel refreshment, and gift-style bread moments.
+- PDF name: DE-NEST FAMILY JUMBO BREAD.
+- Size: Approx. 1.5kg Jumbo Loaf.
+- Description: De-Nest Family Jumbo Bread is the largest and most satisfying loaf, specially baked for families who enjoy generous portions of soft, tasty, and wholesome bread. Crafted with premium wheat flour and baked to golden perfection, it delivers a light, fluffy texture and rich bakery-fresh aroma.
+- Use cases from PDF: breakfast toasts and spreads, sandwiches, family meals, traveller gift pack, shared moments.
 
 ### De-Nest Family Loaf Bread
 
-- Size: Approx. 1kg family loaf
-- Description: Classic household loaf with selected ingredients, balanced richness, freshness, and flavour.
+- PDF name: DE-NEST FAMILY LOAF BREAD (1kg).
+- Size: Approx. 1kg Family Loaf.
+- Description: De-Nest Family Loaf Bread is the classic household loaf, baked with carefully selected ingredients to provide richness, freshness, and flavour.
+- PDF notes: produced as unsliced or evenly sliced; suitable for daily family breakfast, conferences, meetings, and travelling needs.
 
 ### De-Nest Midi Bread
 
-- Size: Approx. 430g midi loaf
-- Description: Medium loaf for individuals, couples, small families, light meals, school refreshment, and workplace needs.
+- PDF name: DE-NEST MIDI BREAD (430g).
+- Size: Approx. 430g Midi Loaf.
+- Description: De-Nest Midi Bread is the classic intermediate loaf with balance of size, quality, and satisfaction, crafted for people who want less than a family-size loaf without waste.
+- PDF use cases: individuals, couples, small families, conferences, school feeding, and travelling needs.
 
 ### De-Nest Mini Bread
 
-- Size: Approx. 220g mini loaf
-- Description: Compact loaf for breakfast, snacking, simple refreshment, and individually portioned bread moments.
+- PDF name: DE-NEST MINI BREAD (220g).
+- Size: Approx. 220g Mini Loaf.
+- Description: De-Nest Mini Bread is soft, fresh, bite-sized, and made for everyday enjoyment. It is portioned, soft, fluffy, and affordable.
+- PDF use cases: breakfast, quick snacks, daily corporate breakfast, conferences, meetings, and snacking needs.
 
-## Ingredients And Allergens
+## Shared Product Details
 
-- Ingredients: enriched wheat flour, water, sugar, vegetable oil, yeast, salt, milk, butter.
-- Allergens: contains wheat gluten and milk; may contain traces of soya.
+- Ingredients: Enriched wheat flour, Water, Sugar, Vegetable oil, Yeast, Salt, Milk, Butter.
+- PDF allergen text: Contains wheat (gluten), healthy traces of soya and milk.
+- Public allergen wording should be clearer and safer: Contains wheat (gluten) and milk; may contain traces of soya.
+- Nutrition placeholders requested per 100g: Energy, Carbohydrates, Protein, Fat, Sugar, Sodium.
 
-## Mission, Vision, And Values
+## PDF Fields Excluded From Public Catalogue By Current Brief
 
-- Mission: To produce baked products and confectioneries under the most hygienic conditions with selected natural ingredients for human nourishment.
-- Vision: To become a leading company in the bakery and confectionery industry.
-- Values: Quality First, Integrity, Customer Focus, Innovation, Consistency, Teamwork.
-
-## Standards
-
-- Food safety and hygiene standards.
-- NAFDAC registered.
-- SON certification focus.
-- NESREA environmental compliance.
-- Quality control from raw material sourcing to baking and packaging.
+- Price: As obtained from the customer care line.
+- Shelf life: 9-10 days when properly stored.
+- Storage instructions: Store in a cool, dry place away from direct sunlight or heat, moisture and airtight containers. After opening, reseal the pack to maintain freshness. Refrigeration may extend shelf life.
+- Online purchase: none.
+- Online payment: none.
+- Merchant account ownership: none.
+- Refund/cancellation policy online: none.
+- Order management rules: none applicable on the website.
 
 ## Contact
 
-- Primary phone: 07066898953
-- Secondary phones: 08064107897, 09116337168
-- Emails: info@nestfoodsltd.com, sales@nestfoodsltd.com, hrsupport@nestfoodsltd.com, adminsupport@nestfoodsltd.com
-- WhatsApp: 07066898953, 08064107897, 09116337168
-- Facebook placeholder: nest foods limited
-- X, Instagram, TikTok, YouTube: placeholders
+- Primary phone: 07066898953.
+- Secondary phones: 08064107897, 09116337168.
+- Official emails: info@nestfoodsltd.com, sales@nestfoodsltd.com, hrsupport@nestfoodsltd.com, adminsupport@nestfoodsltd.com.
+- WhatsApp business numbers: 07066898953, 08064107897, 09116337168.
+- Physical address: No. 1 Nest Foods Street Okochime Okpuno, Awka South, Anambra State.
+- Google Maps should link to the head office address.
+- Facebook handle text from PDF: nest foods limited.
+- Instagram, X, LinkedIn, and TikTok were listed without handles in the PDF.
+- YouTube was requested later as a placeholder channel by the project owner, but no handle is supplied in the PDF.
+- Do not publicly render the word `placeholder` as a social handle.
 
-## Contact Locations
+## Contact Locations And Hours
 
-- Awka Head Office: No. 1 Nest Foods Street, Okochime Okpuno, Awka South, Anambra State. Phones: 07066898953, 08064107897.
-- Port Harcourt: No. 14 Old Refinery Road, Elelenwo, Port Harcourt, Rivers State. Phone: 08114549026.
-- Owerri: No. 20A Mbonu Ojike Street, Ikenegbu, Owerri, Imo State. Phone: 09165407850.
-- Umuahia: No. 1 Club Road by Okpara Square Roundabout, Umuahia, Abia State. Phone: 07077746092.
-- Benin: No. 1 Uwa Lane off Wire Road, Benin City, Edo State. Phone: 08125927131.
-- Aba: Port Harcourt Road Area.
-- Akwa-Ibom: contact head office for details.
+- Awka Head Office: Mondays-Saturdays, 24 hours services; Sundays as scheduled, 6am-12pm. Address: No 1 Nest Foods Street Okpuno Awka, Anambra State. Contacts: 07066898953, 08064107897.
+- Port Harcourt: Mondays-Saturdays, 6am-6pm. Address: No 14 Old Refinery Road, Elelenwo Port Harcourt, Rivers State. Contact: 08114549026.
+- Owerri: Mondays-Saturdays, 6am-6pm. Address: No 20A Mbonu Ojike Street, Ikenegbu Owerri, Imo State. Contact: 09165407850.
+- Umuahia: Mondays-Saturdays, 6am-6pm. Address: No 1 Club Road by Okpara Square Roundabout, Umuahia, Abia State. Contact: 07077746092.
+- Benin: Mondays-Saturdays, 6am-6pm. Address: No 1 Uwa Lane off Wire Road, Benin City, Edo State. Contact: 08125927131.
+- Aba: Mondays-Saturdays, 6am-6pm. Address: Port Harcourt Road Area. Contact not supplied in PDF.
+- Akwa-Ibom: Mondays-Saturdays, 6am-6pm. Address/contact not supplied in PDF.
+
+## About Page Source
+
+Company background story:
+
+Nest Foods Limited Awka is a leading Nigerian bakery located in Awka. The company was established in 2022 to meet the growing demand for locally produced, affordable, rich and quality bakery products across Nigeria and beyond.
+
+From its early beginnings as a large-scale food business, Nest Foods Limited focused on processing, packaging and distribution of staple bakery products tailored to meet various tastes, dietary needs and budgets. Hence, its flagship product, De-Nest family bread is marketed in different varieties, sizes and costs.
+
+Through consistent investment in modern baking practices, quality control and efficient distribution, the company has gradually expanded its operations and market reach across Nigeria.
+
+Over time, Nest Foods Limited has built a reputation for reliability and customer satisfaction, supplying fresh De-Nest family loaf bread directly to wholesalers, retailers, bread unions, supermarkets and small-scale businesses across regions.
+
+Today, Nest Foods Limited continues to grow as a national player in the bakery industry, maintaining its commitment to quality, food safety practices, affordability and service excellence. Its operations contribute to local economic development by creating employment opportunities, streams of income and supporting agricultural supply chains in the country.
+
+Public site note: when implementing About copy, keep the company story credible but avoid turning distribution, wholesale, or regional reach into public product-card or CTA workflows.
+
+## Mission, Vision, And Core Values
+
+- Mission: To produce baked products and confectioneries under the most hygienic conditions with best natural ingredients for human nourishment.
+- Vision: To become the leading company in bakery and confectioneries industry.
+- Quality First: Ensuring every loaf of De-Nest Family bread meets top standards.
+- Integrity: Upholding honesty and accountability in all operations.
+- Customer Focus: Delivering satisfaction through consistent product excellence.
+- Innovation: Improving baking techniques and product presentation.
+- Consistency: Maintaining uniform tastes, quality and premium service delivery across all branches.
+- Teamwork: Building a strong and dedicated workforce.
+
+## Milestones
+
+- Foundation: Establishment of Nest Foods Limited by Mr. Obinna Paulinus Nwosu.
+- Product Launch: Introduction of De-Nest family bread into the local market after thorough pre-launch regulatory activities.
+- Growth Phase: Radical marketing and gradual expansion of production capacity and distribution network.
+- Brand Recognition and Regulation: Acceptance of De-Nest family bread as a trusted household consumable in strict adherence to required standards and food regulatory oversight.
+- National Expansion: Distribution of De-Nest family bread across multiple states in Nigeria.
+- Awards: Industry and philanthropic awards across several food industry bodies and public/private institutions in recognition of commitment to food safety standards, philanthropic acts, and community development services.
+
+## Founder
+
+Mr. Obinna Paulinus Nwosu is the visionary founder and driving force behind Nest Foods Limited. With a strong entrepreneurial spirit and deep understanding of the Nigerian food industry, he established the company with the goal of providing high-quality, affordable bread to everyday consumers.
+
+Under his leadership, Nest Foods Limited has grown from a state bakery into a nationally competitive brand known as De-Nest family bread. His commitment to quality, excellence, innovation and customer satisfaction continues to guide the company strategic direction and continued success.
+
+## Certifications And Compliance
+
+- Food safety certifications: strict food safety and hygiene standards, environmental safety, and public health consciousness.
+- NAFDAC registration and inspections: all products, including De-Nest family bread, are registered with NAFDAC. Periodic inspections are observed.
+- SON certification and inspections: products are certified by Standards Organization of Nigeria and carry the SON logo.
+- Continuous quality control standards: rigorous quality control from raw material sourcing to baking, packaging, and distribution. Regular inspections, batch testing, and process monitoring are used internally.
+- NESREA certifications and inspections: operations comply with environmental standards set by NESREA.
+- Awards and recognition: recognition for quality, customer satisfaction, excellence, innovation, and community value.
+
+Public site note: mention production standards and compliance credibility, but do not expose public traceability or batch lookup features.
 
 ## Careers
 
-- Roles: production workers, management workers, accountants, sales personnel, marketing workers, drivers, cleaners, and operations support.
-- HR email: hrsupport@nestfoodsltd.com
-- HR phone: 09116337168
-- Application guidance: full name, phone number, email, CV, application letter addressed to the Manager Nest Foods Limited Awka, role of interest, years of experience, relevant work history, and driver credentials where needed.
-- Equal opportunity: applicants from all backgrounds should be treated with fairness and respect; decisions should be based on business needs, merit, qualifications, skills, and experience.
+- Heading: We are hiring!
+- Roles: Production workers, management workers, accountants, sales personnels, marketing and distribution workers, drivers, cleaners, etc.
+- Online application preference: available for applicants outside Anambra State.
+- Required application fields: full name, phone number, email, CV upload, application letter addressed to the Manager Nest Foods Limited Awka, position applying for, years of experience, other work experiences if any, driver's license upload or cover letter for drivers.
+- HR contact: hrsupport@nestfoodsltd.com, 09116337168.
+- Equal opportunity: Nest Foods Limited hires across different backgrounds of education, skills, experiences and exposures. The company is committed to creating a diverse and inclusive workplace where all employees are treated with fairness and respect. Employment decisions are largely based on business needs and merit while recognising qualifications, skills and previous experience where applicable and necessary, without discrimination on any legally protected basis.
+
+## Legal And Policy Source
+
+- Privacy policy: collected data is used for communication, service delivery, and improving customer experience. The company does not sell or misuse customer data and implements safeguards for data security.
+- Terms and conditions: website/service use, proper use of content, offline purchase guidelines, intellectual property, and policy updates.
+- Refund and returns policy: PDF includes offline payment/delivery scenarios. Keep this out of public ecommerce UX unless the business requests an offline trade-policy page.
+- Delivery policy: PDF includes shop-to-shop delivery and wholesale pickup context. Keep this out of public UX under the current corporate-only brief.
+- General business policy: food safety regulation compliance, ethical sourcing, environmentally responsible production, transparent business operations, and accountability.
+
+## PDF FAQ Source
+
+The PDF includes six FAQ prompts. Some contain bulk, distributor, and final-consumer language that conflicts with the current corporate-only public scope.
+
+Safe FAQ topics if an FAQ block is later added:
+
+- What products do you offer?
+- Are your products NAFDAC approved?
+- How do you ensure product quality?
+- How can I contact you?
+
+Do not publish the PDF FAQ answers about bulk buying, final-consumer sales, distributor networks, or wholesale supply unless the public brief changes.

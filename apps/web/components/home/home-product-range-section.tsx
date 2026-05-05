@@ -17,7 +17,7 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
     .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
-  const ingredients = product.ingredients.slice(0, 4).join(", ");
+  const ingredients = product.ingredients.join(", ");
   const allergens = product.allergens.join(", ");
 
   return (
@@ -25,8 +25,8 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
       <Link href={`/products/${product.slug}`} className="block">
         <ImagePlaceholder
           src={product.imageUrl}
-          alt={`${product.name} placeholder`}
-          label="Product Placeholder"
+          alt={`${product.name} product image`}
+          label="Product Image"
           className="aspect-[4/3]"
         />
       </Link>
@@ -63,7 +63,7 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
 }
 
 export function HomeProductRangeSection({ products }: HomeProductRangeSectionProps) {
-  const featuredProducts = products.slice(0, 3);
+  const featuredProducts = products.slice(0, 4);
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
@@ -88,7 +88,7 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
         ))}
       />
 
-      <div className="mt-5 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-5 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4">
         {featuredProducts.map((product, index) => (
           <FadeIn key={product.id} delay={(index + 1) * 0.06}>
             <ProductPreviewCard product={product} />

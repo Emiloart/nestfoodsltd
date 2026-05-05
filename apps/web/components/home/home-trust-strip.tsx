@@ -2,18 +2,22 @@ import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 
 const trustItems = [
   {
+    eyebrow: "Registration",
     title: "Registered Food Manufacturer",
     description: "Licensed bread production with public-facing credibility.",
   },
   {
+    eyebrow: "Hygiene",
     title: "Hygienic Production Standards",
     description: "Clean workflow, disciplined QA, and safe handling.",
   },
   {
+    eyebrow: "Production",
     title: "Reliable Daily Output",
     description: "Consistent production routines support dependable bread availability.",
   },
   {
+    eyebrow: "Ingredients",
     title: "Premium Ingredients",
     description: "Ingredient clarity across the product catalogue.",
   },
@@ -22,7 +26,7 @@ const trustItems = [
 export function HomeTrustStrip() {
   const slides = trustItems.map((item) => (
     <div key={item.title} className="section-frame px-4 py-4.5 sm:px-5">
-      <p className="section-kicker">Trust Signal</p>
+      <p className="section-kicker">{item.eyebrow}</p>
       <h2 className="mt-3 text-lg font-semibold text-neutral-900">{item.title}</h2>
       <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">{item.description}</p>
     </div>

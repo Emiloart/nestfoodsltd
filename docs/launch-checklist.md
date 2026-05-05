@@ -5,8 +5,8 @@
 - [ ] Public brand reads De-Nest Bread.
 - [ ] Legal contexts read Nest Foods Limited.
 - [ ] Product catalogue includes the four cleaned PDF products.
-- [ ] Contact page includes phones, emails, WhatsApp numbers, contact locations, and social placeholders.
-- [ ] Careers page includes HR email, HR phone, roles, application guidance, and equal opportunity statement.
+- [ ] Contact page includes phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels.
+- [ ] Careers page includes HR email, HR phone, roles, application guidance, email-prep application form, and equal opportunity statement.
 - [ ] Terms and privacy copy reviewed by the business.
 
 ## Technical

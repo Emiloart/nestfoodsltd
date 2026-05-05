@@ -9,8 +9,8 @@
 | `/products/[slug]` | Product detail pages with description, ingredients, allergens, nutrition notes, size formats, and enquiry CTA. |
 | `/about` | Company story for Nest Foods Limited. |
 | `/vision` | Mission, vision, and values. |
-| `/careers` | Roles, HR contact, application guidance, and equal opportunity statement. |
-| `/contact` | Official phones, emails, WhatsApp numbers, contact locations, and social placeholders. |
+| `/careers` | Roles, HR contact, email-prep application form, and equal opportunity statement. |
+| `/contact` | Official phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels. |
 | `/privacy` | Consent preferences and NDPR data requests. |
 | `/terms` | Website terms placeholder. |
 
