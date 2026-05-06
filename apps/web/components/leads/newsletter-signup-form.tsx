@@ -21,7 +21,6 @@ export function NewsletterSignupForm() {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        fullName: String(formData.get("fullName") ?? ""),
         email: String(formData.get("email") ?? ""),
         source: "homepage",
         consentMarketing: formData.get("consentMarketing") === "on",
@@ -41,10 +40,7 @@ export function NewsletterSignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Input name="fullName" placeholder="Full name" autoComplete="name" />
-        <Input name="email" type="email" placeholder="Email address" autoComplete="email" required />
-      </div>
+      <Input name="email" type="email" placeholder="Email address" autoComplete="email" required />
       <label className="flex gap-3 text-xs leading-5 text-neutral-600">
         <input
           name="consentMarketing"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { FacebookIcon, WhatsAppIcon } from "@/components/social-icons";
 import { buttonClassName } from "@/components/ui/button";
 import { SOCIAL_CHANNELS, WHATSAPP_LINKS } from "@/lib/company/contact";
 
@@ -33,8 +34,9 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84 transition hover:bg-white/12"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84 transition hover:bg-white/12"
                 >
+                  <FacebookIcon className="h-3.5 w-3.5" />
                   {social.label}
                 </Link>
               ))}
@@ -75,6 +77,7 @@ export function Footer() {
                   className: "mt-2",
                 })}
               >
+                <WhatsAppIcon className="h-4 w-4" />
                 WhatsApp
               </Link>
             </div>

@@ -7,7 +7,6 @@ import { Card } from "@/components/ui/card";
 import { buttonClassName } from "@/components/ui/button";
 import { SectionHeading } from "@/components/home/section-heading";
 import { type CatalogueProduct } from "@/lib/catalog/types";
-import { WHATSAPP_CONTACTS, buildWhatsAppUrl, productWhatsAppMessage } from "@/lib/whatsapp";
 
 type HomeProductRangeSectionProps = {
   products: CatalogueProduct[];
@@ -21,10 +20,6 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
   const ingredients = product.ingredients.join(", ");
   const allergens = product.allergens.join(", ");
   const bestFor = product.bestFor.slice(0, 2).join(", ");
-  const whatsappUrl = buildWhatsAppUrl(
-    WHATSAPP_CONTACTS.sales.phone,
-    productWhatsAppMessage(product.name),
-  );
 
   return (
     <Card className="h-full space-y-4">
@@ -60,17 +55,6 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
           className={buttonClassName({ variant: "secondary", size: "sm" })}
         >
           View Product
-        </Link>
-        <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
-          Make Enquiry
-        </Link>
-        <Link
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          className={buttonClassName({ variant: "brand", size: "sm" })}
-        >
-          Chat on WhatsApp
         </Link>
       </div>
     </Card>

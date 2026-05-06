@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { ImagePlaceholder } from "@/components/image-placeholder";
 import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { Card } from "@/components/ui/card";
 import { buttonClassName } from "@/components/ui/button";
@@ -75,12 +74,6 @@ export function HomeStorySection({ aboutPage, visionPage }: HomeStorySectionProp
       <div className="mt-5 grid gap-4 lg:grid-cols-[0.88fr_1.12fr]">
         <Card className="space-y-4">
           <p className="section-kicker">Founder Story</p>
-          <ImagePlaceholder
-            src="/placeholders/sections/section-image-placeholder.svg"
-            alt="Founder portrait visual"
-            label="Founder"
-            className="aspect-[4/3]"
-          />
           <h3 className="text-2xl font-semibold text-neutral-900">
             Mr. Obinna Paulinus Nwosu
           </h3>

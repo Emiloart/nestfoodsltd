@@ -36,6 +36,8 @@ export const CONTACT_CHANNELS = [
 
 export const HEAD_OFFICE_MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=No.%201%20Nest%20Foods%20Street%20Okochime%20Okpuno%20Awka%20South%20Anambra%20State";
+export const HEAD_OFFICE_EMBED_MAP_URL =
+  "https://www.google.com/maps?q=No.+1+Nest+Foods+Street,+Okochime+Okpuno,+Awka+South,+Anambra+State&output=embed";
 
 export const BRANCH_LOCATIONS: BranchLocation[] = [
   {
@@ -140,22 +142,26 @@ export const TRUST_CERTIFICATIONS = [
   {
     label: "NAFDAC",
     title: "NAFDAC registered",
-    body: "Regulatory registration and food safety compliance are treated as core manufacturing requirements.",
+    body: "Food regulatory compliance.",
+    logoUrl: "/brand/certifications/nafdac.svg",
   },
   {
     label: "SON",
     title: "Standards focus",
-    body: "Production routines are structured around consistent quality, product handling, and reliable output.",
+    body: "Standards-aligned production.",
+    logoUrl: "/brand/certifications/son.svg",
   },
   {
     label: "NESREA",
     title: "Environmental compliance",
-    body: "Factory operations are positioned around responsible environmental and operational practices.",
+    body: "Responsible environmental operations.",
+    logoUrl: "/brand/certifications/nesrea.svg",
   },
   {
     label: "QC",
     title: "Quality control",
-    body: "Raw materials, baking, packaging, and finished products move through routine production checks.",
+    body: "Routine production quality checks.",
+    logoUrl: "/brand/certifications/qc.svg",
   },
 ] as const;
 

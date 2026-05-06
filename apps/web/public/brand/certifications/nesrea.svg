@@ -1,0 +1,7 @@
+<svg width="160" height="80" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="80" rx="16" fill="#2A5C3C"/>
+  <circle cx="30" cy="40" r="16" fill="#E4F2E8"/>
+  <path d="M22 44C24.6 37.6 28.7 34 36 32C33.5 38.4 32.2 43 33.2 48C28.5 49 25.2 48.2 22 44Z" fill="#2A5C3C"/>
+  <text x="54" y="34" fill="#ECF8EF" font-size="10" font-family="Arial, sans-serif" font-weight="700">NESREA</text>
+  <text x="54" y="50" fill="#ECF8EF" font-size="9" font-family="Arial, sans-serif">Environmental Mark</text>
+</svg>

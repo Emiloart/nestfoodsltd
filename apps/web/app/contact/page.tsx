@@ -1,38 +1,30 @@
 import Link from "next/link";
 
-import { LocationFinder } from "@/components/locations/location-finder";
-import { JsonLd } from "@/components/seo/json-ld";
+import { EnquiryCaptureForms } from "@/components/leads/enquiry-capture-forms";
+import { FacebookIcon, WhatsAppIcon } from "@/components/social-icons";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   BRANCH_LOCATIONS,
   CONTACT_CHANNELS,
-  HEAD_OFFICE_MAP_URL,
-  PENDING_SOCIAL_CHANNELS,
-  SAFE_FAQS,
+  HEAD_OFFICE_EMBED_MAP_URL,
   SOCIAL_CHANNELS,
   WHATSAPP_LINKS,
 } from "@/lib/company/contact";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
-import { buildFaqStructuredData } from "@/lib/seo/structured-data";
 
 export default async function ContactPage() {
   const page = await getCmsPage("contact");
 
   return (
-    <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
-      <JsonLd id="contact-faq-ld" data={buildFaqStructuredData([...SAFE_FAQS])} />
+    <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="section-frame px-5 py-7 sm:px-6 sm:py-8">
         <Badge>Contact</Badge>
         <h1 className="display-heading mt-4 text-4xl text-neutral-900 sm:text-5xl">
           {page.headline}
         </h1>
-        <p className="pretty-text mt-4 max-w-3xl text-[0.98rem] leading-7 text-neutral-600">
-          Contact Nest Foods Limited for De-Nest Bread product information, company enquiries,
-          careers, and official office contacts.
-        </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="mailto:info@nestfoodsltd.com"
@@ -49,12 +41,13 @@ export default async function ContactPage() {
             rel="noreferrer"
             className={buttonClassName({ variant: "brand" })}
           >
-            Chat on WhatsApp
+            <WhatsAppIcon className="h-4 w-4" />
+            WhatsApp
           </Link>
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
+      <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
         <Card className="space-y-4">
           <p className="section-kicker">Official Contacts</p>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -73,84 +66,90 @@ export default async function ContactPage() {
           </div>
         </Card>
 
-        <Card className="space-y-4">
-          <p className="section-kicker">WhatsApp</p>
-          <div className="space-y-2">
-            {[
-              { label: "General", href: WHATSAPP_LINKS.general, number: "07066898953" },
-              { label: "Sales", href: WHATSAPP_LINKS.sales, number: "08064107897" },
-              { label: "HR", href: WHATSAPP_LINKS.hr, number: "09116337168" },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                className="block text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
-              >
-                {item.label}: {item.number}
-              </Link>
-            ))}
-          </div>
-          <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4">
-            <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
-              Registered office
-            </p>
-            <p className="mt-2 text-sm leading-7 text-neutral-700">
-              No 1 Nest Foods Limited, Okpuno, Awka
-            </p>
-          </div>
+        <Card className="space-y-3">
+          <p className="section-kicker">WhatsApp Lines</p>
+          <Link
+            href={WHATSAPP_LINKS.general}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
+          >
+            <WhatsAppIcon />
+            General: 07066898953
+          </Link>
+          <Link
+            href={WHATSAPP_LINKS.sales}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
+          >
+            <WhatsAppIcon />
+            Sales: 08064107897
+          </Link>
+          <Link
+            href={WHATSAPP_LINKS.hr}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
+          >
+            <WhatsAppIcon />
+            HR: 09116337168
+          </Link>
         </Card>
       </div>
 
+      <div className="overflow-hidden rounded-[1.4rem] border border-[color:var(--border)] bg-white">
+        <iframe
+          title="Nest Foods Limited head office map"
+          src={HEAD_OFFICE_EMBED_MAP_URL}
+          className="h-[24rem] w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+
       <Card className="space-y-4">
-        <p className="section-kicker">Contact Locations</p>
-        <Link
-          href={HEAD_OFFICE_MAP_URL}
-          className={buttonClassName({ variant: "secondary", size: "sm" })}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Open Head Office Map
-        </Link>
+        <p className="section-kicker">Branch Contacts</p>
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {BRANCH_LOCATIONS.map((location) => (
+            <div
+              key={location.id}
+              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4"
+            >
+              <h2 className="text-base font-semibold text-neutral-900">{location.name}</h2>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                {location.address ?? "Contact head office for details."}
+              </p>
+              <p className="mt-3 text-xs font-semibold text-neutral-500">
+                {location.phone ?? "Contact head office for details."}
+              </p>
+              <p className="mt-2 text-xs leading-5 text-neutral-500">
+                {location.hours ?? "Contact head office for details."}
+              </p>
+            </div>
+          ))}
+        </div>
       </Card>
 
-      <LocationFinder locations={BRANCH_LOCATIONS} />
+      <Card className="space-y-4">
+        <p className="section-kicker">Supply And Interest Enquiry</p>
+        <EnquiryCaptureForms />
+      </Card>
 
       <Card className="space-y-4">
-        <p className="section-kicker">Social Channels</p>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <p className="section-kicker">Social</p>
+        <div className="flex flex-wrap gap-3">
           {SOCIAL_CHANNELS.map((social) => (
             <Link
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noreferrer"
-              className="rounded-[1.1rem] border border-[color:var(--border)] bg-white px-4 py-3"
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-2 text-sm font-semibold text-neutral-800 transition hover:border-[color:var(--border-strong)]"
             >
-              <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
-                {social.label}
-              </p>
-              <p className="mt-1 text-sm font-semibold text-neutral-900">{social.value}</p>
+              <FacebookIcon />
+              {social.label}
             </Link>
-          ))}
-        </div>
-        <p className="text-xs leading-6 text-neutral-500">
-          Other official handles are pending confirmation: {PENDING_SOCIAL_CHANNELS.join(", ")}.
-        </p>
-      </Card>
-
-      <Card className="space-y-4">
-        <p className="section-kicker">FAQ</p>
-        <div className="grid gap-3 md:grid-cols-2">
-          {SAFE_FAQS.map((item) => (
-            <div
-              key={item.question}
-              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4"
-            >
-              <h2 className="text-base font-semibold text-neutral-900">{item.question}</h2>
-              <p className="mt-2 text-sm leading-7 text-neutral-600">{item.answer}</p>
-            </div>
           ))}
         </div>
       </Card>

@@ -1,0 +1,7 @@
+<svg width="160" height="80" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="80" rx="16" fill="#5A247A"/>
+  <rect x="14" y="14" width="32" height="52" rx="16" fill="#F5EFC8"/>
+  <path d="M22 40L27 45L38 33" stroke="#5A247A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="54" y="34" fill="#F6F0FF" font-size="13" font-family="Arial, sans-serif" font-weight="700">QC</text>
+  <text x="54" y="50" fill="#F6F0FF" font-size="9" font-family="Arial, sans-serif">Quality Control</text>
+</svg>

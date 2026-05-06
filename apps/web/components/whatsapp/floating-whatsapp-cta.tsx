@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { WhatsAppIcon } from "@/components/social-icons";
 import { cn } from "@/lib/cn";
 import { WHATSAPP_CONTACTS } from "@/lib/whatsapp";
 import { WHATSAPP_LINKS } from "@/lib/company/contact";
@@ -30,8 +31,9 @@ export function FloatingWhatsAppCta() {
               href={WHATSAPP_LINKS[key]}
               target="_blank"
               rel="noreferrer"
-              className="rounded-[1rem] border border-[color:var(--border)] bg-[color:var(--surface-elevated)] px-3 py-2 text-sm font-semibold text-neutral-800 transition hover:border-[color:var(--border-strong)] hover:text-[color:var(--brand-1)]"
+              className="inline-flex items-center gap-2 rounded-[1rem] border border-[color:var(--border)] bg-[color:var(--surface-elevated)] px-3 py-2 text-sm font-semibold text-neutral-800 transition hover:border-[color:var(--border-strong)] hover:text-[color:var(--brand-1)]"
             >
+              <WhatsAppIcon />
               {WHATSAPP_CONTACTS[key].label}
             </a>
           ))}
@@ -44,7 +46,9 @@ export function FloatingWhatsAppCta() {
         onClick={() => setOpen((current) => !current)}
         className="flex h-14 items-center gap-3 rounded-full border border-white/50 bg-[#25d366] px-4 text-sm font-black uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_rgba(37,211,102,0.28)] transition hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
       >
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-white/18 text-lg">W</span>
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-white/18">
+          <WhatsAppIcon className="h-4 w-4 text-white" />
+        </span>
         <span className="hidden sm:inline">Chat</span>
       </button>
     </div>

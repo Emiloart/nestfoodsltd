@@ -332,7 +332,26 @@ img {
   }
 }
 
+.certification-carousel-track {
+  animation: certification-scroll 18s linear infinite;
+}
+
+@keyframes certification-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .certification-carousel-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
   html {
     scroll-behavior: auto;
   }
