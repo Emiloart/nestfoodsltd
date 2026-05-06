@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from "next/cache";
 
 import { readCatalogueData, writeCatalogueData } from "./store";
 import {
+  type CatalogueGalleryImage,
   type CatalogueNutritionNote,
   type CataloguePackFormat,
   type CatalogueProduct,
@@ -113,21 +114,53 @@ function normalizeNutritionNotes(input: CatalogueNutritionNote[] | undefined) {
     .filter((entry) => entry.label && entry.value);
 }
 
+function normalizeGalleryImages(
+  input: CatalogueGalleryImage[] | undefined,
+  fallbackUrls: string[],
+  productName: string,
+) {
+  if (Array.isArray(input) && input.length > 0) {
+    return input
+      .map((entry, index) => ({
+        url: entry.url.trim(),
+        altText: entry.altText?.trim() || `${productName} image ${index + 1}`,
+        label: entry.label?.trim() || undefined,
+      }))
+      .filter((entry) => entry.url);
+  }
+
+  return fallbackUrls.map((url, index) => ({
+    url,
+    altText: `${productName} image ${index + 1}`,
+    label: index === 0 ? "Primary view" : `Gallery view ${index + 1}`,
+  }));
+}
+
 function normalizeCatalogueProduct(product: CatalogueProduct): CatalogueProduct {
+  const slug = normalizeSlug(product.slug);
+  const galleryUrls = normalizeTextList(product.galleryUrls);
+  const nutritionNotes = normalizeNutritionNotes(product.nutritionNotes);
+  const nutrition = normalizeNutritionNotes(product.nutrition);
+
   return {
     ...product,
-    slug: normalizeSlug(product.slug),
+    slug,
     status: normalizeProductStatus(product.status),
     name: product.name.trim(),
     category: product.category.trim(),
     shortDescription: product.shortDescription.trim(),
     longDescription: product.longDescription.trim(),
     imageUrl: product.imageUrl.trim(),
-    galleryUrls: normalizeTextList(product.galleryUrls),
+    galleryUrls,
+    galleryImages: normalizeGalleryImages(product.galleryImages, galleryUrls, product.name.trim()),
     ingredients: normalizeTextList(product.ingredients),
     allergens: normalizeTextList(product.allergens),
-    nutritionNotes: normalizeNutritionNotes(product.nutritionNotes),
-    packFormats: normalizePackFormats(normalizeSlug(product.slug), product.packFormats),
+    nutritionNotes,
+    nutrition: nutrition.length > 0 ? nutrition : nutritionNotes,
+    packFormats: normalizePackFormats(slug, product.packFormats),
+    bestFor: normalizeTextList(product.bestFor),
+    shelfLife: product.shelfLife?.trim() || undefined,
+    storageInstructions: normalizeTextList(product.storageInstructions),
   };
 }
 
@@ -148,6 +181,8 @@ export async function listCatalogueProducts(filters?: ProductFilters) {
         product.category,
         product.ingredients.join(" "),
         product.allergens.join(" "),
+        product.bestFor.join(" "),
+        product.storageInstructions?.join(" ") ?? "",
         product.packFormats.map((format) => format.label).join(" "),
       ]
         .join(" ")
@@ -229,10 +264,15 @@ export async function createAdminCatalogueProduct(input: AdminCreateProductInput
     longDescription: input.longDescription,
     imageUrl: input.imageUrl,
     galleryUrls: input.galleryUrls,
+    galleryImages: input.galleryImages,
     ingredients: input.ingredients,
     allergens: input.allergens,
     nutritionNotes: input.nutritionNotes,
+    nutrition: input.nutrition,
     packFormats: input.packFormats,
+    bestFor: input.bestFor,
+    shelfLife: input.shelfLife,
+    storageInstructions: input.storageInstructions,
     updatedAt: now,
   });
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
+  type CatalogueGalleryImage,
   type CatalogueNutritionNote,
   type CataloguePackFormat,
   type CatalogueProduct,
@@ -32,9 +33,13 @@ type CatalogFormState = {
   longDescription: string;
   imageUrl: string;
   galleryUrlsText: string;
+  galleryImagesText: string;
   allergensText: string;
   ingredientsText: string;
   nutritionNotesText: string;
+  bestForText: string;
+  shelfLife: string;
+  storageInstructionsText: string;
   packFormatsText: string;
 };
 
@@ -47,10 +52,16 @@ const emptyFormState: CatalogFormState = {
   longDescription: "",
   imageUrl: "/placeholders/products/product-placeholder.svg",
   galleryUrlsText: "/placeholders/products/product-placeholder.svg",
+  galleryImagesText:
+    "/placeholders/products/product-placeholder.svg | De-Nest Bread product view | Product view",
   allergensText: "Contains wheat (gluten)\nContains milk\nMay contain traces of soya",
   ingredientsText: "Enriched wheat flour\nWater\nSugar\nVegetable oil\nYeast\nSalt\nMilk\nButter",
   nutritionNotesText:
-    "Nutrition profile | Prepared as a soft, satisfying wheat bread for everyday meals.",
+    "Energy | To be confirmed per 100g\nCarbohydrates | To be confirmed per 100g\nProtein | To be confirmed per 100g\nFat | To be confirmed per 100g\nSugar | To be confirmed per 100g\nSodium | To be confirmed per 100g",
+  bestForText: "Family meals\nSchool lunch\nTea-time serving",
+  shelfLife: "9-10 days freshness when stored as directed.",
+  storageInstructionsText:
+    "Store in a cool, dry place away from direct sunlight.\nKeep sealed after opening.\nUse before the date printed on the pack.",
   packFormatsText: "default | Standard loaf",
 };
 
@@ -76,6 +87,20 @@ function parseNutritionNotes(text: string): CatalogueNutritionNote[] {
       throw new Error(`Nutrition note ${index + 1} must be: label | value`);
     }
     return { label, value };
+  });
+}
+
+function parseGalleryImages(text: string): CatalogueGalleryImage[] {
+  return parseLines(text).map((line, index) => {
+    const [url, altText, label] = parseDelimitedLine(line);
+    if (!url || !altText) {
+      throw new Error(`Gallery image ${index + 1} must be: url | alt text | label`);
+    }
+    return {
+      url,
+      altText,
+      label: label || undefined,
+    };
   });
 }
 
@@ -107,11 +132,17 @@ function toFormState(product: CatalogueProduct): CatalogFormState {
     longDescription: product.longDescription,
     imageUrl: product.imageUrl,
     galleryUrlsText: toTextList(product.galleryUrls),
+    galleryImagesText: (product.galleryImages ?? [])
+      .map((entry) => [entry.url, entry.altText, entry.label ?? ""].join(" | "))
+      .join("\n"),
     allergensText: toTextList(product.allergens),
     ingredientsText: toTextList(product.ingredients),
     nutritionNotesText: product.nutritionNotes
       .map((entry) => [entry.label, entry.value].join(" | "))
       .join("\n"),
+    bestForText: toTextList(product.bestFor),
+    shelfLife: product.shelfLife ?? "",
+    storageInstructionsText: toTextList(product.storageInstructions ?? []),
     packFormatsText: product.packFormats
       .map((format) => [format.id, format.label].join(" | "))
       .join("\n"),
@@ -128,9 +159,14 @@ function buildProductPayload(form: CatalogFormState) {
     longDescription: form.longDescription.trim(),
     imageUrl: form.imageUrl.trim(),
     galleryUrls: parseLines(form.galleryUrlsText),
+    galleryImages: parseGalleryImages(form.galleryImagesText),
     allergens: parseLines(form.allergensText),
     ingredients: parseLines(form.ingredientsText),
     nutritionNotes: parseNutritionNotes(form.nutritionNotesText),
+    nutrition: parseNutritionNotes(form.nutritionNotesText),
+    bestFor: parseLines(form.bestForText),
+    shelfLife: form.shelfLife.trim(),
+    storageInstructions: parseLines(form.storageInstructionsText),
     packFormats: parsePackFormats(form.packFormatsText),
   };
 }
@@ -426,6 +462,17 @@ export function CatalogManagerClient() {
             </label>
             <label className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                Gallery Metadata
+              </span>
+              <textarea
+                value={form.galleryImagesText}
+                onChange={(event) => updateForm({ galleryImagesText: event.target.value })}
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 font-mono text-xs text-neutral-900"
+              />
+              <span className="text-xs text-neutral-500">Format: url | alt text | label</span>
+            </label>
+            <label className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
                 Pack / Size Formats
               </span>
               <textarea
@@ -456,6 +503,35 @@ export function CatalogManagerClient() {
               />
             </label>
           </div>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <label className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                Best For
+              </span>
+              <textarea
+                value={form.bestForText}
+                onChange={(event) => updateForm({ bestForText: event.target.value })}
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
+              />
+            </label>
+            <label className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                Storage Instructions
+              </span>
+              <textarea
+                value={form.storageInstructionsText}
+                onChange={(event) => updateForm({ storageInstructionsText: event.target.value })}
+                className="min-h-24 w-full rounded-xl border border-neutral-300 bg-white px-3 py-3 text-sm text-neutral-900"
+              />
+            </label>
+          </div>
+
+          <Input
+            value={form.shelfLife}
+            onChange={(event) => updateForm({ shelfLife: event.target.value })}
+            placeholder="Shelf life / freshness note"
+          />
 
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">

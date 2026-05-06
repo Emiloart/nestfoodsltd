@@ -33,7 +33,7 @@ export function ImagePlaceholder({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[1.6rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)]",
+        "placeholder-panel relative overflow-hidden bg-[color:var(--surface-overlay)]",
         className,
       )}
     >
@@ -57,12 +57,8 @@ export function ImagePlaceholder({
           className="h-full w-full object-cover"
         />
       )}
-      <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_26%,transparent)]" />
-      {label ? (
-        <div className="absolute left-4 top-4 rounded-full border border-white/16 bg-[color:color-mix(in_srgb,var(--brand-2)_82%,transparent)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-          {label}
-        </div>
-      ) : null}
+      <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_16%,transparent)]" />
+      {label ? <span className="sr-only">{label}</span> : null}
     </div>
   );
 }

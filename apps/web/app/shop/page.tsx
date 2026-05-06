@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { listCatalogueFacets, listCatalogueProducts } from "@/lib/catalog/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { WHATSAPP_CONTACTS, buildWhatsAppUrl, productWhatsAppMessage } from "@/lib/whatsapp";
 
 export const metadata = buildPageMetadata({
   title: "Products",
@@ -121,6 +122,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             .join(", ");
           const ingredients = product.ingredients.join(", ");
           const allergens = product.allergens.join(", ");
+          const bestFor = product.bestFor.slice(0, 2).join(", ");
+          const whatsappUrl = buildWhatsAppUrl(
+            WHATSAPP_CONTACTS.sales.phone,
+            productWhatsAppMessage(product.name),
+          );
 
           return (
             <Card key={product.id} className="space-y-4">
@@ -141,6 +147,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 <p className="text-xs text-neutral-500">
                   Size: {packSizes || "Available on request"}
                 </p>
+                {bestFor ? <p className="text-xs text-neutral-500">Best for: {bestFor}</p> : null}
                 <p className="text-xs text-neutral-500">
                   Ingredients: {ingredients || "Available on request"}
                 </p>
@@ -160,6 +167,14 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   className={buttonClassName({ variant: "primary", size: "sm" })}
                 >
                   Make Enquiry
+                </Link>
+                <Link
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={buttonClassName({ variant: "brand", size: "sm" })}
+                >
+                  Chat on WhatsApp
                 </Link>
               </div>
             </Card>

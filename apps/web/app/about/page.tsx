@@ -1,3 +1,4 @@
+import { ImagePlaceholder } from "@/components/image-placeholder";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
@@ -83,6 +84,12 @@ export default async function AboutPage() {
 
         <Card className="space-y-3">
           <p className="section-kicker">Founder</p>
+          <ImagePlaceholder
+            src="/placeholders/sections/section-image-placeholder.svg"
+            alt="Founder portrait visual"
+            label="Founder"
+            className="aspect-[4/3]"
+          />
           <h2 className="text-2xl font-semibold text-neutral-900">Mr. Obinna Paulinus Nwosu</h2>
           <p className="text-sm leading-7 text-neutral-600">
             Mr. Obinna Paulinus Nwosu is the visionary founder and driving force behind Nest
@@ -119,6 +126,28 @@ export default async function AboutPage() {
           </ul>
         </Card>
       </div>
+
+      <Card className="space-y-4">
+        <p className="section-kicker">Factory And Team</p>
+        <h2 className="text-2xl font-semibold text-neutral-900">
+          Production, packaging, and team culture are part of the brand story.
+        </h2>
+        <div className="grid gap-3 md:grid-cols-3">
+          {[
+            { label: "Production Floor", src: "/placeholders/sections/section-image-placeholder.svg" },
+            { label: "Packaging Line", src: "/placeholders/sections/process-placeholder.svg" },
+            { label: "Team", src: "/placeholders/sections/section-image-placeholder.svg" },
+          ].map((item) => (
+            <ImagePlaceholder
+              key={item.label}
+              src={item.src}
+              alt={`${item.label} visual`}
+              label={item.label}
+              className="aspect-[4/3]"
+            />
+          ))}
+        </div>
+      </Card>
     </section>
   );
 }

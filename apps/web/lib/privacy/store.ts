@@ -19,6 +19,10 @@ function mergePrivacyData(input: Partial<PrivacyData> | null | undefined): Priva
   };
 }
 
+export function getPrivacyStorageDriver() {
+  return storageDriver;
+}
+
 export async function readPrivacyData(): Promise<PrivacyData> {
   if (storageDriver === "postgres") {
     const payload = await readPostgresJsonStore<Partial<PrivacyData>>(postgresModuleKey, {

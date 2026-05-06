@@ -17,6 +17,8 @@ type ConsentResponse = {
   } | null;
 };
 
+const LOCAL_CONSENT_KEY = "nest_privacy_consent_saved";
+
 export function PrivacyConsentBanner() {
   const [visible, setVisible] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -24,13 +26,23 @@ export function PrivacyConsentBanner() {
 
   useEffect(() => {
     async function loadConsent() {
+      if (window.localStorage.getItem(LOCAL_CONSENT_KEY)) {
+        setVisible(false);
+        return;
+      }
+
       const response = await fetch("/api/privacy/consent", { cache: "no-store" });
       if (!response.ok) {
         setVisible(true);
         return;
       }
       const data = (await response.json()) as ConsentResponse;
-      setVisible(!data.consent);
+      if (data.consent) {
+        window.localStorage.setItem(LOCAL_CONSENT_KEY, data.consent.consentedAt);
+        setVisible(false);
+        return;
+      }
+      setVisible(true);
     }
 
     void loadConsent();
@@ -62,6 +74,11 @@ export function PrivacyConsentBanner() {
         return;
       }
 
+      const data = (await response.json()) as ConsentResponse;
+      window.localStorage.setItem(
+        LOCAL_CONSENT_KEY,
+        data.consent?.consentedAt ?? new Date().toISOString(),
+      );
       setStatus("Consent saved.");
       setVisible(false);
     } catch {

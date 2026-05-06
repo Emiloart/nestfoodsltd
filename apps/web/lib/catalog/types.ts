@@ -10,6 +10,12 @@ export type CatalogueNutritionNote = {
   value: string;
 };
 
+export type CatalogueGalleryImage = {
+  url: string;
+  altText: string;
+  label?: string;
+};
+
 export type CatalogueProduct = {
   id: string;
   slug: string;
@@ -20,10 +26,15 @@ export type CatalogueProduct = {
   longDescription: string;
   imageUrl: string;
   galleryUrls: string[];
+  galleryImages?: CatalogueGalleryImage[];
   ingredients: string[];
   allergens: string[];
   nutritionNotes: CatalogueNutritionNote[];
+  nutrition?: CatalogueNutritionNote[];
   packFormats: CataloguePackFormat[];
+  bestFor: string[];
+  shelfLife?: string;
+  storageInstructions?: string[];
   updatedAt: string;
 };
 

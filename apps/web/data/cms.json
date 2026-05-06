@@ -116,7 +116,7 @@
       "label": "Primary Logo Placeholder",
       "kind": "image",
       "url": "/brand/logos/logo-primary.svg",
-      "altText": "De-Nest Bread logo placeholder",
+      "altText": "De-Nest Bread logo",
       "folder": "branding",
       "updatedAt": "2026-05-05T00:00:00.000Z"
     },
@@ -125,7 +125,7 @@
       "label": "Hero Image Placeholder",
       "kind": "image",
       "url": "/placeholders/hero/hero-image-placeholder.svg",
-      "altText": "Hero image placeholder",
+      "altText": "De-Nest Bread hero visual",
       "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"
     },
@@ -134,7 +134,7 @@
       "label": "Hero Video Poster Placeholder",
       "kind": "image",
       "url": "/placeholders/hero/hero-video-poster-placeholder.svg",
-      "altText": "Hero video poster placeholder",
+      "altText": "De-Nest Bread hero video poster",
       "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"
     }

@@ -13,6 +13,7 @@
     "start": "pnpm --filter @nestfoodsltd/web start",
     "lint": "pnpm --filter @nestfoodsltd/web lint",
     "typecheck": "pnpm --filter @nestfoodsltd/web typecheck",
+    "verify:content": "pnpm --filter @nestfoodsltd/web verify:content",
     "format": "prettier --check .",
     "format:write": "prettier --write ."
   },

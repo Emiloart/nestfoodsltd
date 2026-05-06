@@ -1,6 +1,7 @@
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { SectionHeading } from "@/components/home/section-heading";
+import { TRUST_CERTIFICATIONS } from "@/lib/company/contact";
 
 const standards = [
   {
@@ -30,6 +31,18 @@ export function HomeProductionStandardsSection() {
       <p className="pretty-text mt-3 text-sm leading-7 text-neutral-600">{item.description}</p>
     </div>
   ));
+  const trustCards = TRUST_CERTIFICATIONS.map((item) => (
+    <div
+      key={item.label}
+      className="rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
+    >
+      <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[color:var(--bg-accent-gold)] text-sm font-black text-[color:var(--brand-2)]">
+        {item.label}
+      </div>
+      <h3 className="mt-4 text-base font-semibold text-neutral-900">{item.title}</h3>
+      <p className="pretty-text mt-2 text-sm leading-6 text-neutral-600">{item.body}</p>
+    </div>
+  ));
 
   return (
     <section
@@ -57,7 +70,7 @@ export function HomeProductionStandardsSection() {
           ariaLabel="Production standards"
           className="mt-5"
           intervalMs={2000}
-          items={standardCards}
+          items={[...standardCards, ...trustCards]}
         />
       </div>
 
@@ -65,21 +78,36 @@ export function HomeProductionStandardsSection() {
         <div className="section-frame px-5 py-5 sm:px-6">
           <SectionHeading
             eyebrow="Production Standards"
-            title="Production process, hygiene, and packaging standards."
-            description="Nest Foods Limited presents clear manufacturing standards without turning quality into a public product feature."
+            title="Production process, hygiene, packaging, and trust signals."
+            description="Nest Foods Limited presents manufacturing standards, regulatory trust markers, and controlled factory routines for De-Nest Bread."
             descriptionClassName="hidden lg:block"
           />
 
           <div className="mt-6 grid gap-3">{standardCards}</div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">{trustCards}</div>
         </div>
 
-        <div className="section-frame p-4 sm:p-5">
+        <div className="section-frame space-y-4 p-4 sm:p-5">
           <ImagePlaceholder
             src="/placeholders/sections/section-image-placeholder.svg"
             alt="Production process visual"
             label="Production Process"
             className="aspect-[6/5] sm:aspect-[16/11]"
           />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <ImagePlaceholder
+              src="/placeholders/sections/process-placeholder.svg"
+              alt="Factory process video preview"
+              label="Factory Process"
+              className="aspect-video"
+            />
+            <ImagePlaceholder
+              src="/placeholders/sections/section-image-placeholder.svg"
+              alt="Quality control team visual"
+              label="Quality Team"
+              className="aspect-video"
+            />
+          </div>
         </div>
       </div>
     </section>

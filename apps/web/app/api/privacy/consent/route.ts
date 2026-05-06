@@ -9,6 +9,7 @@ import {
   PRIVACY_SUBJECT_COOKIE_NAME,
 } from "@/lib/privacy/consent-cookie";
 import { recordPrivacyConsent } from "@/lib/privacy/service";
+import { type PrivacyConsentCategories } from "@/lib/privacy/types";
 import {
   applyRateLimitHeaders,
   createRateLimitErrorResponse,
@@ -99,20 +100,31 @@ export async function POST(request: NextRequest) {
   const subjectId =
     request.cookies.get(PRIVACY_SUBJECT_COOKIE_NAME)?.value || createPrivacySubjectId();
 
-  const consent = await recordPrivacyConsent({
-    subjectId,
-    locale: validated.data.locale,
-    source: validated.data.source ?? "api",
-    categories,
-    ipAddress: resolveClientIp(request),
-    userAgent: resolveUserAgent(request),
-  });
+  let persistedConsent: { categories: PrivacyConsentCategories; consentedAt: string } | null = null;
+  let persistenceWarning: string | undefined;
+  try {
+    const consent = await recordPrivacyConsent({
+      subjectId,
+      locale: validated.data.locale,
+      source: validated.data.source ?? "api",
+      categories,
+      ipAddress: resolveClientIp(request),
+      userAgent: resolveUserAgent(request),
+    });
+    persistedConsent = {
+      categories: consent.categories,
+      consentedAt: consent.consentedAt,
+    };
+  } catch {
+    persistenceWarning = "Consent cookie saved. Server persistence will retry on the next update.";
+  }
 
   const response = NextResponse.json({
     consent: {
-      categories: consent.categories,
-      consentedAt: consent.consentedAt,
+      categories: persistedConsent?.categories ?? categories,
+      consentedAt: persistedConsent?.consentedAt ?? consentedAt,
     },
+    warning: persistenceWarning,
   });
   const secure = shouldUseSecureCookies(request);
   response.cookies.set(

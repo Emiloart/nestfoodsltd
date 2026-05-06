@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify:content": "node scripts/verify-corporate-content.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

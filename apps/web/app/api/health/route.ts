@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+import { getEnquiriesStorageDriver } from "@/lib/enquiries/store";
+import { getNewsletterStorageDriver } from "@/lib/newsletter/store";
+import { getPrivacyStorageDriver } from "@/lib/privacy/store";
+
 export async function GET() {
   return NextResponse.json(
     {
@@ -15,7 +19,10 @@ export async function GET() {
           cms: process.env.CMS_STORAGE_DRIVER ?? "json",
           catalog: process.env.CATALOG_STORAGE_DRIVER ?? "json",
           chat: process.env.CHAT_STORAGE_DRIVER ?? "json",
+          enquiries: getEnquiriesStorageDriver(),
+          newsletter: getNewsletterStorageDriver(),
           observability: process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json",
+          privacy: getPrivacyStorageDriver(),
         },
       },
     },

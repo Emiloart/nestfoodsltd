@@ -34,7 +34,7 @@ const emptyForm: BannerFormState = {
   headline: "",
   ctaLabel: "",
   ctaHref: "",
-  imageUrl: "/placeholders/hero-image-placeholder.svg",
+  imageUrl: "/placeholders/hero/hero-image-placeholder.svg",
   status: "draft",
   publishAt: "",
   order: "1",

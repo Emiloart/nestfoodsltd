@@ -1,187 +1,95 @@
 import Link from "next/link";
 
-import { buttonClassName } from "./ui/button";
+import { BrandLogo } from "@/components/brand-logo";
+import { buttonClassName } from "@/components/ui/button";
+import { SOCIAL_CHANNELS, WHATSAPP_LINKS } from "@/lib/company/contact";
 
-const socialChannels = ["Facebook: nest foods limited"];
-
-const footerGroups = [
-  {
-    title: "Company",
-    links: [
-      { href: "/about", label: "About" },
-      { href: "/vision", label: "Vision" },
-    ],
-  },
-  {
-    title: "Products",
-    links: [{ href: "/shop", label: "Products" }],
-  },
-  {
-    title: "Careers",
-    links: [{ href: "/careers", label: "Careers" }],
-  },
-  {
-    title: "Contact",
-    links: [{ href: "/contact", label: "Contact" }],
-  },
-  {
-    title: "Legal",
-    links: [
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-    ],
-  },
+const footerLinks = [
+  { href: "/", label: "Home" },
+  { href: "/shop", label: "Products" },
+  { href: "/about", label: "About" },
+  { href: "/vision", label: "Vision" },
+  { href: "/careers", label: "Careers" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Footer() {
   return (
     <footer className="px-3 pb-3 pt-3 md:px-4 md:pb-5 md:pt-4">
-      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
-        <div className="space-y-5 px-4 py-5 md:hidden">
-          <div>
-            <p className="section-kicker text-[color:var(--brand-4)]">De-Nest Bread</p>
-            <h2 className="display-heading mt-3 text-3xl text-white">
-              Premium bread manufacturing by Nest Foods Limited.
+      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border px-4 py-5 sm:px-6 md:py-7">
+        <div className="grid gap-7 lg:grid-cols-[1.05fr_0.7fr_0.85fr] lg:items-start">
+          <div className="space-y-4">
+            <BrandLogo tone="inverse" />
+            <h2 className="display-heading max-w-xl text-3xl text-white sm:text-4xl">
+              Baking memories, one slice at a time.
             </h2>
+            <p className="pretty-text max-w-lg text-sm leading-7 text-white/68">
+              Premium bread manufacturing by Nest Foods Limited, the company behind De-Nest Bread.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SOCIAL_CHANNELS.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84 transition hover:bg-white/12"
+                >
+                  {social.label}
+                </Link>
+              ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { href: "/shop", label: "Products" },
-              { href: "/about", label: "About" },
-              { href: "/careers", label: "Careers" },
-              { href: "/contact", label: "Contact" },
-            ].map((item) => (
+          <nav aria-label="Footer links" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2">
+            {footerLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={buttonClassName({
-                  variant: item.label === "Contact" ? "primary" : "secondary",
-                  size: "sm",
-                  className: "min-h-12 rounded-[1.1rem] text-center",
-                })}
+                className="rounded-full border border-white/10 bg-white/6 px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.14em] text-white/72 transition hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </Link>
             ))}
-          </div>
+          </nav>
 
-          <div className="grid gap-2">
-            {[
-              { href: "/about", label: "About Nest Foods Limited" },
-              { href: "/vision", label: "Vision" },
-              { href: "/careers", label: "Careers" },
-            ].map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center justify-between rounded-[1.15rem] border border-white/10 bg-white/6 px-4 py-3 text-sm text-white/82 transition hover:bg-white/10"
-              >
-                <span>{item.label}</span>
-                <span className="text-xs uppercase tracking-[0.14em] text-white/46">Open</span>
+          <div className="space-y-4 rounded-[1.4rem] border border-white/10 bg-white/8 p-4">
+            <p className="section-kicker text-[color:var(--brand-4)]">Contact</p>
+            <div className="space-y-2 text-sm text-white/76">
+              <Link href="tel:+2347066898953" className="block transition hover:text-white">
+                07066898953
               </Link>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {["Registered Manufacturer", "Controlled Production", "Contact Ready"].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[11px] text-white/84"
+              <Link
+                href="mailto:info@nestfoodsltd.com"
+                className="block transition hover:text-white"
               >
-                {item}
-              </span>
-            ))}
-          </div>
-
-          <div className="space-y-2">
-            <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
-            <div className="flex flex-wrap gap-2">
-              {socialChannels.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[11px] text-white/84"
-                >
-                  {item}
-                </span>
-              ))}
+                info@nestfoodsltd.com
+              </Link>
+              <Link
+                href={WHATSAPP_LINKS.general}
+                target="_blank"
+                rel="noreferrer"
+                className={buttonClassName({
+                  variant: "primary",
+                  size: "sm",
+                  className: "mt-2",
+                })}
+              >
+                WhatsApp
+              </Link>
             </div>
-            <p className="text-xs text-white/58">
-              More official channels will be added after confirmation.
-            </p>
           </div>
+        </div>
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/58">
+        <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-4 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Nest Foods Limited. All rights reserved.</p>
+          <div className="flex gap-4">
             <Link href="/privacy" className="transition hover:text-white">
               Privacy
             </Link>
             <Link href="/terms" className="transition hover:text-white">
               Terms
             </Link>
-          </div>
-        </div>
-
-        <div className="hidden gap-8 px-5 py-8 md:grid md:px-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <p className="section-kicker text-[color:var(--brand-4)]">De-Nest Bread</p>
-            <h2 className="display-heading mt-3 text-3xl text-white sm:text-4xl">
-              Premium bread manufacturing by Nest Foods Limited.
-            </h2>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
-                Registered Manufacturer
-              </span>
-              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
-                Controlled Production
-              </span>
-              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84">
-                Direct Enquiry Route
-              </span>
-            </div>
-            <div className="mt-5 space-y-1.5 text-sm text-white/68">
-              <p>
-                Product questions, company enquiries, and careers follow-up route through the
-                contact page.
-              </p>
-            </div>
-            <div className="mt-5 space-y-2">
-              <p className="section-kicker text-[color:var(--brand-4)]">Socials</p>
-              <div className="flex flex-wrap gap-2">
-                {socialChannels.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-2 text-xs text-white/58">
-                More official channels will be added after confirmation.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-            {footerGroups.map((group) => (
-              <div key={group.title}>
-                <p className="section-kicker text-[color:var(--brand-4)]">{group.title}</p>
-                <nav
-                  aria-label={`${group.title} footer links`}
-                  className="mt-4 flex flex-col gap-3"
-                >
-                  {group.links.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="text-sm text-white/72 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            ))}
           </div>
         </div>
       </div>

@@ -4,9 +4,9 @@
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Homepage with hero, trust strip, product range, production standards, about, vision, careers, and contact sections. |
+| `/` | Homepage with cinematic hero, trust strip, product range, production standards, founder/story, branch/contact teaser, careers, newsletter, and enquiry sections. |
 | `/shop` | De-Nest Bread product catalogue. |
-| `/products/[slug]` | Product detail pages with description, ingredients, allergens, nutrition notes, size formats, and enquiry CTA. |
+| `/products/[slug]` | Product detail pages with gallery, tabs, description, ingredients, allergens, nutrition notes, storage guidance, freshness cue, size formats, comparison table, and enquiry CTA. |
 | `/about` | Company story for Nest Foods Limited. |
 | `/vision` | Mission, vision, and values. |
 | `/careers` | Roles, HR contact, email-prep application form, and equal opportunity statement. |
@@ -23,6 +23,9 @@
 | `/api/chat/leads` | Enquiry handoff capture. |
 | `/api/privacy/consent` | Consent preference storage. |
 | `/api/privacy/data-requests` | NDPR request intake. |
+| `/api/newsletter/subscribe` | Newsletter subscriber capture. |
+| `/api/enquiries/bulk` | Product supply enquiry capture. |
+| `/api/enquiries/distributor` | Distributor-interest capture without an automated trade workflow. |
 | `/api/health` | Runtime health. |
 | `/api/telemetry/errors` | Client error intake. |
 | `/api/telemetry/web-vitals` | Web vitals intake. |

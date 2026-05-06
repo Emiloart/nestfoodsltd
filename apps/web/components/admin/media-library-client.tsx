@@ -34,7 +34,7 @@ type MediaFormState = {
 const emptyForm: MediaFormState = {
   label: "",
   kind: "image",
-  url: "/placeholders/section-image-placeholder.svg",
+  url: "/placeholders/sections/section-image-placeholder.svg",
   altText: "",
   posterImageUrl: "",
   folder: "general",

@@ -28,6 +28,8 @@ type DataRequestResponse = {
   };
 };
 
+const LOCAL_CONSENT_KEY = "nest_privacy_consent_saved";
+
 export function PrivacyPageClient() {
   const [consent, setConsent] = useState({
     analytics: false,
@@ -48,16 +50,27 @@ export function PrivacyPageClient() {
     async function loadConsent() {
       const response = await fetch("/api/privacy/consent", { cache: "no-store" });
       if (!response.ok) {
-        setConsentStatus("Unable to load consent settings.");
+        const savedAt = window.localStorage.getItem(LOCAL_CONSENT_KEY);
+        setConsentStatus(
+          savedAt
+            ? `Saved on this browser ${new Date(savedAt).toLocaleString("en-NG")}`
+            : "Unable to load consent settings.",
+        );
         return;
       }
 
       const data = (await response.json()) as ConsentResponse;
       if (!data.consent) {
-        setConsentStatus("No optional consent saved yet.");
+        const savedAt = window.localStorage.getItem(LOCAL_CONSENT_KEY);
+        setConsentStatus(
+          savedAt
+            ? `Saved on this browser ${new Date(savedAt).toLocaleString("en-NG")}`
+            : "No optional consent saved yet.",
+        );
         return;
       }
 
+      window.localStorage.setItem(LOCAL_CONSENT_KEY, data.consent.consentedAt);
       setConsent({
         analytics: data.consent.categories.analytics,
         marketing: data.consent.categories.marketing,
@@ -94,6 +107,10 @@ export function PrivacyPageClient() {
       }
 
       const data = (await response.json()) as ConsentResponse;
+      window.localStorage.setItem(
+        LOCAL_CONSENT_KEY,
+        data.consent?.consentedAt ?? new Date().toISOString(),
+      );
       setConsentStatus(
         data.consent
           ? `Saved ${new Date(data.consent.consentedAt).toLocaleString("en-NG")}`

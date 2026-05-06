@@ -116,6 +116,18 @@ img {
   opacity: 0.9;
 }
 
+.hero-grain {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0),
+    radial-gradient(circle at 12px 18px, rgba(244, 228, 9, 0.08) 1px, transparent 0);
+  background-size: 22px 22px, 34px 34px;
+  animation: grain-drift 8s steps(8) infinite;
+}
+
+.hero-slogan {
+  animation: hero-copy-rise 720ms ease-out both;
+}
+
 .display-heading {
   font-family: var(--font-display), "Avenir Next", sans-serif;
   font-weight: 700;
@@ -258,7 +270,7 @@ img {
 .placeholder-panel {
   position: relative;
   overflow: hidden;
-  border: 1px dashed color-mix(in srgb, var(--brand-1) 18%, var(--border-strong));
+  border: 1px solid color-mix(in srgb, var(--brand-1) 12%, var(--border));
   border-radius: 1.5rem;
   background: var(--surface-strong);
 }
@@ -267,10 +279,57 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.44), transparent),
+    radial-gradient(circle at 24% 18%, rgba(244, 228, 9, 0.1), transparent 24%),
+    radial-gradient(circle at 78% 64%, rgba(90, 36, 122, 0.08), transparent 28%);
+  background-size: 220% 100%, 100% 100%, 100% 100%;
   border-radius: inherit;
-  opacity: 0.45;
+  opacity: 0.55;
   pointer-events: none;
+  animation: skeleton-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes hero-copy-rise {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes grain-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(-1%, 1%, 0);
+  }
+
+  50% {
+    transform: translate3d(1%, -1%, 0);
+  }
+
+  75% {
+    transform: translate3d(-0.5%, -0.5%, 0);
+  }
+}
+
+@keyframes skeleton-glow {
+  0%,
+  100% {
+    background-position: 120% 0, 0 0, 0 0;
+  }
+
+  50% {
+    background-position: -40% 0, 0 0, 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

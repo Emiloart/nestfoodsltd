@@ -2,14 +2,16 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ImagePlaceholder } from "@/components/image-placeholder";
+import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
+import { ProductGallery } from "@/components/products/product-gallery";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getCatalogueProductBySlug } from "@/lib/catalog/service";
+import { getCatalogueProductBySlug, listCatalogueProducts } from "@/lib/catalog/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProductStructuredData } from "@/lib/seo/structured-data";
+import { WHATSAPP_CONTACTS, buildWhatsAppUrl, productWhatsAppMessage } from "@/lib/whatsapp";
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }> | { slug: string };
@@ -38,7 +40,10 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await Promise.resolve(params);
-  const product = await getCatalogueProductBySlug(slug);
+  const [product, allProducts] = await Promise.all([
+    getCatalogueProductBySlug(slug),
+    listCatalogueProducts(),
+  ]);
 
   if (!product) {
     notFound();
@@ -50,30 +55,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
+  const whatsappUrl = buildWhatsAppUrl(
+    WHATSAPP_CONTACTS.sales.phone,
+    productWhatsAppMessage(product.name),
+  );
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <JsonLd id={`product-${product.slug}-ld`} data={productStructuredData} />
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="space-y-4">
-          <ImagePlaceholder
-            src={product.imageUrl}
-            alt={`${product.name} product image`}
-            label="Product Image"
-            className="aspect-square"
-          />
-          <div className="grid grid-cols-2 gap-3">
-            {product.galleryUrls.map((entry, index) => (
-              <ImagePlaceholder
-                key={`${entry}-${index}`}
-                src={entry}
-                alt={`${product.name} gallery image ${index + 1}`}
-                label={`Gallery ${index + 1}`}
-                className="aspect-square"
-              />
-            ))}
-          </div>
-        </div>
+        <ProductGallery product={product} />
 
         <div className="space-y-6">
           <div className="space-y-3">
@@ -85,40 +76,44 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <p className="text-xs text-neutral-500">
               Size: {packSizes || "Available on request"}
             </p>
-            <p className="text-xs text-neutral-500">
-              Ingredients: {product.ingredients.join(", ")}
-            </p>
+            {product.shelfLife ? (
+              <p className="text-xs text-neutral-500">Freshness: {product.shelfLife}</p>
+            ) : null}
             <div className="flex flex-wrap gap-2">
               <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
                 Make Enquiry
               </Link>
+              <Link
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={buttonClassName({ variant: "brand", size: "sm" })}
+              >
+                Chat on WhatsApp
+              </Link>
             </div>
           </div>
 
-          <Card className="space-y-3">
+          <Card className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-              Formats
+              9-10 Day Freshness
             </p>
-            <div className="space-y-3">
-              {product.packFormats.map((format) => (
+            <div className="grid grid-cols-10 gap-1.5">
+              {Array.from({ length: 10 }).map((_, index) => (
                 <div
-                  key={format.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
-                >
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {format.label}
-                    </p>
-                  </div>
-                  <Link
-                    href="/contact"
-                    className={buttonClassName({ variant: "secondary", size: "sm" })}
-                  >
-                    Make Enquiry
-                  </Link>
-                </div>
+                  key={index}
+                  className={
+                    index < 9
+                      ? "h-3 rounded-full bg-[color:var(--brand-3)]"
+                      : "h-3 rounded-full bg-[color:var(--action-2)]"
+                  }
+                />
               ))}
             </div>
+            <p className="text-sm leading-7 text-neutral-600">
+              {product.shelfLife ??
+                "Freshness guidance is published from the official product brief and should be followed with the storage notes."}
+            </p>
           </Card>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -151,43 +146,41 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-            Ingredients
-          </p>
-          <ul className="space-y-1 text-sm text-neutral-700">
-            {product.ingredients.map((item) => (
-              <li key={item}>• {item}</li>
-            ))}
-          </ul>
-        </Card>
-        <Card className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-            Allergens
-          </p>
-          <ul className="space-y-1 text-sm text-neutral-700">
-            {product.allergens.map((item) => (
-              <li key={item}>• {item}</li>
-            ))}
-          </ul>
-        </Card>
-      </div>
+      <ProductDetailTabs product={product} />
 
-      <Card className="space-y-3">
+      <Card className="space-y-4">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-          Nutrition Notes
+          Compare Products
         </p>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {product.nutritionNotes.map((entry) => (
-            <div
-              key={entry.label}
-              className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
-            >
-              <p className="text-xs text-neutral-500">{entry.label}</p>
-              <p className="text-sm font-semibold text-neutral-900">{entry.value}</p>
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px] border-separate border-spacing-y-2 text-left text-sm">
+            <thead>
+              <tr className="text-xs uppercase tracking-[0.16em] text-neutral-500">
+                <th className="px-3 py-2">Product</th>
+                <th className="px-3 py-2">Size</th>
+                <th className="px-3 py-2">Best for</th>
+                <th className="px-3 py-2">Freshness</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allProducts.map((entry) => (
+                <tr key={entry.id} className="bg-[color:var(--surface-strong)]">
+                  <td className="rounded-l-[1rem] px-3 py-3 font-semibold text-neutral-900">
+                    <Link href={`/products/${entry.slug}`} className="hover:text-[color:var(--brand-1)]">
+                      {entry.name}
+                    </Link>
+                  </td>
+                  <td className="px-3 py-3 text-neutral-600">
+                    {entry.packFormats.map((format) => format.label).join(", ")}
+                  </td>
+                  <td className="px-3 py-3 text-neutral-600">{entry.bestFor.slice(0, 2).join(", ")}</td>
+                  <td className="rounded-r-[1rem] px-3 py-3 text-neutral-600">
+                    {entry.shelfLife ?? "Product freshness guidance available on request"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Card>
     </section>

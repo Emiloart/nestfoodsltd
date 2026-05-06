@@ -1,8 +1,9 @@
 import Link from "next/link";
 
-import { MockPanel } from "@/components/home/mock-panel";
 import { SectionHeading } from "@/components/home/section-heading";
+import { LocationFinder } from "@/components/locations/location-finder";
 import { buttonClassName } from "@/components/ui/button";
+import { BRANCH_LOCATIONS, WHATSAPP_LINKS } from "@/lib/company/contact";
 import { type CmsPage } from "@/lib/cms/types";
 
 type HomeContactSectionProps = {
@@ -12,7 +13,7 @@ type HomeContactSectionProps = {
 const contactBlocks = [
   {
     title: "Office Details",
-    value: "Head office and facility contact details are available on the contact page.",
+    value: "Head office and branch contact details are published with phone numbers and hours.",
   },
   {
     title: "Email",
@@ -20,7 +21,7 @@ const contactBlocks = [
   },
   {
     title: "Phone",
-    value: "Primary phone support remains available during published business hours.",
+    value: "Primary phone and WhatsApp contact routes are available for direct follow-up.",
   },
   {
     title: "Visits",
@@ -38,9 +39,19 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
           description={contactPage.description}
           descriptionClassName="hidden md:block"
           actions={
-            <Link href="/contact" className={buttonClassName({ variant: "primary" })}>
-              Contact Nest Foods Limited
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/contact" className={buttonClassName({ variant: "primary" })}>
+                Contact Nest Foods Limited
+              </Link>
+              <Link
+                href={WHATSAPP_LINKS.general}
+                target="_blank"
+                rel="noreferrer"
+                className={buttonClassName({ variant: "brand" })}
+              >
+                Chat on WhatsApp
+              </Link>
+            </div>
           }
         />
 
@@ -57,27 +68,7 @@ export function HomeContactSection({ contactPage }: HomeContactSectionProps) {
             ))}
           </div>
 
-          <MockPanel
-            label="Location Overview"
-            title="Facility and office access"
-            description="Map and office access details can be published here when available."
-            descriptionClassName="hidden md:block"
-          >
-            <div className="grid gap-3">
-              <div className="h-48 rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)]" />
-              <div className="grid gap-3 sm:grid-cols-3">
-                {["Production site", "Head office", "Office access"].map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4"
-                  >
-                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Area</p>
-                    <p className="mt-2 text-sm font-medium text-neutral-900">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </MockPanel>
+          <LocationFinder locations={BRANCH_LOCATIONS.slice(0, 5)} />
         </div>
       </div>
     </section>

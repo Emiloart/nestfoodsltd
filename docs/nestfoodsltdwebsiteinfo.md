@@ -2,7 +2,7 @@
 
 Cleaned source notes extracted from `NEST FOODS LTD WEBSITE-1.pdf`.
 
-This document keeps the PDF facts visible for implementation, while the public website must still follow the approved corporate-only brief: no ecommerce, cart, checkout, account, payment, public traceability, distributor portal, bulk quote workflow, public shelf-life display, or public region-coverage display.
+This document keeps the PDF facts visible for implementation, while the public website follows the approved conversion-focused corporate brief: no ecommerce, cart, checkout, account, payment, public traceability, distributor portal, invoices, quote-builder workflow, or region-coverage claims. The site may show product education, shelf-life/storage guidance, branch contact visibility, WhatsApp-first enquiries, newsletter capture, and simple supply/distributor-interest lead forms.
 
 ## Brand And Legal
 
@@ -31,9 +31,9 @@ This document keeps the PDF facts visible for implementation, while the public w
 
 ## Products
 
-Public catalogue fields should use product name, description, ingredients, allergens, nutrition notes/placeholders, and size/pack formats.
+Public catalogue fields should use product name, description, ingredients, allergens, nutrition notes/placeholders, size/pack formats, best-for cues, shelf-life guidance, and storage instructions.
 
-Do not expose price, shelf life, storage instructions, stock, payment, online purchase, public delivery operations, public distributor workflows, or bulk quote workflows on the public site unless the business brief changes.
+Do not expose price, stock, online purchase, delivery operations, region coverage, or any portal/workflow language. Supply and distributor-interest capture is enquiry-only.
 
 ### De-Nest Family Jumbo Bread
 
@@ -70,11 +70,11 @@ Do not expose price, shelf life, storage instructions, stock, payment, online pu
 - Public allergen wording should be clearer and safer: Contains wheat (gluten) and milk; may contain traces of soya.
 - Nutrition placeholders requested per 100g: Energy, Carbohydrates, Protein, Fat, Sugar, Sodium.
 
-## PDF Fields Excluded From Public Catalogue By Current Brief
+## PDF Fields And Workflow Boundaries
 
 - Price: As obtained from the customer care line.
-- Shelf life: 9-10 days when properly stored.
-- Storage instructions: Store in a cool, dry place away from direct sunlight or heat, moisture and airtight containers. After opening, reseal the pack to maintain freshness. Refrigeration may extend shelf life.
+- Shelf life: 9-10 days when properly stored. Allowed as product education.
+- Storage instructions: Store in a cool, dry place away from direct sunlight or heat, moisture and airtight containers. After opening, reseal the pack to maintain freshness. Refrigeration may extend shelf life. Allowed as product education.
 - Online purchase: none.
 - Online payment: none.
 - Merchant account ownership: none.
@@ -171,12 +171,12 @@ Public site note: mention production standards and compliance credibility, but d
 - Privacy policy: collected data is used for communication, service delivery, and improving customer experience. The company does not sell or misuse customer data and implements safeguards for data security.
 - Terms and conditions: website/service use, proper use of content, offline purchase guidelines, intellectual property, and policy updates.
 - Refund and returns policy: PDF includes offline payment/delivery scenarios. Keep this out of public ecommerce UX unless the business requests an offline trade-policy page.
-- Delivery policy: PDF includes shop-to-shop delivery and wholesale pickup context. Keep this out of public UX under the current corporate-only brief.
+- Delivery policy: PDF includes shop-to-shop delivery and wholesale pickup context. Keep this out of public UX unless the business requests a separate trade-policy page.
 - General business policy: food safety regulation compliance, ethical sourcing, environmentally responsible production, transparent business operations, and accountability.
 
 ## PDF FAQ Source
 
-The PDF includes six FAQ prompts. Some contain bulk, distributor, and final-consumer language that conflicts with the current corporate-only public scope.
+The PDF includes six FAQ prompts. Use only safe, enquiry-focused FAQ answers.
 
 Safe FAQ topics if an FAQ block is later added:
 
@@ -185,4 +185,4 @@ Safe FAQ topics if an FAQ block is later added:
 - How do you ensure product quality?
 - How can I contact you?
 
-Do not publish the PDF FAQ answers about bulk buying, final-consumer sales, distributor networks, or wholesale supply unless the public brief changes.
+Do not publish FAQ answers that imply direct online buying, guaranteed region coverage, portal access, pricing, delivery commitments, or automated trade workflows.

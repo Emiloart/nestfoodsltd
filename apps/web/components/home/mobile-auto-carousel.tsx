@@ -53,10 +53,11 @@ function MobileAutoCarouselInner({
   }, [hasLoop, items]);
   const [displayIndex, setDisplayIndex] = useState(hasLoop ? 1 : 0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const [paused, setPaused] = useState(false);
   const activeIndex = hasLoop ? (displayIndex - 1 + items.length) % items.length : 0;
 
   const goToNextSlide = useEffectEvent(() => {
-    if (!hasLoop) {
+    if (!hasLoop || paused) {
       return;
     }
     setTransitionEnabled(true);
@@ -76,7 +77,7 @@ function MobileAutoCarouselInner({
   }, [transitionEnabled]);
 
   useEffect(() => {
-    if (!hasLoop || reduceMotion) {
+    if (!hasLoop || reduceMotion || paused) {
       return;
     }
 
@@ -85,17 +86,31 @@ function MobileAutoCarouselInner({
     }, intervalMs);
 
     return () => window.clearInterval(intervalId);
-  }, [hasLoop, intervalMs, reduceMotion]);
+  }, [hasLoop, intervalMs, paused, reduceMotion]);
 
   if (items.length === 0) {
     return null;
   }
 
   return (
-    <div className={cn("md:hidden", className)} aria-label={ariaLabel}>
+    <div
+      className={cn("md:hidden", className)}
+      aria-label={ariaLabel}
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      onPointerDown={() => setPaused(true)}
+      onPointerUp={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div className="overflow-hidden">
         <div
-          className={cn("flex ease-out", transitionEnabled ? "transition-transform" : "transition-none")}
+          className={cn(
+            "flex ease-out",
+            transitionEnabled ? "transition-transform" : "transition-none",
+          )}
           onTransitionEnd={() => {
             if (!hasLoop) {
               return;
@@ -110,11 +125,22 @@ function MobileAutoCarouselInner({
             transitionDuration: transitionEnabled ? `${transitionMs}ms` : "0ms",
           }}
         >
-          {renderedItems.map((item, index) => (
-            <div key={index} className={cn("min-w-full px-0.5", slideClassName)}>
-              {item}
-            </div>
-          ))}
+          {renderedItems.map((item, index) => {
+            const isClone = hasLoop && (index === 0 || index === renderedItems.length - 1);
+            return (
+              <div
+                key={index}
+                aria-hidden={isClone}
+                className={cn(
+                  "min-w-full px-0.5",
+                  isClone && "pointer-events-none",
+                  slideClassName,
+                )}
+              >
+                {item}
+              </div>
+            );
+          })}
         </div>
       </div>
 

@@ -41,6 +41,20 @@ export function buildOrganizationStructuredData() {
 }
 
 export function buildProductStructuredData(product: CatalogueProduct) {
+  const nutrition = product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
+  const productProperties = [
+    ...nutrition,
+    ...(product.shelfLife ? [{ label: "Freshness", value: product.shelfLife }] : []),
+    ...(product.storageInstructions ?? []).map((item, index) => ({
+      label: `Storage ${index + 1}`,
+      value: item,
+    })),
+    ...product.bestFor.map((item, index) => ({
+      label: `Best for ${index + 1}`,
+      value: item,
+    })),
+  ];
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -52,7 +66,7 @@ export function buildProductStructuredData(product: CatalogueProduct) {
       "@type": "Brand",
       name: "De-Nest Bread",
     },
-    additionalProperty: product.nutritionNotes.map((entry) => ({
+    additionalProperty: productProperties.map((entry) => ({
       "@type": "PropertyValue",
       name: entry.label,
       value: entry.value,

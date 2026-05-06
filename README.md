@@ -1,8 +1,8 @@
 # De-Nest Bread Corporate Website
 
-Corporate website for Nest Foods Limited, using De-Nest Bread as the public brand.
+Conversion-focused corporate website for Nest Foods Limited, using De-Nest Bread as the public brand.
 
-This project is not an online sales platform. The public site is limited to company credibility, bread product information, production standards, about, vision, careers, contact, privacy, and terms.
+This project is not an online sales platform. The public site is limited to company credibility, bread product information, production standards, about, vision, careers, contact, privacy, terms, WhatsApp-first enquiries, newsletter capture, and simple supply-interest forms.
 
 ## Stack
 
@@ -39,6 +39,8 @@ Products are managed as catalogue entries only. Public and admin product fields 
 - allergens
 - nutrition notes
 - pack or size formats
+- best-for cues
+- shelf-life and storage guidance
 
 Seeded products from the cleaned PDF source:
 
@@ -58,6 +60,16 @@ The admin surface is host-gated and keeps only the modules needed for a corporat
 - admin users
 - audit events
 - operations overview
+
+## Public Lead Capture
+
+The website captures enquiries only. It does not create transactional fulfilment workflows.
+
+- `/api/newsletter/subscribe`
+- `/api/enquiries/bulk`
+- `/api/enquiries/distributor`
+
+Local storage defaults to JSON files. Production should use Postgres-compatible storage drivers for privacy, newsletter, and enquiry persistence when `DATABASE_URL` is configured.
 
 ## Quick Start
 
