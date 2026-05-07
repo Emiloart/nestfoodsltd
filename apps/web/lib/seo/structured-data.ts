@@ -27,7 +27,7 @@ export function buildOrganizationStructuredData() {
     name: "Nest Foods Limited",
     alternateName: "De-Nest Bread",
     url: absoluteUrl("/"),
-    logo: absoluteUrl("/brand/logos/logo-primary.svg"),
+    logo: absoluteUrl("/brand/logos/logo-primary.png"),
     sameAs: [],
     contactPoint: [
       {
@@ -93,7 +93,7 @@ export function buildArticleStructuredData(input: ArticleStructuredDataInput) {
       name: "Nest Foods Limited",
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/brand/logos/logo-primary.svg"),
+        url: absoluteUrl("/brand/logos/logo-primary.png"),
       },
     },
   };

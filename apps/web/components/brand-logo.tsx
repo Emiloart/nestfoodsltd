@@ -20,12 +20,11 @@ export function BrandLogo({
   const content = (
     <span className={cn("inline-flex items-center gap-3", className)}>
       <Image
-        src="/brand/logos/logo-primary.svg"
+        src="/brand/logos/logo-primary.png"
         alt="De-Nest Bread logo"
         width={compact ? 32 : 36}
         height={compact ? 32 : 36}
         priority
-        unoptimized
         className={cn(
           inverse
             ? "h-9 w-9 rounded-2xl border border-white/14 bg-white/10 p-1 shadow-[0_12px_28px_rgba(10,6,18,0.2)]"
