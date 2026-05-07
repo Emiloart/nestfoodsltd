@@ -358,7 +358,7 @@ export default function AdminContentPage() {
               onChange={(event) =>
                 setForm((s) => ({ ...s, heroImageMobileUrl: event.target.value }))
               }
-              placeholder="/media/hero/nestfoodsltd-mobile-hero-image.jpeg"
+              placeholder="/media/hero/nestfoodsltd-mobile-hero-image.png"
             />
           </label>
           {form.heroMediaKind === "video" ? (

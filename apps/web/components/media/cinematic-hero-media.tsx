@@ -21,7 +21,7 @@ type NavigatorWithConnection = Navigator & {
 };
 
 const defaultHeroDesktopImage = "/media/hero/nestfoodsltd-desktop-hero-banner.jpg";
-const defaultHeroMobileImage = "/media/hero/nestfoodsltd-mobile-hero-image.jpeg";
+const defaultHeroMobileImage = "/media/hero/nestfoodsltd-mobile-hero-image.png";
 const defaultHeroPoster = defaultHeroDesktopImage;
 
 function shouldPreferStaticMedia() {
@@ -112,8 +112,6 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
         <MediaImage desktopSrc={staticImage} mobileSrc={mobileImage} alt="" priority />
       )}
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(46,18,69,0.88),rgba(46,18,69,0.62)_45%,rgba(90,36,122,0.34))]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(244,228,9,0.22),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(255,255,255,0.12),transparent_30%)]" />
-      <div className="hero-grain absolute inset-0 opacity-35" />
     </div>
   );
 }

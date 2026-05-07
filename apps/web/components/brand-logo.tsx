@@ -22,14 +22,12 @@ export function BrandLogo({
       <Image
         src="/brand/logos/logo-primary.png"
         alt="De-Nest Bread logo"
-        width={compact ? 40 : 48}
-        height={compact ? 40 : 48}
+        width={compact ? 56 : 72}
+        height={compact ? 56 : 72}
         priority
         className={cn(
-          inverse
-            ? "h-12 w-12 scale-[1.16] rounded-2xl border border-white/20 bg-white/92 object-cover object-center shadow-[0_12px_28px_rgba(10,6,18,0.28)]"
-            : "h-12 w-12 scale-[1.16] rounded-2xl border border-[color:var(--border)] bg-white object-cover object-center shadow-[0_12px_28px_rgba(46,18,69,0.08)]",
-          compact && "h-10 w-10",
+          "h-14 w-auto object-contain object-center",
+          compact && "h-11",
         )}
       />
       <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
