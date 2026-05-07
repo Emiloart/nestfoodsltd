@@ -111,7 +111,6 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
       ) : (
         <MediaImage desktopSrc={staticImage} mobileSrc={mobileImage} alt="" priority />
       )}
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(46,18,69,0.88),rgba(46,18,69,0.62)_45%,rgba(90,36,122,0.34))]" />
     </div>
   );
 }
