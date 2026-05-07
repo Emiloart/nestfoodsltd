@@ -143,19 +143,19 @@ export const TRUST_CERTIFICATIONS = [
     label: "NAFDAC",
     title: "NAFDAC registered",
     body: "Food regulatory compliance.",
-    logoUrl: "/brand/certifications/nafdac.svg",
+    logoUrl: "/brand/certifications/nafdac-logo.png",
   },
   {
     label: "SON",
     title: "Standards focus",
     body: "Standards-aligned production.",
-    logoUrl: "/brand/certifications/son.svg",
+    logoUrl: "/brand/certifications/son-logo.png",
   },
   {
     label: "NESREA",
     title: "Environmental compliance",
     body: "Responsible environmental operations.",
-    logoUrl: "/brand/certifications/nesrea.svg",
+    logoUrl: "/brand/certifications/nesrea-logo.jpeg",
   },
   {
     label: "QC",

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { buttonClassName } from "@/components/ui/button";
@@ -21,8 +20,9 @@ type NavigatorWithConnection = Navigator & {
   };
 };
 
-const defaultHeroImage = "/placeholders/hero/hero-image-placeholder.svg";
-const defaultHeroPoster = "/placeholders/hero/hero-video-poster-placeholder.svg";
+const defaultHeroDesktopImage = "/media/hero/nestfoodsltd-desktop-hero-banner.jpg";
+const defaultHeroMobileImage = "/media/hero/nestfoodsltd-mobile-hero-image.jpeg";
+const defaultHeroPoster = defaultHeroDesktopImage;
 
 function shouldPreferStaticMedia() {
   if (typeof window === "undefined") {
@@ -39,28 +39,38 @@ function shouldPreferStaticMedia() {
   return reduceMotion || compactViewport || saveData || slowConnection;
 }
 
-function isLocalSource(source: string) {
-  return source.startsWith("/");
+function normalizeHeroSource(source: string | undefined, fallback: string) {
+  const trimmed = source?.trim();
+  if (!trimmed || trimmed.includes("/placeholders/")) {
+    return fallback;
+  }
+  return trimmed;
 }
 
-function MediaImage({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
-  if (isLocalSource(src)) {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority={priority}
-        sizes="100vw"
-        className="object-cover"
-        unoptimized={src.toLowerCase().includes(".svg")}
-      />
-    );
-  }
+function MediaImage({
+  desktopSrc,
+  mobileSrc,
+  alt,
+  priority = false,
+}: {
+  desktopSrc: string;
+  mobileSrc?: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  const resolvedMobileSrc = mobileSrc?.trim() || desktopSrc;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} className="h-full w-full object-cover" loading={priority ? "eager" : "lazy"} />
+    <picture>
+      <source media="(orientation: portrait), (max-width: 767px)" srcSet={resolvedMobileSrc} />
+      <img
+        src={desktopSrc}
+        alt={alt}
+        className="h-full w-full object-cover"
+        loading={priority ? "eager" : "lazy"}
+      />
+    </picture>
   );
 }
 
@@ -79,8 +89,10 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
     setCanPlayVideo(!shouldPreferStaticMedia());
   }, [wantsVideo]);
 
-  const fallbackImage = page.heroImageUrl ?? defaultHeroImage;
-  const posterImage = page.heroVideoPosterUrl ?? page.heroImageUrl ?? defaultHeroPoster;
+  const desktopImage = normalizeHeroSource(page.heroImageUrl, defaultHeroDesktopImage);
+  const mobileImage = normalizeHeroSource(page.heroImageMobileUrl, defaultHeroMobileImage);
+  const posterImage = normalizeHeroSource(page.heroVideoPosterUrl ?? page.heroImageUrl, desktopImage);
+  const staticImage = wantsVideo ? posterImage : desktopImage;
 
   return (
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
@@ -97,11 +109,7 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
           <source src={page.heroVideoUrl} />
         </video>
       ) : (
-        <MediaImage
-          src={wantsVideo ? posterImage : fallbackImage}
-          alt=""
-          priority
-        />
+        <MediaImage desktopSrc={staticImage} mobileSrc={mobileImage} alt="" priority />
       )}
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(46,18,69,0.88),rgba(46,18,69,0.62)_45%,rgba(90,36,122,0.34))]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(244,228,9,0.22),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(255,255,255,0.12),transparent_30%)]" />
@@ -113,7 +121,7 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
 export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) {
   const [open, setOpen] = useState(false);
   const videoUrl = page.heroVideoUrl;
-  const posterImage = page.heroVideoPosterUrl ?? page.heroImageUrl ?? defaultHeroPoster;
+  const posterImage = normalizeHeroSource(page.heroVideoPosterUrl ?? page.heroImageUrl, defaultHeroPoster);
 
   if (!videoUrl) {
     return null;

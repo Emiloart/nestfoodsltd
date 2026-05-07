@@ -44,6 +44,7 @@ const emptyFormState = {
   ctaSecondaryHref: "",
   heroMediaKind: "image" as CmsHeroMediaKind,
   heroImageUrl: "",
+  heroImageMobileUrl: "",
   heroVideoUrl: "",
   heroVideoPosterUrl: "",
   logoImageUrl: "",
@@ -130,6 +131,7 @@ export default function AdminContentPage() {
       ctaSecondaryHref: selectedPage.ctaSecondaryHref ?? "",
       heroMediaKind: selectedPage.heroMediaKind ?? (selectedPage.heroVideoUrl ? "video" : "image"),
       heroImageUrl: selectedPage.heroImageUrl ?? "",
+      heroImageMobileUrl: selectedPage.heroImageMobileUrl ?? "",
       heroVideoUrl: selectedPage.heroVideoUrl ?? "",
       heroVideoPosterUrl: selectedPage.heroVideoPosterUrl ?? "",
       logoImageUrl: selectedPage.logoImageUrl ?? "",
@@ -345,6 +347,18 @@ export default function AdminContentPage() {
             <Input
               value={form.heroImageUrl}
               onChange={(event) => setForm((s) => ({ ...s, heroImageUrl: event.target.value }))}
+            />
+          </label>
+          <label className="block space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Hero Mobile Image URL
+            </span>
+            <Input
+              value={form.heroImageMobileUrl}
+              onChange={(event) =>
+                setForm((s) => ({ ...s, heroImageMobileUrl: event.target.value }))
+              }
+              placeholder="/media/hero/nestfoodsltd-mobile-hero-image.jpeg"
             />
           </label>
           {form.heroMediaKind === "video" ? (

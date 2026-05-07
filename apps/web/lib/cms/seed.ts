@@ -18,6 +18,7 @@ export const CMS_SEED_DATA: CmsData = {
       ctaSecondaryHref: "/contact",
       heroMediaKind: "image",
       heroImageUrl: "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      heroImageMobileUrl: "/media/hero/nestfoodsltd-mobile-hero-image.jpeg",
       heroVideoPosterUrl: "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       logoImageUrl: "/brand/logos/logo-primary.png",
       seo: {

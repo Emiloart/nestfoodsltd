@@ -25,6 +25,7 @@ const updatePageSchema = z.object({
   ctaSecondaryHref: z.string().trim().max(200).optional(),
   heroMediaKind: z.enum(["image", "video"]).optional(),
   heroImageUrl: z.string().trim().max(200).optional(),
+  heroImageMobileUrl: z.string().trim().max(200).optional(),
   heroVideoUrl: z.string().trim().max(260).optional(),
   heroVideoPosterUrl: z.string().trim().max(260).optional(),
   logoImageUrl: z.string().trim().max(200).optional(),
@@ -222,6 +223,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
       ctaSecondaryLabel: normalizeOptional(validated.data.ctaSecondaryLabel),
       ctaSecondaryHref: normalizeOptional(validated.data.ctaSecondaryHref),
       heroImageUrl: normalizeOptional(validated.data.heroImageUrl),
+      heroImageMobileUrl: normalizeOptional(validated.data.heroImageMobileUrl),
       heroVideoUrl:
         heroMediaKind === "video" ? normalizeOptional(validated.data.heroVideoUrl) : undefined,
       heroVideoPosterUrl:

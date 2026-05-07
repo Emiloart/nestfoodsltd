@@ -23,7 +23,7 @@ function CertificationCard({
           alt={`${label} logo`}
           width={160}
           height={80}
-          className="h-14 w-auto rounded-lg object-contain"
+          className="h-16 w-auto rounded-lg border border-[color:var(--border)] bg-white p-1.5 object-contain"
           unoptimized
         />
       </div>

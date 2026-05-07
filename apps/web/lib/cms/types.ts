@@ -32,6 +32,7 @@ export type CmsPage = {
   ctaSecondaryHref?: string;
   heroMediaKind?: CmsHeroMediaKind;
   heroImageUrl?: string;
+  heroImageMobileUrl?: string;
   heroVideoUrl?: string;
   heroVideoPosterUrl?: string;
   logoImageUrl?: string;
