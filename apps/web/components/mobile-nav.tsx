@@ -1,11 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { buttonClassName } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,17 +14,6 @@ const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-const quickActions = [
-  { href: "/shop", label: "View Products", variant: "secondary" as const },
-  { href: "/contact", label: "Make Enquiry", variant: "primary" as const },
-];
-
-const resourceLinks = [
-  { href: "/about", label: "About Nest Foods Limited" },
-  { href: "/vision", label: "Vision" },
-  { href: "/careers", label: "Careers" },
-];
-
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const panelId = "mobile-navigation-panel";
@@ -35,11 +22,13 @@ export function MobileNav() {
     if (!open) {
       return;
     }
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
       }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
@@ -77,90 +66,29 @@ export function MobileNav() {
           )}
         </span>
       </Button>
-      <AnimatePresence>
-        {open ? (
-          <>
-            <motion.button
-              type="button"
-              aria-label="Close navigation"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-[color:color-mix(in_srgb,var(--brand-2)_30%,transparent)] backdrop-blur-[3px]"
-              onClick={() => setOpen(false)}
-            />
 
-            <motion.div
-              id={panelId}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation"
-              className="section-frame fixed inset-x-3 top-[5.5rem] z-50 max-h-[calc(100vh-6.5rem)] overflow-auto p-4"
-            >
-              <p className="section-kicker">De-Nest Bread</p>
-              <div className="mt-4 grid gap-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span>{item.label}</span>
-                    <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
-                      View
-                    </span>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="mt-5">
-                <p className="section-kicker">Quick Actions</p>
-                <div className="mt-3 grid grid-cols-2 gap-2">
-                  {quickActions.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={buttonClassName({
-                        variant: item.variant,
-                        size: "sm",
-                        className: "min-h-12 rounded-[1.1rem] text-center",
-                      })}
-                      onClick={() => setOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-5">
-                <p className="section-kicker">Company</p>
-                <div className="mt-3 grid gap-2">
-                  {resourceLinks.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center justify-between rounded-[1.15rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
-                      onClick={() => setOpen(false)}
-                    >
-                      <span>{item.label}</span>
-                      <span className="text-xs uppercase tracking-[0.14em] text-neutral-400">
-                        View
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </>
-        ) : null}
-      </AnimatePresence>
+      {open ? (
+        <div
+          id={panelId}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="fixed inset-x-0 top-[4.35rem] z-50 border-b border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 shadow-[0_14px_28px_rgba(46,18,69,0.12)]"
+        >
+          <nav aria-label="Mobile navigation links" className="grid gap-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-lg px-3 py-2 text-base text-neutral-800 transition hover:bg-[color:var(--surface-elevated)]"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      ) : null}
     </div>
   );
 }

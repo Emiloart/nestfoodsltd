@@ -37,28 +37,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
-        <div className="space-y-3">
-          <Badge>Product Range</Badge>
-          <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
-            De-Nest Bread Product Catalogue
-          </h1>
-          <p className="max-w-3xl text-sm text-neutral-600">
-            Review the De-Nest Bread range by category, ingredient profile, size, and product
-            notes. The catalogue stays product-first and supports direct enquiries only.
-          </p>
-        </div>
-        <Card className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-            Need guidance?
-          </p>
-          <p className="text-sm text-neutral-600">
-            Contact Nest Foods Limited for product questions, size guidance, or general enquiries.
-          </p>
-          <Link href="/contact" className={buttonClassName({ variant: "secondary", size: "sm" })}>
-            Contact Team
-          </Link>
-        </Card>
+      <div className="space-y-3">
+        <Badge>Product Range</Badge>
+        <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
+          De-Nest Bread Product Catalogue
+        </h1>
       </div>
 
       <Card className="space-y-4">

@@ -5,29 +5,24 @@ import { HomeNewsletterEnquirySection } from "@/components/home/home-newsletter-
 import { HomeProductionStandardsSection } from "@/components/home/home-production-standards-section";
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
-import { HomeTrustStrip } from "@/components/home/home-trust-strip";
 import { listCatalogueProducts } from "@/lib/catalog/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
-import { getCmsBanners, getCmsPage } from "@/lib/cms/service";
+import { getCmsPage } from "@/lib/cms/service";
 
 export default async function HomePage() {
-  const [homePage, aboutPage, visionPage, contactPage, careersPage, banners, products] =
+  const [homePage, aboutPage, visionPage, contactPage, careersPage, products] =
     await Promise.all([
       getCmsPage("home"),
       getCmsPage("about"),
       getCmsPage("vision"),
       getCmsPage("contact"),
       getCmsPage("careers"),
-      getCmsBanners(),
       listCatalogueProducts(),
     ]);
 
-  const featuredBanner = banners[0];
-
   return (
     <div className="grain-background pb-10">
-      <HomeHeroSection page={homePage} banner={featuredBanner} />
-      <HomeTrustStrip />
+      <HomeHeroSection page={homePage} />
       <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection />
       <HomeStorySection aboutPage={aboutPage} visionPage={visionPage} />

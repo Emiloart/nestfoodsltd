@@ -3,7 +3,6 @@ import Link from "next/link";
 import { BrandLogo } from "./brand-logo";
 import { GlobalSearch } from "./global-search";
 import { MobileNav } from "./mobile-nav";
-import { buttonClassName } from "./ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,9 +15,9 @@ const navItems = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 px-3 pt-2.5 md:px-4">
-      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border">
-        <div className="flex min-h-[4.25rem] items-center justify-between gap-3 px-4 py-3 md:px-5">
+    <header className="sticky top-0 z-50">
+      <div className="brand-shell w-full border-b border-white/10">
+        <div className="flex min-h-[4.25rem] items-center justify-between gap-3 px-4 py-3 md:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <BrandLogo className="min-w-0" tone="inverse" />
           </div>
@@ -26,20 +25,10 @@ export function Header() {
           <div className="flex items-center gap-2">
             <GlobalSearch />
             <MobileNav />
-            <Link
-              href="/contact"
-              className={buttonClassName({
-                variant: "primary",
-                size: "sm",
-                className: "hidden md:inline-flex",
-              })}
-            >
-              Make Enquiry
-            </Link>
           </div>
         </div>
 
-        <div className="hidden items-center justify-between gap-4 border-t border-white/10 px-5 py-2.5 lg:flex">
+        <div className="hidden items-center gap-4 border-t border-white/10 px-6 py-2.5 lg:flex">
           <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-2">
             {navItems.map((item) => (
               <Link
@@ -51,10 +40,6 @@ export function Header() {
               </Link>
             ))}
           </nav>
-
-          <Link href="/contact" className={buttonClassName({ variant: "secondary", size: "sm" })}>
-            Make Enquiry
-          </Link>
         </div>
       </div>
     </header>

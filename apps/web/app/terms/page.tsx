@@ -11,8 +11,7 @@ export default function TermsPage() {
   return (
     <PageShell
       title="Terms of Use"
-      description="Scaffold for website terms, product information disclaimers, and enquiry handling policies."
-      nextStep="Attach legal templates and versioned publishing"
+      description="Terms covering website use, intellectual property, and enquiry-related communication for Nest Foods Limited."
     />
   );
 }

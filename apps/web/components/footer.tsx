@@ -16,8 +16,8 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="px-3 pb-3 pt-3 md:px-4 md:pb-5 md:pt-4">
-      <div className="brand-shell mx-auto w-full max-w-7xl rounded-[1.8rem] border px-4 py-5 sm:px-6 md:py-7">
+    <footer>
+      <div className="brand-shell w-full border-t border-white/10 px-4 py-5 sm:px-6 md:px-8 md:py-7">
         <div className="grid gap-7 lg:grid-cols-[1.05fr_0.7fr_0.85fr] lg:items-start">
           <div className="space-y-4">
             <BrandLogo tone="inverse" />

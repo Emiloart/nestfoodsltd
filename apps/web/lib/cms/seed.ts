@@ -14,7 +14,7 @@ export const CMS_SEED_DATA: CmsData = {
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
       ctaPrimaryHref: "/shop",
-      ctaSecondaryLabel: "Contact Team",
+      ctaSecondaryLabel: "Contact",
       ctaSecondaryHref: "/contact",
       heroMediaKind: "image",
       heroImageUrl: "/placeholders/hero/hero-image-placeholder.svg",
@@ -109,9 +109,9 @@ export const CMS_SEED_DATA: CmsData = {
   banners: [
     {
       id: "banner-home-1",
-      label: "Product Guidance",
-      headline: "Review De-Nest Bread products and contact Nest Foods Limited from one place.",
-      ctaLabel: "Contact Team",
+      label: "Company Update",
+      headline: "Latest updates from Nest Foods Limited.",
+      ctaLabel: "Read More",
       ctaHref: "/contact",
       imageUrl: "/placeholders/hero/hero-image-placeholder.svg",
       status: "published",

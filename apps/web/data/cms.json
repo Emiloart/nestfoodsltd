@@ -9,7 +9,7 @@
       "publishAt": "2026-05-05T00:00:00.000Z",
       "ctaPrimaryLabel": "Explore Products",
       "ctaPrimaryHref": "/shop",
-      "ctaSecondaryLabel": "Contact Team",
+      "ctaSecondaryLabel": "Contact",
       "ctaSecondaryHref": "/contact",
       "heroMediaKind": "image",
       "heroImageUrl": "/placeholders/hero/hero-image-placeholder.svg",
@@ -99,9 +99,9 @@
   "banners": [
     {
       "id": "banner-home-1",
-      "label": "Product Guidance",
-      "headline": "Review De-Nest Bread products and contact Nest Foods Limited from one place.",
-      "ctaLabel": "Contact Team",
+      "label": "Company Update",
+      "headline": "Latest updates from Nest Foods Limited.",
+      "ctaLabel": "Read More",
       "ctaHref": "/contact",
       "imageUrl": "/placeholders/hero/hero-image-placeholder.svg",
       "status": "published",

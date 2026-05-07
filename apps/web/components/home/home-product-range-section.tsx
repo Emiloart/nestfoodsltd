@@ -68,8 +68,8 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
       <SectionHeading
         eyebrow="Bread Product Range"
-        title="Bread products ready for review and enquiry."
-        description="Review the De-Nest Bread range by category, size, ingredients, allergens, and product notes."
+        title="De-Nest Bread Product Range"
+        description=""
         descriptionClassName="hidden md:block"
         actions={
           <Link href="/shop" className={buttonClassName({ variant: "secondary" })}>
