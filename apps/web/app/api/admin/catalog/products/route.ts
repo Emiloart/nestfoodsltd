@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const product = await createAdminCatalogueProduct(validated.data);
-    revalidatePath("/shop");
+    revalidatePath("/products");
     revalidatePath(`/products/${product.slug}`);
     logCatalogAuditEvent(request, {
       actorRole: role,

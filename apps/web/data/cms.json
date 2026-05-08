@@ -8,7 +8,7 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "ctaPrimaryLabel": "Explore Products",
-      "ctaPrimaryHref": "/shop",
+      "ctaPrimaryHref": "/products",
       "ctaSecondaryLabel": "Contact",
       "ctaSecondaryHref": "/contact",
       "heroMediaKind": "image",

@@ -251,7 +251,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
 
   revalidatePath(resolvePublicPagePath(slug));
   if (slug === "home") {
-    revalidatePath("/shop");
+    revalidatePath("/products");
   }
 
   return NextResponse.json({ page: updated, role });

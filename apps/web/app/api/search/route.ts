@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
         type: "category" as const,
         title: category,
         subtitle: "Product category",
-        href: `/shop?category=${encodeURIComponent(category)}`,
+        href: `/products?category=${encodeURIComponent(category)}`,
       })),
   ];
 

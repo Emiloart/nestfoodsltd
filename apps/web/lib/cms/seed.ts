@@ -13,7 +13,7 @@ export const CMS_SEED_DATA: CmsData = {
       status: "published",
       publishAt: now,
       ctaPrimaryLabel: "Explore Products",
-      ctaPrimaryHref: "/shop",
+      ctaPrimaryHref: "/products",
       ctaSecondaryLabel: "Contact",
       ctaSecondaryHref: "/contact",
       heroMediaKind: "image",

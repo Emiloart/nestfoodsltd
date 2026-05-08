@@ -55,7 +55,7 @@ export function HomeHeroSection({ page }: HomeHeroSectionProps) {
             </div>
 
             <div className="pt-1">
-              <Link href={page.ctaPrimaryHref ?? "/shop"} className={buttonClassName({ variant: "primary" })}>
+              <Link href={page.ctaPrimaryHref ?? "/products"} className={buttonClassName({ variant: "primary" })}>
                 Explore Products
               </Link>
             </div>

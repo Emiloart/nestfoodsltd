@@ -16,7 +16,7 @@ This project is not an online sales platform. The public site is limited to comp
 ## Public Routes
 
 - `/`
-- `/shop`
+- `/products`
 - `/products/[slug]`
 - `/about`
 - `/vision`
@@ -46,6 +46,7 @@ Seeded products from the cleaned PDF source:
 
 - De-Nest Family Jumbo Bread
 - De-Nest Family Loaf Bread
+- De-Nest Sliced Bread
 - De-Nest Midi Bread
 - De-Nest Mini Bread
 

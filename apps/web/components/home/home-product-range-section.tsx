@@ -72,7 +72,7 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
         description=""
         descriptionClassName="hidden md:block"
         actions={
-          <Link href="/shop" className={buttonClassName({ variant: "secondary" })}>
+          <Link href="/products" className={buttonClassName({ variant: "secondary" })}>
             View Products
           </Link>
         }

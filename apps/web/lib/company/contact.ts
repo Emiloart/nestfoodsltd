@@ -169,7 +169,7 @@ export const SAFE_FAQS = [
   {
     question: "What products does De-Nest Bread offer?",
     answer:
-      "The current catalogue includes Family Jumbo Bread, Family Loaf Bread, Midi Bread, and Mini Bread in different size formats.",
+      "The current catalogue includes Family Jumbo Bread, Family Loaf Bread, Sliced Bread, Mini Bread, and Midi Bread in different size formats.",
   },
   {
     question: "Is De-Nest Bread NAFDAC registered?",

@@ -83,7 +83,7 @@ const defaultQuickActions: ChatQuickAction[] = [
 ];
 
 const defaultSuggestedLinks: ChatSuggestedLink[] = [
-  { label: "Products", href: "/shop" },
+  { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
@@ -294,7 +294,7 @@ async function buildProductReply(message: string): Promise<ChatReply> {
       ...defaultQuickActions,
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Products", href: "/shop" },
+      { label: "Products", href: "/products" },
       { label: "Contact", href: "/contact" },
     ]),
     handoffSuggested: false,
@@ -317,7 +317,7 @@ async function buildAllergenReply(): Promise<ChatReply> {
       { label: "Contact", prompt: "Help me contact the team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
-      { label: "Products", href: "/shop" },
+      { label: "Products", href: "/products" },
       { label: "Contact", href: "/contact" },
     ]),
     handoffSuggested: false,

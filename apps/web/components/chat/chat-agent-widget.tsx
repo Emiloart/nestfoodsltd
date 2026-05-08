@@ -50,7 +50,7 @@ const initialQuickActions: ChatQuickAction[] = [
 ];
 
 const initialLinks: ChatSuggestedLink[] = [
-  { label: "Products", href: "/shop" },
+  { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

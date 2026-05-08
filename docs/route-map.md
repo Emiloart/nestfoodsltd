@@ -5,7 +5,7 @@
 | Route | Purpose |
 | --- | --- |
 | `/` | Homepage with cinematic hero, trust strip, product range, production standards, founder/story, branch/contact teaser, careers, newsletter, and enquiry sections. |
-| `/shop` | De-Nest Bread product catalogue. |
+| `/products` | De-Nest Bread product catalogue. |
 | `/products/[slug]` | Product detail pages with gallery, tabs, description, ingredients, allergens, nutrition notes, storage guidance, freshness cue, size formats, comparison table, and enquiry CTA. |
 | `/about` | Company story for Nest Foods Limited. |
 | `/vision` | Mission, vision, and values. |

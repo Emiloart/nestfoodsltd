@@ -127,7 +127,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
   try {
     const existingProduct = await getAdminCatalogueProductById(id);
     const product = await updateAdminCatalogueProduct(id, validated.data);
-    revalidatePath("/shop");
+    revalidatePath("/products");
     if (existingProduct?.slug && existingProduct.slug !== product.slug) {
       revalidatePath(`/products/${existingProduct.slug}`);
     }
@@ -198,7 +198,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
   try {
     const existingProduct = await getAdminCatalogueProductById(id);
     const product = await deleteAdminCatalogueProduct(id);
-    revalidatePath("/shop");
+    revalidatePath("/products");
     if (existingProduct?.slug) {
       revalidatePath(`/products/${existingProduct.slug}`);
     } else {

@@ -7,7 +7,7 @@ import { SOCIAL_CHANNELS, WHATSAPP_LINKS } from "@/lib/company/contact";
 
 const footerLinks = [
   { href: "/", label: "Home" },
-  { href: "/shop", label: "Products" },
+  { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
   { href: "/careers", label: "Careers" },

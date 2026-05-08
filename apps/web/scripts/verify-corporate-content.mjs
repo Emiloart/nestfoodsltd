@@ -56,6 +56,7 @@ async function verifyCatalogueIngredients() {
   const expectedProducts = new Set([
     "De-Nest Family Jumbo Bread",
     "De-Nest Family Loaf Bread",
+    "De-Nest Sliced Bread",
     "De-Nest Midi Bread",
     "De-Nest Mini Bread",
   ]);

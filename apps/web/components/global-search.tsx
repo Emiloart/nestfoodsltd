@@ -69,7 +69,7 @@ export function GlobalSearch() {
     if (!normalized) {
       return;
     }
-    router.push(`/shop?search=${encodeURIComponent(normalized)}`);
+    router.push(`/products?search=${encodeURIComponent(normalized)}`);
     setFocused(false);
   }
 

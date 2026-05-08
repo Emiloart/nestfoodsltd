@@ -62,13 +62,27 @@ export const CATALOGUE_SEED_DATA: CatalogueData = {
         "The largest De-Nest loaf, baked for generous family portions, breakfast, sandwiches, and shared table moments.",
       longDescription:
         "De-Nest Family Jumbo Bread is the largest and most satisfying loaf in the range, specially baked for families who enjoy generous portions of soft, tasty, and wholesome bread. Crafted with premium wheat flour and baked to golden perfection, it delivers a light, fluffy texture and rich bakery-fresh aroma.",
-      imageUrl: "/placeholders/products/product-placeholder.svg",
-      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      imageUrl: "/media/products/nestfoodsltd-jumbo-loaf.png",
+      galleryUrls: [
+        "/media/products/nestfoodsltd-jumbo-loaf.png",
+        "/media/products/nestfoodsltd-jumbo-loaf-texture.png",
+        "/media/products/nestfoodsltd-unpacked-loaf.png",
+      ],
       galleryImages: [
         {
-          url: "/placeholders/products/product-placeholder.svg",
+          url: "/media/products/nestfoodsltd-jumbo-loaf.png",
           altText: "De-Nest Family Jumbo Bread product view",
-          label: "Jumbo loaf view",
+          label: "Packaged jumbo loaf",
+        },
+        {
+          url: "/media/products/nestfoodsltd-jumbo-loaf-texture.png",
+          altText: "De-Nest Family Jumbo Bread loaf and texture view",
+          label: "Jumbo loaf texture",
+        },
+        {
+          url: "/media/products/nestfoodsltd-unpacked-loaf.png",
+          altText: "Unpacked De-Nest family loaf texture view",
+          label: "Unpacked loaf",
         },
       ],
       ingredients: sharedIngredients,
@@ -102,13 +116,27 @@ export const CATALOGUE_SEED_DATA: CatalogueData = {
         "A classic 1kg household loaf with balanced richness, freshness, flavour, and everyday table use.",
       longDescription:
         "De-Nest Family Loaf Bread is the classic household loaf, baked with carefully selected ingredients to provide a balance of richness, freshness, and flavour. It is produced as a soft family loaf suitable for daily breakfast, meetings, travel needs, and familiar home use.",
-      imageUrl: "/placeholders/products/product-placeholder.svg",
-      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
+      imageUrl: "/media/products/nestfoodsltd-family-loaf.png",
+      galleryUrls: [
+        "/media/products/nestfoodsltd-family-loaf.png",
+        "/media/products/nestfoodsltd-family-loaf-texture.png",
+        "/media/products/nestfoodsltd-unpacked-loaf.png",
+      ],
       galleryImages: [
         {
-          url: "/placeholders/products/product-placeholder.svg",
+          url: "/media/products/nestfoodsltd-family-loaf.png",
           altText: "De-Nest Family Loaf Bread product view",
-          label: "Family loaf view",
+          label: "Packaged family loaf",
+        },
+        {
+          url: "/media/products/nestfoodsltd-family-loaf-texture.png",
+          altText: "De-Nest Family Loaf Bread loaf and texture view",
+          label: "Family loaf texture",
+        },
+        {
+          url: "/media/products/nestfoodsltd-unpacked-loaf.png",
+          altText: "Unpacked De-Nest family loaf texture view",
+          label: "Unpacked loaf",
         },
       ],
       ingredients: sharedIngredients,
@@ -122,6 +150,96 @@ export const CATALOGUE_SEED_DATA: CatalogueData = {
         },
       ],
       bestFor: ["Daily family breakfast", "Home use", "Meetings", "Travel refreshment"],
+      shelfLife: "9-10 days when properly stored.",
+      storageInstructions: sharedStorageInstructions,
+      updatedAt: "2026-05-05T00:00:00.000Z",
+    },
+    {
+      id: "catalogue-de-nest-sliced-bread",
+      slug: "de-nest-sliced-bread",
+      status: "published",
+      name: "De-Nest Sliced Bread",
+      category: "Family Bread",
+      shortDescription:
+        "A sliced variant of the classic family loaf, prepared for easy serving, sandwiches, breakfast, and everyday table use.",
+      longDescription:
+        "De-Nest Sliced Bread is the sliced variant of De-Nest Family Loaf Bread, baked with carefully selected ingredients to provide a balance of richness, freshness, and flavour. It is produced as a soft sliced family loaf suitable for daily breakfast, sandwiches, meetings, travel needs, and familiar home use.",
+      imageUrl: "/media/products/nestfoodsltd-sliced-bread.png",
+      galleryUrls: [
+        "/media/products/nestfoodsltd-sliced-bread.png",
+        "/media/products/nestfoodsltd-sliced-bread-2.png",
+      ],
+      galleryImages: [
+        {
+          url: "/media/products/nestfoodsltd-sliced-bread.png",
+          altText: "De-Nest Sliced Bread product view",
+          label: "Packaged sliced bread",
+        },
+        {
+          url: "/media/products/nestfoodsltd-sliced-bread-2.png",
+          altText: "De-Nest Sliced Bread alternate product view",
+          label: "Sliced bread variant",
+        },
+      ],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      nutrition: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "sliced-family-loaf",
+          label: "Sliced family loaf",
+        },
+      ],
+      bestFor: ["Sandwiches", "Daily family breakfast", "Home use", "Meetings", "Travel refreshment"],
+      shelfLife: "9-10 days when properly stored.",
+      storageInstructions: sharedStorageInstructions,
+      updatedAt: "2026-05-08T00:00:00.000Z",
+    },
+    {
+      id: "catalogue-de-nest-mini-bread",
+      slug: "de-nest-mini-bread",
+      status: "published",
+      name: "De-Nest Mini Bread",
+      category: "Mini Bread",
+      shortDescription:
+        "A soft, fresh, bite-sized loaf for breakfast, quick snacks, and simple everyday enjoyment.",
+      longDescription:
+        "De-Nest Mini Bread is perfectly portioned, soft, fluffy, and made for everyday enjoyment. It is a compact loaf for breakfast, quick snacks, daily corporate breakfast, meetings, and light refreshment moments.",
+      imageUrl: "/media/products/nestfoodsltd-mini-loaf.png",
+      galleryUrls: [
+        "/media/products/nestfoodsltd-mini-loaf.png",
+        "/media/products/nestfoodsltd-mini-loaf-texture.png",
+        "/media/products/nestfoodsltd-mini-loaf-unpacked.png",
+      ],
+      galleryImages: [
+        {
+          url: "/media/products/nestfoodsltd-mini-loaf.png",
+          altText: "De-Nest Mini Bread product view",
+          label: "Packaged mini loaf",
+        },
+        {
+          url: "/media/products/nestfoodsltd-mini-loaf-texture.png",
+          altText: "De-Nest Mini Bread loaf and texture view",
+          label: "Mini loaf texture",
+        },
+        {
+          url: "/media/products/nestfoodsltd-mini-loaf-unpacked.png",
+          altText: "Unpacked De-Nest Mini Bread view",
+          label: "Unpacked mini loaf",
+        },
+      ],
+      ingredients: sharedIngredients,
+      allergens: sharedAllergens,
+      nutritionNotes: sharedNutritionNotes,
+      nutrition: sharedNutritionNotes,
+      packFormats: [
+        {
+          id: "mini-220g",
+          label: "Approx. 220g mini loaf",
+        },
+      ],
+      bestFor: ["Quick snacks", "Breakfast", "Meetings", "Corporate breakfast", "On-the-go refreshment"],
       shelfLife: "9-10 days when properly stored.",
       storageInstructions: sharedStorageInstructions,
       updatedAt: "2026-05-05T00:00:00.000Z",
@@ -162,40 +280,6 @@ export const CATALOGUE_SEED_DATA: CatalogueData = {
         "School feeding",
         "Light refreshment",
       ],
-      shelfLife: "9-10 days when properly stored.",
-      storageInstructions: sharedStorageInstructions,
-      updatedAt: "2026-05-05T00:00:00.000Z",
-    },
-    {
-      id: "catalogue-de-nest-mini-bread",
-      slug: "de-nest-mini-bread",
-      status: "published",
-      name: "De-Nest Mini Bread",
-      category: "Mini Bread",
-      shortDescription:
-        "A soft, fresh, bite-sized loaf for breakfast, quick snacks, and simple everyday enjoyment.",
-      longDescription:
-        "De-Nest Mini Bread is perfectly portioned, soft, fluffy, and made for everyday enjoyment. It is a compact loaf for breakfast, quick snacks, daily corporate breakfast, meetings, and light refreshment moments.",
-      imageUrl: "/placeholders/products/product-placeholder.svg",
-      galleryUrls: ["/placeholders/products/product-placeholder.svg"],
-      galleryImages: [
-        {
-          url: "/placeholders/products/product-placeholder.svg",
-          altText: "De-Nest Mini Bread product view",
-          label: "Mini loaf view",
-        },
-      ],
-      ingredients: sharedIngredients,
-      allergens: sharedAllergens,
-      nutritionNotes: sharedNutritionNotes,
-      nutrition: sharedNutritionNotes,
-      packFormats: [
-        {
-          id: "mini-220g",
-          label: "Approx. 220g mini loaf",
-        },
-      ],
-      bestFor: ["Quick snacks", "Breakfast", "Meetings", "Corporate breakfast", "On-the-go refreshment"],
       shelfLife: "9-10 days when properly stored.",
       storageInstructions: sharedStorageInstructions,
       updatedAt: "2026-05-05T00:00:00.000Z",
