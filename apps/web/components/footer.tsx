@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
-import { FacebookIcon, WhatsAppIcon } from "@/components/social-icons";
-import { buttonClassName } from "@/components/ui/button";
-import { SOCIAL_CHANNELS, WHATSAPP_LINKS } from "@/lib/company/contact";
+import { FacebookIcon } from "@/components/social-icons";
+import { SOCIAL_CHANNELS } from "@/lib/company/contact";
 
 const footerLinks = [
   { href: "/", label: "Home" },
@@ -18,7 +17,7 @@ export function Footer() {
   return (
     <footer>
       <div className="brand-shell w-full border-t border-white/10 px-4 py-5 sm:px-6 md:px-8 md:py-7">
-        <div className="grid gap-7 lg:grid-cols-[1.05fr_0.7fr_0.85fr] lg:items-start">
+        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-4">
             <BrandLogo tone="inverse" />
             <h2 className="display-heading max-w-xl text-3xl text-white sm:text-4xl">
@@ -43,7 +42,7 @@ export function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Footer links" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2">
+          <nav aria-label="Footer links" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {footerLinks.map((item) => (
               <Link
                 key={item.href}
@@ -54,34 +53,6 @@ export function Footer() {
               </Link>
             ))}
           </nav>
-
-          <div className="space-y-4 rounded-[1.4rem] border border-white/10 bg-white/8 p-4">
-            <p className="section-kicker text-[color:var(--brand-4)]">Contact</p>
-            <div className="space-y-2 text-sm text-white/76">
-              <Link href="tel:+2347066898953" className="block transition hover:text-white">
-                07066898953
-              </Link>
-              <Link
-                href="mailto:info@nestfoodsltd.com"
-                className="block transition hover:text-white"
-              >
-                info@nestfoodsltd.com
-              </Link>
-              <Link
-                href={WHATSAPP_LINKS.general}
-                target="_blank"
-                rel="noreferrer"
-                className={buttonClassName({
-                  variant: "primary",
-                  size: "sm",
-                  className: "mt-2",
-                })}
-              >
-                <WhatsAppIcon className="h-4 w-4" />
-                WhatsApp
-              </Link>
-            </div>
-          </div>
         </div>
 
         <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-4 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">

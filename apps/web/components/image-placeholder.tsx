@@ -8,6 +8,7 @@ type ImagePlaceholderProps = {
   label?: string;
   className?: string;
   fit?: "cover" | "contain";
+  decorated?: boolean;
   priority?: boolean;
   sizes?: string;
 };
@@ -26,6 +27,7 @@ export function ImagePlaceholder({
   label,
   className,
   fit = "cover",
+  decorated = true,
   priority = false,
   sizes,
 }: ImagePlaceholderProps) {
@@ -36,6 +38,7 @@ export function ImagePlaceholder({
     <div
       className={cn(
         "placeholder-panel relative overflow-hidden bg-[color:var(--surface-overlay)]",
+        !decorated && "placeholder-panel-clean",
         className,
       )}
     >

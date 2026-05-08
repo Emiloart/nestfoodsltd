@@ -159,7 +159,7 @@ export const CATALOGUE_SEED_DATA: CatalogueData = {
       slug: "de-nest-sliced-bread",
       status: "published",
       name: "De-Nest Sliced Bread",
-      category: "Family Bread",
+      category: "Sliced Bread",
       shortDescription:
         "A sliced variant of the classic family loaf, prepared for easy serving, sandwiches, breakfast, and everyday table use.",
       longDescription:

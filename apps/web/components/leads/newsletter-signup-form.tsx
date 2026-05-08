@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
+import { FormToast } from "@/components/ui/form-toast";
 import { Input } from "@/components/ui/input";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -54,18 +55,11 @@ export function NewsletterSignupForm() {
         <Button type="submit" disabled={state === "submitting"}>
           {state === "submitting" ? "Submitting..." : "Subscribe"}
         </Button>
-        {message ? (
-          <p
-            className={
-              state === "error"
-                ? "text-xs font-medium text-red-700"
-                : "text-xs font-medium text-[color:var(--brand-1)]"
-            }
-          >
-            {message}
-          </p>
-        ) : null}
       </div>
+      <FormToast
+        tone={state === "error" ? "error" : state === "success" ? "success" : "info"}
+        message={message}
+      />
     </form>
   );
 }

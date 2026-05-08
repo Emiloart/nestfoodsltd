@@ -133,7 +133,7 @@ export const BRANCH_LOCATIONS: BranchLocation[] = [
 ];
 
 export const SOCIAL_CHANNELS = [
-  { label: "Facebook", value: "nest foods limited", href: "https://www.facebook.com/search/top?q=nest%20foods%20limited" },
+  { label: "Facebook", value: "nest.foods.2025", href: "https://www.facebook.com/nest.foods.2025" },
 ] as const;
 
 export const PENDING_SOCIAL_CHANNELS = ["X", "Instagram", "TikTok", "YouTube", "LinkedIn"];

@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ProductComparisonToggle } from "@/components/products/product-comparison-toggle";
 import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -148,41 +149,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
       <ProductDetailTabs product={product} />
 
-      <Card className="space-y-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-          Compare Products
-        </p>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] border-separate border-spacing-y-2 text-left text-sm">
-            <thead>
-              <tr className="text-xs uppercase tracking-[0.16em] text-neutral-500">
-                <th className="px-3 py-2">Product</th>
-                <th className="px-3 py-2">Size</th>
-                <th className="px-3 py-2">Best for</th>
-                <th className="px-3 py-2">Freshness</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allProducts.map((entry) => (
-                <tr key={entry.id} className="bg-[color:var(--surface-strong)]">
-                  <td className="rounded-l-[1rem] px-3 py-3 font-semibold text-neutral-900">
-                    <Link href={`/products/${entry.slug}`} className="hover:text-[color:var(--brand-1)]">
-                      {entry.name}
-                    </Link>
-                  </td>
-                  <td className="px-3 py-3 text-neutral-600">
-                    {entry.packFormats.map((format) => format.label).join(", ")}
-                  </td>
-                  <td className="px-3 py-3 text-neutral-600">{entry.bestFor.slice(0, 2).join(", ")}</td>
-                  <td className="rounded-r-[1rem] px-3 py-3 text-neutral-600">
-                    {entry.shelfLife ?? "Product freshness guidance available on request"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+      <ProductComparisonToggle products={allProducts} />
     </section>
   );
 }

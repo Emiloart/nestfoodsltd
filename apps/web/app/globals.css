@@ -290,6 +290,19 @@ img {
   animation: skeleton-glow 2.6s ease-in-out infinite;
 }
 
+.placeholder-panel-clean::before {
+  display: none;
+}
+
+.product-card-media {
+  border: 0;
+  border-radius: 0;
+}
+
+.contact-pulse {
+  animation: contact-pulse 2.8s ease-in-out infinite;
+}
+
 @keyframes hero-copy-rise {
   from {
     transform: translateY(16px);
@@ -329,6 +342,19 @@ img {
 
   50% {
     background-position: -40% 0, 0 0, 0 0;
+  }
+}
+
+@keyframes contact-pulse {
+  0%,
+  100% {
+    box-shadow: 0 16px 34px rgba(46, 18, 69, 0.26);
+  }
+
+  50% {
+    box-shadow:
+      0 16px 34px rgba(46, 18, 69, 0.26),
+      0 0 0 8px rgba(244, 228, 9, 0.12);
   }
 }
 

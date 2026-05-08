@@ -125,7 +125,7 @@ export function FloatingContactActions() {
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className="pointer-events-auto inline-flex h-12 items-center gap-2 rounded-full border border-white/50 bg-[color:var(--brand-1)] px-4 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_16px_34px_rgba(46,18,69,0.26)] transition hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+        className="contact-pulse pointer-events-auto inline-flex h-12 items-center gap-2 rounded-full border border-white/50 bg-[color:var(--brand-1)] px-4 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_16px_34px_rgba(46,18,69,0.26)] transition hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
       >
         {open ? <CloseIcon /> : <PhoneIcon />}
         Contact
