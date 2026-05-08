@@ -36,7 +36,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   ]);
 
   return (
-    <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
+    <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-10 md:space-y-8 md:px-6 md:py-16">
       <div className="space-y-3">
         <Badge>Product Range</Badge>
         <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
@@ -44,7 +44,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         </h1>
       </div>
 
-      <Card className="space-y-4">
+      <Card className="space-y-4 p-4 md:p-[var(--space-card)]">
         <form className="grid gap-3 md:grid-cols-2 lg:grid-cols-3" method="GET">
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-[0.14em] text-neutral-500">Search</span>
@@ -97,7 +97,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         </form>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {products.map((product) => {
           const packSizes = product.packFormats
             .map((format) => format.label)
@@ -112,13 +112,14 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           );
 
           return (
-            <Card key={product.id} className="space-y-4">
+            <Card key={product.id} className="space-y-4 p-3 sm:p-4 md:p-[var(--space-card)]">
               <Link href={`/products/${product.slug}`} className="block">
                 <ImagePlaceholder
                   src={product.imageUrl}
                   alt={`${product.name} product image`}
                   label="Product Image"
-                  className="aspect-square"
+                  fit="contain"
+                  className="aspect-[4/5] bg-[color:var(--surface-strong)] sm:aspect-[3/4]"
                 />
               </Link>
               <div className="space-y-2">
@@ -138,16 +139,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   Allergens: {allergens || "Available on request"}
                 </p>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="grid gap-2 min-[420px]:grid-cols-3">
                 <Link
                   href={`/products/${product.slug}`}
-                  className={buttonClassName({ variant: "secondary", size: "sm" })}
+                  className={buttonClassName({ variant: "secondary", size: "sm", className: "w-full" })}
                 >
                   View Product
                 </Link>
                 <Link
                   href="/contact"
-                  className={buttonClassName({ variant: "primary", size: "sm" })}
+                  className={buttonClassName({ variant: "primary", size: "sm", className: "w-full" })}
                 >
                   Make Enquiry
                 </Link>
@@ -155,7 +156,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className={buttonClassName({ variant: "brand", size: "sm" })}
+                  className={buttonClassName({ variant: "brand", size: "sm", className: "w-full" })}
                 >
                   Chat on WhatsApp
                 </Link>

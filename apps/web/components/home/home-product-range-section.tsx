@@ -28,7 +28,8 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
           src={product.imageUrl}
           alt={`${product.name} product image`}
           label="Product Image"
-          className="aspect-[4/3]"
+          fit="contain"
+          className="aspect-[4/5] bg-[color:var(--surface-strong)] sm:aspect-[3/4]"
         />
       </Link>
       <div>
@@ -52,7 +53,7 @@ function ProductPreviewCard({ product }: { product: CatalogueProduct }) {
       <div className="flex flex-wrap gap-2">
         <Link
           href={`/products/${product.slug}`}
-          className={buttonClassName({ variant: "secondary", size: "sm" })}
+          className={buttonClassName({ variant: "secondary", size: "sm", className: "touch-manipulation" })}
         >
           View Product
         </Link>

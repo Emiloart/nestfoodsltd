@@ -40,7 +40,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           src={selectedImage?.url ?? product.imageUrl}
           alt={selectedImage?.altText ?? `${product.name} product image`}
           label={selectedImage?.label}
-          className="aspect-square transition duration-500 group-hover:scale-[1.025]"
+          fit="contain"
+          className="aspect-[4/5] bg-[color:var(--surface-strong)] transition duration-500 group-hover:scale-[1.025] md:aspect-square"
           priority
         />
       </div>
@@ -62,7 +63,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               src={image.url}
               alt={image.altText}
               label={image.label}
-              className="aspect-square rounded-[0.9rem]"
+              fit="contain"
+              className="aspect-square rounded-[0.9rem] bg-[color:var(--surface-strong)]"
             />
             <span className="sr-only">{image.label ?? `View ${index + 1}`}</span>
           </button>

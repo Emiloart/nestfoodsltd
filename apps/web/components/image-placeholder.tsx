@@ -7,6 +7,7 @@ type ImagePlaceholderProps = {
   alt: string;
   label?: string;
   className?: string;
+  fit?: "cover" | "contain";
   priority?: boolean;
   sizes?: string;
 };
@@ -24,6 +25,7 @@ export function ImagePlaceholder({
   alt,
   label,
   className,
+  fit = "cover",
   priority = false,
   sizes,
 }: ImagePlaceholderProps) {
@@ -44,7 +46,7 @@ export function ImagePlaceholder({
           fill
           priority={priority}
           sizes={responsiveSizes}
-          className="object-cover"
+          className={fit === "contain" ? "object-contain p-2" : "object-cover"}
           unoptimized={isSvgSource(src)}
         />
       ) : (
@@ -54,7 +56,7 @@ export function ImagePlaceholder({
           src={src}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
-          className="h-full w-full object-cover"
+          className={cn("h-full w-full", fit === "contain" ? "object-contain p-2" : "object-cover")}
         />
       )}
       <div className="absolute inset-x-0 bottom-0 h-18 bg-[color:color-mix(in_srgb,var(--brand-2)_16%,transparent)]" />
