@@ -1,8 +1,9 @@
 export const COMPANY_STORY = [
-  "Nest Foods Limited Awka is a Nigerian bakery located in Awka. The company was established in 2022 to meet the growing demand for locally produced, affordable, rich, and quality bakery products across Nigeria and beyond.",
-  "From its early beginnings as a large-scale food business, Nest Foods Limited focused on processing and packaging staple bakery products tailored to various tastes, dietary needs, and budgets. Its flagship product is De-Nest family bread, produced in different varieties and sizes.",
-  "Through consistent investment in modern baking practices, quality control, and operational discipline, the company has gradually expanded its production capacity and market reach.",
-  "Today, Nest Foods Limited continues to grow in the bakery industry while maintaining its commitment to quality, food safety practices, affordability, service excellence, employment creation, and local economic development.",
+  "Nest Foods Limited is a leading Nigerian bakery located in Awka. The company was established in 2022 to meet the growing demand for locally produced, affordable, rich, and quality bakery products across Nigeria and beyond.",
+  "From its early beginnings as a large-scale food business, Nest Foods Limited focused on processing, packaging, and distribution of staple bakery products tailored to meet various tastes, dietary needs, and budgets. Hence, its flagship product, De-Nest family bread, is marketed in different varieties, sizes, and costs.",
+  "Through consistent investment in modern baking practices, quality control, and efficient distribution, the company has gradually expanded its operations and market reach across Nigeria.",
+  "Over time, Nest Foods Limited has built a reputation for reliability and customer satisfaction, supplying fresh De-Nest family loaf bread directly to wholesalers, retailers, bread unions, supermarkets, and small-scale businesses across regions.",
+  "Today, Nest Foods Limited continues to grow as a national player in the bakery industry, maintaining its commitment to quality, food safety practices, affordability, and service excellence. Its operations contribute to local economic development by creating employment opportunities, streams of income, and supporting agricultural supply chains in the country.",
 ];
 
 export const COMPANY_VISION =
@@ -13,7 +14,7 @@ export const COMPANY_MISSION =
 
 export const FOUNDER_STORY = [
   "Mr. Obinna Paulinus Nwosu is the visionary founder and driving force behind Nest Foods Limited. With a strong entrepreneurial spirit and deep understanding of the Nigerian food industry, he established the company with the goal of providing high-quality, affordable bread to everyday consumers.",
-  "Under his leadership, Nest Foods Limited has grown from a state bakery into a nationally competitive brand known as De-Nest family bread. His commitment to quality, excellence, innovation, and customer satisfaction continues to guide the company.",
+  "Under his leadership, Nest Foods Limited has grown from a state bakery into a nationally competitive brand known as De-Nest family bread. His commitment to quality, excellence, innovation, and customer satisfaction continues to guide the company's strategic direction and continued success.",
 ];
 
 export const CORE_VALUES = [
@@ -35,7 +36,7 @@ export const CORE_VALUES = [
   },
   {
     title: "Consistency",
-    body: "Maintaining uniform taste, quality, and premium service delivery across the company.",
+    body: "Maintaining uniform tastes, quality, and premium service delivery across all branches.",
   },
   {
     title: "Teamwork",
@@ -67,6 +68,33 @@ export const COMPANY_MILESTONES = [
   {
     title: "Awards and Community Development",
     body: "Recognition across food industry bodies and public/private institutions for food safety commitment, philanthropic acts, and community development services.",
+  },
+];
+
+export const COMPANY_CERTIFICATIONS = [
+  {
+    title: "Food Safety Certifications",
+    body: "Nest Foods Limited adheres to strict food safety and hygiene standards, environmental safety, and public health consciousness in line with recognized industry practices.",
+  },
+  {
+    title: "NAFDAC Registration and Inspections",
+    body: "All our products, including De-Nest family bread, are duly registered with the National Agency for Food and Drug Administration and Control (NAFDAC). NAFDAC REG: ANO1T2BAWK. This certification affirms that our products meet national regulatory requirements for quality, safety, and consumer protection. Periodic inspections are duly observed to demonstrate accountability and compliance to food safety practices.",
+  },
+  {
+    title: "S.O.N Certification and Inspections",
+    body: "Our products are also certified by Standards Organization of Nigeria (SON), and periodic inspections are duly observed and documented. We have the SON logo on all our products as a representation of our commitment to standards and quality.",
+  },
+  {
+    title: "Continuous Quality Control Standards",
+    body: "Internally, we maintain a rigorous quality control system across all stages of production, from raw material sourcing to baking, packaging, and distribution. Regular inspections, batch testing, and process monitoring ensure consistency, safety, and compliance with Nigeria food industry standards. De-Nest family bread is trusted for its safety for all.",
+  },
+  {
+    title: "NESREA Certifications and Inspections",
+    body: "From inception, we adhere strictly to environmental standards set by the National Environmental Standards and Regulations Enforcement Agency (NESREA). Periodically, our operations undergo regular inspections to ensure full compliance with national environmental laws and regulations. NESREA certifications confirm our commitment to responsible practices, environmental protection, and continuous regulatory alignment.",
+  },
+  {
+    title: "Awards and Recognition",
+    body: "Nest Foods Limited continues to earn recognition for its commitment to quality and customer satisfaction. As we grow nationally, we remain focused on achieving industry certifications and accolades that reflect our standards of excellence and innovation.",
   },
 ];
 

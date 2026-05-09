@@ -149,19 +149,19 @@ export const TRUST_CERTIFICATIONS = [
   {
     label: "SON",
     title: "Standards focus",
-    body: "Standards-aligned production.",
+    body: "SON-certified products with periodic inspections.",
     logoUrl: "/brand/certifications/son-logo.png",
   },
   {
     label: "NESREA",
     title: "Environmental compliance",
-    body: "Responsible environmental operations.",
+    body: "Responsible environmental practices and regulatory alignment.",
     logoUrl: "/brand/certifications/nesrea-logo.jpeg",
   },
   {
     label: "QC",
     title: "Quality control",
-    body: "Routine production quality checks.",
+    body: "Ingredient, baking, packaging, and distribution checks.",
     logoUrl: "/brand/certifications/qc.svg",
   },
 ] as const;

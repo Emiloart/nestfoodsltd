@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
 import { type ReactNode, useState } from "react";
@@ -102,7 +103,11 @@ const slides: StorySlide[] = [
   },
 ];
 
-export function CompanyStoryCarousel() {
+type CompanyStoryCarouselProps = {
+  showAboutLink?: boolean;
+};
+
+export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeSlide = slides[activeIndex] ?? slides[0]!;
   const previousSlide = () => {
@@ -159,6 +164,14 @@ export function CompanyStoryCarousel() {
               Next
             </button>
           </div>
+          {showAboutLink ? (
+            <Link
+              href="/about"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-[color:var(--brand-3)] px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] transition hover:bg-white"
+            >
+              See About Nest Foods Limited
+            </Link>
+          ) : null}
         </div>
 
         <article className="relative min-h-[28rem] p-4 sm:p-6 lg:min-h-[32rem]" aria-live="polite">

@@ -2,17 +2,9 @@ import { CompanyFaqSection } from "@/components/company/company-faq-section";
 import { CompanyStoryCarousel } from "@/components/company/company-story-carousel";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { COMPANY_MILESTONES } from "@/lib/company/about";
+import { COMPANY_CERTIFICATIONS, COMPANY_MILESTONES } from "@/lib/company/about";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
-
-const standards = [
-  "Food safety and hygiene standards",
-  "NAFDAC REG: ANO1T2BAWK",
-  "SON certification focus",
-  "NESREA environmental compliance",
-  "Quality control from raw materials to baking and packaging",
-];
 
 export default async function AboutPage() {
   const page = await getCmsPage("about");
@@ -26,9 +18,9 @@ export default async function AboutPage() {
         </h1>
       </div>
 
-      <CompanyStoryCarousel />
+      <CompanyStoryCarousel showAboutLink={false} />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
         <Card className="space-y-3">
           <p className="section-kicker">Milestones</p>
           <ul className="space-y-3 text-sm text-neutral-700">
@@ -40,12 +32,15 @@ export default async function AboutPage() {
           </ul>
         </Card>
         <Card className="space-y-3">
-          <p className="section-kicker">Production Standards</p>
-          <ul className="space-y-2 text-sm text-neutral-700">
-            {standards.map((item) => (
-              <li key={item}>• {item}</li>
+          <p className="section-kicker">Certifications & Compliance</p>
+          <div className="divide-y divide-[color:var(--border)]">
+            {COMPANY_CERTIFICATIONS.map((item) => (
+              <article key={item.title} className="py-4 first:pt-0 last:pb-0">
+                <h2 className="text-base font-semibold text-neutral-900">{item.title}</h2>
+                <p className="pretty-text mt-2 text-sm leading-7 text-neutral-600">{item.body}</p>
+              </article>
             ))}
-          </ul>
+          </div>
         </Card>
       </div>
 
