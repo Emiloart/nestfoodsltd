@@ -18,8 +18,7 @@ The homepage order is:
 - Trust strip
 - Product range
 - Production standards
-- About
-- Vision
+- About carousel with mission, vision, founder story, core values, and FAQ
 - Careers
 - Contact
 

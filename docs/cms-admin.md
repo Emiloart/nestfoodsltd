@@ -6,7 +6,6 @@ Editable pages:
 
 - Home
 - About
-- Vision
 - Careers
 - Contact
 

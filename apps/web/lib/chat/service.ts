@@ -331,13 +331,12 @@ function buildCompanyReply(): ChatReply {
     answer:
       "De-Nest Bread is the public brand of Nest Foods Limited. The company was incorporated on 18 November 2022, operates from Awka, Anambra State, and focuses on hygienic bread production, selected ingredients, quality control, and consistent bakery products.",
     quickActions: normalizeQuickActions([
-      { label: "Vision", prompt: "Tell me about the company vision." },
+      { label: "About", prompt: "Tell me about the company vision and mission." },
       { label: "Products", prompt: "Show me the De-Nest Bread product range." },
       { label: "Contact", prompt: "Help me contact the team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([
       { label: "About", href: "/about" },
-      { label: "Vision", href: "/vision" },
       { label: "Contact", href: "/contact" },
     ]),
     handoffSuggested: false,

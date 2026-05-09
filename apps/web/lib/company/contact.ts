@@ -1,4 +1,5 @@
 import { buildWhatsAppUrl, WHATSAPP_CONTACTS } from "@/lib/whatsapp";
+import { COMPANY_FAQS } from "@/lib/company/about";
 
 export type BranchLocation = {
   id: string;
@@ -142,7 +143,7 @@ export const TRUST_CERTIFICATIONS = [
   {
     label: "NAFDAC",
     title: "NAFDAC registered",
-    body: "Food regulatory compliance.",
+    body: "NAFDAC REG: ANO1T2BAWK.",
     logoUrl: "/brand/certifications/nafdac-logo.png",
   },
   {
@@ -165,28 +166,7 @@ export const TRUST_CERTIFICATIONS = [
   },
 ] as const;
 
-export const SAFE_FAQS = [
-  {
-    question: "What products does De-Nest Bread offer?",
-    answer:
-      "The current catalogue includes Family Jumbo Bread, Family Loaf Bread, Sliced Bread, Mini Bread, and Midi Bread in different size formats.",
-  },
-  {
-    question: "Is De-Nest Bread NAFDAC registered?",
-    answer:
-      "Nest Foods Limited presents De-Nest Bread as a regulated food product line with NAFDAC registration and quality compliance as part of the company brief.",
-  },
-  {
-    question: "How can I ask about product availability?",
-    answer:
-      "Use the Contact page, product enquiry buttons, or WhatsApp links to reach the company team for product information.",
-  },
-  {
-    question: "How does Nest Foods Limited maintain quality?",
-    answer:
-      "The company focuses on selected ingredients, controlled production routines, hygiene, packaging checks, and regulatory compliance.",
-  },
-] as const;
+export const SAFE_FAQS = COMPANY_FAQS;
 
 export const WHATSAPP_LINKS = {
   general: buildWhatsAppUrl(WHATSAPP_CONTACTS.general.phone, WHATSAPP_CONTACTS.general.message),

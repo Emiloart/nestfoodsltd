@@ -34,7 +34,7 @@ export default async function AdminPage() {
               Content Manager
             </h2>
             <p className="text-sm text-neutral-600">
-              Edit Home, About, Vision, Careers, and Contact content.
+              Edit Home, About, Careers, and Contact content.
             </p>
           </Card>
         </Link>

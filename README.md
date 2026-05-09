@@ -19,7 +19,6 @@ This project is not an online sales platform. The public site is limited to comp
 - `/products`
 - `/products/[slug]`
 - `/about`
-- `/vision`
 - `/careers`
 - `/contact`
 - `/privacy`

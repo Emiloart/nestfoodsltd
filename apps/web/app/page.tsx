@@ -10,11 +10,9 @@ import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
 
 export default async function HomePage() {
-  const [homePage, aboutPage, visionPage, contactPage, careersPage, products] =
+  const [homePage, contactPage, careersPage, products] =
     await Promise.all([
       getCmsPage("home"),
-      getCmsPage("about"),
-      getCmsPage("vision"),
       getCmsPage("contact"),
       getCmsPage("careers"),
       listCatalogueProducts(),
@@ -25,7 +23,7 @@ export default async function HomePage() {
       <HomeHeroSection page={homePage} />
       <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection />
-      <HomeStorySection aboutPage={aboutPage} visionPage={visionPage} />
+      <HomeStorySection />
       <HomeContactSection contactPage={contactPage} />
       <HomeCareersSection careersPage={careersPage} />
       <HomeNewsletterEnquirySection />
