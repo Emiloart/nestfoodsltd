@@ -34,7 +34,7 @@ export default function GlobalErrorPage({ error, reset }: GlobalErrorPageProps) 
           Something went wrong
         </h1>
         <p className="text-sm text-neutral-600">
-          We captured this incident for review. Please retry the action.
+          We logged this issue. Please retry the action.
         </p>
         <Button onClick={reset}>Try again</Button>
       </Card>

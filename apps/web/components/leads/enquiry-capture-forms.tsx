@@ -76,7 +76,7 @@ export function EnquiryCaptureForms() {
     }
 
     setState("success");
-    setMessage("Enquiry received. The sales context is sales@nestfoodsltd.com.");
+    setMessage("Thank you. The Nest Foods Limited team will follow up.");
     return true;
   }
 
@@ -129,7 +129,7 @@ export function EnquiryCaptureForms() {
       <div className="flex flex-wrap gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-1">
         {[
           { id: "supply", label: "Supply Enquiry" },
-          { id: "distributor", label: "Distributor Interest" },
+          { id: "distributor", label: "Business Interest" },
         ].map((item) => (
           <button
             key={item.id}

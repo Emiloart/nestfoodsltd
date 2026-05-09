@@ -75,7 +75,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </h1>
             <p className="text-sm text-neutral-600">{product.longDescription}</p>
             <p className="text-xs text-neutral-500">
-              Size: {packSizes || "Available on request"}
+              Size: {packSizes || "See product details"}
             </p>
             {product.shelfLife ? (
               <p className="text-xs text-neutral-500">Freshness: {product.shelfLife}</p>
@@ -113,35 +113,19 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </div>
             <p className="text-sm leading-7 text-neutral-600">
               {product.shelfLife ??
-                "Freshness guidance is published from the official product brief and should be followed with the storage notes."}
+                "Follow the storage notes for best freshness."}
             </p>
           </Card>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4">
             <Card className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
                 Product specifications
               </p>
               <p className="text-sm text-neutral-700">Category: {product.category}</p>
               <p className="text-sm text-neutral-700">
-                Size: {packSizes || "Available on request"}
+                Size: {packSizes || "See product details"}
               </p>
-            </Card>
-            <Card className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                Product enquiries
-              </p>
-              <p className="text-sm text-neutral-700">
-                Use the contact route for product questions, size guidance, and general follow-up.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  href="/contact"
-                  className={buttonClassName({ variant: "primary", size: "sm" })}
-                >
-                  Make Enquiry
-                </Link>
-              </div>
             </Card>
           </div>
         </div>

@@ -287,7 +287,7 @@ async function buildProductReply(message: string): Promise<ChatReply> {
     confidence: fallbackProducts.length > 0 ? 0.88 : 0.58,
     answer:
       summary ||
-      "The De-Nest Bread catalogue is being prepared. Use the contact page for product enquiries.",
+      "Visit the Products page for the current De-Nest Bread range, ingredients, allergens, and sizes.",
     quickActions: normalizeQuickActions([
       { label: "Allergens", prompt: "Show allergen notes for the products." },
       { label: "Contact", prompt: "Help me contact the team." },
@@ -310,8 +310,8 @@ async function buildAllergenReply(): Promise<ChatReply> {
     confidence: 0.88,
     answer:
       allergens.length > 0
-        ? `Current product allergen notes: ${allergens}. Review each product page or contact Nest Foods Limited for specific product guidance.`
-        : "Allergen notes are being prepared for the catalogue. Use the contact page for specific product guidance.",
+        ? `Current product allergen notes: ${allergens}. Check each product page or contact Nest Foods Limited for product-specific details.`
+        : "Use the contact page for product-specific allergen details.",
     quickActions: normalizeQuickActions([
       { label: "Products", prompt: "Show me the De-Nest Bread product range." },
       { label: "Contact", prompt: "Help me contact the team." },
@@ -350,7 +350,7 @@ function buildCareersReply(): ChatReply {
     answer:
       "Nest Foods Limited accepts career enquiries for production, management, accounting, sales, marketing and distribution, driving, cleaning, and support roles. HR contact: hrsupport@nestfoodsltd.com or 09116337168.",
     quickActions: normalizeQuickActions([
-      { label: "Careers page", prompt: "Open careers guidance." },
+      { label: "Careers", prompt: "Open careers information." },
       { label: "Contact", prompt: "Help me contact the team." },
     ]),
     suggestedLinks: normalizeSuggestedLinks([

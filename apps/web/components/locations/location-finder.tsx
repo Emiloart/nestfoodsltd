@@ -12,12 +12,6 @@ type LocationFinderProps = {
 
 type GeoStatus = "idle" | "locating" | "found" | "blocked" | "unsupported";
 
-const missingFieldText = "Contact head office for details.";
-
-function displayValue(value?: string) {
-  return value?.trim() || missingFieldText;
-}
-
 function distanceKm(
   pointA: { latitude: number; longitude: number },
   pointB: { latitude: number; longitude: number },
@@ -132,14 +126,16 @@ export function LocationFinder({ locations }: LocationFinderProps) {
             <p className="mt-1 text-base font-semibold text-neutral-900">
               {selectedLocation?.name}
             </p>
-            <p className="mt-1 text-xs leading-5 text-neutral-600">
-              {displayValue(selectedLocation?.address)}
-            </p>
+            {selectedLocation?.address ? (
+              <p className="mt-1 text-xs leading-5 text-neutral-600">
+                {selectedLocation.address}
+              </p>
+            ) : null}
           </div>
         </div>
 
         <p className="text-xs leading-5 text-neutral-500" aria-live="polite">
-          {geoStatus === "idle" ? "Select a marker or use browser location to choose a branch contact." : null}
+          {geoStatus === "idle" ? "Select a marker or use browser location to choose a branch." : null}
           {geoStatus === "locating" ? "Checking your approximate location..." : null}
           {geoStatus === "found" ? "Nearest contact location selected." : null}
           {geoStatus === "blocked" ? "Location access was not allowed. You can still choose a city manually." : null}
@@ -153,22 +149,24 @@ export function LocationFinder({ locations }: LocationFinderProps) {
           <h3 className="mt-3 text-2xl font-semibold text-neutral-900">
             {selectedLocation?.name}
           </h3>
-          <p className="mt-2 text-sm leading-7 text-neutral-600">
-            {displayValue(selectedLocation?.address)}
-          </p>
+          {selectedLocation?.address ? (
+            <p className="mt-2 text-sm leading-7 text-neutral-600">
+              {selectedLocation.address}
+            </p>
+          ) : null}
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Phone</p>
             <p className="mt-2 text-sm font-semibold text-neutral-900">
-              {displayValue(selectedLocation?.phone)}
+              {selectedLocation?.phone ?? "Use the head office line"}
             </p>
           </div>
           <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-500">Hours</p>
             <p className="mt-2 text-sm font-semibold text-neutral-900">
-              {displayValue(selectedLocation?.hours)}
+              {selectedLocation?.hours ?? "Business hours vary by location"}
             </p>
           </div>
         </div>

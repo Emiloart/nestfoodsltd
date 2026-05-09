@@ -129,16 +129,16 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
           <h2
             className={`${playfairDisplay.className} mt-3 max-w-sm text-[clamp(2rem,4vw,3rem)] font-bold leading-[0.98] text-white`}
           >
-            About De-Nest Bread
+            About Nest Foods Limited
           </h2>
-          <div className="mt-5 grid gap-2">
+          <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:grid lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
             {slides.map((slide, index) => (
               <button
                 key={slide.id}
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 className={cn(
-                  "rounded-full border px-4 py-2 text-left text-xs font-black uppercase tracking-[0.14em] transition",
+                  "shrink-0 rounded-full border px-4 py-2 text-left text-xs font-black uppercase tracking-[0.14em] transition",
                   activeIndex === index
                     ? "border-[color:var(--brand-3)] bg-[color:var(--brand-3)] text-[color:var(--brand-2)]"
                     : "border-white/12 bg-white/[0.045] text-white/72 hover:bg-white/[0.09] hover:text-white",
@@ -148,13 +148,13 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
               </button>
             ))}
           </div>
-          <div className="mt-4 flex items-center gap-2">
+          <div className="mt-4 hidden items-center gap-2 lg:flex">
             <button
               type="button"
               onClick={previousSlide}
               className="rounded-full border border-white/14 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white/76 transition hover:border-white/30 hover:text-white"
             >
-              Prev
+              Previous
             </button>
             <button
               type="button"
@@ -174,7 +174,7 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
           ) : null}
         </div>
 
-        <article className="relative min-h-[28rem] p-4 sm:p-6 lg:min-h-[32rem]" aria-live="polite">
+        <article className="relative order-first min-h-[28rem] p-4 sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.id}

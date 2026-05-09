@@ -4,22 +4,22 @@ const trustItems = [
   {
     eyebrow: "Registration",
     title: "Registered Food Manufacturer",
-    description: "Licensed bread production with public-facing credibility.",
+    description: "Registered bread production with documented food-safety compliance.",
   },
   {
     eyebrow: "Hygiene",
     title: "Hygienic Production Standards",
-    description: "Clean workflow, disciplined QA, and safe handling.",
+    description: "Clean handling, routine checks, and controlled factory practices.",
   },
   {
     eyebrow: "Production",
     title: "Reliable Daily Output",
-    description: "Consistent production routines support dependable bread availability.",
+    description: "Consistent bakery routines support dependable product quality.",
   },
   {
     eyebrow: "Ingredients",
     title: "Premium Ingredients",
-    description: "Ingredient clarity across the product catalogue.",
+    description: "Selected ingredients for soft, rich, and family-ready bread.",
   },
 ];
 

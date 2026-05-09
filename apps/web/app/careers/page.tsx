@@ -72,7 +72,7 @@ export default async function CareersPage() {
         </Card>
 
         <Card className="space-y-3">
-          <p className="section-kicker">Application Guidance</p>
+          <p className="section-kicker">Application Requirements</p>
           <ul className="space-y-2 text-sm text-neutral-700">
             {applicationItems.map((item) => (
               <li key={item}>• {item}</li>
@@ -104,9 +104,9 @@ export default async function CareersPage() {
       <Card className="space-y-4">
         <p className="section-kicker">Online Application</p>
         <p className="text-sm leading-7 text-neutral-700">
-          Applicants outside Anambra State can prepare an HR email from this form. Attach your CV
-          and application letter before sending. Drivers should also attach a driver's license or
-          cover letter where applicable.
+          Applicants outside Anambra State can send their details to HR from this form. Attach your
+          CV and application letter before sending. Drivers should also attach a driver's license
+          or cover letter where applicable.
         </p>
         <CareerApplicationForm />
       </Card>

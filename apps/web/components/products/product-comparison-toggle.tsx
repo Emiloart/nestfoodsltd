@@ -22,7 +22,7 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
             Compare Products
           </p>
           <p className="mt-1 text-sm text-neutral-600">
-            Review size, use case, and freshness across the De-Nest Bread range.
+            Compare size, use case, and freshness across the De-Nest Bread range.
           </p>
         </div>
         <button
@@ -60,7 +60,7 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
                     {entry.bestFor.slice(0, 2).join(", ")}
                   </td>
                   <td className="rounded-r-[1rem] px-3 py-3 text-neutral-600">
-                    {entry.shelfLife ?? "Product freshness guidance available on request"}
+                    {entry.shelfLife ?? "Follow storage notes"}
                   </td>
                 </tr>
               ))}

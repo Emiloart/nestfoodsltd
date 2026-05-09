@@ -45,7 +45,7 @@ function encodeMailtoBody(form: CareerApplicationFormState, fileNames: string[])
 export function CareerApplicationForm() {
   const [form, setForm] = useState(initialFormState);
   const [fileNames, setFileNames] = useState<string[]>([]);
-  const [status, setStatus] = useState("Use the form to prepare an HR email application.");
+  const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState<"info" | "success" | "error">("info");
 
   function updateForm(partial: Partial<CareerApplicationFormState>) {
@@ -67,7 +67,7 @@ export function CareerApplicationForm() {
 
     const subject = encodeURIComponent(`Career Application - ${form.position} - ${form.fullName}`);
     const body = encodeMailtoBody(form, fileNames);
-    setStatus("Opening your email app. Attach CV/application files before sending.");
+    setStatus("Opening your email app. Attach selected files before sending.");
     setStatusTone("success");
     window.location.href = `mailto:hrsupport@nestfoodsltd.com?subject=${subject}&body=${body}`;
   }
@@ -155,7 +155,7 @@ export function CareerApplicationForm() {
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit">Prepare HR Email</Button>
+        <Button type="submit">Submit Application</Button>
       </div>
       <FormToast tone={statusTone} message={status} />
     </form>

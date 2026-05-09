@@ -73,7 +73,7 @@ export const CMS_SEED_DATA: CmsData = {
       title: "Contact Nest Foods Limited",
       headline: "Speak with the Nest Foods Limited team.",
       description:
-        "Use this page for product enquiries, office contacts, confirmed social channels, and career contact details.",
+        "Product information, office contacts, confirmed social channels, and career contact details for Nest Foods Limited.",
       status: "published",
       publishAt: now,
       heroMediaKind: "image",
@@ -100,7 +100,7 @@ export const CMS_SEED_DATA: CmsData = {
       logoImageUrl: "/brand/logos/logo-primary.png",
       seo: {
         title: "Careers at Nest Foods Limited",
-        description: "Career guidance and HR contacts for Nest Foods Limited.",
+        description: "Career opportunities and HR contacts for Nest Foods Limited.",
         ogImageUrl: "/seo/og/default-og.svg",
       },
       updatedAt: now,

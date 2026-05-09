@@ -5,7 +5,7 @@ export function CompanyFaqSection() {
   return (
     <section className="space-y-4">
       <div>
-        <p className="section-kicker">Frequently Asked Questions</p>
+        <p className="section-kicker">FAQ</p>
         <h2 className="display-heading mt-3 text-3xl text-neutral-900 sm:text-4xl">
           Frequently Asked Questions
         </h2>

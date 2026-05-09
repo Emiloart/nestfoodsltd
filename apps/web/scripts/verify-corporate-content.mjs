@@ -88,20 +88,29 @@ async function verifyCatalogueIngredients() {
 
 async function verifyLocationFallbacks() {
   const contactSource = await readText("apps/web/lib/company/contact.ts");
-  for (const required of [
-    "Aba Contact Location",
-    "Akwa-Ibom Contact Location",
-    "Phone contact was not supplied in the PDF source.",
-    "Address and phone contact were not supplied in the PDF source.",
-  ]) {
+  for (const required of ["Aba Contact Location", "Akwa-Ibom Contact Location"]) {
     if (!contactSource.includes(required)) {
-      fail(`Missing location fallback note: ${required}`);
+      fail(`Missing branch contact entry: ${required}`);
     }
   }
 
-  const locationFinder = await readText("apps/web/components/locations/location-finder.tsx");
-  if (!locationFinder.includes("displayValue")) {
-    fail("LocationFinder must use displayValue fallbacks for incomplete PDF branch data.");
+  const publicFiles = [
+    "apps/web/app/contact/page.tsx",
+    "apps/web/components/locations/location-finder.tsx",
+    "apps/web/lib/company/contact.ts",
+  ];
+  const forbidden = [
+    "Contact head office for details",
+    "not supplied in the PDF source",
+  ];
+
+  for (const file of publicFiles) {
+    const source = await readText(file);
+    for (const term of forbidden) {
+      if (source.includes(term)) {
+        fail(`Public scaffold wording found in ${file}: ${term}`);
+      }
+    }
   }
 }
 

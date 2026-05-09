@@ -117,22 +117,30 @@ export default async function ContactPage() {
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4"
             >
               <h2 className="text-base font-semibold text-neutral-900">{location.name}</h2>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">
-                {location.address ?? "Contact head office for details."}
-              </p>
-              <p className="mt-3 text-xs font-semibold text-neutral-500">
-                {location.phone ?? "Contact head office for details."}
-              </p>
-              <p className="mt-2 text-xs leading-5 text-neutral-500">
-                {location.hours ?? "Contact head office for details."}
-              </p>
+              {location.address ? (
+                <p className="mt-2 text-sm leading-6 text-neutral-600">{location.address}</p>
+              ) : null}
+              {location.phone ? (
+                <p className="mt-3 text-xs font-semibold text-neutral-500">{location.phone}</p>
+              ) : null}
+              {location.hours ? (
+                <p className="mt-2 text-xs leading-5 text-neutral-500">{location.hours}</p>
+              ) : null}
+              <Link
+                href={location.mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex text-xs font-semibold text-[color:var(--brand-1)] transition hover:text-[color:var(--brand-2)]"
+              >
+                Open map
+              </Link>
             </div>
           ))}
         </div>
       </Card>
 
       <Card className="space-y-4">
-        <p className="section-kicker">Supply And Interest Enquiry</p>
+        <p className="section-kicker">Product Enquiry</p>
         <EnquiryCaptureForms />
       </Card>
 

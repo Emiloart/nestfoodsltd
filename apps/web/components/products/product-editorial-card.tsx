@@ -8,7 +8,7 @@ type ProductEditorialCardProps = {
   product: CatalogueProduct;
 };
 
-function joinLabels(values: string[], fallback = "Available on request") {
+function joinLabels(values: string[], fallback = "See product details") {
   return values.filter(Boolean).join(", ") || fallback;
 }
 

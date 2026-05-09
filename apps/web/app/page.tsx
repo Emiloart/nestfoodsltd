@@ -5,6 +5,7 @@ import { HomeNewsletterEnquirySection } from "@/components/home/home-newsletter-
 import { HomeProductionStandardsSection } from "@/components/home/home-production-standards-section";
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
+import { HomeTrustStrip } from "@/components/home/home-trust-strip";
 import { listCatalogueProducts } from "@/lib/catalog/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
@@ -21,6 +22,7 @@ export default async function HomePage() {
   return (
     <div className="grain-background pb-10">
       <HomeHeroSection page={homePage} />
+      <HomeTrustStrip />
       <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection />
       <HomeStorySection />
