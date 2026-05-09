@@ -30,6 +30,11 @@ type DataRequestResponse = {
 
 const LOCAL_CONSENT_KEY = "nest_privacy_consent_saved";
 
+const privacyPolicyText = [
+  "We protect your privacy and are committed to protecting your personal information. Any data collected through our official website, email addresses, or business interactions is used solely for communication, service delivery, and improving customer experience.",
+  "We do not sell or misuse customer data and implement appropriate safeguards to support data security.",
+];
+
 export function PrivacyPageClient() {
   const [consent, setConsent] = useState({
     analytics: false,
@@ -167,6 +172,17 @@ export function PrivacyPageClient() {
           Manage optional consent preferences and submit NDPR data export or deletion requests.
         </p>
       </div>
+
+      <Card className="space-y-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+          Privacy Policy
+        </p>
+        {privacyPolicyText.map((paragraph) => (
+          <p key={paragraph} className="pretty-text text-sm leading-7 text-neutral-700">
+            {paragraph}
+          </p>
+        ))}
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
         <Card className="space-y-4">
