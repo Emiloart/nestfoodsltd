@@ -49,8 +49,8 @@ export function HomeHeroSection({ page }: HomeHeroSectionProps) {
                 Every loaf is a testament to our commitment to quality
               </h1>
               <p className="max-w-2xl text-balance break-words text-[clamp(0.97rem,1.6vw,1.18rem)] leading-7 text-white">
-                Fresh. Healthy. For every family.
-                <span className="block">. 100% bromate and saccharine free.</span>
+                Fresh • Healthy • For every family.
+                <span className="block">100% bromate and saccharine free.</span>
               </p>
             </div>
 
