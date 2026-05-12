@@ -55,27 +55,23 @@ export function HomeProductionVideoSection() {
     <section
       ref={sectionRef}
       aria-label="De-Nest Bread production video"
-      className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9"
+      className="w-full py-6 md:py-8 lg:py-9"
       onPointerEnter={() => setHovering(true)}
       onPointerLeave={() => setHovering(false)}
       onFocus={() => setHovering(true)}
       onBlur={() => setHovering(false)}
     >
-      <div className="relative overflow-hidden rounded-[1.8rem] bg-[color:var(--surface-elevated)] shadow-[0_24px_54px_rgba(46,18,69,0.12)]">
-        <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_42%,rgba(252,247,240,0.46)_72%,var(--surface-elevated)_100%)]" />
-        <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(90deg,var(--surface-elevated)_0%,transparent_12%,transparent_88%,var(--surface-elevated)_100%)]" />
-        <video
-          ref={videoRef}
-          className="aspect-[16/9] max-h-[42rem] w-full bg-[color:var(--brand-2)] object-cover [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_100%)]"
-          muted
-          loop
-          playsInline
-          preload="none"
-          aria-label="Production process video"
-        >
-          {shouldLoad ? <source src={productionVideoSrc} type="video/webm" /> : null}
-        </video>
-      </div>
+      <video
+        ref={videoRef}
+        className="block aspect-video w-full bg-[color:var(--brand-2)] object-cover"
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-label="Production process video"
+      >
+        {shouldLoad ? <source src={productionVideoSrc} type="video/webm" /> : null}
+      </video>
     </section>
   );
 }

@@ -110,12 +110,6 @@ type CompanyStoryCarouselProps = {
 export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeSlide = slides[activeIndex] ?? slides[0]!;
-  const previousSlide = () => {
-    setActiveIndex((current) => (current === 0 ? slides.length - 1 : current - 1));
-  };
-  const nextSlide = () => {
-    setActiveIndex((current) => (current === slides.length - 1 ? 0 : current + 1));
-  };
 
   return (
     <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-[color:var(--brand-2)] text-white shadow-[0_22px_44px_rgba(46,18,69,0.22)]">
@@ -148,22 +142,6 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
               </button>
             ))}
           </div>
-          <div className="mt-4 hidden items-center gap-2 lg:flex">
-            <button
-              type="button"
-              onClick={previousSlide}
-              className="rounded-full border border-white/14 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white/76 transition hover:border-white/30 hover:text-white"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              onClick={nextSlide}
-              className="rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] transition hover:bg-[color:var(--brand-3)]"
-            >
-              Next
-            </button>
-          </div>
           {showAboutLink ? (
             <Link
               href="/about"
@@ -174,7 +152,7 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
           ) : null}
         </div>
 
-        <article className="relative order-first min-h-[28rem] p-4 sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
+        <article className="relative order-first min-h-0 p-4 sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.id}
@@ -194,10 +172,10 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
                 {activeSlide.title}
               </h3>
               <div className="relative mt-5">
-                <div className="max-h-[18.5rem] overflow-y-auto pr-3 sm:max-h-[20rem] lg:max-h-[21.5rem]">
+                <div className="pr-0 lg:max-h-[21.5rem] lg:overflow-y-auto lg:pr-3 lg:pb-14">
                   {activeSlide.render()}
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[color:var(--brand-2)] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-14 bg-gradient-to-t from-[color:var(--brand-2)] to-transparent lg:block" />
               </div>
             </motion.div>
           </AnimatePresence>

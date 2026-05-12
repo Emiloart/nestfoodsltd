@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { WhatsAppIcon } from "@/components/social-icons";
 import { cn } from "@/lib/cn";
@@ -54,6 +54,25 @@ function CloseIcon() {
   );
 }
 
+function ChatIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
+      <path
+        d="M5.25 6.75A3.25 3.25 0 0 1 8.5 3.5h7A3.25 3.25 0 0 1 18.75 6.75v4.5A3.25 3.25 0 0 1 15.5 14.5h-3.3l-3.58 3.08c-.55.47-1.37.08-1.37-.64V14.4A3.25 3.25 0 0 1 5.25 11.25v-4.5Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 8.5h6M9 11h4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 const emailChannel =
   CONTACT_CHANNELS.find((channel) => channel.label === "Official email") ?? CONTACT_CHANNELS[3];
 const phoneChannel =
@@ -62,6 +81,21 @@ const phoneChannel =
 export function FloatingContactActions() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const shouldCompact = window.scrollY > 24;
+      setCompact(shouldCompact);
+      if (shouldCompact) {
+        setOpen(false);
+      }
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (pathname.startsWith("/admin")) {
     return null;
@@ -124,11 +158,15 @@ export function FloatingContactActions() {
       <button
         type="button"
         aria-expanded={open}
+        aria-label={open ? "Close contact options" : "Open contact options"}
         onClick={() => setOpen((current) => !current)}
-        className="contact-pulse pointer-events-auto inline-flex h-12 items-center gap-2 rounded-full border border-white/50 bg-[color:var(--brand-1)] px-4 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_16px_34px_rgba(46,18,69,0.26)] transition hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+        className={cn(
+          "contact-pulse pointer-events-auto inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[color:var(--brand-2)] bg-[color:var(--brand-3)] text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] shadow-[0_16px_34px_rgba(46,18,69,0.2)] transition hover:scale-[1.02] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]",
+          compact && !open ? "w-12 px-0" : "px-4",
+        )}
       >
-        {open ? <CloseIcon /> : <PhoneIcon />}
-        Contact
+        {open ? <CloseIcon /> : compact ? <ChatIcon /> : <PhoneIcon />}
+        {compact && !open ? null : "Contact"}
       </button>
     </div>
   );
