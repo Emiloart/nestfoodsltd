@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -13,7 +14,11 @@ const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function MobileNav() {
+type MobileNavProps = {
+  compact?: boolean;
+};
+
+export function MobileNav({ compact = false }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const panelId = "mobile-navigation-panel";
 
@@ -37,7 +42,10 @@ export function MobileNav() {
       <Button
         variant="ghost"
         size="icon"
-        className="h-9 w-9 border-white/14 bg-white/8 text-white hover:border-white/22 hover:bg-white/12"
+        className={cn(
+          "border-white/14 bg-white/8 text-white transition-all hover:border-white/22 hover:bg-white/12",
+          compact ? "h-8 w-8" : "h-9 w-9",
+        )}
         aria-label={open ? "Close navigation" : "Open navigation"}
         aria-expanded={open}
         aria-controls={panelId}
@@ -72,7 +80,10 @@ export function MobileNav() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="fixed inset-x-0 top-[4.35rem] z-50 border-b border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 shadow-[0_14px_28px_rgba(46,18,69,0.12)]"
+          className={cn(
+            "fixed inset-x-0 z-50 border-b border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 shadow-[0_14px_28px_rgba(46,18,69,0.12)] transition-all",
+            compact ? "top-[3.45rem]" : "top-[4.1rem]",
+          )}
         >
           <nav aria-label="Mobile navigation links" className="grid gap-2">
             {navItems.map((item) => (

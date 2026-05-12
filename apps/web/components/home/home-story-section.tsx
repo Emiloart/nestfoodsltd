@@ -3,9 +3,9 @@ import { CompanyStoryCarousel } from "@/components/company/company-story-carouse
 
 export function HomeStorySection() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">
+    <section className="mx-auto w-full max-w-7xl px-0 py-6 md:px-6 md:py-8 lg:py-9">
       <CompanyStoryCarousel />
-      <div className="mt-7">
+      <div className="mt-7 px-4 md:px-0">
         <CompanyFaqSection />
       </div>
     </section>
