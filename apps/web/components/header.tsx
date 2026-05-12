@@ -21,7 +21,7 @@ export function Header() {
 
   useEffect(() => {
     const onScroll = () => {
-      setCompact(window.scrollY > 28);
+      setCompact(window.scrollY > 4);
     };
 
     onScroll();
@@ -35,7 +35,7 @@ export function Header() {
         <div
           className={cn(
             "flex items-center justify-between gap-3 px-4 transition-all duration-300 md:px-6",
-            compact ? "min-h-[3.35rem] py-1.5" : "min-h-[4rem] py-2.5",
+            compact ? "min-h-[3.05rem] py-1" : "min-h-[3.85rem] py-2",
           )}
         >
           <div className="flex min-w-0 items-center gap-3">
@@ -49,9 +49,10 @@ export function Header() {
         </div>
 
         <div
+          aria-hidden={compact}
           className={cn(
             "hidden items-center gap-4 overflow-hidden border-t border-white/10 px-6 transition-all duration-300 lg:flex",
-            compact ? "max-h-10 py-1" : "max-h-14 py-2",
+            compact ? "pointer-events-none max-h-0 py-0 opacity-0" : "max-h-14 py-2 opacity-100",
           )}
         >
           <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-2">
@@ -59,9 +60,10 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                tabIndex={compact ? -1 : undefined}
                 className={cn(
                   "rounded-full text-white/76 transition hover:bg-white/10 hover:text-[color:var(--brand-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]",
-                  compact ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-sm",
+                  "px-4 py-2 text-sm",
                 )}
               >
                 {item.label}

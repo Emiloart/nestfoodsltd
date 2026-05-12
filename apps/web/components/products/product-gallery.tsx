@@ -73,40 +73,40 @@ export function ProductGallery({ product }: ProductGalleryProps) {
       <button
         type="button"
         onClick={() => setLightboxOpen(true)}
-        className="group block w-full overflow-hidden rounded-[1.6rem] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+        className="group block w-full overflow-hidden rounded-[1.45rem] bg-[color:var(--brand-2)] text-left shadow-[0_22px_44px_rgba(46,18,69,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
       >
         <ImagePlaceholder
           src={selectedImage?.url ?? product.imageUrl}
           alt={selectedImage?.altText ?? `${product.name} product image`}
           label={selectedImage?.label}
-          fit="contain"
           decorated={false}
-          className="aspect-[4/5] bg-[color:var(--surface-strong)] transition duration-500 group-hover:scale-[1.025] md:aspect-square"
+          className="product-card-media aspect-[2/3] bg-[color:var(--brand-2)] transition duration-500 group-hover:scale-[1.025]"
           priority
+          sizes="(max-width: 1024px) 100vw, 46vw"
         />
         <span className="sr-only">Open product image gallery</span>
       </button>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
         {images.map((image, index) => (
           <button
             key={`${image.url}-${index}`}
             type="button"
             onClick={() => setSelectedIndex(index)}
             className={cn(
-              "rounded-[1.1rem] border p-1 transition hover:border-[color:var(--brand-1)]",
+              "overflow-hidden rounded-[1rem] border bg-[color:var(--brand-2)] transition hover:border-[color:var(--brand-1)]",
               selectedIndex === index
-                ? "border-[color:var(--brand-1)] bg-[color:var(--bg-accent-brand)]"
-                : "border-[color:var(--border)] bg-[color:var(--surface-strong)]",
+                ? "border-[color:var(--brand-3)]"
+                : "border-white/10",
             )}
           >
             <ImagePlaceholder
               src={image.url}
               alt={image.altText}
               label={image.label}
-              fit="contain"
               decorated={false}
-              className="aspect-square rounded-[0.9rem] bg-[color:var(--surface-strong)]"
+              className="product-card-media aspect-[2/3] bg-[color:var(--brand-2)]"
+              sizes="(max-width: 768px) 32vw, 12vw"
             />
             <span className="sr-only">{image.label ?? `View ${index + 1}`}</span>
           </button>

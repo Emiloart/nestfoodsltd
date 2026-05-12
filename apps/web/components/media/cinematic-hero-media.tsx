@@ -67,7 +67,7 @@ function MediaImage({
       <img
         src={desktopSrc}
         alt={alt}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover object-center md:object-contain"
         loading={priority ? "eager" : "lazy"}
       />
     </picture>

@@ -15,16 +15,13 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer>
-      <div className="brand-shell w-full border-t border-white/10 px-4 py-4 sm:px-6 md:px-8 md:py-5">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className="space-y-3">
+      <div className="brand-shell w-full border-t border-white/10 px-4 py-3 sm:px-6 md:px-8 md:py-4">
+        <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div className="space-y-2.5">
             <BrandLogo tone="inverse" compact />
-            <h2 className="display-heading max-w-xl text-2xl text-white sm:text-3xl">
+            <h2 className="display-heading max-w-xl text-xl text-white sm:text-2xl">
               Baking memories, one slice at a time.
             </h2>
-            <p className="pretty-text max-w-lg text-sm leading-6 text-white/68">
-              Premium bread manufacturing by Nest Foods Limited, the company behind De-Nest Bread.
-            </p>
             <div className="flex flex-wrap gap-2">
               {SOCIAL_CHANNELS.map((social) => (
                 <Link
@@ -54,7 +51,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-5 flex flex-col gap-2 border-t border-white/10 pt-3 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-2.5 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Nest Foods Limited. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="transition hover:text-white">
