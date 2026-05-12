@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const productionVideoSrc = "/media/videos/nestfoodsltd-production-video2.mp4";
+const productionVideoSrc = "/media/videos/nestfoodsltd-production-video2.webm";
 
 export function HomeProductionVideoSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -73,7 +73,7 @@ export function HomeProductionVideoSection() {
           preload="none"
           aria-label="Production process video"
         >
-          {shouldLoad ? <source src={productionVideoSrc} type="video/mp4" /> : null}
+          {shouldLoad ? <source src={productionVideoSrc} type="video/webm" /> : null}
         </video>
       </div>
     </section>
