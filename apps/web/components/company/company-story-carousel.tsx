@@ -39,9 +39,9 @@ const slides: StorySlide[] = [
     eyebrow: "About Nest Foods Limited",
     title: "A Nigerian bakery built on quality.",
     render: () => (
-      <div className="mx-auto max-w-3xl space-y-4 text-center">
+      <div className="mx-auto max-w-3xl space-y-4 text-left">
         {COMPANY_STORY.map((paragraph) => (
-          <p key={paragraph} className="break-words text-sm leading-7 text-white/76">
+          <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
             {paragraph}
           </p>
         ))}
@@ -53,18 +53,18 @@ const slides: StorySlide[] = [
     eyebrow: "Vision & Mission",
     title: "Where the company is going.",
     render: () => (
-      <div className="mx-auto max-w-2xl space-y-5 text-center">
-        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.055] p-4">
+      <div className="mx-auto max-w-2xl space-y-4 text-left sm:space-y-5">
+        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.055] p-4 text-center">
           <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
             Vision
           </p>
-          <p className="mt-2 break-words text-sm leading-7 text-white/78">{COMPANY_VISION}</p>
+          <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{COMPANY_VISION}</p>
         </div>
-        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.035] p-4">
+        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.035] p-4 text-center">
           <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
             Mission
           </p>
-          <p className="mt-2 break-words text-sm leading-7 text-white/78">{COMPANY_MISSION}</p>
+          <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{COMPANY_MISSION}</p>
         </div>
       </div>
     ),
@@ -74,13 +74,13 @@ const slides: StorySlide[] = [
     eyebrow: "Founder Story",
     title: "Mr. Obinna Paulinus Nwosu",
     render: () => (
-      <div className="mx-auto max-w-3xl space-y-4 text-center">
+      <div className="mx-auto max-w-3xl space-y-4 text-left">
         {FOUNDER_STORY.map((paragraph) => (
-          <p key={paragraph} className="break-words text-sm leading-7 text-white/76">
+          <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
             {paragraph}
           </p>
         ))}
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/48">
           RC: 2001646
         </p>
       </div>
@@ -91,11 +91,11 @@ const slides: StorySlide[] = [
     eyebrow: "Core Values",
     title: "Principles behind De-Nest Bread.",
     render: () => (
-      <div className="grid gap-3 text-center sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         {CORE_VALUES.map((value) => (
-          <div key={value.title} className="rounded-[1rem] border border-white/10 bg-white/[0.05] p-3">
+          <div key={value.title} className="rounded-[1rem] border border-white/10 bg-white/[0.05] p-3 text-left">
             <h3 className="text-sm font-bold text-white">{value.title}</h3>
-            <p className="mt-2 break-words text-xs leading-6 text-white/70">{value.body}</p>
+            <p className="mt-2 break-words text-xs leading-5 text-white/72 sm:leading-6">{value.body}</p>
           </div>
         ))}
       </div>
@@ -152,7 +152,7 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
           ) : null}
         </div>
 
-        <article className="relative order-first min-h-[28rem] p-4 text-center sm:min-h-[29rem] sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
+        <article className="relative order-first p-4 text-center sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.id}
@@ -171,11 +171,11 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
               >
                 {activeSlide.title}
               </h3>
-              <div className="relative mt-5">
-                <div className="max-h-[18.5rem] overflow-y-auto pr-3 pb-14 sm:max-h-[20rem] lg:max-h-[21.5rem]">
+              <div className="relative mt-4 sm:mt-5">
+                <div className="h-[14.75rem] touch-pan-y overflow-y-auto overscroll-contain pr-3 pb-12 text-left [-webkit-overflow-scrolling:touch] [scrollbar-gutter:stable] sm:h-[17rem] lg:h-auto lg:max-h-[21.5rem]">
                   {activeSlide.render()}
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[color:var(--brand-2)] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[color:var(--brand-2)] to-transparent sm:h-14" />
               </div>
             </motion.div>
           </AnimatePresence>
