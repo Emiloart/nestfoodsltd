@@ -3,6 +3,7 @@ import { HomeContactSection } from "@/components/home/home-contact-section";
 import { HomeHeroSection } from "@/components/home/home-hero-section";
 import { HomeNewsletterEnquirySection } from "@/components/home/home-newsletter-enquiry-section";
 import { HomeProductionStandardsSection } from "@/components/home/home-production-standards-section";
+import { HomeProductionVideoSection } from "@/components/home/home-production-video-section";
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
 import { HomeTrustStrip } from "@/components/home/home-trust-strip";
@@ -23,6 +24,7 @@ export default async function HomePage() {
     <div className="grain-background pb-10">
       <HomeHeroSection page={homePage} />
       <HomeTrustStrip />
+      <HomeProductionVideoSection />
       <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection />
       <HomeStorySection />
