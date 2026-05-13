@@ -17,7 +17,7 @@ type FaqEntry = {
 };
 
 function resolveImageUrl(imageUrl?: string) {
-  return absoluteUrl(imageUrl ?? "/media/hero/nestfoodsltd-desktop-hero-banner.jpg");
+  return absoluteUrl(imageUrl ?? "/media/hero/nestfoodsltd-desktop-hero-banner2.png");
 }
 
 export function buildOrganizationStructuredData() {

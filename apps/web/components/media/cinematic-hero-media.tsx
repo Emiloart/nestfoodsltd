@@ -20,7 +20,7 @@ type NavigatorWithConnection = Navigator & {
   };
 };
 
-const defaultHeroDesktopImage = "/media/hero/nestfoodsltd-desktop-hero-banner.jpg";
+const defaultHeroDesktopImage = "/media/hero/nestfoodsltd-desktop-hero-banner2.png";
 const defaultHeroMobileImage = "/media/hero/nestfoodsltd-mobile-hero-image.png";
 const defaultHeroPoster = defaultHeroDesktopImage;
 

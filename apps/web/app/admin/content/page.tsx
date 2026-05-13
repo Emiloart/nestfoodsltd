@@ -382,7 +382,7 @@ export default function AdminContentPage() {
                   onChange={(event) =>
                     setForm((s) => ({ ...s, heroVideoPosterUrl: event.target.value }))
                   }
-                  placeholder="/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+                  placeholder="/media/hero/nestfoodsltd-desktop-hero-banner2.png"
                 />
               </label>
             </>

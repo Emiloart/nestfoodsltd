@@ -12,14 +12,14 @@
       "ctaSecondaryLabel": "Contact",
       "ctaSecondaryHref": "/contact",
       "heroMediaKind": "image",
-      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "heroImageMobileUrl": "/media/hero/nestfoodsltd-mobile-hero-image.png",
-      "heroVideoPosterUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroVideoPosterUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "De-Nest Bread | Premium Bread Manufacturer",
         "description": "Premium bread products, production standards, and company information from Nest Foods Limited.",
-        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -32,12 +32,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "About Nest Foods Limited",
         "description": "Learn about Nest Foods Limited, the company behind De-Nest Bread.",
-        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -50,12 +50,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Vision & Mission | De-Nest Bread",
         "description": "Explore the mission, vision, and values behind De-Nest Bread.",
-        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -68,12 +68,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Contact Nest Foods Limited",
         "description": "Reach Nest Foods Limited for De-Nest Bread product and company enquiries.",
-        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -86,12 +86,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Careers at Nest Foods Limited",
         "description": "Career guidance and HR contacts for Nest Foods Limited.",
-        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -104,7 +104,7 @@
       "headline": "Latest updates from Nest Foods Limited.",
       "ctaLabel": "Read More",
       "ctaHref": "/contact",
-      "imageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "imageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "order": 1,
@@ -125,7 +125,7 @@
       "id": "media-hero-default",
       "label": "Hero Image",
       "kind": "image",
-      "url": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "url": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "altText": "De-Nest Bread hero visual",
       "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"
@@ -134,7 +134,7 @@
       "id": "media-hero-video-poster",
       "label": "Hero Video Poster",
       "kind": "image",
-      "url": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
+      "url": "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       "altText": "De-Nest Bread hero video poster",
       "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"
