@@ -112,27 +112,27 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
   const activeSlide = slides[activeIndex] ?? slides[0]!;
 
   return (
-    <div className="overflow-hidden rounded-none border border-white/10 bg-[color:var(--brand-2)] text-white shadow-[0_22px_44px_rgba(46,18,69,0.22)] md:rounded-[1.6rem]">
-      <div className="grid gap-0 lg:grid-cols-[0.38fr_0.62fr]">
-        <div className="border-b border-white/10 bg-white/[0.045] p-4 text-center sm:p-5 lg:border-b-0 lg:border-r lg:text-left">
+    <div className="w-full max-w-full overflow-hidden rounded-none border border-white/10 bg-[color:var(--brand-2)] text-white shadow-[0_22px_44px_rgba(46,18,69,0.22)] md:rounded-[1.6rem]">
+      <div className="grid min-w-0 gap-0 lg:grid-cols-[0.38fr_0.62fr]">
+        <div className="min-w-0 border-b border-white/10 bg-white/[0.045] p-4 text-center sm:p-5 lg:border-b-0 lg:border-r lg:text-left">
           <p
             className={`${montserrat.className} text-xs font-semibold uppercase tracking-[0.18em] text-white/54`}
           >
             Nest Foods Limited
           </p>
           <h2
-            className={`${playfairDisplay.className} mx-auto mt-3 max-w-sm text-[clamp(2rem,4vw,3rem)] font-bold leading-[0.98] text-white lg:mx-0`}
+            className={`${playfairDisplay.className} mx-auto mt-3 max-w-full [overflow-wrap:anywhere] text-[clamp(1.75rem,9vw,2.6rem)] font-bold leading-[0.98] text-white lg:mx-0 lg:text-[clamp(2rem,4vw,3rem)]`}
           >
             About Nest Foods Limited
           </h2>
-          <div className="mt-5 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:grid lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+          <div className="mt-5 flex max-w-full min-w-0 gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:grid lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
             {slides.map((slide, index) => (
               <button
                 key={slide.id}
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 className={cn(
-                  "max-w-[82vw] shrink-0 whitespace-normal break-words rounded-full border px-4 py-2 text-center text-xs font-black uppercase leading-4 tracking-[0.14em] transition sm:max-w-none",
+                  "max-w-[72vw] shrink-0 whitespace-normal break-words rounded-full border px-3 py-2 text-center text-[0.68rem] font-black uppercase leading-4 tracking-[0.12em] transition sm:max-w-none sm:px-4 sm:text-xs sm:tracking-[0.14em]",
                   activeIndex === index
                     ? "border-[color:var(--brand-3)] bg-[color:var(--brand-3)] text-[color:var(--brand-2)]"
                     : "border-white/12 bg-white/[0.045] text-white/72 hover:bg-white/[0.09] hover:text-white",
@@ -145,17 +145,18 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
           {showAboutLink ? (
             <Link
               href="/about"
-              className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-[color:var(--brand-3)] px-4 py-3 text-center text-xs font-black uppercase leading-5 tracking-[0.14em] text-[color:var(--brand-2)] transition hover:bg-white"
+              className="mt-4 inline-flex w-full max-w-full items-center justify-center rounded-full bg-[color:var(--brand-3)] px-4 py-3 text-center text-xs font-black uppercase leading-5 tracking-[0.12em] text-[color:var(--brand-2)] transition hover:bg-white sm:tracking-[0.14em]"
             >
               See About Nest Foods Limited
             </Link>
           ) : null}
         </div>
 
-        <article className="relative order-first p-4 text-center sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
+        <article className="relative order-first min-w-0 p-4 text-center sm:p-6 lg:order-none lg:min-h-[32rem]" aria-live="polite">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.id}
+              className="min-w-0"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -167,12 +168,12 @@ export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarou
                 {activeSlide.eyebrow}
               </p>
               <h3
-                className={`${playfairDisplay.className} mx-auto mt-3 max-w-3xl break-words text-balance text-[clamp(1.75rem,3.2vw,2.8rem)] font-bold leading-[1.02] text-white`}
+                className={`${playfairDisplay.className} mx-auto mt-3 max-w-full [overflow-wrap:anywhere] text-balance text-[clamp(1.55rem,8vw,2.35rem)] font-bold leading-[1.02] text-white lg:max-w-3xl lg:text-[clamp(1.75rem,3.2vw,2.8rem)]`}
               >
                 {activeSlide.title}
               </h3>
               <div className="relative mt-4 sm:mt-5">
-                <div className="h-[14.75rem] touch-pan-y overflow-y-auto overscroll-contain pr-3 pb-12 text-left [-webkit-overflow-scrolling:touch] [scrollbar-gutter:stable] sm:h-[17rem] lg:h-auto lg:max-h-[21.5rem]">
+                <div className="h-[14.75rem] max-w-full touch-pan-y overflow-x-hidden overflow-y-auto overscroll-contain px-1 pb-12 text-left [-webkit-overflow-scrolling:touch] [scrollbar-gutter:stable] sm:h-[17rem] sm:pr-3 lg:h-auto lg:max-h-[21.5rem]">
                   {activeSlide.render()}
                 </div>
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[color:var(--brand-2)] to-transparent sm:h-14" />
