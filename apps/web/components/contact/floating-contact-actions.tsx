@@ -161,8 +161,8 @@ export function FloatingContactActions() {
         aria-label={open ? "Close contact options" : "Open contact options"}
         onClick={() => setOpen((current) => !current)}
         className={cn(
-          "contact-pulse pointer-events-auto inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[color:var(--brand-2)] bg-[color:var(--brand-3)] text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] shadow-[0_16px_34px_rgba(46,18,69,0.2)] transition hover:scale-[1.02] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]",
-          compact && !open ? "w-12 px-0" : "px-4",
+          "contact-pulse pointer-events-auto inline-flex h-[3.25rem] items-center justify-center gap-2 rounded-full border border-[color:var(--brand-2)] bg-[color:var(--brand-3)] text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] shadow-[0_16px_34px_rgba(46,18,69,0.2)] transition hover:scale-[1.02] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]",
+          compact && !open ? "w-[3.25rem] px-0" : "px-5",
         )}
       >
         {open ? <CloseIcon /> : compact ? <ChatIcon /> : <PhoneIcon />}

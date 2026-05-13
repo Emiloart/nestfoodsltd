@@ -19,7 +19,7 @@
       "seo": {
         "title": "De-Nest Bread | Premium Bread Manufacturer",
         "description": "Premium bread products, production standards, and company information from Nest Foods Limited.",
-        "ogImageUrl": "/seo/og/default-og.svg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -32,12 +32,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/placeholders/sections/section-image-placeholder.svg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "About Nest Foods Limited",
         "description": "Learn about Nest Foods Limited, the company behind De-Nest Bread.",
-        "ogImageUrl": "/seo/og/default-og.svg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -50,12 +50,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/placeholders/sections/section-image-placeholder.svg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Vision & Mission | De-Nest Bread",
         "description": "Explore the mission, vision, and values behind De-Nest Bread.",
-        "ogImageUrl": "/seo/og/default-og.svg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -68,12 +68,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/placeholders/sections/section-image-placeholder.svg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Contact Nest Foods Limited",
         "description": "Reach Nest Foods Limited for De-Nest Bread product and company enquiries.",
-        "ogImageUrl": "/seo/og/default-og.svg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -86,12 +86,12 @@
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "heroMediaKind": "image",
-      "heroImageUrl": "/placeholders/sections/section-image-placeholder.svg",
+      "heroImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "logoImageUrl": "/brand/logos/logo-primary.png",
       "seo": {
         "title": "Careers at Nest Foods Limited",
         "description": "Career guidance and HR contacts for Nest Foods Limited.",
-        "ogImageUrl": "/seo/og/default-og.svg"
+        "ogImageUrl": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
       },
       "updatedAt": "2026-05-05T00:00:00.000Z",
       "revisions": []
@@ -114,7 +114,7 @@
   "media": [
     {
       "id": "media-logo-primary",
-      "label": "Primary Logo Placeholder",
+      "label": "Primary Logo",
       "kind": "image",
       "url": "/brand/logos/logo-primary.png",
       "altText": "De-Nest Bread logo",
@@ -123,7 +123,7 @@
     },
     {
       "id": "media-hero-default",
-      "label": "Hero Image Placeholder",
+      "label": "Hero Image",
       "kind": "image",
       "url": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "altText": "De-Nest Bread hero visual",
@@ -132,9 +132,9 @@
     },
     {
       "id": "media-hero-video-poster",
-      "label": "Hero Video Poster Placeholder",
+      "label": "Hero Video Poster",
       "kind": "image",
-      "url": "/placeholders/hero/hero-video-poster-placeholder.svg",
+      "url": "/media/hero/nestfoodsltd-desktop-hero-banner.jpg",
       "altText": "De-Nest Bread hero video poster",
       "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"

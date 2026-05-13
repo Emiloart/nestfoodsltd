@@ -1,8 +1,8 @@
 # De-Nest Bread Corporate Website
 
-Conversion-focused corporate website for Nest Foods Limited, using De-Nest Bread as the public brand.
+Corporate website for Nest Foods Limited, using De-Nest Bread as the public brand.
 
-This project is not an online sales platform. The public site is limited to company credibility, bread product information, production standards, about, vision, careers, contact, privacy, terms, WhatsApp-first enquiries, newsletter capture, and simple supply-interest forms.
+This project is not an online sales platform. The public site is limited to company credibility, bread product information, production standards, about, careers, contact, privacy, terms, WhatsApp-first contact, newsletter capture, and simple enquiry forms.
 
 ## Stack
 
@@ -33,7 +33,7 @@ Products are managed as catalogue entries only. Public and admin product fields 
 - status
 - category
 - short and detailed descriptions
-- image and gallery placeholders
+- image and gallery media
 - ingredients
 - allergens
 - nutrition notes

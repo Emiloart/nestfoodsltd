@@ -43,7 +43,7 @@ export function MobileNav({ compact = false }: MobileNavProps) {
         variant="ghost"
         size="icon"
         className={cn(
-          "border-white/14 bg-white/8 text-white transition-all hover:border-white/22 hover:bg-white/12",
+          "border-[color:var(--brand-2)] bg-[color:var(--brand-3)] text-[color:var(--brand-2)] transition-all hover:border-[color:var(--brand-2)] hover:bg-white",
           compact ? "h-8 w-8" : "h-9 w-9",
         )}
         aria-label={open ? "Close navigation" : "Open navigation"}

@@ -10,18 +10,23 @@ type ProductDetailTabsProps = {
   product: CatalogueProduct;
 };
 
-const tabs = [
+const baseTabs = [
   { id: "description", label: "Description" },
   { id: "ingredients", label: "Ingredients" },
   { id: "nutrition", label: "Nutrition" },
   { id: "storage", label: "Storage" },
 ] as const;
 
-type TabId = (typeof tabs)[number]["id"];
+type TabId = (typeof baseTabs)[number]["id"];
 
 export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<TabId>("description");
-  const nutrition = product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
+  const nutritionSource =
+    product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
+  const nutrition = nutritionSource.filter(
+    (entry) => !/to be confirmed/i.test(entry.value),
+  );
+  const tabs = baseTabs.filter((tab) => tab.id !== "nutrition" || nutrition.length > 0);
 
   return (
     <Card className="space-y-5">

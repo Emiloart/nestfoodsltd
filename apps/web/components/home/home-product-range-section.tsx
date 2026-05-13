@@ -33,14 +33,14 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
         className="mt-5"
         intervalMs={2000}
         items={featuredProducts.map((product) => (
-          <ProductEditorialCard key={product.id} product={product} />
+          <ProductEditorialCard key={product.id} product={product} compact />
         ))}
       />
 
       <div className="mt-5 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4">
         {featuredProducts.map((product, index) => (
           <FadeIn key={product.id} delay={(index + 1) * 0.06}>
-            <ProductEditorialCard product={product} />
+            <ProductEditorialCard product={product} compact />
           </FadeIn>
         ))}
       </div>

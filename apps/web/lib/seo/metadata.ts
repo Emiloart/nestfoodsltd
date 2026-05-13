@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 
 import { absoluteUrl } from "@/lib/seo/site";
 
-const DEFAULT_OG_IMAGE = "/seo/og/default-og.svg";
+const DEFAULT_OG_IMAGE = "/media/hero/nestfoodsltd-desktop-hero-banner.jpg";
 
 type BuildPageMetadataInput = {
   title: string;

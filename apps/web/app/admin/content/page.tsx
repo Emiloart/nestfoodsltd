@@ -195,7 +195,7 @@ export default function AdminContentPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Content Manager</h1>
         <p className="text-sm text-neutral-600">
           Role: <span className="font-semibold">{role}</span>. Manage publishing state, scheduling,
-          SEO, and visual placeholders.
+          SEO, and media references.
         </p>
       </div>
 
@@ -382,7 +382,7 @@ export default function AdminContentPage() {
                   onChange={(event) =>
                     setForm((s) => ({ ...s, heroVideoPosterUrl: event.target.value }))
                   }
-                  placeholder="/placeholders/hero/hero-video-poster-placeholder.svg"
+                  placeholder="/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
                 />
               </label>
             </>

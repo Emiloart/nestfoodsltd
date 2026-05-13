@@ -2,7 +2,7 @@
 
 Cleaned source notes extracted from `NEST FOODS LTD WEBSITE-1.pdf`.
 
-This document keeps the PDF facts visible for implementation, while the public website follows the approved conversion-focused corporate brief: no ecommerce, cart, checkout, account, payment, public traceability, distributor portal, invoices, quote-builder workflow, or region-coverage claims. The site may show product education, shelf-life/storage guidance, branch contact visibility, WhatsApp-first enquiries, newsletter capture, and simple supply/distributor-interest lead forms.
+This document keeps the PDF facts visible for implementation, while the public website follows the approved corporate website brief: no ecommerce, cart, checkout, account, payment, public traceability, distributor portal, invoices, quote-builder workflow, or region-coverage claims. The site may show product education, shelf-life/storage guidance, branch contact visibility, WhatsApp-first contact, newsletter capture, and simple enquiry forms.
 
 ## Brand And Legal
 
@@ -31,7 +31,7 @@ This document keeps the PDF facts visible for implementation, while the public w
 
 ## Products
 
-Public catalogue fields should use product name, description, ingredients, allergens, nutrition notes/placeholders, size/pack formats, best-for cues, shelf-life guidance, and storage instructions.
+Public catalogue fields should use product name, description, ingredients, allergens, size/pack formats, best-for cues, shelf-life guidance, and storage instructions. Nutrition details should only be shown publicly when final values are available.
 
 Do not expose price, stock, online purchase, delivery operations, region coverage, or any portal/workflow language. Supply and distributor-interest capture is enquiry-only.
 
@@ -68,7 +68,7 @@ Do not expose price, stock, online purchase, delivery operations, region coverag
 - Ingredients: Enriched wheat flour, Water, Sugar, Vegetable oil, Yeast, Salt, Milk, Butter.
 - PDF allergen text: Contains wheat (gluten), healthy traces of soya and milk.
 - Public allergen wording should be clearer and safer: Contains wheat (gluten) and milk; may contain traces of soya.
-- Nutrition placeholders requested per 100g: Energy, Carbohydrates, Protein, Fat, Sugar, Sodium.
+- Nutrition values requested per 100g: Energy, Carbohydrates, Protein, Fat, Sugar, Sodium. Do not publish unconfirmed nutrition values on public pages.
 
 ## PDF Fields And Workflow Boundaries
 

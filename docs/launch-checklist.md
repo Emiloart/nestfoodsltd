@@ -4,7 +4,7 @@
 
 - [ ] Public brand reads De-Nest Bread.
 - [ ] Legal contexts read Nest Foods Limited.
-- [ ] Product catalogue includes the four cleaned PDF products.
+- [ ] Product catalogue includes the approved De-Nest Bread products.
 - [ ] Contact page includes phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels.
 - [ ] Careers page includes HR email, HR phone, roles, application guidance, email-prep application form, and equal opportunity statement.
 - [ ] Terms and privacy copy reviewed by the business.
@@ -23,7 +23,8 @@
 
 - [ ] Hero poster is present.
 - [ ] Hero video is compressed, muted, looped, and self-hosted if used.
-- [ ] Product images use placeholders until final assets are available.
+- [ ] Product images use real assets where available; Midi Bread remains pending by current business decision.
+- [ ] Open Graph image uses the real branded hero asset.
 
 ## Deployment
 

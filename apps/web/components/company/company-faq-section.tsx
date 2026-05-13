@@ -6,9 +6,6 @@ export function CompanyFaqSection() {
     <section className="space-y-4">
       <div>
         <p className="section-kicker">FAQ</p>
-        <h2 className="display-heading mt-3 text-3xl text-neutral-900 sm:text-4xl">
-          Frequently Asked Questions
-        </h2>
       </div>
       <Card className="divide-y divide-[color:var(--border)] p-0">
         {COMPANY_FAQS.map((item, index) => (

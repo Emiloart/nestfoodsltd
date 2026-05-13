@@ -6,13 +6,14 @@ import { type CatalogueProduct } from "@/lib/catalog/types";
 
 type ProductEditorialCardProps = {
   product: CatalogueProduct;
+  compact?: boolean;
 };
 
 function joinLabels(values: string[], fallback = "See product details") {
   return values.filter(Boolean).join(", ") || fallback;
 }
 
-export function ProductEditorialCard({ product }: ProductEditorialCardProps) {
+export function ProductEditorialCard({ product, compact = false }: ProductEditorialCardProps) {
   const packSizes = joinLabels(product.packFormats.map((format) => format.label));
   const bestFor = joinLabels(product.bestFor.slice(0, 2));
   const ingredients = joinLabels(product.ingredients);
@@ -51,23 +52,25 @@ export function ProductEditorialCard({ product }: ProductEditorialCardProps) {
           </p>
         </div>
 
-        <div className="divide-y divide-white/10 border-y border-white/10">
-          {infoRows.map((row, index) => (
-            <div
-              key={row.label}
-              className={
-                index % 2 === 0
-                  ? "grid gap-1 px-3 py-2.5"
-                  : "grid gap-1 bg-white/[0.055] px-3 py-2.5"
-              }
-            >
-              <span className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-white/44">
-                {row.label}
-              </span>
-              <span className="line-clamp-2 text-xs leading-5 text-white/78">{row.value}</span>
-            </div>
-          ))}
-        </div>
+        {compact ? null : (
+          <div className="divide-y divide-white/10 border-y border-white/10">
+            {infoRows.map((row, index) => (
+              <div
+                key={row.label}
+                className={
+                  index % 2 === 0
+                    ? "grid gap-1 px-3 py-2.5"
+                    : "grid gap-1 bg-white/[0.055] px-3 py-2.5"
+                }
+              >
+                <span className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-white/44">
+                  {row.label}
+                </span>
+                <span className="line-clamp-2 text-xs leading-5 text-white/78">{row.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         <Link
           href={`/products/${product.slug}`}

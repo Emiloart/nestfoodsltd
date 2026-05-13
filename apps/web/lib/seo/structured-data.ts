@@ -17,7 +17,7 @@ type FaqEntry = {
 };
 
 function resolveImageUrl(imageUrl?: string) {
-  return absoluteUrl(imageUrl ?? "/seo/og/default-og.svg");
+  return absoluteUrl(imageUrl ?? "/media/hero/nestfoodsltd-desktop-hero-banner.jpg");
 }
 
 export function buildOrganizationStructuredData() {
@@ -41,7 +41,11 @@ export function buildOrganizationStructuredData() {
 }
 
 export function buildProductStructuredData(product: CatalogueProduct) {
-  const nutrition = product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
+  const nutritionSource =
+    product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
+  const nutrition = nutritionSource.filter(
+    (entry) => !/to be confirmed/i.test(entry.value),
+  );
   const productProperties = [
     ...nutrition,
     ...(product.shelfLife ? [{ label: "Freshness", value: product.shelfLife }] : []),

@@ -4,14 +4,16 @@
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Homepage with cinematic hero, trust strip, product range, production standards, founder/story, branch/contact teaser, careers, newsletter, and enquiry sections. |
+| `/` | Homepage with cinematic hero, trust strip, brief product range, production standards, founder/story, branch/contact teaser, careers, and newsletter section. |
 | `/products` | De-Nest Bread product catalogue. |
 | `/products/[slug]` | Product detail pages with gallery, tabs, description, ingredients, allergens, nutrition notes, storage guidance, freshness cue, size formats, comparison table, and enquiry CTA. |
 | `/about` | Company story, founder story, mission, vision, values, milestones, production standards, and FAQ for Nest Foods Limited. |
 | `/careers` | Roles, HR contact, email-prep application form, and equal opportunity statement. |
 | `/contact` | Official phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels. |
 | `/privacy` | Consent preferences and NDPR data requests. |
-| `/terms` | Website terms placeholder. |
+| `/terms` | Legal and policy documents. |
+
+Legacy `/shop` and `/vision` URLs are handled as permanent redirects to `/products` and `/about`.
 
 ## Public API
 
