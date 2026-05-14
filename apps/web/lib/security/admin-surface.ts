@@ -1,6 +1,10 @@
 import { type NextRequest } from "next/server";
 
-const DEFAULT_ADMIN_HOSTS = ["admin.localhost:3000", "admin.nestfoodsltd.com"];
+const DEFAULT_ADMIN_HOSTS = [
+  "admin.localhost:3000",
+  "admin.nestfoodsltd.com",
+  "nestfoodsltd-web.vercel.app",
+];
 
 function normalizeHost(value?: string | null) {
   if (!value?.trim()) {
@@ -18,16 +22,16 @@ function normalizeHost(value?: string | null) {
 }
 
 function resolveConfiguredAdminHosts() {
-  const configuredHosts = (process.env.ADMIN_APP_HOSTS ?? "")
-    .split(",")
-    .map((host) => normalizeHost(host.trim()))
+  const configuredHosts = [
+    ...DEFAULT_ADMIN_HOSTS,
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_URL,
+    ...(process.env.ADMIN_APP_HOSTS ?? "").split(","),
+  ]
+    .map((host) => normalizeHost(host))
     .filter((host): host is string => Boolean(host));
 
-  if (configuredHosts.length > 0) {
-    return new Set(configuredHosts);
-  }
-
-  return new Set(DEFAULT_ADMIN_HOSTS);
+  return new Set(configuredHosts);
 }
 
 function resolveRequestHost(request: NextRequest) {
