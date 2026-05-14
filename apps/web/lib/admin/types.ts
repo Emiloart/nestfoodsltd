@@ -37,9 +37,18 @@ export type AdminInvite = {
   acceptedAt?: string;
 };
 
+export type AdminAccessToken = {
+  role: AdminRole;
+  tokenHash: string;
+  updatedAt: string;
+  updatedByUserId?: string;
+  updatedByRole?: AdminRole;
+};
+
 export type AdminDirectoryData = {
   users: AdminUser[];
   invites: AdminInvite[];
+  accessTokens: AdminAccessToken[];
 };
 
 export type PublicAdminUser = Omit<AdminUser, "passwordHash" | "mfaSecretHash"> & {
@@ -47,3 +56,8 @@ export type PublicAdminUser = Omit<AdminUser, "passwordHash" | "mfaSecretHash"> 
 };
 
 export type PublicAdminInvite = Omit<AdminInvite, "tokenHash">;
+
+export type PublicAdminAccessToken = Omit<AdminAccessToken, "tokenHash"> & {
+  configured: boolean;
+  source: "managed" | "environment" | "none";
+};

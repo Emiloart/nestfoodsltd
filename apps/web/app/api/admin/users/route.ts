@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { listAdminAccessTokenSummary } from "@/lib/admin/access-tokens";
 import { resolveAdminSessionFromRequest } from "@/lib/admin/auth";
 import { listAdminDirectorySummary } from "@/lib/admin/user-directory";
 
@@ -12,11 +13,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden: requires SUPER_ADMIN role" }, { status: 403 });
   }
 
-  const summary = await listAdminDirectorySummary();
+  const [summary, accessTokens] = await Promise.all([
+    listAdminDirectorySummary(),
+    listAdminAccessTokenSummary(),
+  ]);
   return NextResponse.json({
     role: session.role,
     actorId: session.actorId,
     users: summary.users,
     invites: summary.invites,
+    accessTokens,
   });
 }

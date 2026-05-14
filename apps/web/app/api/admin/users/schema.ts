@@ -6,7 +6,12 @@ export const createInviteSchema = z.object({
   email: z.string().trim().email(),
   role: adminRoleSchema,
   mfaRequired: z.boolean().optional(),
-  expiresInHours: z.number().int().min(1).max(24 * 14).optional(),
+  expiresInHours: z
+    .number()
+    .int()
+    .min(1)
+    .max(24 * 14)
+    .optional(),
 });
 
 export const updateAdminUserSchema = z
@@ -32,3 +37,8 @@ export const updateAdminUserSchema = z
       message: "At least one update field is required.",
     },
   );
+
+export const rotateAdminAccessTokenSchema = z.object({
+  role: adminRoleSchema,
+  token: z.string().trim().min(20).max(240),
+});

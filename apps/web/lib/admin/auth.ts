@@ -13,7 +13,7 @@ export type AdminPermission =
   | "cms.catalog.read"
   | "cms.catalog.write";
 
-export type AdminAuthSource = "session_user" | "session_role_token" | "header_role_token";
+export type AdminAuthSource = "session_user" | "session_role_token";
 
 export type AdminSession = {
   role: AdminRole;
@@ -42,44 +42,11 @@ const rolePermissions: Record<AdminRole, AdminPermission[]> = {
     "cms.catalog.read",
     "cms.catalog.write",
   ],
-  SALES_MANAGER: [
-    "cms.pages.read",
-    "cms.media.read",
-    "cms.catalog.read",
-    "cms.catalog.write",
-  ],
+  SALES_MANAGER: ["cms.pages.read", "cms.media.read", "cms.catalog.read", "cms.catalog.write"],
 };
-
-function getConfiguredTokenMap() {
-  const mapping = new Map<string, AdminRole>();
-
-  const superAdminToken = process.env.ADMIN_TOKEN_SUPER_ADMIN ?? process.env.ADMIN_API_TOKEN;
-  if (superAdminToken) {
-    mapping.set(superAdminToken, "SUPER_ADMIN");
-  }
-
-  if (process.env.ADMIN_TOKEN_CONTENT_EDITOR) {
-    mapping.set(process.env.ADMIN_TOKEN_CONTENT_EDITOR, "CONTENT_EDITOR");
-  }
-
-  if (process.env.ADMIN_TOKEN_SALES_MANAGER) {
-    mapping.set(process.env.ADMIN_TOKEN_SALES_MANAGER, "SALES_MANAGER");
-  }
-
-  return mapping;
-}
 
 export function isAdminRole(value: string): value is AdminRole {
   return value === "SUPER_ADMIN" || value === "CONTENT_EDITOR" || value === "SALES_MANAGER";
-}
-
-export function resolveAdminRoleFromAuthToken(token?: string | null): AdminRole | null {
-  if (!token) {
-    return null;
-  }
-
-  const tokenMap = getConfiguredTokenMap();
-  return tokenMap.get(token) ?? null;
 }
 
 export function createAdminSessionToken(role: AdminRole, options?: { adminUserId?: string }) {
@@ -134,20 +101,7 @@ export function resolveAdminSessionFromSessionToken(token?: string | null): Admi
 }
 
 export function resolveAdminSessionFromToken(token?: string | null): AdminSession | null {
-  const fromSession = resolveAdminSessionFromSessionToken(token);
-  if (fromSession) {
-    return fromSession;
-  }
-
-  const roleFromHeaderToken = resolveAdminRoleFromAuthToken(token);
-  if (!roleFromHeaderToken) {
-    return null;
-  }
-
-  return {
-    role: roleFromHeaderToken,
-    source: "header_role_token",
-  };
+  return resolveAdminSessionFromSessionToken(token);
 }
 
 export function resolveAdminRoleFromToken(token?: string | null): AdminRole | null {
@@ -156,8 +110,7 @@ export function resolveAdminRoleFromToken(token?: string | null): AdminRole | nu
 
 export function resolveAdminSessionFromRequest(request: NextRequest): AdminSession | null {
   const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value;
-  const tokenFromHeader = request.headers.get("x-admin-token");
-  return resolveAdminSessionFromToken(tokenFromHeader ?? tokenFromCookie);
+  return resolveAdminSessionFromToken(tokenFromCookie);
 }
 
 export function resolveAdminRoleFromRequest(request: NextRequest): AdminRole | null {

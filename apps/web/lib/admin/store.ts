@@ -7,6 +7,7 @@ import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 import { ADMIN_DIRECTORY_SEED_DATA } from "./seed";
 import {
   type AdminDirectoryData,
+  type AdminAccessToken,
   type AdminInvite,
   type AdminInviteStatus,
   type AdminUser,
@@ -47,6 +48,28 @@ function normalizeInviteStatus(value: unknown): AdminInviteStatus {
     return value;
   }
   return "pending";
+}
+
+function normalizeAccessToken(
+  input: Partial<AdminAccessToken> | null | undefined,
+): AdminAccessToken | null {
+  if (!input) {
+    return null;
+  }
+
+  const role = normalizeRole(input.role);
+  if (!role || !input.tokenHash?.trim()) {
+    return null;
+  }
+
+  const now = new Date().toISOString();
+  return {
+    role,
+    tokenHash: input.tokenHash.trim(),
+    updatedAt: normalizeIsoString(input.updatedAt, now),
+    updatedByUserId: input.updatedByUserId?.trim() || undefined,
+    updatedByRole: normalizeRole(input.updatedByRole) ?? undefined,
+  };
 }
 
 function normalizeRole(value: unknown): AdminRole | null {
@@ -139,10 +162,14 @@ function mergeAdminDirectoryData(
       }
       return entry;
     });
+  const accessTokens = (input.accessTokens ?? [])
+    .map((entry) => normalizeAccessToken(entry))
+    .filter((entry): entry is AdminAccessToken => Boolean(entry));
 
   return {
     users,
     invites,
+    accessTokens,
   };
 }
 

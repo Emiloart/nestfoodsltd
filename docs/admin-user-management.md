@@ -7,8 +7,8 @@
 - Invite activation flow that provisions admin accounts with password + optional MFA code.
 - Login supports:
   - managed account credentials (`email`, `password`, `mfaCode` when required)
-  - break-glass role token fallback
-- Super-admin user controls (`/admin/users`) for role/status/MFA policy updates.
+  - managed role-token login with environment-token fallback before rotation
+- Super-admin user controls (`/admin/users`) for role/status/MFA policy updates and access-token rotation.
 - Account lockout controls for repeated failed sign-in attempts.
 
 ## Data Model
@@ -21,12 +21,17 @@
   - role, status, expiry
   - hashed one-time token
   - invite issuer metadata
+- `AdminAccessToken`
+  - role
+  - hashed token
+  - last rotation metadata
 
 Data files and services:
 
 - `apps/web/data/admin-users.json`
 - `apps/web/lib/admin/store.ts`
 - `apps/web/lib/admin/user-directory.ts`
+- `apps/web/lib/admin/access-tokens.ts`
 
 ## APIs
 
@@ -35,6 +40,7 @@ Data files and services:
 - `POST https://admin.<domain>/api/admin/users/invites`
 - `DELETE https://admin.<domain>/api/admin/users/invites/[id]`
 - `POST https://admin.<domain>/api/admin/users/invites/activate`
+- `PUT https://admin.<domain>/api/admin/users/tokens`
 - `GET|POST|DELETE https://admin.<domain>/api/admin/session`
 
 ## Security Notes
@@ -42,7 +48,8 @@ Data files and services:
 - Write operations require trusted origin checks.
 - Invite activation and login endpoints include rate-limiting.
 - Password and MFA secrets are stored as scrypt hashes.
-- Break-glass token login remains available for operational recovery.
+- Rotated access tokens are stored as hashes and the raw token is never returned by the API.
+- Environment role tokens are used only until a managed token is set for that role.
 
 ## Next Hardening
 

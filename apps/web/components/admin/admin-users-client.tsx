@@ -7,13 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { type AdminRole } from "@/lib/admin/auth";
-import { type PublicAdminInvite, type PublicAdminUser } from "@/lib/admin/types";
+import {
+  type PublicAdminAccessToken,
+  type PublicAdminInvite,
+  type PublicAdminUser,
+} from "@/lib/admin/types";
 
 type AdminDirectoryResponse = {
   role: string;
   actorId?: string;
   users: PublicAdminUser[];
   invites: PublicAdminInvite[];
+  accessTokens: PublicAdminAccessToken[];
 };
 
 type CreateInviteResponse = {
@@ -32,6 +37,11 @@ type RevokeInviteResponse = {
   invite: PublicAdminInvite;
 };
 
+type RotateAccessTokenResponse = {
+  role: string;
+  accessToken: PublicAdminAccessToken;
+};
+
 type InviteFormState = {
   email: string;
   role: AdminRole;
@@ -46,6 +56,11 @@ type UserUpdateFormState = {
   newMfaCode: string;
 };
 
+type AccessTokenFormState = {
+  role: AdminRole;
+  token: string;
+};
+
 const roleOptions: AdminRole[] = ["SUPER_ADMIN", "CONTENT_EDITOR", "SALES_MANAGER"];
 
 const emptyInviteForm: InviteFormState = {
@@ -53,6 +68,11 @@ const emptyInviteForm: InviteFormState = {
   role: "CONTENT_EDITOR",
   mfaRequired: false,
   expiresInHours: "72",
+};
+
+const emptyAccessTokenForm: AccessTokenFormState = {
+  role: "SUPER_ADMIN",
+  token: "",
 };
 
 function toUserUpdateForm(user: PublicAdminUser): UserUpdateFormState {
@@ -75,16 +95,29 @@ function formatDate(value?: string) {
   return date.toLocaleString("en-NG");
 }
 
+function generateReadableAccessToken() {
+  const randomBytes = new Uint8Array(24);
+  window.crypto.getRandomValues(randomBytes);
+  const token = Array.from(randomBytes)
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  return `nfl-access-${token}`;
+}
+
 export function AdminUsersClient() {
   const [role, setRole] = useState("Unknown");
   const [users, setUsers] = useState<PublicAdminUser[]>([]);
   const [invites, setInvites] = useState<PublicAdminInvite[]>([]);
+  const [accessTokens, setAccessTokens] = useState<PublicAdminAccessToken[]>([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [inviteForm, setInviteForm] = useState<InviteFormState>(emptyInviteForm);
   const [userForm, setUserForm] = useState<UserUpdateFormState | null>(null);
+  const [accessTokenForm, setAccessTokenForm] =
+    useState<AccessTokenFormState>(emptyAccessTokenForm);
   const [lastInviteToken, setLastInviteToken] = useState("");
   const [savingInvite, setSavingInvite] = useState(false);
   const [savingUser, setSavingUser] = useState(false);
+  const [savingAccessToken, setSavingAccessToken] = useState(false);
   const [status, setStatus] = useState("Loading admin directory...");
 
   const selectedUser = useMemo(
@@ -105,6 +138,7 @@ export function AdminUsersClient() {
     setRole(data.role);
     setUsers(data.users);
     setInvites(data.invites);
+    setAccessTokens(data.accessTokens);
 
     const target = preferredUserId
       ? (data.users.find((entry) => entry.id === preferredUserId) ?? data.users[0] ?? null)
@@ -257,6 +291,44 @@ export function AdminUsersClient() {
     setStatus(`Reset lock state for ${selectedUser.email}.`);
   }
 
+  async function rotateAccessToken() {
+    if (!canManage) {
+      setStatus("This role has read-only access.");
+      return;
+    }
+    if (accessTokenForm.token.trim().length < 20) {
+      setStatus("Access token must be at least 20 characters.");
+      return;
+    }
+
+    setSavingAccessToken(true);
+    setStatus(`Rotating ${accessTokenForm.role} access token...`);
+    const response = await fetch("/api/admin/users/tokens", {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        role: accessTokenForm.role,
+        token: accessTokenForm.token.trim(),
+      }),
+    });
+
+    if (!response.ok) {
+      const body = (await response.json().catch(() => null)) as { error?: string } | null;
+      setStatus(body?.error ?? "Failed to rotate access token.");
+      setSavingAccessToken(false);
+      return;
+    }
+
+    const data = (await response.json()) as RotateAccessTokenResponse;
+    setAccessTokens((current) =>
+      current.map((entry) => (entry.role === data.accessToken.role ? data.accessToken : entry)),
+    );
+    setStatus(
+      `${data.accessToken.role} access token rotated. Store the new token securely before leaving this page.`,
+    );
+    setSavingAccessToken(false);
+  }
+
   async function copyInviteToken() {
     if (!lastInviteToken) {
       return;
@@ -266,6 +338,18 @@ export function AdminUsersClient() {
       setStatus("Invite token copied.");
     } catch {
       setStatus("Unable to copy invite token.");
+    }
+  }
+
+  async function copyAccessToken() {
+    if (!accessTokenForm.token) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(accessTokenForm.token);
+      setStatus("Access token copied.");
+    } catch {
+      setStatus("Unable to copy access token.");
     }
   }
 
@@ -358,9 +442,7 @@ export function AdminUsersClient() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-700">
                 One-time Invite Token
               </p>
-              <p className="break-all text-xs text-amber-800">
-                {lastInviteToken}
-              </p>
+              <p className="break-all text-xs text-amber-800">{lastInviteToken}</p>
               <Button size="sm" variant="secondary" onClick={() => void copyInviteToken()}>
                 Copy Token
               </Button>
@@ -397,6 +479,97 @@ export function AdminUsersClient() {
                 </div>
               ))
             )}
+          </div>
+
+          <div className="space-y-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              Access Tokens
+            </p>
+            <div className="grid gap-2">
+              {accessTokens.map((token) => (
+                <div
+                  key={token.role}
+                  className="rounded-lg border border-neutral-200 bg-white p-2 text-xs text-neutral-600"
+                >
+                  <p className="font-semibold text-neutral-900">{token.role}</p>
+                  <p>
+                    Source: {token.source} · {token.configured ? "configured" : "not configured"}
+                  </p>
+                  {token.updatedAt ? <p>Updated: {formatDate(token.updatedAt)}</p> : null}
+                </div>
+              ))}
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-[0.8fr_1.2fr]">
+              <label className="block space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                  Role Token
+                </span>
+                <select
+                  value={accessTokenForm.role}
+                  onChange={(event) =>
+                    setAccessTokenForm((current) => ({
+                      ...current,
+                      role: event.target.value as AdminRole,
+                    }))
+                  }
+                  className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
+                >
+                  {roleOptions.map((entry) => (
+                    <option key={entry} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="block space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                  New Token
+                </span>
+                <Input
+                  value={accessTokenForm.token}
+                  onChange={(event) =>
+                    setAccessTokenForm((current) => ({ ...current, token: event.target.value }))
+                  }
+                  placeholder="Paste or generate a new token"
+                  type="password"
+                />
+              </label>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={!canManage || savingAccessToken}
+                onClick={() =>
+                  setAccessTokenForm((current) => ({
+                    ...current,
+                    token: generateReadableAccessToken(),
+                  }))
+                }
+              >
+                Generate Token
+              </Button>
+              <Button
+                size="sm"
+                disabled={!canManage || savingAccessToken || accessTokenForm.token.length < 20}
+                onClick={() => void rotateAccessToken()}
+              >
+                {savingAccessToken ? "Saving..." : "Rotate Token"}
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={!accessTokenForm.token}
+                onClick={() => void copyAccessToken()}
+              >
+                Copy New Token
+              </Button>
+            </div>
+            <p className="text-xs leading-5 text-neutral-500">
+              Rotating a role token stores only a hash. Once saved, the previous environment token
+              for that role is no longer accepted for normal token login.
+            </p>
           </div>
         </Card>
 
@@ -553,9 +726,7 @@ export function AdminUsersClient() {
               </div>
             </>
           ) : (
-            <p className="text-sm text-neutral-500">
-              Select a user to manage.
-            </p>
+            <p className="text-sm text-neutral-500">Select a user to manage.</p>
           )}
         </Card>
       </div>

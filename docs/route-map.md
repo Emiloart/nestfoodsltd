@@ -44,6 +44,6 @@ Admin routes are available only on configured admin hosts.
 | `/admin/banners` | Homepage banner image, publishing, ordering, and action-link management. |
 | `/admin/media`   | Media metadata and usage references.                                     |
 | `/admin/catalog` | Corporate product catalogue manager.                                     |
-| `/admin/users`   | Admin user directory.                                                    |
+| `/admin/users`   | Admin user directory, invites, MFA policy, and access-token rotation.    |
 | `/admin/audit`   | Audit events.                                                            |
 | `/admin/ops`     | Runtime operations summary.                                              |

@@ -57,7 +57,7 @@ The admin surface is host-gated and keeps only the modules needed for a corporat
 - homepage banners with images, publishing state, order, and action links
 - media library
 - product catalogue
-- admin users
+- admin users and access-token rotation
 - audit events
 - operations overview
 

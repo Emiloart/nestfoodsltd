@@ -6,8 +6,8 @@ import {
   createAdminSessionToken,
   getAdminPermissions,
   resolveAdminSessionFromRequest,
-  resolveAdminRoleFromAuthToken,
 } from "@/lib/admin/auth";
+import { resolveAdminRoleFromAccessToken } from "@/lib/admin/access-tokens";
 import { authenticateAdminDirectoryUser } from "@/lib/admin/user-directory";
 import { logAuditEvent } from "@/lib/audit/service";
 import {
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (tokenLogin.success) {
-    const role = resolveAdminRoleFromAuthToken(tokenLogin.data.token);
+    const role = await resolveAdminRoleFromAccessToken(tokenLogin.data.token);
     if (!role) {
       logAdminAuditEvent(request, {
         action: "admin.session.login",

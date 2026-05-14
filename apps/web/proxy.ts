@@ -26,14 +26,10 @@ export function proxy(request: NextRequest) {
   }
 
   const tokenFromCookie = request.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value?.trim();
-  const tokenFromHeader = request.headers.get("x-admin-token")?.trim();
-
   if (pathname.startsWith("/admin")) {
     if (tokenFromCookie) {
       return NextResponse.next();
     }
-  } else if (tokenFromHeader || tokenFromCookie) {
-    return NextResponse.next();
   }
 
   const redirectUrl = request.nextUrl.clone();

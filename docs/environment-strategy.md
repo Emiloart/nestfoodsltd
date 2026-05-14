@@ -20,7 +20,7 @@ Required:
 - `NEXT_PUBLIC_SITE_URL`
 - `ADMIN_APP_HOSTS`
 - `AUTH_SECRET`
-- admin tokens or managed admin users
+- first-use admin token or managed admin users
 - selected storage drivers
 
 Optional:
@@ -28,3 +28,5 @@ Optional:
 - analytics measurement ID
 - error monitoring DSN
 - media storage credentials
+
+After first sign-in, rotate role access tokens from `/admin/users` so the dashboard-managed token replaces the environment token for normal token login.
