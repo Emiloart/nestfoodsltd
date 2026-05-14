@@ -9,6 +9,13 @@ import { cn } from "@/lib/cn";
 
 type ActiveForm = "supply" | "distributor";
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type SubmitResponse = {
+  emailDelivery?: {
+    confirmation?: {
+      status?: string;
+    };
+  };
+};
 
 type DistributorFormState = {
   fullName: string;
@@ -69,6 +76,8 @@ export function EnquiryCaptureForms() {
       body: JSON.stringify(payload),
     });
 
+    const responsePayload = (await response.json().catch(() => null)) as SubmitResponse | null;
+
     if (!response.ok) {
       setState("error");
       setMessage("Your enquiry could not be saved. Please use WhatsApp or try again.");
@@ -76,7 +85,11 @@ export function EnquiryCaptureForms() {
     }
 
     setState("success");
-    setMessage("Thank you. The Nest Foods Limited team will follow up.");
+    setMessage(
+      responsePayload?.emailDelivery?.confirmation?.status === "sent"
+        ? "Thank you. Your enquiry was submitted and a confirmation email has been sent."
+        : "Thank you. Your enquiry was submitted and the Nest Foods Limited team will follow up.",
+    );
     return true;
   }
 

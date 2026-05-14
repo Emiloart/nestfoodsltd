@@ -7,6 +7,13 @@ import { FormToast } from "@/components/ui/form-toast";
 import { Input } from "@/components/ui/input";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type NewsletterResponse = {
+  emailDelivery?: {
+    confirmation?: {
+      status?: string;
+    };
+  };
+};
 
 export function NewsletterSignupForm() {
   const [state, setState] = useState<SubmitState>("idle");
@@ -28,6 +35,8 @@ export function NewsletterSignupForm() {
       }),
     });
 
+    const payload = (await response.json().catch(() => null)) as NewsletterResponse | null;
+
     if (!response.ok) {
       setState("error");
       setMessage("Newsletter signup could not be saved. Please try again.");
@@ -36,7 +45,11 @@ export function NewsletterSignupForm() {
 
     event.currentTarget.reset();
     setState("success");
-    setMessage("Signup received. Updates will be sent by Nest Foods Limited.");
+    setMessage(
+      payload?.emailDelivery?.confirmation?.status === "sent"
+        ? "Signup received. A confirmation email has been sent."
+        : "Signup received. Updates will be sent by Nest Foods Limited.",
+    );
   }
 
   return (

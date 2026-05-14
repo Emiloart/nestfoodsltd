@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { sendEnquiryLeadEmails } from "@/lib/email/notifications";
 import { captureEnquiryLead } from "@/lib/enquiries/service";
 import {
   applyRateLimitHeaders,
@@ -56,7 +57,11 @@ export async function POST(request: NextRequest) {
       ...validated.data,
       email: validated.data.email || undefined,
     });
-    const response = NextResponse.json({ lead: { id: lead.id, type: lead.type } }, { status: 201 });
+    const emailDelivery = await sendEnquiryLeadEmails(lead);
+    const response = NextResponse.json(
+      { lead: { id: lead.id, type: lead.type }, emailDelivery },
+      { status: 201 },
+    );
     applyRateLimitHeaders(response, rateLimitResult);
     return response;
   } catch {

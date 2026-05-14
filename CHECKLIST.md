@@ -15,7 +15,7 @@ Last updated: 2026-05-05
 - [x] Homepage order: hero, trust strip, product range, production standards, about, vision, careers, contact.
 - [x] Product catalogue seeded from the cleaned PDF facts.
 - [x] Contact page includes official phones, emails, WhatsApp numbers, office contacts, and social placeholders.
-- [x] Careers page includes roles, HR contact, equal opportunity statement, and application guidance.
+- [x] Careers page includes roles, HR contact, equal opportunity statement, and online application intake.
 - [x] About and Vision pages use cleaned company, mission, compliance, and values content.
 
 ## Admin
@@ -36,6 +36,11 @@ Last updated: 2026-05-05
 
 - [x] Consent banner and privacy page submit preferences through `/api/privacy/consent`.
 - [x] Data request form remains available on the privacy page.
+
+## Lead Delivery
+
+- [x] Newsletter, supply enquiry, business-interest, and career forms submit through server APIs.
+- [x] Transactional email support sends applicant/customer confirmations when configured.
 
 ## Verification
 

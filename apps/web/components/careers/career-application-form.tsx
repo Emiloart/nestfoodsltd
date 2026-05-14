@@ -24,29 +24,12 @@ const initialFormState: CareerApplicationFormState = {
   otherExperience: "",
 };
 
-function encodeMailtoBody(form: CareerApplicationFormState, fileNames: string[]) {
-  const body = [
-    "Career application for Nest Foods Limited Awka",
-    "",
-    `Full name: ${form.fullName}`,
-    `Phone number: ${form.phone}`,
-    `Email: ${form.email}`,
-    `Position applying for: ${form.position}`,
-    `Years of experience: ${form.yearsOfExperience}`,
-    `Other work experience: ${form.otherExperience || "Not provided"}`,
-    fileNames.length ? `Files prepared: ${fileNames.join(", ")}` : "Files prepared: Not attached yet",
-    "",
-    "Please attach your CV and application letter before sending this email. Drivers should also attach a driver's license or cover letter where applicable.",
-  ].join("\n");
-
-  return encodeURIComponent(body);
-}
-
 export function CareerApplicationForm() {
   const [form, setForm] = useState(initialFormState);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState<"info" | "success" | "error">("info");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function updateForm(partial: Partial<CareerApplicationFormState>) {
     setForm((current) => ({ ...current, ...partial }));
@@ -56,7 +39,7 @@ export function CareerApplicationForm() {
     setFileNames(files ? Array.from(files).map((file) => file.name) : []);
   }
 
-  function submitApplication(event: FormEvent<HTMLFormElement>) {
+  async function submitApplication(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!form.fullName.trim() || !form.phone.trim() || !form.email.trim() || !form.position.trim()) {
@@ -65,11 +48,36 @@ export function CareerApplicationForm() {
       return;
     }
 
-    const subject = encodeURIComponent(`Career Application - ${form.position} - ${form.fullName}`);
-    const body = encodeMailtoBody(form, fileNames);
-    setStatus("Opening your email app. Attach selected files before sending.");
+    setIsSubmitting(true);
+    setStatus("");
+    setStatusTone("info");
+
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/careers/apply", {
+      method: "POST",
+      body: formData,
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; emailDelivery?: { confirmation?: { status?: string } } }
+      | null;
+
+    setIsSubmitting(false);
+
+    if (!response.ok) {
+      setStatus(payload?.error || "Application could not be submitted. Please try again.");
+      setStatusTone("error");
+      return;
+    }
+
+    event.currentTarget.reset();
+    setForm(initialFormState);
+    setFileNames([]);
     setStatusTone("success");
-    window.location.href = `mailto:hrsupport@nestfoodsltd.com?subject=${subject}&body=${body}`;
+    setStatus(
+      payload?.emailDelivery?.confirmation?.status === "sent"
+        ? "Application submitted. A confirmation email has been sent to your inbox."
+        : "Application submitted online. HR will review your details.",
+    );
   }
 
   return (
@@ -80,18 +88,21 @@ export function CareerApplicationForm() {
           <h3 className="mt-2 text-lg font-semibold text-neutral-900">Applicant details</h3>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             <Input
+              name="fullName"
               required
               value={form.fullName}
               onChange={(event) => updateForm({ fullName: event.target.value })}
               placeholder="Full name"
             />
             <Input
+              name="phone"
               required
               value={form.phone}
               onChange={(event) => updateForm({ phone: event.target.value })}
               placeholder="Phone number"
             />
             <Input
+              name="email"
               required
               type="email"
               value={form.email}
@@ -99,12 +110,14 @@ export function CareerApplicationForm() {
               placeholder="Email address"
             />
             <Input
+              name="position"
               required
               value={form.position}
               onChange={(event) => updateForm({ position: event.target.value })}
               placeholder="Position applying for"
             />
             <Input
+              name="yearsOfExperience"
               value={form.yearsOfExperience}
               onChange={(event) => updateForm({ yearsOfExperience: event.target.value })}
               placeholder="Years of experience"
@@ -118,8 +131,10 @@ export function CareerApplicationForm() {
           <label className="field-control mt-4 flex min-h-11 cursor-pointer items-center px-3 text-sm text-neutral-500">
             <span className="sr-only">Select CV, application letter, or driver documents</span>
             <input
+              name="files"
               type="file"
               multiple
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
               className="w-full text-xs"
               onChange={(event) => updateFileNames(event.target.files)}
             />
@@ -137,7 +152,8 @@ export function CareerApplicationForm() {
             </div>
           ) : (
             <p className="mt-3 text-xs leading-5 text-neutral-500">
-              Select CV and application files here, then attach them in your email app before sending.
+              Upload CV, application letter, and driver documents where applicable. Each file should be
+              3MB or less.
             </p>
           )}
         </div>
@@ -147,6 +163,7 @@ export function CareerApplicationForm() {
         <p className="section-kicker">Step 3</p>
         <h3 className="mt-2 text-lg font-semibold text-neutral-900">Experience note</h3>
         <textarea
+          name="otherExperience"
           value={form.otherExperience}
           onChange={(event) => updateForm({ otherExperience: event.target.value })}
           placeholder="Other work experience, if any"
@@ -155,7 +172,9 @@ export function CareerApplicationForm() {
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit">Submit Application</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Submit Application"}
+        </Button>
       </div>
       <FormToast tone={statusTone} message={status} />
     </form>

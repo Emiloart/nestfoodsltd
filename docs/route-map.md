@@ -8,7 +8,7 @@
 | `/products` | De-Nest Bread product catalogue. |
 | `/products/[slug]` | Product detail pages with gallery, tabs, description, ingredients, allergens, nutrition notes, storage guidance, freshness cue, size formats, comparison table, and enquiry CTA. |
 | `/about` | Company story, founder story, mission, vision, values, milestones, production standards, and FAQ for Nest Foods Limited. |
-| `/careers` | Roles, HR contact, email-prep application form, and equal opportunity statement. |
+| `/careers` | Roles, HR contact, online application form, file attachment intake, and equal opportunity statement. |
 | `/contact` | Official phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels. |
 | `/privacy` | Consent preferences and NDPR data requests. |
 | `/terms` | Legal and policy documents. |
@@ -27,6 +27,7 @@ Legacy `/shop` and `/vision` URLs are handled as permanent redirects to `/produc
 | `/api/newsletter/subscribe` | Newsletter subscriber capture. |
 | `/api/enquiries/bulk` | Product supply enquiry capture. |
 | `/api/enquiries/distributor` | Distributor-interest capture without an automated trade workflow. |
+| `/api/careers/apply` | Online career application intake with applicant confirmation email when email delivery is configured. |
 | `/api/health` | Runtime health. |
 | `/api/telemetry/errors` | Client error intake. |
 | `/api/telemetry/web-vitals` | Web vitals intake. |

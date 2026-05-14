@@ -6,7 +6,7 @@
 - [ ] Legal contexts read Nest Foods Limited.
 - [ ] Product catalogue includes the approved De-Nest Bread products.
 - [ ] Contact page includes phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels.
-- [ ] Careers page includes HR email, HR phone, roles, application guidance, email-prep application form, and equal opportunity statement.
+- [ ] Careers page includes HR email, HR phone, roles, online application form, file attachment guidance, and equal opportunity statement.
 - [ ] Terms and privacy copy reviewed by the business.
 
 ## Technical
@@ -17,6 +17,7 @@
 - [ ] Admin dashboard links only to retained modules.
 - [ ] Catalogue manager exposes only corporate catalogue fields.
 - [ ] Privacy preference save works from banner and privacy page.
+- [ ] Enquiry, newsletter, and career forms submit online and send automated confirmation emails in production.
 - [ ] Mobile nav and footer match the simplified route map.
 
 ## Media
@@ -31,4 +32,5 @@
 - [ ] `AUTH_SECRET` is set.
 - [ ] Admin hosts are configured.
 - [ ] Storage driver choices are confirmed.
+- [ ] Transactional email provider, sender domain, SPF/DKIM/DMARC, and notification inboxes are configured.
 - [ ] Error monitoring and web vitals intake are reviewed.

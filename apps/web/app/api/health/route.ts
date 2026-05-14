@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { getCareersStorageDriver } from "@/lib/careers/store";
+import { getEmailServiceHealth } from "@/lib/email/service";
 import { getEnquiriesStorageDriver } from "@/lib/enquiries/store";
 import { getNewsletterStorageDriver } from "@/lib/newsletter/store";
 import { getPrivacyStorageDriver } from "@/lib/privacy/store";
@@ -14,10 +16,12 @@ export async function GET() {
       uptimeSeconds: Math.round(process.uptime()),
       checks: {
         api: "ok",
+        email: getEmailServiceHealth(),
         storageDrivers: {
           adminUsers: process.env.ADMIN_USERS_STORAGE_DRIVER ?? "json",
           cms: process.env.CMS_STORAGE_DRIVER ?? "json",
           catalog: process.env.CATALOG_STORAGE_DRIVER ?? "json",
+          careers: getCareersStorageDriver(),
           chat: process.env.CHAT_STORAGE_DRIVER ?? "json",
           enquiries: getEnquiriesStorageDriver(),
           newsletter: getNewsletterStorageDriver(),

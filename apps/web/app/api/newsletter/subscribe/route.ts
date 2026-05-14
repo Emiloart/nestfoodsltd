@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { sendNewsletterSignupEmails } from "@/lib/email/notifications";
 import { subscribeToNewsletter } from "@/lib/newsletter/service";
 import {
   applyRateLimitHeaders,
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const result = await subscribeToNewsletter(validated.data);
+    const emailDelivery = await sendNewsletterSignupEmails(result);
     const response = NextResponse.json(
       {
         subscriber: {
@@ -55,6 +57,7 @@ export async function POST(request: NextRequest) {
           email: result.subscriber.email,
           created: result.created,
         },
+        emailDelivery,
       },
       { status: result.created ? 201 : 200 },
     );

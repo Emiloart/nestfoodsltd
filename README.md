@@ -68,8 +68,11 @@ The website captures enquiries only. It does not create transactional fulfilment
 - `/api/newsletter/subscribe`
 - `/api/enquiries/bulk`
 - `/api/enquiries/distributor`
+- `/api/careers/apply`
 
 Local storage defaults to JSON files. Production should use Postgres-compatible storage drivers for privacy, newsletter, and enquiry persistence when `DATABASE_URL` is configured.
+
+Transactional email is sent server-side when configured. Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, and the notification inbox variables in production. Supply, business-interest, newsletter, and career submissions send an internal notification plus a confirmation email to the submitted email address when available.
 
 ## Quick Start
 
