@@ -98,9 +98,10 @@ export default function AdminContentPage() {
         }
 
         const pagesData = (await pagesResponse.json()) as CmsPagesResponse;
-        setPages(pagesData.pages);
-        setSelectedSlug(pagesData.pages[0]?.slug ?? null);
-        setStatus("Preview content loaded.");
+        const publicPages = pagesData.pages.filter((page) => page.slug !== "vision");
+        setPages(publicPages);
+        setSelectedSlug(publicPages[0]?.slug ?? null);
+        setStatus("Website content loaded.");
       } catch {
         setStatus("Unable to load CMS pages.");
       }
@@ -191,11 +192,11 @@ export default function AdminContentPage() {
   return (
     <section className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <Badge>Admin CMS</Badge>
+        <Badge>Website Content</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Content Manager</h1>
         <p className="text-sm text-neutral-600">
-          Role: <span className="font-semibold">{role}</span>. Manage publishing state, scheduling,
-          SEO, and media references.
+          Role: <span className="font-semibold">{role}</span>. Edit public page copy, publishing
+          state, SEO, and media references.
         </p>
       </div>
 

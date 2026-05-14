@@ -54,7 +54,7 @@ Seeded products from the cleaned PDF source:
 The admin surface is host-gated and keeps only the modules needed for a corporate website:
 
 - content pages
-- banners
+- homepage banners with images, publishing state, order, and action links
 - media library
 - product catalogue
 - admin users

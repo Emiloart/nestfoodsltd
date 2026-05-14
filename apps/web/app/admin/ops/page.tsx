@@ -8,8 +8,8 @@ export default async function AdminOpsPage() {
   if (role !== "SUPER_ADMIN") {
     return (
       <PageShell
-        title="Operations Dashboard"
-        description="Restricted workspace. SUPER_ADMIN role is required to view observability and runtime operations data."
+        title="Website Health"
+        description="Restricted workspace. SUPER_ADMIN role is required to view website health and performance data."
       />
     );
   }

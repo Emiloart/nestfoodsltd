@@ -22,7 +22,7 @@ async function verifyHomepageSections() {
   const page = await readText("apps/web/app/page.tsx");
   const sections = [
     "HomeHeroSection",
-    "HomeTrustStrip",
+    "HomeBannerSection",
     "HomeProductRangeSection",
     "HomeProductionStandardsSection",
     "HomeStorySection",

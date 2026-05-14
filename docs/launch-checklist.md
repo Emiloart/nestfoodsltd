@@ -5,6 +5,7 @@
 - [ ] Public brand reads De-Nest Bread.
 - [ ] Legal contexts read Nest Foods Limited.
 - [ ] Product catalogue includes the approved De-Nest Bread products.
+- [ ] Homepage banner section has at least one published admin-managed banner with a real image and valid action link.
 - [ ] Contact page includes phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels.
 - [ ] Careers page includes HR email, HR phone, roles, online application form, file attachment guidance, and equal opportunity statement.
 - [ ] Terms and privacy copy reviewed by the business.
@@ -15,6 +16,7 @@
 - [ ] `pnpm --filter @nestfoodsltd/web build`
 - [ ] Sitemap contains only approved public pages and product detail pages.
 - [ ] Admin dashboard links only to retained modules.
+- [ ] Banner manager can upload/select banner images and save action button links.
 - [ ] Catalogue manager exposes only corporate catalogue fields.
 - [ ] Privacy preference save works from banner and privacy page.
 - [ ] Enquiry, newsletter, and career forms submit online and send automated confirmation emails in production.

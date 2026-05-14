@@ -65,12 +65,10 @@ export function OpsOverviewClient() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <Badge>Operations</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Observability Dashboard
-        </h1>
+        <Badge>Website Health</Badge>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Website Health</h1>
         <p className="text-sm text-neutral-600">
-          Runtime health, Core Web Vitals budget performance, and captured application errors.
+          Runtime status, page performance signals, and captured application errors.
         </p>
       </div>
 
@@ -139,15 +137,10 @@ export function OpsOverviewClient() {
             Recent Web Vitals
           </p>
           {vitalRows.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              No web-vitals events in selected window.
-            </p>
+            <p className="text-sm text-neutral-600">No web-vitals events in selected window.</p>
           ) : (
             vitalRows.slice(0, 12).map((entry) => (
-              <div
-                key={entry.id}
-                className="rounded-xl border border-neutral-200 p-3"
-              >
+              <div key={entry.id} className="rounded-xl border border-neutral-200 p-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-sm font-semibold text-neutral-900">
                     {entry.metricName}: {formatMetricValue(entry.metricName, entry.value)}
@@ -169,19 +162,12 @@ export function OpsOverviewClient() {
             Recent Errors
           </p>
           {errorRows.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              No captured errors in selected window.
-            </p>
+            <p className="text-sm text-neutral-600">No captured errors in selected window.</p>
           ) : (
             errorRows.slice(0, 12).map((entry) => (
-              <div
-                key={entry.id}
-                className="rounded-xl border border-neutral-200 p-3"
-              >
+              <div key={entry.id} className="rounded-xl border border-neutral-200 p-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-neutral-900">
-                    {entry.message}
-                  </p>
+                  <p className="text-sm font-semibold text-neutral-900">{entry.message}</p>
                   <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                     {entry.severity} · {entry.source}
                   </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,13 +34,29 @@ const emptyForm: BannerFormState = {
   headline: "",
   ctaLabel: "",
   ctaHref: "",
-  imageUrl: "/placeholders/hero/hero-image-placeholder.svg",
+  imageUrl: "/media/products/nestfoodsltd-family-loaf-texture.png",
   status: "draft",
   publishAt: "",
   order: "1",
 };
 
+const maxBannerUploadBytes = 1_500_000;
 const statusOptions: CmsPublicationStatus[] = ["draft", "published", "scheduled"];
+
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      if (typeof reader.result === "string") {
+        resolve(reader.result);
+        return;
+      }
+      reject(new Error("Could not read selected image."));
+    });
+    reader.addEventListener("error", () => reject(new Error("Could not read selected image.")));
+    reader.readAsDataURL(file);
+  });
+}
 
 function toDateTimeInputValue(value?: string) {
   if (!value) {
@@ -137,6 +153,38 @@ export function BannerManagerClient() {
 
   function updateForm(partial: Partial<BannerFormState>) {
     setForm((current) => ({ ...current, ...partial }));
+  }
+
+  async function uploadBannerImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setStatus("Select an image file for the banner.");
+      return;
+    }
+
+    if (file.size > maxBannerUploadBytes) {
+      setStatus("Banner image is too large. Use a compressed image below 1.5MB.");
+      return;
+    }
+
+    setStatus("Loading banner image...");
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      setForm((current) => ({
+        ...current,
+        imageUrl: dataUrl,
+        label: current.label || file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "),
+      }));
+      setStatus("Banner image loaded. Save the banner to publish the change.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Could not load selected image.");
+    }
   }
 
   async function createBanner() {
@@ -245,20 +293,20 @@ export function BannerManagerClient() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
-        <Badge>Banner Admin</Badge>
+        <Badge>Homepage Banner</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Banner Manager
+          Banner Section Manager
         </h1>
         <p className="text-sm text-neutral-600">
-          Role: <span className="font-semibold">{role}</span>. Create, schedule, and reorder hero
-          banners.
+          Role: <span className="font-semibold">{role}</span>. Manage homepage banner images,
+          publish state, display order, and action links.
         </p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
         <Card className="space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-            Banners
+            Homepage Banners
           </p>
           <select
             value={selectedBannerId}
@@ -270,7 +318,7 @@ export function BannerManagerClient() {
             }}
             className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
           >
-            <option value="">New banner form</option>
+            <option value="">New homepage banner</option>
             {banners.map((banner) => (
               <option key={banner.id} value={banner.id}>
                 {banner.order}. {banner.label} · {banner.status}
@@ -296,8 +344,30 @@ export function BannerManagerClient() {
 
         <Card className="space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-            Banner Form
+            Banner Details
           </p>
+          <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
+            <img
+              src={form.imageUrl}
+              alt={form.label || "Banner preview"}
+              className="aspect-[16/7] w-full object-cover"
+            />
+          </div>
+          <label className="block space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+              Upload Banner Image
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(event) => void uploadBannerImage(event)}
+              disabled={saving || !canWrite}
+              className="block w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-700 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--brand-1)] file:px-4 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-[0.12em] file:text-white"
+            />
+            <span className="block text-xs leading-5 text-neutral-500">
+              Use a compressed JPG, PNG, or WebP under 1.5MB. You can also paste a hosted image URL.
+            </span>
+          </label>
           <div className="grid gap-3 md:grid-cols-2">
             <Input
               value={form.label}
@@ -314,7 +384,7 @@ export function BannerManagerClient() {
             <Input
               value={form.imageUrl}
               onChange={(event) => updateForm({ imageUrl: event.target.value })}
-              placeholder="Image URL"
+              placeholder="Banner image URL"
             />
             <select
               value={form.status}
@@ -332,12 +402,12 @@ export function BannerManagerClient() {
             <Input
               value={form.ctaLabel}
               onChange={(event) => updateForm({ ctaLabel: event.target.value })}
-              placeholder="CTA label (optional)"
+              placeholder="Button label (optional)"
             />
             <Input
               value={form.ctaHref}
               onChange={(event) => updateForm({ ctaHref: event.target.value })}
-              placeholder="CTA URL (optional)"
+              placeholder="Button link, e.g. /products"
             />
             <Input
               type="datetime-local"

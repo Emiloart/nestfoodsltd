@@ -110,11 +110,11 @@ export const CMS_SEED_DATA: CmsData = {
   banners: [
     {
       id: "banner-home-1",
-      label: "Company Update",
-      headline: "Latest updates from Nest Foods Limited.",
-      ctaLabel: "Read More",
-      ctaHref: "/contact",
-      imageUrl: "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
+      label: "Explore De-Nest Bread",
+      headline: "Fresh, healthy bread made for every family.",
+      ctaLabel: "Explore Products",
+      ctaHref: "/products",
+      imageUrl: "/media/products/nestfoodsltd-family-loaf-texture.png",
       status: "published",
       publishAt: now,
       order: 1,

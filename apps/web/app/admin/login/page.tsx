@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
   const [activationPassword, setActivationPassword] = useState("");
   const [activationMfaCode, setActivationMfaCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [status, setStatus] = useState("Sign in to access the admin workspace.");
+  const [status, setStatus] = useState("Sign in to manage the De-Nest Bread website.");
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -137,13 +137,11 @@ export default function AdminLoginPage() {
     <section className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-xl items-center px-4 py-16 md:px-6">
       <Card className="w-full space-y-5">
         <div className="space-y-2">
-          <Badge>Admin Access</Badge>
+          <Badge>Website Admin</Badge>
           <BrandLogo href={null} compact />
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">
-            Secure Login
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">Admin Login</h1>
           <p className="text-sm text-neutral-600">
-            Managed admin accounts are preferred. Role token login remains available as break-glass.
+            Use your approved admin account. Token access is reserved for maintenance.
           </p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3">

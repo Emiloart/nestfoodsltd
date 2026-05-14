@@ -17,152 +17,113 @@ export default async function AdminPage() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-3">
-        <Badge>Admin Workspace</Badge>
+        <Badge>Website Admin</Badge>
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Operations Dashboard
+          De-Nest Bread Website Admin
         </h1>
         <p className="text-sm text-neutral-600">
-          Secure control plane for dynamic content, product catalogue management, media, and
-          operations.
-          Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
+          Manage homepage banners, page content, media, product catalogue, and admin access for Nest
+          Foods Limited. Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Link href="/admin/content" className="block transition hover:-translate-y-1">
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              Content Manager
-            </h2>
+            <h2 className="text-base font-semibold text-neutral-900">Content Manager</h2>
             <p className="text-sm text-neutral-600">
-              Edit Home, About, Careers, and Contact content.
+              Edit public website copy for Home, About, Careers, and Contact.
             </p>
           </Card>
         </Link>
         {canManageBanners ? (
           <Link href="/admin/banners" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                Banner Manager
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">Banner Manager</h2>
               <p className="text-sm text-neutral-600">
-                Create, schedule, and order homepage hero banners and CTA surfaces.
+                Upload homepage banner images and manage action button links.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              Banner Manager
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `cms.pages.read` permission.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">Banner Manager</h2>
+            <p className="text-sm text-neutral-600">Requires `cms.pages.read` permission.</p>
           </Card>
         )}
         {canManageMedia ? (
           <Link href="/admin/media" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                Media Library
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">Media Library</h2>
               <p className="text-sm text-neutral-600">
-                Manage asset metadata, folders, alt text, and usage references.
+                Manage website asset metadata, folders, alt text, and usage references.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              Media Library
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `cms.media.read` permission.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">Media Library</h2>
+            <p className="text-sm text-neutral-600">Requires `cms.media.read` permission.</p>
           </Card>
         )}
         {canManageCatalog ? (
           <Link href="/admin/catalog" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                Catalogue Manager
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">Catalogue Manager</h2>
               <p className="text-sm text-neutral-600">
-                Manage product names, descriptions, images, ingredients, allergens, nutrition
-                notes, pack formats, and publishing states.
+                Manage product names, descriptions, images, ingredients, allergens, nutrition notes,
+                pack formats, and publishing states.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-              Catalogue Manager
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `cms.catalog.read` permission.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">Catalogue Manager</h2>
+            <p className="text-sm text-neutral-600">Requires `cms.catalog.read` permission.</p>
           </Card>
         )}
         {canManageUsers ? (
           <Link href="/admin/users" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                User Directory
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">User Directory</h2>
               <p className="text-sm text-neutral-600">
-                Invite, suspend, and update admin users with role and MFA policy controls.
+                Invite, suspend, and update approved website administrators.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              User Directory
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `SUPER_ADMIN` role.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">User Directory</h2>
+            <p className="text-sm text-neutral-600">Requires `SUPER_ADMIN` role.</p>
           </Card>
         )}
         {canViewAudit ? (
           <Link href="/admin/audit" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                Audit Events
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">Audit Events</h2>
               <p className="text-sm text-neutral-600">
-                Review security-sensitive actions, failures, and blocked requests.
+                Review admin activity, failed access, and blocked requests.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              Audit Events
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `SUPER_ADMIN` role.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">Audit Events</h2>
+            <p className="text-sm text-neutral-600">Requires `SUPER_ADMIN` role.</p>
           </Card>
         )}
         {canViewOps ? (
           <Link href="/admin/ops" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">
-              <h2 className="text-base font-semibold text-neutral-900">
-                Operations
-              </h2>
+              <h2 className="text-base font-semibold text-neutral-900">Operations</h2>
               <p className="text-sm text-neutral-600">
-                Monitor runtime health, Core Web Vitals budget, and captured app errors.
+                Review website health, page performance signals, and captured app errors.
               </p>
             </Card>
           </Link>
         ) : (
           <Card className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">
-              Operations
-            </h2>
-            <p className="text-sm text-neutral-600">
-              Requires `SUPER_ADMIN` role.
-            </p>
+            <h2 className="text-base font-semibold text-neutral-900">Operations</h2>
+            <p className="text-sm text-neutral-600">Requires `SUPER_ADMIN` role.</p>
           </Card>
         )}
       </div>

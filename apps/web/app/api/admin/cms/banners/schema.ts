@@ -7,7 +7,7 @@ const baseBannerSchema = z.object({
   headline: z.string().trim().min(4).max(240),
   ctaLabel: z.string().trim().max(80).optional(),
   ctaHref: z.string().trim().max(260).optional(),
-  imageUrl: z.string().trim().min(4).max(240),
+  imageUrl: z.string().trim().min(4).max(2_100_000),
   status: publicationStatusSchema,
   publishAt: z.string().trim().max(80).optional(),
   order: z.number().int().min(1).max(1000).optional(),

@@ -6,21 +6,22 @@ Last updated: 2026-05-05
 
 - [x] Public brand set to De-Nest Bread.
 - [x] Legal company name retained as Nest Foods Limited.
-- [x] Public navigation limited to Home, Products, About, Vision, Careers, and Contact.
+- [x] Public navigation limited to Home, Products, About, Careers, and Contact.
 - [x] Products remain a catalogue with product detail pages and enquiry CTA only.
 - [x] Sitemap limited to approved public routes and product detail pages.
 
 ## Content
 
-- [x] Homepage order: hero, trust strip, product range, production standards, about, vision, careers, contact.
+- [x] Homepage order: hero, CMS-managed banner section, product range, production standards, about, careers, contact.
 - [x] Product catalogue seeded from the cleaned PDF facts.
-- [x] Contact page includes official phones, emails, WhatsApp numbers, office contacts, and social placeholders.
+- [x] Contact page includes official phones, emails, WhatsApp numbers, office contacts, and confirmed social channels.
 - [x] Careers page includes roles, HR contact, equal opportunity statement, and online application intake.
 - [x] About and Vision pages use cleaned company, mission, compliance, and values content.
 
 ## Admin
 
 - [x] Admin modules retained for content, banners, media, catalogue, users, audit, and operations.
+- [x] Homepage banner section is managed through the admin banner manager.
 - [x] Catalogue manager limited to corporate product fields.
 - [x] Removed old operational product fields from admin catalogue editing.
 - [x] Host-gated admin surface preserved.
