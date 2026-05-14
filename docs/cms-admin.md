@@ -59,4 +59,4 @@ Admins edit only corporate catalogue fields:
 - `CONTENT_EDITOR`
 - `SALES_MANAGER`
 
-Daily admin access should use managed admin users where configured. SUPER_ADMIN can rotate role access tokens from `/admin/users`; once a managed token is set for a role, the old environment token is no longer accepted for normal token login for that role.
+Daily admin access should use managed admin users where configured. SUPER_ADMIN can rotate role access tokens from `/admin/users`; the environment token remains accepted as a break-glass fallback until it is changed or removed in Vercel.

@@ -7,7 +7,7 @@
 - Invite activation flow that provisions admin accounts with password + optional MFA code.
 - Login supports:
   - managed account credentials (`email`, `password`, `mfaCode` when required)
-  - managed role-token login with environment-token fallback before rotation
+  - managed role-token login with environment-token break-glass fallback
 - Super-admin user controls (`/admin/users`) for role/status/MFA policy updates and access-token rotation.
 - Account lockout controls for repeated failed sign-in attempts.
 
@@ -49,7 +49,7 @@ Data files and services:
 - Invite activation and login endpoints include rate-limiting.
 - Password and MFA secrets are stored as scrypt hashes.
 - Rotated access tokens are stored as hashes and the raw token is never returned by the API.
-- Environment role tokens are used only until a managed token is set for that role.
+- Environment role tokens remain accepted as break-glass fallback tokens until changed or removed in the hosting environment.
 
 ## Next Hardening
 

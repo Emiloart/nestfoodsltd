@@ -567,8 +567,8 @@ export function AdminUsersClient() {
               </Button>
             </div>
             <p className="text-xs leading-5 text-neutral-500">
-              Rotating a role token stores only a hash. Once saved, the previous environment token
-              for that role is no longer accepted for normal token login.
+              Rotating a role token stores only a hash. The environment token remains available as
+              a break-glass fallback until it is changed or removed in Vercel.
             </p>
           </div>
         </Card>

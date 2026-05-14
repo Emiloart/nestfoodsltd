@@ -159,7 +159,13 @@ export async function POST(request: NextRequest) {
         severity: "warning",
         details: { reason: "invalid_credentials", mode: "token" },
       });
-      return NextResponse.json({ error: "Invalid admin token" }, { status: 401 });
+      return NextResponse.json(
+        {
+          error:
+            "Invalid admin token. Use the exact SUPER_ADMIN token configured in Vercel or the latest rotated admin access token.",
+        },
+        { status: 401 },
+      );
     }
 
     const sessionToken = createAdminSessionToken(role);

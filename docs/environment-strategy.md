@@ -29,4 +29,4 @@ Optional:
 - error monitoring DSN
 - media storage credentials
 
-After first sign-in, rotate role access tokens from `/admin/users` so the dashboard-managed token replaces the environment token for normal token login.
+After first sign-in, rotate role access tokens from `/admin/users` for daily maintenance access. Keep `ADMIN_TOKEN_SUPER_ADMIN` in Vercel as a break-glass fallback until a new recovery process replaces it.

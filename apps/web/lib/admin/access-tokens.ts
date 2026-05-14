@@ -104,12 +104,7 @@ export async function resolveAdminRoleFromAccessToken(
     }
   }
 
-  const managedRoles = new Set(data.accessTokens.map((entry) => entry.role));
   for (const role of ADMIN_ROLE_OPTIONS) {
-    if (managedRoles.has(role)) {
-      continue;
-    }
-
     const environmentToken = getEnvironmentToken(role);
     if (environmentToken && safeTokenEquals(normalizedToken, environmentToken)) {
       return role;
