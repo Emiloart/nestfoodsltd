@@ -27,29 +27,35 @@ export function HomeBannerSection({ banners }: { banners: CmsBanner[] }) {
               loading={index === 0 ? "eager" : "lazy"}
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(46,18,69,0.88),rgba(46,18,69,0.48),rgba(46,18,69,0.12))]" />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(0deg,var(--surface),rgba(245,239,230,0))]" />
 
-            <div className="relative mx-auto flex min-h-[18rem] w-full max-w-7xl items-center px-4 py-10 md:min-h-[24rem] md:px-6">
-              <div className="max-w-2xl text-white">
-                <p className="font-montserrat text-xs font-black uppercase tracking-[0.26em] text-[color:var(--brand-3)]">
-                  De-Nest Bread
-                </p>
-                <h2 className="mt-3 font-playfair text-3xl font-bold leading-tight text-white md:text-5xl">
-                  {banner.headline}
-                </h2>
+            <div className="relative mx-auto flex min-h-[18rem] w-full max-w-7xl items-end px-4 py-6 md:min-h-[24rem] md:px-6 md:py-8">
+              <div className="flex w-full flex-col gap-4 rounded-3xl border border-white/15 bg-[rgba(46,18,69,0.9)] p-4 text-white shadow-2xl md:flex-row md:items-center md:justify-between md:p-5">
+                <div className="max-w-2xl">
+                  <p className="font-montserrat text-xs font-black uppercase tracking-[0.26em] text-[color:var(--brand-3)]">
+                    {banner.label}
+                  </p>
+                  <h2 className="mt-2 font-playfair text-2xl font-bold leading-tight text-white md:text-4xl">
+                    {banner.headline}
+                  </h2>
+                </div>
                 {banner.ctaHref && banner.ctaLabel ? (
                   isInternalHref(banner.ctaHref) ? (
                     <Link
                       href={banner.ctaHref}
-                      className={buttonClassName({ className: "mt-6 border-transparent" })}
+                      className={buttonClassName({
+                        size: "sm",
+                        className: "self-end whitespace-nowrap border-transparent md:self-center",
+                      })}
                     >
                       {banner.ctaLabel}
                     </Link>
                   ) : (
                     <a
                       href={banner.ctaHref}
-                      className={buttonClassName({ className: "mt-6 border-transparent" })}
+                      className={buttonClassName({
+                        size: "sm",
+                        className: "self-end whitespace-nowrap border-transparent md:self-center",
+                      })}
                       target="_blank"
                       rel="noreferrer"
                     >
