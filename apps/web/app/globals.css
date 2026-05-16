@@ -129,10 +129,10 @@ img {
 }
 
 .display-heading {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.98;
+  font-family: var(--font-display), Montserrat, "Segoe UI", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
   text-wrap: balance;
 }
 

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Playfair_Display } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -19,9 +19,9 @@ const bodyFont = Montserrat({
   display: "swap",
 });
 
-const displayFont = Playfair_Display({
+const displayFont = Montserrat({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["700", "800", "900"],
   variable: "--font-display",
   display: "swap",
 });
