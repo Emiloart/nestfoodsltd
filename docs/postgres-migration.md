@@ -14,6 +14,7 @@
   - `cms_page_revision`
   - `cms_banner`
   - `cms_media_asset`
+  - company content via `app_json_storage` module key `company`
   - `catalogue_product`
   - `privacy_record`
   - `audit_event`

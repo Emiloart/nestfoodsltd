@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCompanyContent } from "@/lib/company/service";
 import { resolveSiteUrl } from "@/lib/seo/site";
 import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
@@ -46,7 +47,9 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const company = await getCompanyContent();
+
   return (
     <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
       <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
@@ -57,13 +60,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           Skip to main content
         </a>
-        <Providers>
+        <Providers company={company}>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main id="main-content" className="flex-1">
               {children}
             </main>
-            <Footer />
+            <Footer company={company} />
           </div>
         </Providers>
       </body>

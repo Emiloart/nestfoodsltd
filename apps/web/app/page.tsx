@@ -8,16 +8,18 @@ import { HomeProductionVideoSection } from "@/components/home/home-production-vi
 import { HomeProductRangeSection } from "@/components/home/home-product-range-section";
 import { HomeStorySection } from "@/components/home/home-story-section";
 import { listCatalogueProducts } from "@/lib/catalog/service";
+import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsBanners, getCmsPage } from "@/lib/cms/service";
 
 export default async function HomePage() {
-  const [homePage, contactPage, careersPage, banners, products] = await Promise.all([
+  const [homePage, contactPage, careersPage, banners, products, company] = await Promise.all([
     getCmsPage("home"),
     getCmsPage("contact"),
     getCmsPage("careers"),
     getCmsBanners(),
     listCatalogueProducts(),
+    getCompanyContent(),
   ]);
 
   return (
@@ -26,9 +28,9 @@ export default async function HomePage() {
       <HomeBannerSection banners={banners} />
       <HomeProductionVideoSection />
       <HomeProductRangeSection products={products} />
-      <HomeProductionStandardsSection />
-      <HomeStorySection />
-      <HomeContactSection contactPage={contactPage} />
+      <HomeProductionStandardsSection trustCertifications={company.trustCertifications} />
+      <HomeStorySection company={company} />
+      <HomeContactSection contactPage={contactPage} company={company} />
       <HomeCareersSection careersPage={careersPage} />
       <HomeNewsletterEnquirySection />
     </div>

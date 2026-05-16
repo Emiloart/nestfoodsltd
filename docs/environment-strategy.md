@@ -21,7 +21,7 @@ Required:
 - `ADMIN_APP_HOSTS`
 - `AUTH_SECRET`
 - first-use admin token or managed admin users
-- selected storage drivers
+- selected storage drivers, including `COMPANY_STORAGE_DRIVER=postgres` for admin-managed contacts, socials, About, careers, and FAQ content
 
 Optional:
 

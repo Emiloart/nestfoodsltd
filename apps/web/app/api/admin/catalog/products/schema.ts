@@ -6,7 +6,7 @@ export const nutritionNoteSchema = z.object({
 });
 
 export const galleryImageSchema = z.object({
-  url: z.string().trim().min(4).max(220),
+  url: z.string().trim().min(4).max(2_100_000),
   altText: z.string().trim().min(2).max(180),
   label: z.string().trim().max(120).optional(),
 });
@@ -28,8 +28,8 @@ const baseProductSchema = z.object({
   category: z.string().trim().min(2).max(120),
   shortDescription: z.string().trim().min(8).max(280),
   longDescription: z.string().trim().min(16).max(2200),
-  imageUrl: z.string().trim().min(4).max(220),
-  galleryUrls: z.array(z.string().trim().min(4).max(220)).max(12),
+  imageUrl: z.string().trim().min(4).max(2_100_000),
+  galleryUrls: z.array(z.string().trim().min(4).max(2_100_000)).max(12),
   galleryImages: z.array(galleryImageSchema).max(12).optional(),
   allergens: z.array(z.string().trim().min(1).max(120)).max(20),
   ingredients: z.array(z.string().trim().min(1).max(160)).max(50),

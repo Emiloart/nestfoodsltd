@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -64,6 +64,23 @@ const emptyFormState: CatalogFormState = {
     "Store in a cool, dry place away from direct sunlight.\nKeep sealed after opening.\nUse before the date printed on the pack.",
   packFormatsText: "default | Standard loaf",
 };
+
+const maxProductImageUploadBytes = 1_500_000;
+
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      if (typeof reader.result === "string") {
+        resolve(reader.result);
+        return;
+      }
+      reject(new Error("Could not read selected image."));
+    });
+    reader.addEventListener("error", () => reject(new Error("Could not read selected image.")));
+    reader.readAsDataURL(file);
+  });
+}
 
 function parseLines(text: string) {
   return text
@@ -218,6 +235,76 @@ export function CatalogManagerClient() {
 
   function updateForm(partial: Partial<CatalogFormState>) {
     setForm((current) => ({ ...current, ...partial }));
+  }
+
+  async function uploadProductImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) {
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setStatus("Select an image file for the product.");
+      return;
+    }
+    if (file.size > maxProductImageUploadBytes) {
+      setStatus("Product image is too large. Use a compressed image below 1.5MB.");
+      return;
+    }
+
+    setStatus("Loading product image...");
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      setForm((current) => ({
+        ...current,
+        imageUrl: dataUrl,
+        galleryUrlsText: current.galleryUrlsText.includes(dataUrl)
+          ? current.galleryUrlsText
+          : [dataUrl, ...parseLines(current.galleryUrlsText)].join("\n"),
+        galleryImagesText: current.galleryImagesText.includes(dataUrl)
+          ? current.galleryImagesText
+          : [
+              `${dataUrl} | ${current.name || "De-Nest Bread product"} | Primary product photo`,
+              ...parseLines(current.galleryImagesText),
+            ].join("\n"),
+      }));
+      setStatus("Product image loaded. Save the product to publish the change.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Could not load selected image.");
+    }
+  }
+
+  async function addGalleryImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) {
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setStatus("Select an image file for the product gallery.");
+      return;
+    }
+    if (file.size > maxProductImageUploadBytes) {
+      setStatus("Gallery image is too large. Use a compressed image below 1.5MB.");
+      return;
+    }
+
+    setStatus("Loading gallery image...");
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const label = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      setForm((current) => ({
+        ...current,
+        galleryUrlsText: [...parseLines(current.galleryUrlsText), dataUrl].join("\n"),
+        galleryImagesText: [
+          ...parseLines(current.galleryImagesText),
+          `${dataUrl} | ${current.name || "De-Nest Bread product"} ${label} | ${label}`,
+        ].join("\n"),
+      }));
+      setStatus("Gallery image loaded. Save the product to publish the change.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Could not load selected image.");
+    }
   }
 
   async function createProduct() {
@@ -425,6 +512,41 @@ export function CatalogManagerClient() {
               onChange={(event) => updateForm({ imageUrl: event.target.value })}
               placeholder="Primary image URL"
             />
+          </div>
+
+          <div className="grid gap-3 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4 md:grid-cols-[10rem_1fr] md:items-center">
+            <img
+              src={form.imageUrl}
+              alt={form.name || "Product preview"}
+              className="h-36 w-full rounded-xl bg-white object-contain"
+            />
+            <div className="space-y-3">
+              <p className="text-sm font-semibold text-neutral-900">Product photos</p>
+              <p className="text-xs leading-5 text-neutral-500">
+                Upload compressed product images. The primary image appears on product cards; gallery
+                images appear on the product detail page.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <label className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full border border-[color:var(--border)] bg-white px-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-neutral-800 transition hover:border-[color:var(--border-strong)]">
+                  Replace Primary Photo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={(event) => void uploadProductImage(event)}
+                  />
+                </label>
+                <label className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full border border-[color:var(--border)] bg-white px-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-neutral-800 transition hover:border-[color:var(--border-strong)]">
+                  Add Gallery Photo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={(event) => void addGalleryImage(event)}
+                  />
+                </label>
+              </div>
+            </div>
           </div>
 
           <label className="space-y-2">

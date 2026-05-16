@@ -54,9 +54,10 @@ Seeded products from the cleaned PDF source:
 The admin surface is host-gated and keeps only the modules needed for a corporate website:
 
 - content pages
+- company controls for contacts, socials, About, careers, branches, trust text, and FAQ
 - homepage banners with images, publishing state, order, and action links
 - media library
-- product catalogue
+- product catalogue with direct product-photo uploads
 - admin users and access-token rotation
 - audit events
 - operations overview
@@ -70,7 +71,7 @@ The website captures enquiries only. It does not create transactional fulfilment
 - `/api/enquiries/distributor`
 - `/api/careers/apply`
 
-Local storage defaults to JSON files. Production should use Postgres-compatible storage drivers for privacy, newsletter, and enquiry persistence when `DATABASE_URL` is configured.
+Local storage defaults to JSON files. Production should use Postgres-compatible storage drivers for CMS, company content, catalogue, privacy, newsletter, enquiry, careers, admin users, and audit persistence when `DATABASE_URL` is configured. For Neon, set `COMPANY_STORAGE_DRIVER=postgres` alongside the other `*_STORAGE_DRIVER=postgres` values.
 
 Transactional email is sent server-side when configured. Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, and the notification inbox variables in production. Supply, business-interest, newsletter, and career submissions send an internal notification plus a confirmation email to the submitted email address when available.
 

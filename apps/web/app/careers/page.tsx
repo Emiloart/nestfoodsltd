@@ -4,33 +4,13 @@ import { CareerApplicationForm } from "@/components/careers/career-application-f
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
 
-const roles = [
-  "Production workers",
-  "Management workers",
-  "Accountants",
-  "Sales personnel",
-  "Marketing and distribution workers",
-  "Drivers",
-  "Cleaners",
-  "Other support roles",
-];
-
-const applicationItems = [
-  "Full name",
-  "Phone number",
-  "Email address",
-  "CV",
-  "Application letter addressed to the Manager, Nest Foods Limited Awka",
-  "Position applying for",
-  "Years of experience and relevant work history",
-  "Driver's license or cover note where required for driving roles",
-];
-
 export default async function CareersPage() {
-  const page = await getCmsPage("careers");
+  const [page, company] = await Promise.all([getCmsPage("careers"), getCompanyContent()]);
+  const careers = company.careers;
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
@@ -40,17 +20,16 @@ export default async function CareersPage() {
           {page.headline}
         </h1>
         <p className="pretty-text mt-4 max-w-3xl text-[0.98rem] leading-7 text-neutral-600">
-          Nest Foods Limited welcomes career enquiries from people who want to contribute to
-          production, quality, operations, and company growth.
+          {careers.intro}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="mailto:hrsupport@nestfoodsltd.com"
+            href={`mailto:${careers.hrEmail}`}
             className={buttonClassName({ variant: "primary" })}
           >
             Email HR
           </Link>
-          <Link href="tel:+2349116337168" className={buttonClassName({ variant: "secondary" })}>
+          <Link href={`tel:${careers.hrPhone}`} className={buttonClassName({ variant: "secondary" })}>
             Call HR
           </Link>
         </div>
@@ -60,7 +39,7 @@ export default async function CareersPage() {
         <Card className="space-y-3">
           <p className="section-kicker">Roles</p>
           <div className="grid gap-2 sm:grid-cols-2">
-            {roles.map((role) => (
+            {careers.roles.map((role) => (
               <div
                 key={role}
                 className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700"
@@ -74,7 +53,7 @@ export default async function CareersPage() {
         <Card className="space-y-3">
           <p className="section-kicker">Application Requirements</p>
           <ul className="space-y-2 text-sm text-neutral-700">
-            {applicationItems.map((item) => (
+            {careers.applicationRequirements.map((item) => (
               <li key={item}>• {item}</li>
             ))}
           </ul>
@@ -84,20 +63,16 @@ export default async function CareersPage() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="space-y-3">
           <p className="section-kicker">HR Contact</p>
-          <p className="text-sm text-neutral-700">Email: hrsupport@nestfoodsltd.com</p>
-          <p className="text-sm text-neutral-700">Phone: 09116337168</p>
+          <p className="text-sm text-neutral-700">Email: {careers.hrEmail}</p>
+          <p className="text-sm text-neutral-700">Phone: {careers.hrPhone}</p>
         </Card>
         <Card className="space-y-3">
           <p className="section-kicker">Equal Opportunity</p>
-          <p className="text-sm leading-7 text-neutral-700">
-            Nest Foods Limited hires across different backgrounds of education, skills, experiences,
-            and exposure. The company is committed to a diverse and inclusive workplace where
-            employees are treated with fairness and respect.
-          </p>
-          <p className="text-sm leading-7 text-neutral-700">
-            Employment decisions are based on business needs and merit, while recognising
-            qualifications, skills, and previous experience where applicable and necessary.
-          </p>
+          {careers.equalOpportunity.map((paragraph) => (
+            <p key={paragraph} className="text-sm leading-7 text-neutral-700">
+              {paragraph}
+            </p>
+          ))}
         </Card>
       </div>
 

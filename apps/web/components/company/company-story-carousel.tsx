@@ -5,14 +5,8 @@ import { Montserrat, Playfair_Display } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
 import { type ReactNode, useState } from "react";
 
-import {
-  COMPANY_MISSION,
-  COMPANY_STORY,
-  COMPANY_VISION,
-  CORE_VALUES,
-  FOUNDER_STORY,
-} from "@/lib/company/about";
 import { cn } from "@/lib/cn";
+import { type CompanyContent } from "@/lib/company/types";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -33,82 +27,86 @@ type StorySlide = {
   render: () => ReactNode;
 };
 
-const slides: StorySlide[] = [
-  {
-    id: "about",
-    eyebrow: "About Nest Foods Limited",
-    title: "A Nigerian bakery built on quality.",
-    render: () => (
-      <div className="mx-auto max-w-3xl space-y-4 text-left">
-        {COMPANY_STORY.map((paragraph) => (
-          <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-    ),
-  },
-  {
-    id: "vision-mission",
-    eyebrow: "Vision & Mission",
-    title: "Where the company is going.",
-    render: () => (
-      <div className="mx-auto max-w-2xl space-y-4 text-left sm:space-y-5">
-        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.055] p-4 text-center">
-          <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-            Vision
-          </p>
-          <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{COMPANY_VISION}</p>
-        </div>
-        <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.035] p-4 text-center">
-          <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-            Mission
-          </p>
-          <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{COMPANY_MISSION}</p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: "founder",
-    eyebrow: "Founder Story",
-    title: "Mr. Obinna Paulinus Nwosu",
-    render: () => (
-      <div className="mx-auto max-w-3xl space-y-4 text-left">
-        {FOUNDER_STORY.map((paragraph) => (
-          <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
-            {paragraph}
-          </p>
-        ))}
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/48">
-          RC: 2001646
-        </p>
-      </div>
-    ),
-  },
-  {
-    id: "values",
-    eyebrow: "Core Values",
-    title: "Principles behind De-Nest Bread.",
-    render: () => (
-      <div className="grid gap-3 sm:grid-cols-2">
-        {CORE_VALUES.map((value) => (
-          <div key={value.title} className="rounded-[1rem] border border-white/10 bg-white/[0.05] p-3 text-left">
-            <h3 className="text-sm font-bold text-white">{value.title}</h3>
-            <p className="mt-2 break-words text-xs leading-5 text-white/72 sm:leading-6">{value.body}</p>
-          </div>
-        ))}
-      </div>
-    ),
-  },
-];
-
 type CompanyStoryCarouselProps = {
+  company: CompanyContent;
   showAboutLink?: boolean;
 };
 
-export function CompanyStoryCarousel({ showAboutLink = true }: CompanyStoryCarouselProps) {
+function buildSlides(company: CompanyContent): StorySlide[] {
+  return [
+    {
+      id: "about",
+      eyebrow: "About Nest Foods Limited",
+      title: "A Nigerian bakery built on quality.",
+      render: () => (
+        <div className="mx-auto max-w-3xl space-y-4 text-left">
+          {company.story.map((paragraph) => (
+            <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: "vision-mission",
+      eyebrow: "Vision & Mission",
+      title: "Where the company is going.",
+      render: () => (
+        <div className="mx-auto max-w-2xl space-y-4 text-left sm:space-y-5">
+          <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.055] p-4 text-center">
+            <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
+              Vision
+            </p>
+            <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{company.vision}</p>
+          </div>
+          <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.035] p-4 text-center">
+            <p className="text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
+              Mission
+            </p>
+            <p className="mt-2 break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">{company.mission}</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "founder",
+      eyebrow: "Founder Story",
+      title: "Mr. Obinna Paulinus Nwosu",
+      render: () => (
+        <div className="mx-auto max-w-3xl space-y-4 text-left">
+          {company.founderStory.map((paragraph) => (
+            <p key={paragraph} className="break-words text-[0.93rem] leading-6 text-white/78 sm:text-sm sm:leading-7">
+              {paragraph}
+            </p>
+          ))}
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/48">
+            RC: 2001646
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "values",
+      eyebrow: "Core Values",
+      title: "Principles behind De-Nest Bread.",
+      render: () => (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {company.coreValues.map((value) => (
+            <div key={value.title} className="rounded-[1rem] border border-white/10 bg-white/[0.05] p-3 text-left">
+              <h3 className="text-sm font-bold text-white">{value.title}</h3>
+              <p className="mt-2 break-words text-xs leading-5 text-white/72 sm:leading-6">{value.body}</p>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+  ];
+}
+
+export function CompanyStoryCarousel({ company, showAboutLink = true }: CompanyStoryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const slides = buildSlides(company);
   const activeSlide = slides[activeIndex] ?? slides[0]!;
 
   return (

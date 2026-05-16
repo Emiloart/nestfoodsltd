@@ -6,6 +6,7 @@
 - Public content is rendered with Next.js App Router.
 - Shared UI primitives live in `apps/web/components/ui`.
 - CMS-backed pages, banners, media, and hero media settings live under `apps/web/lib/cms`.
+- Admin-managed company details live under `apps/web/lib/company`.
 - Product catalogue data lives under `apps/web/lib/catalog`.
 
 ## Public Website
@@ -15,7 +16,7 @@ The public website exposes only the corporate routes listed in `docs/route-map.m
 The homepage order is:
 
 - Hero with image or short video support
-- Trust strip
+- Admin-managed banner section
 - Product range
 - Production standards
 - About carousel with mission, vision, founder story, core values, and FAQ
@@ -35,6 +36,7 @@ Admin routes are protected by:
 Retained admin modules:
 
 - content pages
+- company controls
 - banners
 - media
 - catalogue
@@ -49,6 +51,7 @@ The app currently supports JSON storage drivers for local development and Postgr
 Current data files:
 
 - `apps/web/data/cms.json`
+- `apps/web/data/company.json`
 - `apps/web/data/catalog.json`
 - `apps/web/data/chat.json`
 - `apps/web/data/privacy.json`

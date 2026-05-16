@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 
 import { WhatsAppIcon } from "@/components/social-icons";
 import { cn } from "@/lib/cn";
-import { CONTACT_CHANNELS, WHATSAPP_LINKS } from "@/lib/company/contact";
+import { type CompanyContactChannel, type CompanyWhatsAppContact } from "@/lib/company/types";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 function MailIcon() {
   return (
@@ -73,12 +74,15 @@ function ChatIcon() {
   );
 }
 
-const emailChannel =
-  CONTACT_CHANNELS.find((channel) => channel.label === "Official email") ?? CONTACT_CHANNELS[3];
-const phoneChannel =
-  CONTACT_CHANNELS.find((channel) => channel.label === "Primary phone") ?? CONTACT_CHANNELS[0];
+type FloatingContactActionsProps = {
+  contactChannels: CompanyContactChannel[];
+  whatsappContacts: CompanyWhatsAppContact[];
+};
 
-export function FloatingContactActions() {
+export function FloatingContactActions({
+  contactChannels,
+  whatsappContacts,
+}: FloatingContactActionsProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -101,24 +105,34 @@ export function FloatingContactActions() {
     return null;
   }
 
+  const emailChannel =
+    contactChannels.find((channel) => channel.href.startsWith("mailto:")) ?? contactChannels[0];
+  const phoneChannel =
+    contactChannels.find((channel) => channel.href.startsWith("tel:")) ?? contactChannels[0];
+  const generalWhatsApp =
+    whatsappContacts.find((contact) => contact.id === "general") ?? whatsappContacts[0];
+  const whatsappHref = generalWhatsApp
+    ? buildWhatsAppUrl(generalWhatsApp.phone, generalWhatsApp.message)
+    : "/contact";
+
   const actions = [
     {
       label: "Send Email",
-      href: emailChannel.href,
-      value: emailChannel.value,
+      href: emailChannel?.href ?? "mailto:info@nestfoodsltd.com",
+      value: emailChannel?.value ?? "info@nestfoodsltd.com",
       icon: <MailIcon />,
     },
     {
       label: "WhatsApp",
-      href: WHATSAPP_LINKS.general,
+      href: whatsappHref,
       value: "Chat with De-Nest Bread",
       icon: <WhatsAppIcon />,
       external: true,
     },
     {
       label: "Call",
-      href: phoneChannel.href,
-      value: phoneChannel.value,
+      href: phoneChannel?.href ?? "tel:+2347066898953",
+      value: phoneChannel?.value ?? "07066898953",
       icon: <PhoneIcon />,
     },
   ];

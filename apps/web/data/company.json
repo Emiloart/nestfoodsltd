@@ -1,0 +1,375 @@
+{
+  "story": [
+    "Nest Foods Limited is a leading Nigerian bakery located in Awka. The company was established in 2022 to meet the growing demand for locally produced, affordable, rich, and quality bakery products across Nigeria and beyond.",
+    "From its early beginnings as a large-scale food business, Nest Foods Limited focused on processing, packaging, and distribution of staple bakery products tailored to meet various tastes, dietary needs, and budgets. Hence, its flagship product, De-Nest family bread, is marketed in different varieties, sizes, and costs.",
+    "Through consistent investment in modern baking practices, quality control, and efficient distribution, the company has gradually expanded its operations and market reach across Nigeria.",
+    "Over time, Nest Foods Limited has built a reputation for reliability and customer satisfaction, supplying fresh De-Nest family loaf bread directly to wholesalers, retailers, bread unions, supermarkets, and small-scale businesses across regions.",
+    "Today, Nest Foods Limited continues to grow as a national player in the bakery industry, maintaining its commitment to quality, food safety practices, affordability, and service excellence. Its operations contribute to local economic development by creating employment opportunities, streams of income, and supporting agricultural supply chains in the country."
+  ],
+  "vision": "To become the leading company in bakery and confectioneries industry.",
+  "mission": "To produce baked products and confectioneries under the most hygienic conditions with best natural ingredients for human nourishment.",
+  "founderStory": [
+    "Mr. Obinna Paulinus Nwosu is the visionary founder and driving force behind Nest Foods Limited. With a strong entrepreneurial spirit and deep understanding of the Nigerian food industry, he established the company with the goal of providing high-quality, affordable bread to everyday consumers.",
+    "Under his leadership, Nest Foods Limited has grown from a state bakery into a nationally competitive brand known as De-Nest family bread. His commitment to quality, excellence, innovation, and customer satisfaction continues to guide the company's strategic direction and continued success."
+  ],
+  "coreValues": [
+    {
+      "title": "Quality First",
+      "body": "Ensuring every loaf of De-Nest Family bread meets top standards."
+    },
+    {
+      "title": "Integrity",
+      "body": "Upholding honesty and accountability in all operations."
+    },
+    {
+      "title": "Customer Focus",
+      "body": "Delivering satisfaction through consistent product excellence."
+    },
+    {
+      "title": "Innovation",
+      "body": "Improving baking techniques and product presentation."
+    },
+    {
+      "title": "Consistency",
+      "body": "Maintaining uniform tastes, quality, and premium service delivery across all branches."
+    },
+    {
+      "title": "Teamwork",
+      "body": "Building a strong and dedicated workforce."
+    }
+  ],
+  "milestones": [
+    {
+      "title": "Foundation",
+      "body": "Establishment of Nest Foods Limited by Mr. Obinna Paulinus Nwosu."
+    },
+    {
+      "title": "Product Launch",
+      "body": "Introduction of De-Nest family bread into the local market after pre-launch regulatory activities."
+    },
+    {
+      "title": "Growth Phase",
+      "body": "Radical marketing and gradual expansion of production capacity and market reach."
+    },
+    {
+      "title": "Brand Recognition and Regulation",
+      "body": "Acceptance of De-Nest family bread as a trusted household consumable in adherence to food regulatory oversight."
+    },
+    {
+      "title": "National Expansion",
+      "body": "Growth of De-Nest family bread awareness across multiple states in Nigeria."
+    },
+    {
+      "title": "Awards and Community Development",
+      "body": "Recognition across food industry bodies and public/private institutions for food safety commitment, philanthropic acts, and community development services."
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Food Safety Certifications",
+      "body": "Nest Foods Limited adheres to strict food safety and hygiene standards, environmental safety, and public health consciousness in line with recognized industry practices."
+    },
+    {
+      "title": "NAFDAC Registration and Inspections",
+      "body": "All our products, including De-Nest family bread, are duly registered with the National Agency for Food and Drug Administration and Control (NAFDAC). NAFDAC REG: ANO1T2BAWK. This certification affirms that our products meet national regulatory requirements for quality, safety, and consumer protection. Periodic inspections are duly observed to demonstrate accountability and compliance to food safety practices."
+    },
+    {
+      "title": "S.O.N Certification and Inspections",
+      "body": "Our products are also certified by Standards Organization of Nigeria (SON), and periodic inspections are duly observed and documented. We have the SON logo on all our products as a representation of our commitment to standards and quality."
+    },
+    {
+      "title": "Continuous Quality Control Standards",
+      "body": "Internally, we maintain a rigorous quality control system across all stages of production, from raw material sourcing to baking, packaging, and distribution. Regular inspections, batch testing, and process monitoring ensure consistency, safety, and compliance with Nigeria food industry standards. De-Nest family bread is trusted for its safety for all."
+    },
+    {
+      "title": "NESREA Certifications and Inspections",
+      "body": "From inception, we adhere strictly to environmental standards set by the National Environmental Standards and Regulations Enforcement Agency (NESREA). Periodically, our operations undergo regular inspections to ensure full compliance with national environmental laws and regulations. NESREA certifications confirm our commitment to responsible practices, environmental protection, and continuous regulatory alignment."
+    },
+    {
+      "title": "Awards and Recognition",
+      "body": "Nest Foods Limited continues to earn recognition for its commitment to quality and customer satisfaction. As we grow nationally, we remain focused on achieving industry certifications and accolades that reflect our standards of excellence and innovation."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What products do you offer?",
+      "answer": "We specialize in bakery products, with De-Nest family bread as our flagship product."
+    },
+    {
+      "question": "Where can I buy your products in bulk?",
+      "answer": "We do not sell to final consumers. You can walk into any of our branches and buy our bread products or contact us on 07066898953 to direct our nearest mobile sales team to deliver at your shop as soon as possible. Our products are also available through distributors, retail outlets, and most bread unions across multiple states in Nigeria."
+    },
+    {
+      "question": "Are your products NAFDAC approved?",
+      "answer": "Yes, all our products are registered with the National Agency for Food and Drug Administration and Control (NAFDAC). We also have Standard Organization of Nigeria (SON) logo on our brands."
+    },
+    {
+      "question": "How do you ensure product quality?",
+      "answer": "We follow strict quality control procedures, including hygiene standards, ingredient checks, and production and distribution monitoring."
+    },
+    {
+      "question": "Do you offer bulk or wholesale supply alone?",
+      "answer": "We sell to different capacity of buyers depending on location and budget, ranging from mega buyers, retailers, petty traders, bread unions, conferences, and school feeding programmes. We also supply in bulk to registered distributors and partners nationwide. Contact us on 07066898953 for a walk-in shopping experience."
+    },
+    {
+      "question": "How can I contact you?",
+      "answer": "Whether your interest is bread purchases or employment, you can reach us through our official website contact page or designated mobile phone numbers and email addresses mentioned on this website."
+    }
+  ],
+  "contactChannels": [
+    {
+      "id": "primary-phone",
+      "label": "Primary phone",
+      "value": "07066898953",
+      "href": "tel:+2347066898953"
+    },
+    {
+      "id": "secondary-phone-1",
+      "label": "Secondary phone",
+      "value": "08064107897",
+      "href": "tel:+2348064107897"
+    },
+    {
+      "id": "secondary-phone-2",
+      "label": "Secondary phone",
+      "value": "09116337168",
+      "href": "tel:+2349116337168"
+    },
+    {
+      "id": "official-email",
+      "label": "Official email",
+      "value": "info@nestfoodsltd.com",
+      "href": "mailto:info@nestfoodsltd.com"
+    },
+    {
+      "id": "product-email",
+      "label": "Product email",
+      "value": "sales@nestfoodsltd.com",
+      "href": "mailto:sales@nestfoodsltd.com"
+    },
+    {
+      "id": "hr-email",
+      "label": "HR email",
+      "value": "hrsupport@nestfoodsltd.com",
+      "href": "mailto:hrsupport@nestfoodsltd.com"
+    },
+    {
+      "id": "admin-email",
+      "label": "Admin email",
+      "value": "adminsupport@nestfoodsltd.com",
+      "href": "mailto:adminsupport@nestfoodsltd.com"
+    }
+  ],
+  "whatsappContacts": [
+    {
+      "id": "general",
+      "label": "General",
+      "phone": "07066898953",
+      "message": "Hi, I'd like to contact Nest Foods Limited about De-Nest Bread."
+    },
+    {
+      "id": "sales",
+      "label": "Sales",
+      "phone": "08064107897",
+      "message": "Hi, I'd like to enquire about De-Nest Bread supply."
+    },
+    {
+      "id": "hr",
+      "label": "HR",
+      "phone": "09116337168",
+      "message": "Hi, I'd like to enquire about careers at Nest Foods Limited."
+    }
+  ],
+  "socialChannels": [
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "value": "nest.foods.2025",
+      "href": "https://www.facebook.com/nest.foods.2025"
+    }
+  ],
+  "pendingSocialChannels": ["X", "Instagram", "TikTok", "YouTube", "LinkedIn"],
+  "branchLocations": [
+    {
+      "id": "awka",
+      "name": "Awka Head Office",
+      "state": "Anambra",
+      "city": "Awka",
+      "address": "No. 1 Nest Foods Street, Okochime Okpuno, Awka South, Anambra State",
+      "phone": "07066898953, 08064107897",
+      "hours": "Mondays - Saturdays: 24 hours. Sundays: 6am - 12pm as scheduled.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=No.%201%20Nest%20Foods%20Street%20Okochime%20Okpuno%20Awka%20South%20Anambra%20State",
+      "coordinates": {
+        "latitude": 6.2459,
+        "longitude": 7.1194
+      },
+      "marker": {
+        "x": 57,
+        "y": 57
+      }
+    },
+    {
+      "id": "port-harcourt",
+      "name": "Port Harcourt Contact Location",
+      "state": "Rivers",
+      "city": "Port Harcourt",
+      "address": "No. 14 Old Refinery Road, Elelenwo, Port Harcourt, Rivers State",
+      "phone": "08114549026",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=No.%2014%20Old%20Refinery%20Road%20Elelenwo%20Port%20Harcourt%20Rivers%20State",
+      "coordinates": {
+        "latitude": 4.8156,
+        "longitude": 7.0498
+      },
+      "marker": {
+        "x": 54,
+        "y": 75
+      }
+    },
+    {
+      "id": "owerri",
+      "name": "Owerri Contact Location",
+      "state": "Imo",
+      "city": "Owerri",
+      "address": "No. 20A Mbonu Ojike Street, Ikenegbu, Owerri, Imo State",
+      "phone": "09165407850",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=No.%2020A%20Mbonu%20Ojike%20Street%20Ikenegbu%20Owerri%20Imo%20State",
+      "coordinates": {
+        "latitude": 5.485,
+        "longitude": 7.0359
+      },
+      "marker": {
+        "x": 52,
+        "y": 66
+      }
+    },
+    {
+      "id": "umuahia",
+      "name": "Umuahia Contact Location",
+      "state": "Abia",
+      "city": "Umuahia",
+      "address": "No. 1 Club Road by Okpara Square Roundabout, Umuahia, Abia State",
+      "phone": "07077746092",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=No.%201%20Club%20Road%20by%20Okpara%20Square%20Roundabout%20Umuahia%20Abia%20State",
+      "coordinates": {
+        "latitude": 5.5249,
+        "longitude": 7.4946
+      },
+      "marker": {
+        "x": 58,
+        "y": 67
+      }
+    },
+    {
+      "id": "benin",
+      "name": "Benin Contact Location",
+      "state": "Edo",
+      "city": "Benin City",
+      "address": "No. 1 Uwa Lane off Wire Road, Benin City, Edo State",
+      "phone": "08125927131",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=No.%201%20Uwa%20Lane%20off%20Wire%20Road%20Benin%20City%20Edo%20State",
+      "coordinates": {
+        "latitude": 6.335,
+        "longitude": 5.6037
+      },
+      "marker": {
+        "x": 38,
+        "y": 56
+      }
+    },
+    {
+      "id": "aba",
+      "name": "Aba Contact Location",
+      "state": "Abia",
+      "city": "Aba",
+      "address": "Port Harcourt Road Area",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Port%20Harcourt%20Road%20Aba",
+      "coordinates": {
+        "latitude": 5.1216,
+        "longitude": 7.3733
+      },
+      "marker": {
+        "x": 56,
+        "y": 71
+      }
+    },
+    {
+      "id": "akwa-ibom",
+      "name": "Akwa-Ibom Contact Location",
+      "state": "Akwa Ibom",
+      "city": "Uyo",
+      "hours": "Mondays - Saturdays: 6am - 6pm.",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Uyo%20Akwa%20Ibom%20State",
+      "coordinates": {
+        "latitude": 5.0377,
+        "longitude": 7.9128
+      },
+      "marker": {
+        "x": 62,
+        "y": 75
+      }
+    }
+  ],
+  "headOfficeMapUrl": "https://www.google.com/maps/search/?api=1&query=No.%201%20Nest%20Foods%20Street%20Okochime%20Okpuno%20Awka%20South%20Anambra%20State",
+  "headOfficeEmbedMapUrl": "https://www.google.com/maps?q=No.+1+Nest+Foods+Street,+Okochime+Okpuno,+Awka+South,+Anambra+State&output=embed",
+  "trustCertifications": [
+    {
+      "label": "NAFDAC",
+      "title": "NAFDAC registered",
+      "body": "NAFDAC REG: ANO1T2BAWK.",
+      "logoUrl": "/brand/certifications/nafdac-logo.png"
+    },
+    {
+      "label": "SON",
+      "title": "Standards focus",
+      "body": "SON-certified products with periodic inspections.",
+      "logoUrl": "/brand/certifications/son-logo.png"
+    },
+    {
+      "label": "NESREA",
+      "title": "Environmental compliance",
+      "body": "Responsible environmental practices and regulatory alignment.",
+      "logoUrl": "/brand/certifications/nesrea-logo.jpeg"
+    },
+    {
+      "label": "QC",
+      "title": "Quality control",
+      "body": "Ingredient, baking, packaging, and distribution checks.",
+      "logoUrl": "/brand/certifications/qc.svg"
+    }
+  ],
+  "careers": {
+    "intro": "Nest Foods Limited welcomes career enquiries from people who want to contribute to production, quality, operations, and company growth.",
+    "roles": [
+      "Production workers",
+      "Management workers",
+      "Accountants",
+      "Sales personnel",
+      "Marketing and distribution workers",
+      "Drivers",
+      "Cleaners",
+      "Other support roles"
+    ],
+    "applicationRequirements": [
+      "Full name",
+      "Phone number",
+      "Email address",
+      "CV",
+      "Application letter addressed to the Manager, Nest Foods Limited Awka",
+      "Position applying for",
+      "Years of experience and relevant work history",
+      "Driver's license or cover note where required for driving roles"
+    ],
+    "hrEmail": "hrsupport@nestfoodsltd.com",
+    "hrPhone": "09116337168",
+    "equalOpportunity": [
+      "Nest Foods Limited hires across different backgrounds of education, skills, experiences, and exposure. The company is committed to a diverse and inclusive workplace where employees are treated with fairness and respect.",
+      "Employment decisions are based on business needs and merit, while recognising qualifications, skills, and previous experience where applicable and necessary."
+    ]
+  },
+  "updatedAt": "1970-01-01T00:00:00.000Z"
+}

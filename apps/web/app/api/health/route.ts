@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getCareersStorageDriver } from "@/lib/careers/store";
+import { getCompanyStorageDriver } from "@/lib/company/store";
 import { getEmailServiceHealth } from "@/lib/email/service";
 import { getEnquiriesStorageDriver } from "@/lib/enquiries/store";
 import { getNewsletterStorageDriver } from "@/lib/newsletter/store";
@@ -23,6 +24,7 @@ export async function GET() {
           catalog: process.env.CATALOG_STORAGE_DRIVER ?? "json",
           careers: getCareersStorageDriver(),
           chat: process.env.CHAT_STORAGE_DRIVER ?? "json",
+          company: getCompanyStorageDriver(),
           enquiries: getEnquiriesStorageDriver(),
           newsletter: getNewsletterStorageDriver(),
           observability: process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json",

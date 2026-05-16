@@ -4,10 +4,10 @@ import { useMemo, useState } from "react";
 
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { type BranchLocation } from "@/lib/company/contact";
+import { type CompanyBranchLocation } from "@/lib/company/types";
 
 type LocationFinderProps = {
-  locations: BranchLocation[];
+  locations: CompanyBranchLocation[];
 };
 
 type GeoStatus = "idle" | "locating" | "found" | "blocked" | "unsupported";

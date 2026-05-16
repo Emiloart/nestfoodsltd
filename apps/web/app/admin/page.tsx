@@ -8,6 +8,7 @@ import { requireAdminPageRole } from "@/lib/admin/page-auth";
 export default async function AdminPage() {
   const role = await requireAdminPageRole("/admin");
   const canManageBanners = role ? hasAdminPermission(role, "cms.pages.read") : false;
+  const canManageCompany = role ? hasAdminPermission(role, "cms.pages.read") : false;
   const canManageMedia = role ? hasAdminPermission(role, "cms.media.read") : false;
   const canManageCatalog = role ? hasAdminPermission(role, "cms.catalog.read") : false;
   const canManageUsers = role === "SUPER_ADMIN";
@@ -26,7 +27,7 @@ export default async function AdminPage() {
           Foods Limited. Active role: <span className="font-semibold">{role ?? "UNKNOWN"}</span>.
         </p>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Link href="/admin/content" className="block transition hover:-translate-y-1">
           <Card className="space-y-2">
             <h2 className="text-base font-semibold text-neutral-900">Content Manager</h2>
@@ -35,6 +36,21 @@ export default async function AdminPage() {
             </p>
           </Card>
         </Link>
+        {canManageCompany ? (
+          <Link href="/admin/company" className="block transition hover:-translate-y-1">
+            <Card className="space-y-2">
+              <h2 className="text-base font-semibold text-neutral-900">Company Controls</h2>
+              <p className="text-sm text-neutral-600">
+                Edit contacts, socials, About details, careers, branch offices, FAQ, and trust text.
+              </p>
+            </Card>
+          </Link>
+        ) : (
+          <Card className="space-y-2">
+            <h2 className="text-base font-semibold text-neutral-900">Company Controls</h2>
+            <p className="text-sm text-neutral-600">Requires `cms.pages.read` permission.</p>
+          </Card>
+        )}
         {canManageBanners ? (
           <Link href="/admin/banners" className="block transition hover:-translate-y-1">
             <Card className="space-y-2">

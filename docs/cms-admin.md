@@ -26,6 +26,19 @@ Each CMS page supports:
 
 Banners support homepage hero messaging and CTA surfaces.
 
+## Company Controls
+
+`/admin/company` is the non-developer control panel for public business details:
+
+- official phone, email, WhatsApp, and map links
+- confirmed social media links
+- About story, mission, vision, founder story, and core values
+- careers intro, HR contact, roles, and application requirements
+- branch/contact locations and business hours
+- trust certifications, milestones, compliance text, and FAQ content
+
+Set `COMPANY_STORAGE_DRIVER=postgres` with `DATABASE_URL` in production so these edits persist in Neon.
+
 ## Media
 
 Media assets support:
@@ -47,7 +60,7 @@ Admins edit only corporate catalogue fields:
 - category
 - short description
 - detailed description
-- image and gallery URLs
+- image and gallery uploads or URLs
 - ingredients
 - allergens
 - nutrition notes

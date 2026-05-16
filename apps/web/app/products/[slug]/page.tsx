@@ -10,9 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getCatalogueProductBySlug, listCatalogueProducts } from "@/lib/catalog/service";
+import { getCompanyContent } from "@/lib/company/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildProductStructuredData } from "@/lib/seo/structured-data";
-import { WHATSAPP_CONTACTS, buildWhatsAppUrl, productWhatsAppMessage } from "@/lib/whatsapp";
+import { buildWhatsAppUrl, productWhatsAppMessage } from "@/lib/whatsapp";
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }> | { slug: string };
@@ -41,9 +42,10 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await Promise.resolve(params);
-  const [product, allProducts] = await Promise.all([
+  const [product, allProducts, company] = await Promise.all([
     getCatalogueProductBySlug(slug),
     listCatalogueProducts(),
+    getCompanyContent(),
   ]);
 
   if (!product) {
@@ -56,8 +58,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
+  const salesWhatsApp = company.whatsappContacts.find((contact) => contact.id === "sales") ??
+    company.whatsappContacts[0];
   const whatsappUrl = buildWhatsAppUrl(
-    WHATSAPP_CONTACTS.sales.phone,
+    salesWhatsApp?.phone ?? "08064107897",
     productWhatsAppMessage(product.name),
   );
 

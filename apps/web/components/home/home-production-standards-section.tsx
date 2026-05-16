@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { SectionHeading } from "@/components/home/section-heading";
-import { TRUST_CERTIFICATIONS } from "@/lib/company/contact";
+import { type CompanyTrustCertification } from "@/lib/company/types";
 
 function CertificationCard({
   label,
@@ -33,11 +33,15 @@ function CertificationCard({
   );
 }
 
-export function HomeProductionStandardsSection() {
-  const cards = TRUST_CERTIFICATIONS.map((item) => (
+export function HomeProductionStandardsSection({
+  trustCertifications,
+}: {
+  trustCertifications: CompanyTrustCertification[];
+}) {
+  const cards = trustCertifications.map((item) => (
     <CertificationCard key={item.label} {...item} />
   ));
-  const desktopCards = [...TRUST_CERTIFICATIONS, ...TRUST_CERTIFICATIONS];
+  const desktopCards = [...trustCertifications, ...trustCertifications];
 
   return (
     <section

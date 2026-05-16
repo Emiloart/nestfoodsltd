@@ -5,18 +5,22 @@ import { FacebookIcon, WhatsAppIcon } from "@/components/social-icons";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  BRANCH_LOCATIONS,
-  CONTACT_CHANNELS,
-  HEAD_OFFICE_EMBED_MAP_URL,
-  SOCIAL_CHANNELS,
-  WHATSAPP_LINKS,
-} from "@/lib/company/contact";
+import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export default async function ContactPage() {
-  const page = await getCmsPage("contact");
+  const [page, company] = await Promise.all([getCmsPage("contact"), getCompanyContent()]);
+  const officialEmail = company.contactChannels.find((channel) =>
+    channel.href.startsWith("mailto:"),
+  );
+  const primaryPhone = company.contactChannels.find((channel) => channel.href.startsWith("tel:"));
+  const generalWhatsApp = company.whatsappContacts.find((contact) => contact.id === "general") ??
+    company.whatsappContacts[0];
+  const generalWhatsAppUrl = generalWhatsApp
+    ? buildWhatsAppUrl(generalWhatsApp.phone, generalWhatsApp.message)
+    : "/contact";
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
@@ -27,16 +31,16 @@ export default async function ContactPage() {
         </h1>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="mailto:info@nestfoodsltd.com"
+            href={officialEmail?.href ?? "mailto:info@nestfoodsltd.com"}
             className={buttonClassName({ variant: "primary" })}
           >
             Email Company
           </Link>
-          <Link href="tel:+2347066898953" className={buttonClassName({ variant: "secondary" })}>
+          <Link href={primaryPhone?.href ?? "tel:+2347066898953"} className={buttonClassName({ variant: "secondary" })}>
             Call Primary Line
           </Link>
           <Link
-            href={WHATSAPP_LINKS.general}
+            href={generalWhatsAppUrl}
             target="_blank"
             rel="noreferrer"
             className={buttonClassName({ variant: "brand" })}
@@ -51,7 +55,7 @@ export default async function ContactPage() {
         <Card className="space-y-4">
           <p className="section-kicker">Official Contacts</p>
           <div className="grid gap-3 sm:grid-cols-2">
-            {CONTACT_CHANNELS.map((channel) => (
+            {company.contactChannels.map((channel) => (
               <Link
                 key={`${channel.label}-${channel.value}`}
                 href={channel.href}
@@ -68,40 +72,25 @@ export default async function ContactPage() {
 
         <Card className="space-y-3">
           <p className="section-kicker">WhatsApp Lines</p>
-          <Link
-            href={WHATSAPP_LINKS.general}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
-          >
-            <WhatsAppIcon />
-            General: 07066898953
-          </Link>
-          <Link
-            href={WHATSAPP_LINKS.sales}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
-          >
-            <WhatsAppIcon />
-            Sales: 08064107897
-          </Link>
-          <Link
-            href={WHATSAPP_LINKS.hr}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
-          >
-            <WhatsAppIcon />
-            HR: 09116337168
-          </Link>
+          {company.whatsappContacts.map((contact) => (
+            <Link
+              key={contact.id}
+              href={buildWhatsAppUrl(contact.phone, contact.message)}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-sm font-medium text-neutral-700 transition hover:text-[color:var(--brand-1)]"
+            >
+              <WhatsAppIcon />
+              {contact.label}: {contact.phone}
+            </Link>
+          ))}
         </Card>
       </div>
 
       <div className="overflow-hidden rounded-[1.4rem] border border-[color:var(--border)] bg-white">
         <iframe
           title="Nest Foods Limited head office map"
-          src={HEAD_OFFICE_EMBED_MAP_URL}
+          src={company.headOfficeEmbedMapUrl}
           className="h-[24rem] w-full"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
@@ -111,7 +100,7 @@ export default async function ContactPage() {
       <Card className="space-y-4">
         <p className="section-kicker">Branch Contacts</p>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {BRANCH_LOCATIONS.map((location) => (
+          {company.branchLocations.map((location) => (
             <div
               key={location.id}
               className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4"
@@ -147,7 +136,7 @@ export default async function ContactPage() {
       <Card className="space-y-4">
         <p className="section-kicker">Social</p>
         <div className="flex flex-wrap gap-3">
-          {SOCIAL_CHANNELS.map((social) => (
+          {company.socialChannels.map((social) => (
             <Link
               key={social.label}
               href={social.href}

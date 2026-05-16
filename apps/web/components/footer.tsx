@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
 import { FacebookIcon } from "@/components/social-icons";
-import { SOCIAL_CHANNELS } from "@/lib/company/contact";
+import { type CompanyContent } from "@/lib/company/types";
 
 const footerLinks = [
   { href: "/", label: "Home" },
@@ -12,7 +12,7 @@ const footerLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Footer() {
+export function Footer({ company }: { company: CompanyContent }) {
   return (
     <footer>
       <div className="brand-shell w-full border-t border-white/10 px-4 py-3 sm:px-6 md:px-8 md:py-4">
@@ -23,7 +23,7 @@ export function Footer() {
               Baking memories, one slice at a time.
             </h2>
             <div className="flex flex-wrap gap-2">
-              {SOCIAL_CHANNELS.map((social) => (
+              {company.socialChannels.map((social) => (
                 <Link
                   key={social.label}
                   href={social.href}

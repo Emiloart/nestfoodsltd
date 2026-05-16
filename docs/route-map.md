@@ -41,9 +41,12 @@ Admin routes are available only on configured admin hosts.
 | `/admin`         | De-Nest Bread website admin dashboard.                                   |
 | `/admin/login`   | Admin login.                                                             |
 | `/admin/content` | Editable CMS pages.                                                      |
+| `/admin/company` | Contacts, socials, About, careers, branches, trust text, and FAQ.        |
 | `/admin/banners` | Homepage banner image, publishing, ordering, and action-link management. |
 | `/admin/media`   | Media metadata and usage references.                                     |
 | `/admin/catalog` | Corporate product catalogue manager.                                     |
 | `/admin/users`   | Admin user directory, invites, MFA policy, and access-token rotation.    |
 | `/admin/audit`   | Audit events.                                                            |
 | `/admin/ops`     | Runtime operations summary.                                              |
+
+Admin API routes include `/api/admin/company`, `/api/admin/cms/*`, `/api/admin/catalog/*`, `/api/admin/users/*`, `/api/admin/audit/*`, `/api/admin/ops/*`, and `/api/admin/session`.

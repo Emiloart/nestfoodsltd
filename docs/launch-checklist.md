@@ -6,6 +6,7 @@
 - [ ] Legal contexts read Nest Foods Limited.
 - [ ] Product catalogue includes the approved De-Nest Bread products.
 - [ ] Homepage banner section has at least one published admin-managed banner with a real image and valid action link.
+- [ ] Company Controls in `/admin/company` are reviewed for contacts, socials, About, careers, branches, trust text, and FAQ.
 - [ ] Contact page includes phones, emails, WhatsApp numbers, business hours, map link, contact locations, and confirmed social channels.
 - [ ] Careers page includes HR email, HR phone, roles, online application form, file attachment guidance, and equal opportunity statement.
 - [ ] Terms and privacy copy reviewed by the business.
@@ -17,7 +18,7 @@
 - [ ] Sitemap contains only approved public pages and product detail pages.
 - [ ] Admin dashboard links only to retained modules.
 - [ ] Banner manager can upload/select banner images and save action button links.
-- [ ] Catalogue manager exposes only corporate catalogue fields.
+- [ ] Catalogue manager exposes only corporate catalogue fields and can update product photos.
 - [ ] Privacy preference save works from banner and privacy page.
 - [ ] Enquiry, newsletter, and career forms submit online and send automated confirmation emails in production.
 - [ ] Mobile nav and footer match the simplified route map.
@@ -34,5 +35,6 @@
 - [ ] `AUTH_SECRET` is set.
 - [ ] Admin hosts are configured.
 - [ ] Storage driver choices are confirmed.
+- [ ] `COMPANY_STORAGE_DRIVER=postgres` is set in production when using Neon for admin-managed company content.
 - [ ] Transactional email provider, sender domain, SPF/DKIM/DMARC, and notification inboxes are configured.
 - [ ] Error monitoring and web vitals intake are reviewed.

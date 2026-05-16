@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 
 import { listCatalogueProducts } from "@/lib/catalog/service";
+import { getCompanyContent } from "@/lib/company/service";
 
 import { readChatData, writeChatData } from "./store";
 import {
@@ -324,12 +325,14 @@ async function buildAllergenReply(): Promise<ChatReply> {
   };
 }
 
-function buildCompanyReply(): ChatReply {
+async function buildCompanyReply(): Promise<ChatReply> {
+  const company = await getCompanyContent();
+  const firstStoryParagraph = company.story[0] ??
+    "De-Nest Bread is the public brand of Nest Foods Limited.";
   return {
     intent: "company_info",
     confidence: 0.88,
-    answer:
-      "De-Nest Bread is the public brand of Nest Foods Limited. The company was incorporated on 18 November 2022, operates from Awka, Anambra State, and focuses on hygienic bread production, selected ingredients, quality control, and consistent bakery products.",
+    answer: `${firstStoryParagraph} Vision: ${company.vision} Mission: ${company.mission}`,
     quickActions: normalizeQuickActions([
       { label: "About", prompt: "Tell me about the company vision and mission." },
       { label: "Products", prompt: "Show me the De-Nest Bread product range." },
@@ -343,12 +346,12 @@ function buildCompanyReply(): ChatReply {
   };
 }
 
-function buildCareersReply(): ChatReply {
+async function buildCareersReply(): Promise<ChatReply> {
+  const company = await getCompanyContent();
   return {
     intent: "careers",
     confidence: 0.9,
-    answer:
-      "Nest Foods Limited accepts career enquiries for production, management, accounting, sales, marketing and distribution, driving, cleaning, and support roles. HR contact: hrsupport@nestfoodsltd.com or 09116337168.",
+    answer: `${company.careers.intro} HR contact: ${company.careers.hrEmail} or ${company.careers.hrPhone}.`,
     quickActions: normalizeQuickActions([
       { label: "Careers", prompt: "Open careers information." },
       { label: "Contact", prompt: "Help me contact the team." },
@@ -361,12 +364,20 @@ function buildCareersReply(): ChatReply {
   };
 }
 
-function buildContactReply(): ChatReply {
+async function buildContactReply(): Promise<ChatReply> {
+  const company = await getCompanyContent();
+  const phones = company.contactChannels
+    .filter((channel) => channel.href.startsWith("tel:"))
+    .map((channel) => channel.value)
+    .join(", ");
+  const emails = company.contactChannels
+    .filter((channel) => channel.href.startsWith("mailto:"))
+    .map((channel) => channel.value)
+    .join(", ");
   return {
     intent: "contact_enquiry",
     confidence: 0.9,
-    answer:
-      "You can contact Nest Foods Limited by phone on 07066898953, 08064107897, or 09116337168. Official emails are info@nestfoodsltd.com, sales@nestfoodsltd.com, hrsupport@nestfoodsltd.com, and adminsupport@nestfoodsltd.com.",
+    answer: `You can contact Nest Foods Limited by phone on ${phones || "the numbers on the Contact page"}. Official emails are ${emails || "listed on the Contact page"}.`,
     quickActions: normalizeQuickActions([
       { label: "Products", prompt: "Show me the De-Nest Bread product range." },
       { label: "Careers", prompt: "How can I learn about careers?" },
