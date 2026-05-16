@@ -74,6 +74,10 @@ export type UpdateAdminUserInput = {
   resetFailedLogins?: boolean;
 };
 
+export type DeleteAdminUserInput = {
+  userId: string;
+};
+
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
 }
@@ -529,6 +533,18 @@ export async function updateAdminUser(input: UpdateAdminUserInput) {
   }
 
   const nowIso = new Date().toISOString();
+  const nextRole = input.role ?? user.role;
+  const nextStatus = input.status ?? user.status;
+  const activeSuperAdminsAfterUpdate = data.users.filter((entry) => {
+    if (entry.id === user.id) {
+      return nextRole === "SUPER_ADMIN" && nextStatus === "active";
+    }
+    return entry.role === "SUPER_ADMIN" && entry.status === "active";
+  }).length;
+  if (activeSuperAdminsAfterUpdate < 1) {
+    throw new Error("At least one active SUPER_ADMIN must remain.");
+  }
+
   if (input.role) {
     user.role = input.role;
     if (user.role === "SUPER_ADMIN") {
@@ -550,6 +566,10 @@ export async function updateAdminUser(input: UpdateAdminUserInput) {
     }
   }
 
+  if (user.role === "SUPER_ADMIN") {
+    user.mfaRequired = true;
+  }
+
   const normalizedNewMfaCode = normalizeMfaCode(input.newMfaCode);
   if (normalizedNewMfaCode) {
     user.mfaSecretHash = hashSecret(ensureMfaCode(normalizedNewMfaCode));
@@ -566,6 +586,38 @@ export async function updateAdminUser(input: UpdateAdminUserInput) {
   }
 
   user.updatedAt = nowIso;
+  await writeAdminDirectoryData(data);
+  return toPublicAdminUser(user);
+}
+
+export async function deleteAdminUser(input: DeleteAdminUserInput) {
+  const userId = input.userId.trim();
+  if (!userId) {
+    throw new Error("User id is required.");
+  }
+
+  const data = await readAdminDirectoryData();
+  const userIndex = data.users.findIndex((entry) => entry.id === userId);
+  if (userIndex < 0) {
+    throw new Error("Admin user not found.");
+  }
+
+  const user = data.users[userIndex]!;
+  const activeSuperAdminsAfterDelete = data.users.filter(
+    (entry) =>
+      entry.id !== user.id && entry.role === "SUPER_ADMIN" && entry.status === "active",
+  ).length;
+  if (user.role === "SUPER_ADMIN" && user.status === "active" && activeSuperAdminsAfterDelete < 1) {
+    throw new Error("At least one active SUPER_ADMIN must remain.");
+  }
+
+  data.users.splice(userIndex, 1);
+  for (const invite of data.invites) {
+    if (invite.invitedByUserId === user.id) {
+      invite.invitedByUserId = undefined;
+    }
+  }
+
   await writeAdminDirectoryData(data);
   return toPublicAdminUser(user);
 }

@@ -3,12 +3,12 @@
 ## Scope Delivered
 
 - Managed admin identity directory backed by configurable storage (`ADMIN_USERS_STORAGE_DRIVER`).
-- Super-admin invite workflow with one-time activation tokens.
-- Invite activation flow that provisions admin accounts with password + optional MFA code.
+- Super-admin invite workflow with one-time activation tokens and copyable activation links.
+- Invite activation flow that provisions admin accounts with password + optional MFA code, then signs the user in automatically when activation succeeds.
 - Login supports:
   - managed account credentials (`email`, `password`, `mfaCode` when required)
   - managed role-token login with environment-token break-glass fallback
-- Super-admin user controls (`/admin/users`) for role/status/MFA policy updates and access-token rotation.
+- Super-admin user controls (`/admin/users`) for role/status/MFA policy updates, lock reset, user deletion, and access-token rotation.
 - Account lockout controls for repeated failed sign-in attempts.
 
 ## Data Model
@@ -37,6 +37,7 @@ Data files and services:
 
 - `GET https://admin.<domain>/api/admin/users`
 - `PUT https://admin.<domain>/api/admin/users/[id]`
+- `DELETE https://admin.<domain>/api/admin/users/[id]`
 - `POST https://admin.<domain>/api/admin/users/invites`
 - `DELETE https://admin.<domain>/api/admin/users/invites/[id]`
 - `POST https://admin.<domain>/api/admin/users/invites/activate`
@@ -47,6 +48,8 @@ Data files and services:
 
 - Write operations require trusted origin checks.
 - Invite activation and login endpoints include rate-limiting.
+- User deletion blocks self-delete for managed sessions and prevents removal of the final active `SUPER_ADMIN`.
+- Role/status updates also prevent leaving the directory without at least one active `SUPER_ADMIN`.
 - Password and MFA secrets are stored as scrypt hashes.
 - Rotated access tokens are stored as hashes and the raw token is never returned by the API.
 - Environment role tokens remain accepted as break-glass fallback tokens until changed or removed in the hosting environment.

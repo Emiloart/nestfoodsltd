@@ -28,13 +28,16 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const nextPath = searchParams.get("next") ?? "/admin";
+  const requestedMode = searchParams.get("mode");
 
-  const [mode, setMode] = useState<LoginMode>("account");
+  const [mode, setMode] = useState<LoginMode>(
+    requestedMode === "activate" || requestedMode === "token" ? requestedMode : "account",
+  );
   const [token, setToken] = useState("");
   const [email, setEmail] = useState(searchParams.get("email") ?? "");
   const [password, setPassword] = useState("");
   const [mfaCode, setMfaCode] = useState("");
-  const [inviteToken, setInviteToken] = useState("");
+  const [inviteToken, setInviteToken] = useState(searchParams.get("inviteToken") ?? "");
   const [fullName, setFullName] = useState("");
   const [activationPassword, setActivationPassword] = useState("");
   const [activationMfaCode, setActivationMfaCode] = useState("");
@@ -110,6 +113,23 @@ export default function AdminLoginPage() {
       }
 
       const body = (await response.json()) as ActivateInviteResponse;
+      const loginResponse = await fetch("/api/admin/session", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email: body.user.email,
+          password: activationPassword,
+          mfaCode: activationMfaCode.trim() || undefined,
+        }),
+      });
+
+      if (loginResponse.ok) {
+        setStatus("Invite activated. Redirecting...");
+        router.push(nextPath);
+        router.refresh();
+        return;
+      }
+
       setEmail(body.user.email);
       setPassword("");
       setMfaCode("");
@@ -118,7 +138,7 @@ export default function AdminLoginPage() {
       setActivationPassword("");
       setActivationMfaCode("");
       setMode("account");
-      setStatus("Invite activated. Sign in with your email and password.");
+      setStatus("Invite activated. Sign in with your email, password, and MFA code if required.");
       setSubmitting(false);
     } catch {
       setStatus("Activation failed.");
@@ -141,7 +161,8 @@ export default function AdminLoginPage() {
           <BrandLogo href={null} compact />
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">Admin Login</h1>
           <p className="text-sm text-neutral-600">
-            Use your approved admin account. Token access is reserved for maintenance.
+            Use Account Login after activation. Invite tokens must be used in Activate Invite,
+            not Token Login.
           </p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3">

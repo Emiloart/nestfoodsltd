@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { resolveAdminSessionFromRequest } from "@/lib/admin/auth";
-import { updateAdminUser } from "@/lib/admin/user-directory";
+import { deleteAdminUser, updateAdminUser } from "@/lib/admin/user-directory";
 import { logAuditEvent } from "@/lib/audit/service";
 import { isTrustedOrigin, resolveClientIp, resolveUserAgent } from "@/lib/security/request";
 
@@ -121,6 +121,86 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     });
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to update admin user." },
+      { status: 400 },
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest, context: RouteContext) {
+  const { id } = await Promise.resolve(context.params);
+  if (!isTrustedOrigin(request)) {
+    logAdminUserAuditEvent(request, {
+      action: "admin.users.user.delete",
+      outcome: "blocked",
+      severity: "warning",
+      resourceId: id,
+      details: { reason: "untrusted_origin" },
+    });
+    return NextResponse.json({ error: "Untrusted request origin." }, { status: 403 });
+  }
+
+  const session = resolveAdminSessionFromRequest(request);
+  if (!session) {
+    logAdminUserAuditEvent(request, {
+      action: "admin.users.user.delete",
+      outcome: "failure",
+      severity: "warning",
+      resourceId: id,
+      details: { reason: "unauthorized" },
+    });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (session.role !== "SUPER_ADMIN") {
+    logAdminUserAuditEvent(request, {
+      actorId: session.actorId,
+      actorRole: session.role,
+      action: "admin.users.user.delete",
+      outcome: "blocked",
+      severity: "warning",
+      resourceId: id,
+      details: { reason: "missing_role", requiredRole: "SUPER_ADMIN" },
+    });
+    return NextResponse.json({ error: "Forbidden: requires SUPER_ADMIN role" }, { status: 403 });
+  }
+
+  if (session.actorId && session.actorId === id) {
+    logAdminUserAuditEvent(request, {
+      actorId: session.actorId,
+      actorRole: session.role,
+      action: "admin.users.user.delete",
+      outcome: "blocked",
+      severity: "warning",
+      resourceId: id,
+      details: { reason: "self_delete_blocked" },
+    });
+    return NextResponse.json({ error: "You cannot delete your own active session user." }, { status: 400 });
+  }
+
+  try {
+    const user = await deleteAdminUser({ userId: id });
+    logAdminUserAuditEvent(request, {
+      actorId: session.actorId,
+      actorRole: session.role,
+      action: "admin.users.user.delete",
+      outcome: "success",
+      severity: "info",
+      resourceId: user.id,
+      details: { email: user.email, role: user.role, status: user.status },
+    });
+    return NextResponse.json({ role: session.role, user });
+  } catch (error) {
+    logAdminUserAuditEvent(request, {
+      actorId: session.actorId,
+      actorRole: session.role,
+      action: "admin.users.user.delete",
+      outcome: "failure",
+      severity: "warning",
+      resourceId: id,
+      details: { reason: error instanceof Error ? error.message : "user_delete_failed" },
+    });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to delete admin user." },
       { status: 400 },
     );
   }

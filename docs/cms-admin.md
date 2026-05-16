@@ -73,3 +73,4 @@ Admins edit only corporate catalogue fields:
 - `SALES_MANAGER`
 
 Daily admin access should use managed admin users where configured. SUPER_ADMIN can rotate role access tokens from `/admin/users`; the environment token remains accepted as a break-glass fallback until it is changed or removed in Vercel.
+Invited users should use the generated activation link first; after activation, the login page signs them in with the password and MFA code they set.

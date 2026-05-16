@@ -32,6 +32,11 @@ type UpdateUserResponse = {
   user: PublicAdminUser;
 };
 
+type DeleteUserResponse = {
+  role: string;
+  user: PublicAdminUser;
+};
+
 type RevokeInviteResponse = {
   role: string;
   invite: PublicAdminInvite;
@@ -115,6 +120,7 @@ export function AdminUsersClient() {
   const [accessTokenForm, setAccessTokenForm] =
     useState<AccessTokenFormState>(emptyAccessTokenForm);
   const [lastInviteToken, setLastInviteToken] = useState("");
+  const [lastInviteActivationLink, setLastInviteActivationLink] = useState("");
   const [savingInvite, setSavingInvite] = useState(false);
   const [savingUser, setSavingUser] = useState(false);
   const [savingAccessToken, setSavingAccessToken] = useState(false);
@@ -192,14 +198,19 @@ export function AdminUsersClient() {
     }
 
     const data = (await response.json()) as CreateInviteResponse;
+    const activationUrl = new URL("/admin/login", window.location.origin);
+    activationUrl.searchParams.set("mode", "activate");
+    activationUrl.searchParams.set("email", data.invite.email);
+    activationUrl.searchParams.set("inviteToken", data.inviteToken);
     setLastInviteToken(data.inviteToken);
+    setLastInviteActivationLink(activationUrl.toString());
     setInviteForm({
       ...emptyInviteForm,
       role: inviteForm.role,
       mfaRequired: inviteForm.role === "SUPER_ADMIN",
     });
     await reloadDirectory(selectedUserId || undefined);
-    setStatus(`Created invite for ${data.invite.email}.`);
+    setStatus(`Created invite for ${data.invite.email}. Share the activation link with the user.`);
     setSavingInvite(false);
   }
 
@@ -291,6 +302,42 @@ export function AdminUsersClient() {
     setStatus(`Reset lock state for ${selectedUser.email}.`);
   }
 
+  async function deleteUser() {
+    if (!selectedUser) {
+      setStatus("Select an admin user first.");
+      return;
+    }
+    if (!canManage) {
+      setStatus("This role has read-only access.");
+      return;
+    }
+    if (
+      !window.confirm(
+        `Delete admin user ${selectedUser.email}? This removes their dashboard access and cannot be undone.`,
+      )
+    ) {
+      return;
+    }
+
+    setSavingUser(true);
+    setStatus("Deleting admin user...");
+    const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const body = (await response.json().catch(() => null)) as { error?: string } | null;
+      setStatus(body?.error ?? "Failed to delete user.");
+      setSavingUser(false);
+      return;
+    }
+
+    const data = (await response.json()) as DeleteUserResponse;
+    await reloadDirectory();
+    setStatus(`Deleted admin user ${data.user.email}.`);
+    setSavingUser(false);
+  }
+
   async function rotateAccessToken() {
     if (!canManage) {
       setStatus("This role has read-only access.");
@@ -338,6 +385,18 @@ export function AdminUsersClient() {
       setStatus("Invite token copied.");
     } catch {
       setStatus("Unable to copy invite token.");
+    }
+  }
+
+  async function copyInviteActivationLink() {
+    if (!lastInviteActivationLink) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(lastInviteActivationLink);
+      setStatus("Invite activation link copied.");
+    } catch {
+      setStatus("Unable to copy invite activation link.");
     }
   }
 
@@ -440,12 +499,28 @@ export function AdminUsersClient() {
           {lastInviteToken ? (
             <div className="space-y-2 rounded-xl border border-amber-200 bg-amber-50 p-3">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-700">
-                One-time Invite Token
+                One-time Invite
               </p>
+              {lastInviteActivationLink ? (
+                <p className="break-all text-xs text-amber-800">{lastInviteActivationLink}</p>
+              ) : null}
               <p className="break-all text-xs text-amber-800">{lastInviteToken}</p>
-              <Button size="sm" variant="secondary" onClick={() => void copyInviteToken()}>
-                Copy Token
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => void copyInviteActivationLink()}
+                >
+                  Copy Activation Link
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => void copyInviteToken()}>
+                  Copy Token Only
+                </Button>
+              </div>
+              <p className="text-xs leading-5 text-amber-800">
+                Send the activation link to the invited user. They must activate the invite before
+                using Account Login.
+              </p>
             </div>
           ) : null}
 
@@ -708,13 +783,22 @@ export function AdminUsersClient() {
                 <Button onClick={() => void saveUser()} disabled={savingUser || !canManage}>
                   {savingUser ? "Saving..." : "Save User"}
                 </Button>
-                <Button
-                  variant="secondary"
-                  onClick={() => void resetUserLock()}
-                  disabled={!canManage}
-                >
-                  Reset Lock State
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="secondary"
+                    onClick={() => void resetUserLock()}
+                    disabled={!canManage || savingUser}
+                  >
+                    Reset Lock State
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => void deleteUser()}
+                    disabled={!canManage || savingUser}
+                  >
+                    Delete User
+                  </Button>
+                </div>
               </div>
 
               <div className="rounded-xl border border-neutral-200 p-3 text-xs text-neutral-600">
