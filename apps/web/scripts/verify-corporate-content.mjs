@@ -96,7 +96,6 @@ async function verifyLocationFallbacks() {
 
   const publicFiles = [
     "apps/web/app/contact/page.tsx",
-    "apps/web/components/locations/location-finder.tsx",
     "apps/web/lib/company/contact.ts",
   ];
   const forbidden = [

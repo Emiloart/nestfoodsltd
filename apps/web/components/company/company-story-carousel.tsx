@@ -1,24 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Montserrat, Playfair_Display } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
 import { type ReactNode, useState } from "react";
 
 import { cn } from "@/lib/cn";
 import { type CompanyContent } from "@/lib/company/types";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["700"],
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["600"],
-  display: "swap",
-});
 
 type StorySlide = {
   id: string;
@@ -114,12 +101,12 @@ export function CompanyStoryCarousel({ company, showAboutLink = true }: CompanyS
       <div className="grid min-w-0 gap-0 lg:grid-cols-[0.38fr_0.62fr]">
         <div className="min-w-0 border-b border-white/10 bg-white/[0.045] p-4 text-center sm:p-5 lg:border-b-0 lg:border-r lg:text-left">
           <p
-            className={`${montserrat.className} text-xs font-semibold uppercase tracking-[0.18em] text-white/54`}
+            className="font-[family:var(--font-body)] text-xs font-semibold uppercase tracking-[0.18em] text-white/54"
           >
             Nest Foods Limited
           </p>
           <h2
-            className={`${playfairDisplay.className} mx-auto mt-3 max-w-full [overflow-wrap:anywhere] text-[clamp(1.75rem,9vw,2.6rem)] font-bold leading-[0.98] text-white lg:mx-0 lg:text-[clamp(2rem,4vw,3rem)]`}
+            className="mx-auto mt-3 max-w-full [overflow-wrap:anywhere] font-[family:var(--font-display)] text-[clamp(1.75rem,9vw,2.6rem)] font-bold leading-[0.98] text-white lg:mx-0 lg:text-[clamp(2rem,4vw,3rem)]"
           >
             About Nest Foods Limited
           </h2>
@@ -161,12 +148,12 @@ export function CompanyStoryCarousel({ company, showAboutLink = true }: CompanyS
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <p
-                className={`${montserrat.className} text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]`}
+                className="font-[family:var(--font-body)] text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--brand-3)]"
               >
                 {activeSlide.eyebrow}
               </p>
               <h3
-                className={`${playfairDisplay.className} mx-auto mt-3 max-w-full [overflow-wrap:anywhere] text-balance text-[clamp(1.55rem,8vw,2.35rem)] font-bold leading-[1.02] text-white lg:max-w-3xl lg:text-[clamp(1.75rem,3.2vw,2.8rem)]`}
+                className="mx-auto mt-3 max-w-full [overflow-wrap:anywhere] text-balance font-[family:var(--font-display)] text-[clamp(1.55rem,8vw,2.35rem)] font-bold leading-[1.02] text-white lg:max-w-3xl lg:text-[clamp(1.75rem,3.2vw,2.8rem)]"
               >
                 {activeSlide.title}
               </h3>

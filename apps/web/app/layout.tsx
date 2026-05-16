@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -12,14 +12,16 @@ import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
 import "./globals.css";
 
-const bodyFont = Manrope({
+const bodyFont = Montserrat({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-body",
   display: "swap",
 });
 
-const displayFont = Sora({
+const displayFont = Playfair_Display({
   subsets: ["latin"],
+  weight: ["700"],
   variable: "--font-display",
   display: "swap",
 });

@@ -28,43 +28,35 @@ export function HomeBannerSection({ banners }: { banners: CmsBanner[] }) {
               className="absolute inset-0 h-full w-full object-cover"
             />
 
-            <div className="relative mx-auto flex min-h-[18rem] w-full max-w-7xl items-end px-4 py-6 md:min-h-[24rem] md:px-6 md:py-8">
-              <div className="flex w-full flex-col gap-4 rounded-3xl border border-white/15 bg-[rgba(46,18,69,0.9)] p-4 text-white shadow-2xl md:flex-row md:items-center md:justify-between md:p-5">
-                <div className="max-w-2xl">
-                  <p className="font-montserrat text-xs font-black uppercase tracking-[0.26em] text-[color:var(--brand-3)]">
-                    {banner.label}
-                  </p>
-                  <h2 className="mt-2 font-playfair text-2xl font-bold leading-tight text-white md:text-4xl">
-                    {banner.headline}
-                  </h2>
-                </div>
-                {banner.ctaHref && banner.ctaLabel ? (
-                  isInternalHref(banner.ctaHref) ? (
-                    <Link
-                      href={banner.ctaHref}
-                      className={buttonClassName({
-                        size: "sm",
-                        className: "self-end whitespace-nowrap border-transparent md:self-center",
-                      })}
-                    >
-                      {banner.ctaLabel}
-                    </Link>
-                  ) : (
-                    <a
-                      href={banner.ctaHref}
-                      className={buttonClassName({
-                        size: "sm",
-                        className: "self-end whitespace-nowrap border-transparent md:self-center",
-                      })}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {banner.ctaLabel}
-                    </a>
-                  )
-                ) : null}
+            {banner.ctaHref && banner.ctaLabel ? (
+              <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-7xl justify-end px-4 pb-4 md:px-6 md:pb-5">
+                {isInternalHref(banner.ctaHref) ? (
+                  <Link
+                    href={banner.ctaHref}
+                    className={buttonClassName({
+                      size: "sm",
+                      className:
+                        "whitespace-nowrap border-transparent shadow-[0_14px_28px_rgba(46,18,69,0.24)]",
+                    })}
+                  >
+                    {banner.ctaLabel}
+                  </Link>
+                ) : (
+                  <a
+                    href={banner.ctaHref}
+                    className={buttonClassName({
+                      size: "sm",
+                      className:
+                        "whitespace-nowrap border-transparent shadow-[0_14px_28px_rgba(46,18,69,0.24)]",
+                    })}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {banner.ctaLabel}
+                  </a>
+                )}
               </div>
-            </div>
+            ) : null}
           </article>
         ))}
       </div>
