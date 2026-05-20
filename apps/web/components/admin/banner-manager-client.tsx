@@ -23,7 +23,8 @@ type BannerFormState = {
   headline: string;
   ctaLabel: string;
   ctaHref: string;
-  imageUrl: string;
+  desktopImageUrl: string;
+  mobileImageUrl: string;
   status: CmsPublicationStatus;
   publishAt: string;
   order: string;
@@ -34,7 +35,8 @@ const emptyForm: BannerFormState = {
   headline: "",
   ctaLabel: "",
   ctaHref: "",
-  imageUrl: "/media/products/nestfoodsltd-family-loaf-texture.png",
+  desktopImageUrl: "/media/banners/de-nest-bread-desktop-banner.jpg",
+  mobileImageUrl: "",
   status: "draft",
   publishAt: "",
   order: "1",
@@ -82,7 +84,8 @@ function toForm(banner: CmsBanner): BannerFormState {
     headline: banner.headline,
     ctaLabel: banner.ctaLabel ?? "",
     ctaHref: banner.ctaHref ?? "",
-    imageUrl: banner.imageUrl,
+    desktopImageUrl: banner.desktopImageUrl ?? banner.imageUrl,
+    mobileImageUrl: banner.mobileImageUrl ?? "",
     status: banner.status,
     publishAt: toDateTimeInputValue(banner.publishAt),
     order: String(banner.order),
@@ -91,12 +94,15 @@ function toForm(banner: CmsBanner): BannerFormState {
 
 function buildPayload(form: BannerFormState) {
   const numericOrder = Math.max(1, Math.round(Number(form.order || 1)));
+  const desktopImageUrl = form.desktopImageUrl.trim();
   return {
     label: form.label.trim(),
     headline: form.headline.trim(),
     ctaLabel: form.ctaLabel.trim() || undefined,
     ctaHref: form.ctaHref.trim() || undefined,
-    imageUrl: form.imageUrl.trim(),
+    imageUrl: desktopImageUrl,
+    desktopImageUrl,
+    mobileImageUrl: form.mobileImageUrl.trim(),
     status: form.status,
     publishAt: form.publishAt ? new Date(form.publishAt).toISOString() : undefined,
     order: numericOrder,
@@ -155,7 +161,10 @@ export function BannerManagerClient() {
     setForm((current) => ({ ...current, ...partial }));
   }
 
-  async function uploadBannerImage(event: ChangeEvent<HTMLInputElement>) {
+  async function uploadBannerImage(
+    event: ChangeEvent<HTMLInputElement>,
+    target: "desktop" | "mobile",
+  ) {
     const file = event.target.files?.[0];
     event.target.value = "";
 
@@ -178,7 +187,7 @@ export function BannerManagerClient() {
       const dataUrl = await readFileAsDataUrl(file);
       setForm((current) => ({
         ...current,
-        imageUrl: dataUrl,
+        [target === "desktop" ? "desktopImageUrl" : "mobileImageUrl"]: dataUrl,
         label: current.label || file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "),
       }));
       setStatus("Banner image loaded. Save the banner to publish the change.");
@@ -346,28 +355,52 @@ export function BannerManagerClient() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
             Banner Details
           </p>
-          <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
-            <img
-              src={form.imageUrl}
-              alt={form.label || "Banner preview"}
-              className="aspect-[16/7] w-full object-cover"
-            />
+          <div className="grid gap-3 md:grid-cols-[1fr_0.45fr]">
+            <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
+              <img
+                src={form.desktopImageUrl}
+                alt={form.label || "Desktop banner preview"}
+                className="aspect-[1881/836] w-full object-contain"
+              />
+            </div>
+            <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
+              <img
+                src={form.mobileImageUrl || form.desktopImageUrl}
+                alt={form.label || "Mobile banner preview"}
+                className="aspect-[4/5] w-full object-contain"
+              />
+            </div>
           </div>
-          <label className="block space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
-              Upload Banner Image
-            </span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(event) => void uploadBannerImage(event)}
-              disabled={saving || !canWrite}
-              className="block w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-700 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--brand-1)] file:px-4 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-[0.12em] file:text-white"
-            />
-            <span className="block text-xs leading-5 text-neutral-500">
-              Use a compressed JPG, PNG, or WebP under 1.5MB. You can also paste a hosted image URL.
-            </span>
-          </label>
+          <div className="grid gap-3 md:grid-cols-2">
+            <label className="block space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                Upload Desktop Banner
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => void uploadBannerImage(event, "desktop")}
+                disabled={saving || !canWrite}
+                className="block w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-700 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--brand-1)] file:px-4 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-[0.12em] file:text-white"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-neutral-500">
+                Upload Mobile Banner
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => void uploadBannerImage(event, "mobile")}
+                disabled={saving || !canWrite}
+                className="block w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-700 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--brand-1)] file:px-4 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-[0.12em] file:text-white"
+              />
+            </label>
+          </div>
+          <p className="text-xs leading-5 text-neutral-500">
+            Desktop and mobile banners are managed separately. Use compressed JPG, PNG, or WebP
+            files under 1.5MB, or paste hosted image URLs below.
+          </p>
           <div className="grid gap-3 md:grid-cols-2">
             <Input
               value={form.label}
@@ -382,9 +415,14 @@ export function BannerManagerClient() {
               placeholder="Display order"
             />
             <Input
-              value={form.imageUrl}
-              onChange={(event) => updateForm({ imageUrl: event.target.value })}
-              placeholder="Banner image URL"
+              value={form.desktopImageUrl}
+              onChange={(event) => updateForm({ desktopImageUrl: event.target.value })}
+              placeholder="Desktop banner image URL"
+            />
+            <Input
+              value={form.mobileImageUrl}
+              onChange={(event) => updateForm({ mobileImageUrl: event.target.value })}
+              placeholder="Mobile banner image URL (optional)"
             />
             <select
               value={form.status}

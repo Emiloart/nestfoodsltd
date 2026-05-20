@@ -115,6 +115,12 @@ function collectMediaUsageReferences(
     if (banner.imageUrl === assetUrl) {
       refs.push(`banner:${banner.id}.imageUrl`);
     }
+    if (banner.desktopImageUrl === assetUrl) {
+      refs.push(`banner:${banner.id}.desktopImageUrl`);
+    }
+    if (banner.mobileImageUrl === assetUrl) {
+      refs.push(`banner:${banner.id}.mobileImageUrl`);
+    }
   }
 
   for (const asset of data.media) {
@@ -223,13 +229,16 @@ export async function createCmsBanner(input: CreateCmsBannerInput) {
 
   const fallbackOrder = data.banners.length + 1;
   const now = new Date().toISOString();
+  const desktopImageUrl = input.desktopImageUrl?.trim() || input.imageUrl.trim();
   const banner: CmsBanner = {
     id: bannerId,
     label: input.label.trim(),
     headline: input.headline.trim(),
     ctaLabel: input.ctaLabel?.trim() || undefined,
     ctaHref: input.ctaHref?.trim() || undefined,
-    imageUrl: input.imageUrl.trim(),
+    imageUrl: desktopImageUrl,
+    desktopImageUrl,
+    mobileImageUrl: input.mobileImageUrl?.trim() || undefined,
     status: normalizeBannerStatus(input.status),
     publishAt: input.publishAt?.trim() || undefined,
     order: normalizeBannerOrder(input.order, fallbackOrder),
@@ -262,7 +271,19 @@ export async function updateCmsBanner(bannerId: string, input: UpdateCmsBannerIn
     banner.ctaHref = input.ctaHref.trim() || undefined;
   }
   if (input.imageUrl !== undefined) {
-    banner.imageUrl = input.imageUrl.trim();
+    const imageUrl = input.imageUrl.trim();
+    banner.imageUrl = imageUrl;
+    if (input.desktopImageUrl === undefined) {
+      banner.desktopImageUrl = imageUrl;
+    }
+  }
+  if (input.desktopImageUrl !== undefined) {
+    const desktopImageUrl = input.desktopImageUrl.trim() || banner.imageUrl;
+    banner.desktopImageUrl = desktopImageUrl;
+    banner.imageUrl = desktopImageUrl;
+  }
+  if (input.mobileImageUrl !== undefined) {
+    banner.mobileImageUrl = input.mobileImageUrl.trim() || undefined;
   }
   if (input.status !== undefined) {
     banner.status = normalizeBannerStatus(input.status);

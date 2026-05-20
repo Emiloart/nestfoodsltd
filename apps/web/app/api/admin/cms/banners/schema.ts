@@ -1,13 +1,17 @@
 import { z } from "zod";
 
 const publicationStatusSchema = z.enum(["draft", "published", "scheduled"]);
+const requiredImageUrlSchema = z.string().trim().min(4).max(2_100_000);
+const optionalImageUrlSchema = z.string().trim().max(2_100_000).optional();
 
 const baseBannerSchema = z.object({
   label: z.string().trim().min(2).max(120),
   headline: z.string().trim().min(4).max(240),
   ctaLabel: z.string().trim().max(80).optional(),
   ctaHref: z.string().trim().max(260).optional(),
-  imageUrl: z.string().trim().min(4).max(2_100_000),
+  imageUrl: requiredImageUrlSchema,
+  desktopImageUrl: optionalImageUrlSchema,
+  mobileImageUrl: optionalImageUrlSchema,
   status: publicationStatusSchema,
   publishAt: z.string().trim().max(80).optional(),
   order: z.number().int().min(1).max(1000).optional(),

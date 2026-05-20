@@ -100,11 +100,12 @@
   "banners": [
     {
       "id": "banner-home-1",
-      "label": "Explore De-Nest Bread",
-      "headline": "Fresh, healthy bread made for every family.",
-      "ctaLabel": "Explore Products",
-      "ctaHref": "/products",
-      "imageUrl": "/media/products/nestfoodsltd-family-loaf-texture.png",
+      "label": "Company Drivers Hiring",
+      "headline": "Nest Foods Limited is hiring company drivers.",
+      "ctaLabel": "Visit Careers Page",
+      "ctaHref": "/careers",
+      "imageUrl": "/media/banners/de-nest-bread-desktop-banner.jpg",
+      "desktopImageUrl": "/media/banners/de-nest-bread-desktop-banner.jpg",
       "status": "published",
       "publishAt": "2026-05-05T00:00:00.000Z",
       "order": 1,
@@ -119,6 +120,15 @@
       "url": "/brand/logos/logo-primary.png",
       "altText": "De-Nest Bread logo",
       "folder": "branding",
+      "updatedAt": "2026-05-05T00:00:00.000Z"
+    },
+    {
+      "id": "media-home-desktop-banner",
+      "label": "Homepage Desktop Banner",
+      "kind": "image",
+      "url": "/media/banners/de-nest-bread-desktop-banner.jpg",
+      "altText": "Nest Foods Limited company drivers hiring banner",
+      "folder": "homepage",
       "updatedAt": "2026-05-05T00:00:00.000Z"
     },
     {

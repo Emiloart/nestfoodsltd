@@ -48,6 +48,8 @@ export type CmsBanner = {
   ctaLabel?: string;
   ctaHref?: string;
   imageUrl: string;
+  desktopImageUrl?: string;
+  mobileImageUrl?: string;
   status: CmsPublicationStatus;
   publishAt?: string;
   order: number;

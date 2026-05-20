@@ -12,6 +12,39 @@ const relativeDataFilePath = path.join("data", "cms.json");
 const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.CMS_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "cms";
+const legacyDefaultBannerImageUrl = "/media/products/nestfoodsltd-family-loaf-texture.png";
+const currentDefaultDesktopBannerImageUrl = "/media/banners/de-nest-bread-desktop-banner.jpg";
+
+function normalizeCmsBanners(input: Partial<CmsData> | null | undefined) {
+  if (!input?.banners) {
+    return CMS_SEED_DATA.banners;
+  }
+
+  return input.banners.map((banner, index) => {
+    const fallbackBanner = CMS_SEED_DATA.banners.find((entry) => entry.id === banner.id) ??
+      CMS_SEED_DATA.banners[index] ??
+      CMS_SEED_DATA.banners[0];
+    const isLegacyDefaultBanner =
+      banner.id === "banner-home-1" &&
+      banner.imageUrl === legacyDefaultBannerImageUrl &&
+      !banner.desktopImageUrl;
+    const desktopImageUrl =
+      banner.desktopImageUrl?.trim() ||
+      (isLegacyDefaultBanner ? currentDefaultDesktopBannerImageUrl : banner.imageUrl?.trim()) ||
+      fallbackBanner?.desktopImageUrl ||
+      fallbackBanner?.imageUrl ||
+      currentDefaultDesktopBannerImageUrl;
+    const mobileImageUrl = banner.mobileImageUrl?.trim() || fallbackBanner?.mobileImageUrl;
+
+    return {
+      ...fallbackBanner,
+      ...banner,
+      imageUrl: desktopImageUrl,
+      desktopImageUrl,
+      mobileImageUrl,
+    };
+  });
+}
 
 function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
   if (!input) {
@@ -34,7 +67,7 @@ function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
 
   return {
     pages: mergedPages,
-    banners: input.banners ?? CMS_SEED_DATA.banners,
+    banners: normalizeCmsBanners(input),
     media: input.media ?? CMS_SEED_DATA.media,
   };
 }
