@@ -20,12 +20,12 @@ export function HomeHeroSection({ page }: HomeHeroSectionProps) {
               <p
                 className="font-[family:var(--font-display)] text-balance break-words text-[clamp(2rem,4.6vw,3.35rem)] font-bold leading-[0.98] tracking-[0.07em] text-white"
               >
-                DE NEST BREAD
+                Nest Foods Limited
               </p>
               <p
                 className="font-[family:var(--font-body)] text-balance break-words text-[clamp(1rem,2.2vw,1.55rem)] font-semibold uppercase leading-[1.12] tracking-[0.08em] text-white [text-shadow:-1px_-1px_0_#d71f1f,1px_-1px_0_#d71f1f,-1px_1px_0_#d71f1f,1px_1px_0_#d71f1f]"
               >
-                Nest Foods Limited
+                De Nest Bread
               </p>
             </div>
 
