@@ -6,7 +6,7 @@ export const CMS_SEED_DATA: CmsData = {
   pages: {
     home: {
       slug: "home",
-      title: "De-Nest Bread",
+      title: "Nest Foods Ltd | De-Nest Bread",
       headline: "Baking memories, one slice at a time.",
       description:
         "De-Nest Bread is the public bread brand of Nest Foods Limited. Baking memories, one slice at a time. Every loaf is a testament of our commitment to quality.",
@@ -22,7 +22,7 @@ export const CMS_SEED_DATA: CmsData = {
       heroVideoPosterUrl: "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
       logoImageUrl: "/brand/logos/logo-primary.png",
       seo: {
-        title: "De-Nest Bread | Premium Bread Manufacturer",
+        title: "Nest Foods Ltd | De-Nest Bread",
         description:
           "Premium bread products, production standards, and company information from Nest Foods Limited.",
         ogImageUrl: "/media/hero/nestfoodsltd-desktop-hero-banner2.png",

@@ -14,6 +14,7 @@ const storageDriver = process.env.CMS_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "cms";
 const legacyDefaultBannerImageUrl = "/media/products/nestfoodsltd-family-loaf-texture.png";
 const currentDefaultDesktopBannerImageUrl = "/media/banners/de-nest-bread-desktop-banner.jpg";
+const homePageTitle = "Nest Foods Ltd | De-Nest Bread";
 
 function normalizeCmsBanners(input: Partial<CmsData> | null | undefined) {
   if (!input?.banners) {
@@ -54,12 +55,22 @@ function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
   const mergedPages = { ...CMS_SEED_DATA.pages };
   for (const [slug, fallbackPage] of Object.entries(CMS_SEED_DATA.pages)) {
     const sourcePage = input.pages?.[slug as keyof typeof input.pages];
+    const sourceSeo = sourcePage?.seo;
     mergedPages[slug as keyof typeof mergedPages] = {
       ...fallbackPage,
       ...sourcePage,
+      title:
+        slug === "home" && (!sourcePage?.title || sourcePage.title === "De-Nest Bread")
+          ? homePageTitle
+          : sourcePage?.title ?? fallbackPage.title,
       seo: {
         ...fallbackPage.seo,
-        ...sourcePage?.seo,
+        ...sourceSeo,
+        title:
+          slug === "home" &&
+          (!sourceSeo?.title || sourceSeo.title === "De-Nest Bread | Premium Bread Manufacturer")
+            ? homePageTitle
+            : sourceSeo?.title ?? fallbackPage.seo.title,
       },
       revisions: sourcePage?.revisions ?? fallbackPage.revisions,
     };

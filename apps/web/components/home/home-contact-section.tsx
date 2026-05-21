@@ -17,6 +17,7 @@ export function HomeContactSection({ contactPage, company }: HomeContactSectionP
   const phones = company.contactChannels.filter((channel) => channel.href.startsWith("tel:"));
   const emails = company.contactChannels.filter((channel) => channel.href.startsWith("mailto:"));
   const headOffice = company.branchLocations[0];
+  const headOfficeAddress = headOffice?.address?.replace(/^No\.\s*1\s*Nest Foods Street,\s*/i, "");
   const generalWhatsApp = company.whatsappContacts.find((contact) => contact.id === "general") ??
     company.whatsappContacts[0];
   const generalWhatsAppUrl = generalWhatsApp
@@ -76,7 +77,7 @@ export function HomeContactSection({ contactPage, company }: HomeContactSectionP
             <Card className="space-y-2 p-4 sm:col-span-2">
               <p className="section-kicker">Head Office</p>
               <p className="text-sm text-neutral-700">
-                {headOffice?.address ?? "Nest Foods Limited, Awka, Anambra State"}
+                {headOfficeAddress ?? "Okochime Okpuno, Awka South, Anambra State"}
               </p>
             </Card>
           </div>

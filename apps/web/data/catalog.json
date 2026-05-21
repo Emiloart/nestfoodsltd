@@ -356,29 +356,17 @@
       "status": "published",
       "name": "De-Nest Mini Bread",
       "category": "Mini Bread",
-      "shortDescription": "A soft, fresh, bite-sized loaf for breakfast, quick snacks, and simple everyday enjoyment.",
-      "longDescription": "De-Nest Mini Bread is perfectly portioned, soft, fluffy, and made for everyday enjoyment. It is a compact loaf for breakfast, quick snacks, daily corporate breakfast, meetings, and light refreshment moments.",
-      "imageUrl": "/media/products/nestfoodsltd-mini-loaf.png",
+      "shortDescription": "A soft, fresh, bite-sized loaf for breakfast, quick snacks, and simple everyday enjoyment. Coming soon.",
+      "longDescription": "De-Nest Mini Bread is perfectly portioned, soft, fluffy, and made for everyday enjoyment. It is a compact loaf for breakfast, quick snacks, daily corporate breakfast, meetings, and light refreshment moments. Coming soon.",
+      "imageUrl": "/placeholders/products/mini-bread-coming-soon.svg",
       "galleryUrls": [
-        "/media/products/nestfoodsltd-mini-loaf.png",
-        "/media/products/nestfoodsltd-mini-loaf-texture.png",
-        "/media/products/nestfoodsltd-mini-loaf-unpacked.png"
+        "/placeholders/products/mini-bread-coming-soon.svg"
       ],
       "galleryImages": [
         {
-          "url": "/media/products/nestfoodsltd-mini-loaf.png",
-          "altText": "De-Nest Mini Bread product view",
-          "label": "Packaged mini loaf"
-        },
-        {
-          "url": "/media/products/nestfoodsltd-mini-loaf-texture.png",
-          "altText": "De-Nest Mini Bread loaf and texture view",
-          "label": "Mini loaf texture"
-        },
-        {
-          "url": "/media/products/nestfoodsltd-mini-loaf-unpacked.png",
-          "altText": "Unpacked De-Nest Mini Bread view",
-          "label": "Unpacked mini loaf"
+          "url": "/placeholders/products/mini-bread-coming-soon.svg",
+          "altText": "De-Nest Mini Bread coming soon image placeholder",
+          "label": "Mini bread coming soon"
         }
       ],
       "ingredients": [
@@ -477,15 +465,27 @@
       "category": "Midi Bread",
       "shortDescription": "An intermediate loaf with the right balance of size, quality, and satisfaction.",
       "longDescription": "De-Nest Midi Bread is the intermediate loaf in the range, crafted for people who want less than a family-size loaf without waste. It is a practical option for individuals, couples, small families, conferences, school feeding, travel needs, and everyday refreshment.",
-      "imageUrl": "/placeholders/products/product-placeholder.svg",
+      "imageUrl": "/media/products/nestfoodsltd-midi-loaf.png",
       "galleryUrls": [
-        "/placeholders/products/product-placeholder.svg"
+        "/media/products/nestfoodsltd-midi-loaf.png",
+        "/media/products/nestfoodsltd-midi-loaf-texture.png",
+        "/media/products/nestfoodsltd-midi-loaf-unpacked.png"
       ],
       "galleryImages": [
         {
-          "url": "/placeholders/products/product-placeholder.svg",
+          "url": "/media/products/nestfoodsltd-midi-loaf.png",
           "altText": "De-Nest Midi Bread product view",
-          "label": "Midi loaf view"
+          "label": "Packaged midi loaf"
+        },
+        {
+          "url": "/media/products/nestfoodsltd-midi-loaf-texture.png",
+          "altText": "De-Nest Midi Bread loaf and texture view",
+          "label": "Midi loaf texture"
+        },
+        {
+          "url": "/media/products/nestfoodsltd-midi-loaf-unpacked.png",
+          "altText": "Unpacked De-Nest Midi Bread view",
+          "label": "Unpacked midi loaf"
         }
       ],
       "ingredients": [

@@ -29,8 +29,8 @@ const displayFont = Montserrat({
 export const metadata: Metadata = {
   metadataBase: new URL(resolveSiteUrl()),
   title: {
-    default: "De-Nest Bread",
-    template: "%s | De-Nest Bread",
+    default: "Nest Foods Ltd | De-Nest Bread",
+    template: "%s | Nest Foods Ltd | De-Nest Bread",
   },
   description:
     "Premium bread manufacturing, product information, and company details from Nest Foods Limited.",

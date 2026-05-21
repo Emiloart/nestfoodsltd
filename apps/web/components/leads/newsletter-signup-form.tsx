@@ -62,7 +62,7 @@ export function NewsletterSignupForm() {
           required
           className="mt-1 h-4 w-4 rounded border-[color:var(--border-strong)]"
         />
-        I agree to receive De-Nest Bread product and company updates from Nest Foods Limited.
+        I agree to receive Nest Foods Ltd company and product updates.
       </label>
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={state === "submitting"}>

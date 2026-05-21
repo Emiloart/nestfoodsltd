@@ -31,16 +31,16 @@ export function BrandLogo({
         )}
       />
       <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
-        <span className={cn("section-kicker text-[0.58rem]", inverse && "text-[color:var(--brand-3)]")}>
-          De-Nest Bread
-        </span>
         <span
           className={cn(
-            inverse ? "display-heading text-base text-white" : "display-heading text-base text-neutral-900",
-            compact && "text-sm",
+            inverse ? "display-heading text-lg text-white" : "display-heading text-lg text-neutral-900",
+            compact && "text-base",
           )}
         >
           Nest Foods Limited
+        </span>
+        <span className={cn("section-kicker text-[0.58rem]", inverse && "text-[color:var(--brand-3)]")}>
+          De-Nest Bread
         </span>
       </span>
     </span>

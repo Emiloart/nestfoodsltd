@@ -1,0 +1,25 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">De-Nest Mini Bread coming soon</title>
+  <desc id="desc">A branded coming soon placeholder for De-Nest Mini Bread.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="720" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2E1245"/>
+      <stop offset="0.56" stop-color="#5A247A"/>
+      <stop offset="1" stop-color="#2E1245"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="80" y1="140" x2="640" y2="580" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4E409" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#EEBA0B" stop-opacity="0.68"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="720" rx="40" fill="url(#bg)"/>
+  <circle cx="600" cy="118" r="128" fill="#F4E409" fill-opacity="0.12"/>
+  <circle cx="106" cy="612" r="170" fill="#F4E409" fill-opacity="0.09"/>
+  <rect x="74" y="86" width="572" height="548" rx="34" fill="#FCF7F0" fill-opacity="0.08" stroke="#F4E409" stroke-opacity="0.34" stroke-width="2"/>
+  <path d="M229 366c0-78.4 63.6-142 142-142h12c78.4 0 142 63.6 142 142v78c0 33.1-26.9 60-60 60H289c-33.1 0-60-26.9-60-60v-78Z" fill="#FCF7F0" fill-opacity="0.2"/>
+  <path d="M267 340c0-56.3 45.7-102 102-102h16c56.3 0 102 45.7 102 102v25H267v-25Z" fill="url(#shine)"/>
+  <rect x="230" y="524" width="260" height="16" rx="8" fill="#F4E409" fill-opacity="0.26"/>
+  <text x="360" y="150" fill="#F4E409" font-size="22" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="800" letter-spacing="5">DE-NEST BREAD</text>
+  <text x="360" y="590" fill="#FFFFFF" font-size="34" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="900" letter-spacing="3">COMING SOON</text>
+  <text x="360" y="626" fill="#FFFFFF" fill-opacity="0.72" font-size="17" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="600" letter-spacing="1.5">MINI BREAD IMAGE</text>
+</svg>
