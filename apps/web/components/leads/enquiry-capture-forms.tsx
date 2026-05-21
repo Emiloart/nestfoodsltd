@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { FormToast } from "@/components/ui/form-toast";
@@ -61,36 +61,59 @@ export function EnquiryCaptureForms() {
   const [message, setMessage] = useState("");
   const [distributorStep, setDistributorStep] = useState(0);
   const [distributorForm, setDistributorForm] = useState(initialDistributorState);
+  const inFlightSubmissionRef = useRef(false);
+  const lastSubmittedSignatureRef = useRef<string | null>(null);
 
   function updateDistributorForm(partial: Partial<DistributorFormState>) {
     setDistributorForm((current) => ({ ...current, ...partial }));
   }
 
   async function submitPayload(endpoint: string, payload: Record<string, string>) {
-    setState("submitting");
-    setMessage("");
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const responsePayload = (await response.json().catch(() => null)) as SubmitResponse | null;
-
-    if (!response.ok) {
-      setState("error");
-      setMessage("Your enquiry could not be saved. Please use WhatsApp or try again.");
+    if (inFlightSubmissionRef.current) {
       return false;
     }
 
-    setState("success");
-    setMessage(
-      responsePayload?.emailDelivery?.confirmation?.status === "sent"
-        ? "Thank you. Your enquiry was submitted and a confirmation email has been sent."
-        : "Thank you. Your enquiry was submitted and the Nest Foods Limited team will follow up.",
-    );
-    return true;
+    const submissionSignature = JSON.stringify({ endpoint, payload });
+    if (lastSubmittedSignatureRef.current === submissionSignature) {
+      setState("success");
+      setMessage("Thank you. This enquiry has already been submitted.");
+      return false;
+    }
+
+    inFlightSubmissionRef.current = true;
+    setState("submitting");
+    setMessage("");
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const responsePayload = (await response.json().catch(() => null)) as SubmitResponse | null;
+
+      if (!response.ok) {
+        setState("error");
+        setMessage("Your enquiry could not be saved. Please use WhatsApp or try again.");
+        return false;
+      }
+
+      lastSubmittedSignatureRef.current = submissionSignature;
+      setState("success");
+      setMessage(
+        responsePayload?.emailDelivery?.confirmation?.status === "sent"
+          ? "Thank you. Your enquiry was submitted. Please check your inbox for confirmation."
+          : "Thank you. Your enquiry was submitted and the Nest Foods Limited team will follow up.",
+      );
+      return true;
+    } catch {
+      setState("error");
+      setMessage("Your enquiry could not be saved. Please check your connection or use WhatsApp.");
+      return false;
+    } finally {
+      inFlightSubmissionRef.current = false;
+    }
   }
 
   async function submitSupplyForm(event: FormEvent<HTMLFormElement>) {

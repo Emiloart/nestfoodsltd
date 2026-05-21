@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { FormToast } from "@/components/ui/form-toast";
@@ -24,12 +24,17 @@ const initialFormState: CareerApplicationFormState = {
   otherExperience: "",
 };
 
+const applicationConfirmationMessage =
+  "Thank you for your submission. Nest Foods Limited will review your application and reach out to you via email. Please check your inbox for your application confirmation and a copy of your submission.";
+
 export function CareerApplicationForm() {
   const [form, setForm] = useState(initialFormState);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState<"info" | "success" | "error">("info");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const inFlightSubmissionRef = useRef(false);
+  const lastSubmittedSignatureRef = useRef<string | null>(null);
 
   function updateForm(partial: Partial<CareerApplicationFormState>) {
     setForm((current) => ({ ...current, ...partial }));
@@ -42,42 +47,71 @@ export function CareerApplicationForm() {
   async function submitApplication(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (inFlightSubmissionRef.current) {
+      return;
+    }
+
     if (!form.fullName.trim() || !form.phone.trim() || !form.email.trim() || !form.position.trim()) {
       setStatus("Full name, phone, email, and position are required.");
       setStatusTone("error");
       return;
     }
 
+    const submissionSignature = JSON.stringify({
+      fullName: form.fullName.trim(),
+      phone: form.phone.trim(),
+      email: form.email.trim().toLowerCase(),
+      position: form.position.trim(),
+      yearsOfExperience: form.yearsOfExperience.trim(),
+      otherExperience: form.otherExperience.trim(),
+      fileNames,
+    });
+
+    if (lastSubmittedSignatureRef.current === submissionSignature) {
+      setStatus(applicationConfirmationMessage);
+      setStatusTone("success");
+      return;
+    }
+
+    const formElement = event.currentTarget;
+    inFlightSubmissionRef.current = true;
     setIsSubmitting(true);
     setStatus("");
     setStatusTone("info");
 
-    const formData = new FormData(event.currentTarget);
-    const response = await fetch("/api/careers/apply", {
-      method: "POST",
-      body: formData,
-    });
-    const payload = (await response.json().catch(() => null)) as
-      | { error?: string; emailDelivery?: { confirmation?: { status?: string } } }
-      | null;
+    try {
+      const formData = new FormData(formElement);
+      const response = await fetch("/api/careers/apply", {
+        method: "POST",
+        body: formData,
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string; emailDelivery?: { confirmation?: { status?: string } } }
+        | null;
 
-    setIsSubmitting(false);
+      if (!response.ok) {
+        setStatus(payload?.error || "Application could not be submitted. Please try again.");
+        setStatusTone("error");
+        return;
+      }
 
-    if (!response.ok) {
-      setStatus(payload?.error || "Application could not be submitted. Please try again.");
+      formElement.reset();
+      setForm(initialFormState);
+      setFileNames([]);
+      lastSubmittedSignatureRef.current = submissionSignature;
+      setStatusTone("success");
+      setStatus(
+        payload?.emailDelivery?.confirmation?.status === "sent"
+          ? applicationConfirmationMessage
+          : "Thank you for your submission. Nest Foods Limited will review your application and reach out to you.",
+      );
+    } catch {
+      setStatus("Application could not be submitted. Please check your connection and try again.");
       setStatusTone("error");
-      return;
+    } finally {
+      inFlightSubmissionRef.current = false;
+      setIsSubmitting(false);
     }
-
-    event.currentTarget.reset();
-    setForm(initialFormState);
-    setFileNames([]);
-    setStatusTone("success");
-    setStatus(
-      payload?.emailDelivery?.confirmation?.status === "sent"
-        ? "Application submitted. A confirmation email has been sent to your inbox."
-        : "Application submitted online. HR will review your details.",
-    );
   }
 
   return (

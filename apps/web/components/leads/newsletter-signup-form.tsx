@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { FormToast } from "@/components/ui/form-toast";
@@ -18,38 +18,63 @@ type NewsletterResponse = {
 export function NewsletterSignupForm() {
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
+  const inFlightSubmissionRef = useRef(false);
+  const lastSubmittedSignatureRef = useRef<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    setState("submitting");
-    setMessage("");
-
-    const response = await fetch("/api/newsletter/subscribe", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        email: String(formData.get("email") ?? ""),
-        source: "homepage",
-        consentMarketing: formData.get("consentMarketing") === "on",
-      }),
-    });
-
-    const payload = (await response.json().catch(() => null)) as NewsletterResponse | null;
-
-    if (!response.ok) {
-      setState("error");
-      setMessage("Newsletter signup could not be saved. Please try again.");
+    if (inFlightSubmissionRef.current) {
       return;
     }
 
-    event.currentTarget.reset();
-    setState("success");
-    setMessage(
-      payload?.emailDelivery?.confirmation?.status === "sent"
-        ? "Signup received. A confirmation email has been sent."
-        : "Signup received. Updates will be sent by Nest Foods Limited.",
-    );
+    const formElement = event.currentTarget;
+    const formData = new FormData(formElement);
+    const payload = {
+      email: String(formData.get("email") ?? "").trim().toLowerCase(),
+      source: "homepage",
+      consentMarketing: formData.get("consentMarketing") === "on",
+    };
+    const submissionSignature = JSON.stringify(payload);
+
+    if (lastSubmittedSignatureRef.current === submissionSignature) {
+      setState("success");
+      setMessage("Signup already received. Please check your inbox for confirmation.");
+      return;
+    }
+
+    inFlightSubmissionRef.current = true;
+    setState("submitting");
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const responsePayload = (await response.json().catch(() => null)) as NewsletterResponse | null;
+
+      if (!response.ok) {
+        setState("error");
+        setMessage("Newsletter signup could not be saved. Please try again.");
+        return;
+      }
+
+      formElement.reset();
+      lastSubmittedSignatureRef.current = submissionSignature;
+      setState("success");
+      setMessage(
+        responsePayload?.emailDelivery?.confirmation?.status === "sent"
+          ? "Signup received. Please check your inbox for confirmation."
+          : "Signup received. Updates will be sent by Nest Foods Limited.",
+      );
+    } catch {
+      setState("error");
+      setMessage("Newsletter signup could not be saved. Please check your connection and try again.");
+    } finally {
+      inFlightSubmissionRef.current = false;
+    }
   }
 
   return (

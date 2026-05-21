@@ -198,7 +198,7 @@ export async function sendCareerApplicationEmails(input: {
     text: [
       `Hello ${input.application.fullName},`,
       "",
-      "Nest Foods Limited has received your career application. HR will review your details and contact you if your application matches current openings.",
+      "Thank you for your submission. Nest Foods Limited has received your career application. HR will review your details and contact you by email if your application matches current openings. A copy of your submission is included below.",
       "",
       detailsToText(details),
       "",
@@ -206,7 +206,7 @@ export async function sendCareerApplicationEmails(input: {
     ].join("\n"),
     html: buildEmailHtml(
       "Application received",
-      `Hello ${input.application.fullName}, Nest Foods Limited has received your career application. HR will review your details and contact you if your application matches current openings.`,
+      `Hello ${input.application.fullName}, thank you for your submission. Nest Foods Limited has received your career application. HR will review your details and contact you by email if your application matches current openings. A copy of your submission is included below.`,
       details,
       "This is an automated confirmation from Nest Foods Limited.",
     ),
