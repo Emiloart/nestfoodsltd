@@ -20,6 +20,31 @@ function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((entry) => typeof entry === "string");
 }
 
+function mergeSocialChannels(
+  input: CompanyContent["socialChannels"] | undefined,
+  fallback: CompanyContent["socialChannels"],
+) {
+  const merged = [...(input ?? [])];
+  for (const channel of fallback) {
+    const alreadyExists = merged.some(
+      (entry) => entry.id === channel.id || entry.href === channel.href,
+    );
+    if (!alreadyExists) {
+      merged.push(channel);
+    }
+  }
+
+  return merged;
+}
+
+function mergePendingSocialChannels(input: string[] | undefined, fallback: string[]) {
+  const activeSocialLabels = new Set(
+    COMPANY_CONTENT_SEED_DATA.socialChannels.map((channel) => channel.label.toLowerCase()),
+  );
+  const source = isStringArray(input) ? input : fallback;
+  return source.filter((label) => !activeSocialLabels.has(label.toLowerCase()));
+}
+
 function mergeCompanyContent(input: Partial<CompanyContent> | null | undefined): CompanyContent {
   if (!input) {
     return structuredClone(COMPANY_CONTENT_SEED_DATA);
@@ -37,8 +62,11 @@ function mergeCompanyContent(input: Partial<CompanyContent> | null | undefined):
     faqs: input.faqs ?? fallback.faqs,
     contactChannels: input.contactChannels ?? fallback.contactChannels,
     whatsappContacts: input.whatsappContacts ?? fallback.whatsappContacts,
-    socialChannels: input.socialChannels ?? fallback.socialChannels,
-    pendingSocialChannels: input.pendingSocialChannels ?? fallback.pendingSocialChannels,
+    socialChannels: mergeSocialChannels(input.socialChannels, fallback.socialChannels),
+    pendingSocialChannels: mergePendingSocialChannels(
+      input.pendingSocialChannels,
+      fallback.pendingSocialChannels,
+    ),
     branchLocations: input.branchLocations ?? fallback.branchLocations,
     headOfficeMapUrl: input.headOfficeMapUrl?.trim() || fallback.headOfficeMapUrl,
     headOfficeEmbedMapUrl: input.headOfficeEmbedMapUrl?.trim() || fallback.headOfficeEmbedMapUrl,

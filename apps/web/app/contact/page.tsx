@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { EnquiryCaptureForms } from "@/components/leads/enquiry-capture-forms";
-import { FacebookIcon, WhatsAppIcon } from "@/components/social-icons";
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/social-icons";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -9,6 +9,15 @@ import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+
+function ContactSocialIcon({ id, label }: { id: string; label: string }) {
+  const socialName = `${id} ${label}`.toLowerCase();
+  if (socialName.includes("instagram")) {
+    return <InstagramIcon />;
+  }
+
+  return <FacebookIcon />;
+}
 
 export default async function ContactPage() {
   const [page, company] = await Promise.all([getCmsPage("contact"), getCompanyContent()]);
@@ -144,7 +153,7 @@ export default async function ContactPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-2 text-sm font-semibold text-neutral-800 transition hover:border-[color:var(--border-strong)]"
             >
-              <FacebookIcon />
+              <ContactSocialIcon id={social.id} label={social.label} />
               {social.label}
             </Link>
           ))}

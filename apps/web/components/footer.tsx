@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
-import { FacebookIcon } from "@/components/social-icons";
+import { FacebookIcon, InstagramIcon } from "@/components/social-icons";
 import { type CompanyContent } from "@/lib/company/types";
 
 const footerLinks = [
@@ -11,6 +11,15 @@ const footerLinks = [
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
+
+function FooterSocialIcon({ id, label }: { id: string; label: string }) {
+  const socialName = `${id} ${label}`.toLowerCase();
+  if (socialName.includes("instagram")) {
+    return <InstagramIcon className="h-3.5 w-3.5" />;
+  }
+
+  return <FacebookIcon className="h-3.5 w-3.5" />;
+}
 
 export function Footer({ company }: { company: CompanyContent }) {
   return (
@@ -31,7 +40,7 @@ export function Footer({ company }: { company: CompanyContent }) {
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs text-white/84 transition hover:bg-white/12"
                 >
-                  <FacebookIcon className="h-3.5 w-3.5" />
+                  <FooterSocialIcon id={social.id} label={social.label} />
                   {social.label}
                 </Link>
               ))}

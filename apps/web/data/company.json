@@ -186,9 +186,15 @@
       "label": "Facebook",
       "value": "nest.foods.2025",
       "href": "https://www.facebook.com/nest.foods.2025"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "value": "nest_foods",
+      "href": "https://www.instagram.com/nest_foods"
     }
   ],
-  "pendingSocialChannels": ["X", "Instagram", "TikTok", "YouTube", "LinkedIn"],
+  "pendingSocialChannels": ["X", "TikTok", "YouTube", "LinkedIn"],
   "branchLocations": [
     {
       "id": "awka",
