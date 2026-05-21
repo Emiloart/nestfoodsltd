@@ -66,8 +66,8 @@ export function NewsletterSignupForm() {
       setState("success");
       setMessage(
         responsePayload?.emailDelivery?.confirmation?.status === "sent"
-          ? "Signup received. Please check your inbox for confirmation."
-          : "Signup received. Updates will be sent by Nest Foods Limited.",
+          ? "Thank you for signing up for Nest Foods limited newsletter."
+          : "Successful. Updates will be sent by Nest Foods Limited.",
       );
     } catch {
       setState("error");
