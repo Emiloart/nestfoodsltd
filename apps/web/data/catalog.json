@@ -8,22 +8,22 @@
       "category": "Family Bread",
       "shortDescription": "The largest De-Nest loaf, baked for generous family portions, breakfast, sandwiches, and shared table moments.",
       "longDescription": "De-Nest Family Jumbo Bread is the largest and most satisfying loaf in the range, specially baked for families who enjoy generous portions of soft, tasty, and wholesome bread. Crafted with premium wheat flour and baked to golden perfection, it delivers a light, fluffy texture and rich bakery-fresh aroma.",
-      "imageUrl": "/media/products/nestfoodsltd-jumbo-loaf.png",
+      "imageUrl": "/media/products/de-nest-family-jumbo-bread-packaged.jpg",
       "galleryUrls": [
-        "/media/products/nestfoodsltd-jumbo-loaf.png",
-        "/media/products/nestfoodsltd-jumbo-loaf-texture.png",
+        "/media/products/de-nest-family-jumbo-bread-packaged.jpg",
+        "/media/products/de-nest-family-jumbo-bread-with-slices.png",
         "/media/products/nestfoodsltd-unpacked-loaf.png"
       ],
       "galleryImages": [
         {
-          "url": "/media/products/nestfoodsltd-jumbo-loaf.png",
+          "url": "/media/products/de-nest-family-jumbo-bread-packaged.jpg",
           "altText": "De-Nest Family Jumbo Bread product view",
           "label": "Packaged jumbo loaf"
         },
         {
-          "url": "/media/products/nestfoodsltd-jumbo-loaf-texture.png",
-          "altText": "De-Nest Family Jumbo Bread loaf and texture view",
-          "label": "Jumbo loaf texture"
+          "url": "/media/products/de-nest-family-jumbo-bread-with-slices.png",
+          "altText": "De-Nest Family Jumbo Bread loaf with slices view",
+          "label": "Jumbo loaf with slices"
         },
         {
           "url": "/media/products/nestfoodsltd-unpacked-loaf.png",

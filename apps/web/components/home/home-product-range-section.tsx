@@ -12,7 +12,9 @@ type HomeProductRangeSectionProps = {
 };
 
 export function HomeProductRangeSection({ products }: HomeProductRangeSectionProps) {
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = products
+    .filter((product) => product.slug !== "de-nest-mini-bread")
+    .slice(0, 4);
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9">

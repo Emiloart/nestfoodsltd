@@ -11,6 +11,11 @@ const relativeDataFilePath = path.join("data", "catalog.json");
 const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.CATALOG_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "catalog";
+const jumboImageUrls = [
+  "/media/products/de-nest-family-jumbo-bread-packaged.jpg",
+  "/media/products/de-nest-family-jumbo-bread-with-slices.png",
+  "/media/products/nestfoodsltd-unpacked-loaf.png",
+];
 const miniComingSoonImageUrl = "/placeholders/products/mini-bread-coming-soon.svg";
 const midiImageUrls = [
   "/media/products/nestfoodsltd-midi-loaf.png",
@@ -24,6 +29,34 @@ function withComingSoon(value: string) {
 
 function normalizeCurrentCatalogueProducts(products: CatalogueData["products"]) {
   return products.map((product) => {
+    if (
+      product.slug === "de-nest-family-jumbo-bread" ||
+      product.id === "catalogue-de-nest-family-jumbo-bread"
+    ) {
+      return {
+        ...product,
+        imageUrl: jumboImageUrls[0]!,
+        galleryUrls: jumboImageUrls,
+        galleryImages: [
+          {
+            url: jumboImageUrls[0]!,
+            altText: "De-Nest Family Jumbo Bread product view",
+            label: "Packaged jumbo loaf",
+          },
+          {
+            url: jumboImageUrls[1]!,
+            altText: "De-Nest Family Jumbo Bread loaf with slices view",
+            label: "Jumbo loaf with slices",
+          },
+          {
+            url: jumboImageUrls[2]!,
+            altText: "Unpacked De-Nest family loaf texture view",
+            label: "Unpacked loaf",
+          },
+        ],
+      };
+    }
+
     if (product.slug === "de-nest-mini-bread" || product.id === "catalogue-de-nest-mini-bread") {
       return {
         ...product,
