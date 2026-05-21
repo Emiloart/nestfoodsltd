@@ -43,6 +43,17 @@ function splitRecipients(value: string | undefined) {
     .filter(Boolean);
 }
 
+function normalizeRecipients(value: string | string[]) {
+  const recipients = Array.isArray(value) ? value : [value];
+  return recipients.map((entry) => entry.trim()).filter(Boolean);
+}
+
+function resolveEmailDomain(address: string) {
+  const bracketMatch = address.match(/<([^>]+)>/);
+  const emailAddress = (bracketMatch?.[1] ?? address).trim();
+  return emailAddress.includes("@") ? emailAddress.split("@").pop()?.toLowerCase() : undefined;
+}
+
 export function getEmailServiceStatus() {
   const provider = getConfiguredProvider();
   const from = process.env.EMAIL_FROM?.trim() || "De-Nest Bread <noreply@nestfoodsltd.com>";
@@ -55,6 +66,8 @@ export function getEmailServiceStatus() {
     enabled,
     from,
     replyTo,
+    fromDomain: resolveEmailDomain(from),
+    usingDefaultFrom: !process.env.EMAIL_FROM?.trim(),
     resendApiKeyConfigured,
     notificationRecipients: {
       sales: splitRecipients(process.env.SALES_NOTIFICATION_EMAIL || "sales@nestfoodsltd.com"),
@@ -76,6 +89,8 @@ export function getEmailServiceHealth() {
     enabled: status.enabled,
     fromConfigured: Boolean(status.from),
     replyToConfigured: Boolean(status.replyTo),
+    fromDomain: status.fromDomain,
+    usingDefaultFrom: status.usingDefaultFrom,
     resendApiKeyConfigured: status.resendApiKeyConfigured,
     notificationRecipientsConfigured: {
       sales: status.notificationRecipients.sales.length > 0,
@@ -87,6 +102,15 @@ export function getEmailServiceHealth() {
 
 export async function sendTransactionalEmail(input: TransactionalEmailInput): Promise<EmailSendResult> {
   const status = getEmailServiceStatus();
+  const recipients = normalizeRecipients(input.to);
+
+  if (recipients.length === 0) {
+    return {
+      status: "skipped",
+      provider: status.provider,
+      reason: "No email recipients were provided.",
+    };
+  }
 
   if (status.provider === "disabled") {
     return {
@@ -119,10 +143,11 @@ export async function sendTransactionalEmail(input: TransactionalEmailInput): Pr
       headers: {
         authorization: `Bearer ${apiKey}`,
         "content-type": "application/json",
+        "user-agent": "nestfoodsltd-web/1.0",
       },
       body: JSON.stringify({
         from: status.from,
-        to: Array.isArray(input.to) ? input.to : [input.to],
+        to: recipients,
         subject: input.subject,
         text: input.text,
         html: input.html,

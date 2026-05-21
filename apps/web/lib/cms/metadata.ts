@@ -15,7 +15,7 @@ export function cmsPageMetadata(page: CmsPage, options?: CmsPageMetadataOptions)
     title: page.seo.title ?? page.title,
     description: page.seo.description ?? page.description,
     alternates: {
-      canonical: canonicalPath,
+      canonical: absoluteUrl(canonicalPath),
     },
     openGraph: {
       title: page.seo.title ?? page.title,

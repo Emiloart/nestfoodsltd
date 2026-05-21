@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   description:
     "Premium bread manufacturing, product information, and company details from Nest Foods Limited.",
   icons: {
-    icon: "/brand/logos/logo-primary.png",
-    shortcut: "/brand/logos/logo-primary.png",
-    apple: "/brand/logos/logo-primary.png",
+    icon: [{ url: "/icon.png", sizes: "any", type: "image/png" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 

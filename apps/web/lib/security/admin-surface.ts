@@ -3,6 +3,8 @@ import { type NextRequest } from "next/server";
 const DEFAULT_ADMIN_HOSTS = [
   "admin.localhost:3000",
   "admin.nestfoodsltd.com",
+  "nestfoodsltd.com",
+  "www.nestfoodsltd.com",
   "nestfoodsltd-web.vercel.app",
 ];
 

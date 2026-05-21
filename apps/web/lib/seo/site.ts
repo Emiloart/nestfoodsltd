@@ -1,4 +1,5 @@
-const PRODUCTION_SITE_URL = "https://nestfoodsltd-web.vercel.app";
+const PRODUCTION_SITE_URL = "https://nestfoodsltd.com";
+const NON_CANONICAL_SITE_HOSTS = new Set(["nestfoodsltd-web.vercel.app", "www.nestfoodsltd.com"]);
 
 function ensureLeadingSlash(path: string) {
   return path.startsWith("/") ? path : `/${path}`;
@@ -11,7 +12,11 @@ export function resolveSiteUrl() {
   }
 
   try {
-    return new URL(configured).origin;
+    const url = new URL(configured);
+    if (NON_CANONICAL_SITE_HOSTS.has(url.host.toLowerCase())) {
+      return PRODUCTION_SITE_URL;
+    }
+    return url.origin;
   } catch {
     return PRODUCTION_SITE_URL;
   }
