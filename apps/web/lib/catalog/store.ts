@@ -6,6 +6,7 @@ import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/pos
 
 import { CATALOGUE_SEED_DATA } from "./seed";
 import { type CatalogueData } from "./types";
+import { normalizeCurrentCatalogueProducts } from "./current-products";
 
 const relativeDataFilePath = path.join("data", "catalog.json");
 const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
@@ -17,7 +18,7 @@ function mergeCatalogueData(input: Partial<CatalogueData> | null | undefined): C
   }
 
   return {
-    products: input.products ?? CATALOGUE_SEED_DATA.products,
+    products: normalizeCurrentCatalogueProducts(input.products ?? CATALOGUE_SEED_DATA.products),
   };
 }
 

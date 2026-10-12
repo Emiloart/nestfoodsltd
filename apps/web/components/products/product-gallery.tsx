@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
-import { ImagePlaceholder } from "@/components/image-placeholder";
+import { ProductImage } from "@/components/products/product-image";
 import { Dialog } from "@/components/ui/dialog";
 import { cn } from "@/lib/cn";
 import { type CatalogueProduct } from "@/lib/catalog/types";
@@ -76,15 +76,11 @@ export function ProductGallery({ product }: ProductGalleryProps) {
         type="button"
         disabled={!interactive}
         onClick={() => setLightboxOpen(true)}
-        className="group block w-full overflow-hidden rounded-[1.45rem] bg-[color:var(--brand-2)] text-left shadow-[0_22px_44px_rgba(46,18,69,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+        className="block w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-4"
       >
-        <ImagePlaceholder
+        <ProductImage
           src={selectedImage?.url ?? product.imageUrl}
           alt={selectedImage?.altText ?? `${product.name} product image`}
-          label={selectedImage?.label}
-          decorated={false}
-          fit="contain"
-          className="product-card-media aspect-square bg-[color:var(--brand-2)] transition duration-500 group-hover:scale-[1.025]"
           priority
           sizes="(max-width: 1024px) 100vw, 46vw"
         />
@@ -99,17 +95,14 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             aria-pressed={selectedIndex === index}
             onClick={() => setSelectedIndex(index)}
             className={cn(
-              "overflow-hidden rounded-[1rem] border bg-[color:var(--brand-2)] transition hover:border-[color:var(--brand-1)]",
-              selectedIndex === index ? "border-[color:var(--brand-3)]" : "border-white/10",
+              "self-start rounded-2xl border-2 p-1 transition hover:border-[color:var(--brand-1)]",
+              selectedIndex === index ? "border-[color:var(--brand-1)]" : "border-transparent",
             )}
           >
-            <ImagePlaceholder
+            <ProductImage
               src={image.url}
               alt={image.altText}
-              label={image.label}
-              decorated={false}
-              fit="contain"
-              className="product-card-media aspect-square bg-[color:var(--brand-2)]"
+              className="rounded-xl"
               sizes="(max-width: 768px) 32vw, 12vw"
             />
             <span className="sr-only">{image.label ?? `View ${index + 1}`}</span>
@@ -134,13 +127,10 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             </button>
 
             <div className="overflow-hidden rounded-[1.2rem] bg-white/8">
-              <ImagePlaceholder
+              <ProductImage
                 src={selectedImage?.url ?? product.imageUrl}
                 alt={selectedImage?.altText ?? `${product.name} product image`}
-                label={selectedImage?.label}
-                fit="contain"
-                decorated={false}
-                className="h-[min(78vh,54rem)] rounded-none border-0 bg-transparent"
+                className="h-[min(78vh,54rem)]"
                 priority
                 sizes="100vw"
               />

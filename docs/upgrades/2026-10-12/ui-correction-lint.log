@@ -1,0 +1,7 @@
+
+> nestfoodsltd-platform@0.1.0 lint /home/emiloart/.cache/nestfoods-upgrade/ui-check
+> pnpm --filter @nestfoodsltd/web lint
+
+
+> @nestfoodsltd/web@0.1.0 lint /home/emiloart/.cache/nestfoods-upgrade/ui-check/apps/web
+> eslint . --max-warnings=0

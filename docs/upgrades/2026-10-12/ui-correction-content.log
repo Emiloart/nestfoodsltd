@@ -1,0 +1,9 @@
+
+> nestfoodsltd-platform@0.1.0 verify:content /home/emiloart/.cache/nestfoods-upgrade/ui-check
+> pnpm --filter @nestfoodsltd/web verify:content
+
+
+> @nestfoodsltd/web@0.1.0 verify:content /home/emiloart/.cache/nestfoods-upgrade/ui-check/apps/web
+> node scripts/verify-corporate-content.mjs
+
+Corporate content regression checks passed.

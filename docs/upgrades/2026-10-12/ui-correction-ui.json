@@ -1,0 +1,82 @@
+[
+  {
+    "route": "/",
+    "width": 390,
+    "height": 5593,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products",
+    "width": 390,
+    "height": 4919,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-family-jumbo-bread",
+    "width": 390,
+    "height": 2603,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-midi-bread",
+    "width": 390,
+    "height": 2449,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-mini-bread",
+    "width": 390,
+    "height": 2371,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/",
+    "width": 1440,
+    "height": 5529,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products",
+    "width": 1440,
+    "height": 2560,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-family-jumbo-bread",
+    "width": 1440,
+    "height": 2100,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-midi-bread",
+    "width": 1440,
+    "height": 2100,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  },
+  {
+    "route": "/products/de-nest-mini-bread",
+    "width": 1440,
+    "height": 1735,
+    "overflow": false,
+    "pageErrors": [],
+    "violations": []
+  }
+]

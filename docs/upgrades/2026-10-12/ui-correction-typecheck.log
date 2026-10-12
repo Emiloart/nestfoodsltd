@@ -1,0 +1,7 @@
+
+> nestfoodsltd-platform@0.1.0 typecheck /home/emiloart/.cache/nestfoods-upgrade/ui-check
+> pnpm --filter @nestfoodsltd/web typecheck
+
+
+> @nestfoodsltd/web@0.1.0 typecheck /home/emiloart/.cache/nestfoods-upgrade/ui-check/apps/web
+> tsc --noEmit

@@ -1,65 +1,44 @@
 import Image from "next/image";
 
-import { MobileAutoCarousel } from "@/components/home/mobile-auto-carousel";
 import { SectionHeading } from "@/components/home/section-heading";
 import { type CompanyTrustCertification } from "@/lib/company/types";
-
-function CertificationCard({
-  label,
-  title,
-  body,
-  logoUrl,
-}: {
-  label: string;
-  title: string;
-  body: string;
-  logoUrl: string;
-}) {
-  return (
-    <article className="w-full min-w-[18rem] rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-5 py-5">
-      <div className="mb-4">
-        <Image
-          src={logoUrl}
-          alt={`${label} logo`}
-          width={160}
-          height={80}
-          className="h-16 w-auto rounded-lg border border-[color:var(--border)] bg-white p-1.5 object-contain"
-          unoptimized
-        />
-      </div>
-      <h3 className="text-xl font-semibold text-neutral-900">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-neutral-600">{body}</p>
-    </article>
-  );
-}
 
 export function HomeProductionStandardsSection({
   trustCertifications,
 }: {
   trustCertifications: CompanyTrustCertification[];
 }) {
-  const cards = trustCertifications.map((item) => <CertificationCard key={item.label} {...item} />);
-  const desktopCards = [...trustCertifications, ...trustCertifications];
+  // Quality control is an internal process, rather than an external certification logo.
+  const credentials = trustCertifications.filter((item) => item.label.toUpperCase() !== "QC");
+  if (!credentials.length) return null;
 
   return (
     <section
       id="production-standards"
       className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 lg:py-9"
     >
-      <SectionHeading eyebrow="Standards" title="Production Credentials" description="" />
-
-      <MobileAutoCarousel ariaLabel="Production credentials" className="mt-4" items={cards} />
-
-      <div className="group mt-4 hidden overflow-hidden md:block">
-        <div className="certification-carousel-track flex w-max items-stretch gap-4 group-hover:[animation-play-state:paused]">
-          {desktopCards.map((item, index) => (
-            <CertificationCard
-              key={`${item.label}-${index}`}
-              label={item.label}
-              title={item.title}
-              body={item.body}
-              logoUrl={item.logoUrl}
-            />
+      <SectionHeading eyebrow="Standards" title="Production Credentials" />
+      <div className="certification-marquee mt-6 overflow-hidden py-4">
+        <div className="certification-carousel-track flex w-max">
+          {[false, true].map((duplicate) => (
+            <div
+              key={String(duplicate)}
+              aria-hidden={duplicate || undefined}
+              className="certification-logo-group flex shrink-0 items-center justify-around gap-12 pr-12 md:gap-20 md:pr-20"
+            >
+              {credentials.map((item) => (
+                <Image
+                  key={item.label}
+                  src={item.logoUrl}
+                  alt={duplicate ? "" : `${item.label} — ${item.title}`}
+                  title={duplicate ? undefined : item.body}
+                  width={180}
+                  height={96}
+                  className="h-20 w-36 shrink-0 object-contain md:h-24 md:w-44"
+                  unoptimized
+                />
+              ))}
+            </div>
           ))}
         </div>
       </div>

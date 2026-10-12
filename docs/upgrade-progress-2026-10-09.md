@@ -51,3 +51,13 @@ Validation: production build, TypeScript, lint with no warnings and corporate-co
 - General career areas prefill applications without presenting unverified vacancies. Terms contact links use maintained company settings.
 
 Validation: the production build, TypeScript, lint with no warnings and corporate-content checks passed. All fourteen production browser regressions passed with zero page exceptions. Automated WCAG A/AA checks found zero violations, page exceptions or horizontal overflow across Home, Products, Jumbo details, Contact and About at 390 px and 1440 px. Browser-visible mobile catalogue height was 4,188 px in the isolated fixture. Deployment still requires the Vercel environment secrets documented above.
+
+### UI corrections requested by the owner — 12 October 2026
+
+- Restored the original catalogue normalization: Mini retains its intentional Coming soon artwork and availability, while Midi and Jumbo use their approved product photographs. This also corrects older catalogue records already stored in production without rewriting those records.
+- Removed the enclosing purple product cards and fixed square/landscape image frames. Catalogue, home previews and gallery images retain their natural proportions, show the complete photograph and have rounded edges. Removed hover scaling and the image overlay from product presentation.
+- Replaced the large Production Credentials boxes with unboxed NAFDAC, SON and NESREA logos. Equal repeated groups form a continuous right-to-left strip on mobile and desktop, including while hovered. Removed the generic internal QC badge from the external certification strip; reduced-motion settings retain a manually scrollable row.
+- Production video plays muted when scrolled into view and pauses outside the viewport or in a hidden tab. Native controls remain available. Removed the Play instruction and large custom play button.
+- Removed the pulsing contact animation and generic contact icons. Contact actions use clear text on mobile and desktop.
+
+Validation: checked the production build, TypeScript, lint with no warnings and corporate-content checks in an isolated checkout containing only these corrections. All 21 browser regressions passed. Browser checks cover Mini/Midi legacy data, uncropped images, logo movement and video playback at 390 px and 1440 px, alongside the existing navigation and enquiry checks. Visual inspection and automated WCAG A/AA scans across Home, Catalogue, Jumbo, Mini and Midi at both widths found no page exceptions, accessibility violations or horizontal overflow. Evidence is retained under [the correction checks](upgrades/2026-10-12/ui-correction-ui.json).

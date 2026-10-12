@@ -1,4 +1,7 @@
 import { test, expect } from "@playwright/test";
+import catalogue from "../data/catalog.json";
+import { normalizeCurrentCatalogueProducts } from "../lib/catalog/current-products";
+import { type CatalogueData } from "../lib/catalog/types";
 
 let pageErrors: string[];
 test.beforeEach(async ({ page }) => {
@@ -316,3 +319,126 @@ test("canonical URLs, public contact data and sitemap timestamps are consistent"
   await page.goto("/terms");
   await expect(page.getByText("sales@nestfoodsltd@gmail.com", { exact: false })).toHaveCount(0);
 });
+
+test("legacy catalogue data retains the approved Mini and Midi presentation", () => {
+  const legacy = structuredClone(catalogue) as CatalogueData;
+  const mini = legacy.products.find((product) => product.slug === "de-nest-mini-bread")!;
+  mini.imageUrl = "/media/products/nestfoodsltd-mini-loaf.png";
+  mini.galleryUrls = [mini.imageUrl];
+  mini.shortDescription = "A mini loaf.";
+  mini.longDescription = "Mini loaf information.";
+  delete mini.availability;
+  const midi = legacy.products.find((product) => product.slug === "de-nest-midi-bread")!;
+  midi.imageUrl = "/placeholders/products/product-placeholder.svg";
+  midi.galleryUrls = [midi.imageUrl];
+  const products = normalizeCurrentCatalogueProducts(legacy.products);
+  const approvedMini = products.find((product) => product.slug === mini.slug)!;
+  expect(approvedMini.availability).toBe("coming-soon");
+  expect(approvedMini.imageUrl).toBe("/placeholders/products/mini-bread-coming-soon.svg");
+  expect(approvedMini.galleryUrls).toEqual([approvedMini.imageUrl]);
+  expect(approvedMini.shortDescription).toContain("Coming soon.");
+  expect(products.find((product) => product.slug === midi.slug)!.imageUrl).toBe(
+    "/media/products/nestfoodsltd-midi-loaf.png",
+  );
+  expect(normalizeCurrentCatalogueProducts(products)).toEqual(products);
+});
+
+for (const width of [390, 1440]) {
+  test(`product images retain their full proportions and rounded edges at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/products");
+    const photos = page.locator('article img:not([src$=".svg"])');
+    await expect(photos).toHaveCount(4);
+    for (const photo of await photos.all()) {
+      await photo.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() => photo.evaluate((image: HTMLImageElement) => image.naturalWidth))
+        .toBeGreaterThan(0);
+      const proportions = await photo.evaluate((image: HTMLImageElement) => {
+        const box = image.getBoundingClientRect();
+        return {
+          ratio: box.width / box.height,
+          original: image.naturalWidth / image.naturalHeight,
+          fit: getComputedStyle(image).objectFit,
+          radius: parseFloat(getComputedStyle(image).borderTopLeftRadius),
+          frame: getComputedStyle(image.closest("article")!).backgroundColor,
+        };
+      });
+      expect(proportions.ratio).toBeCloseTo(proportions.original, 2);
+      expect(proportions.fit).toBe("contain");
+      expect(proportions.radius).toBeGreaterThan(0);
+      expect(proportions.frame).toBe("rgba(0, 0, 0, 0)");
+    }
+    const mini = page.locator("article").filter({ hasText: "De-Nest Mini Bread" });
+    await expect(mini.getByRole("img")).toHaveAttribute(
+      "src",
+      "/placeholders/products/mini-bread-coming-soon.svg",
+    );
+    await expect(mini.getByText("Coming soon", { exact: true })).toBeVisible();
+    await page.goto("/products/de-nest-family-jumbo-bread");
+    const mainImage = page
+      .getByRole("button", { name: /Open product image gallery/ })
+      .getByRole("img");
+    await mainImage.scrollIntoViewIfNeeded();
+    const box = await mainImage.boundingBox();
+    expect(box!.width / box!.height).toBeCloseTo(2 / 3, 2);
+    await expect(mainImage).toHaveCSS("object-fit", "contain");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+  });
+
+  test(`credential logos scroll continuously to the left without boxes at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/");
+    const credentials = page.locator("#production-standards");
+    await credentials.scrollIntoViewIfNeeded();
+    await expect(credentials.getByRole("img")).toHaveCount(3);
+    await expect(credentials.locator("article")).toHaveCount(0);
+    const track = credentials.locator(".certification-carousel-track");
+    await credentials.locator(".certification-marquee").hover();
+    await expect(track).toHaveCSS("animation-play-state", "running");
+    const position = () =>
+      track.evaluate((element) => new DOMMatrix(getComputedStyle(element).transform).m41);
+    const start = await position();
+    await expect.poll(position).toBeLessThan(start - 4);
+    const groups = await credentials
+      .locator(".certification-logo-group")
+      .evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().width));
+    expect(groups[0]).toBeCloseTo(groups[1]!, 2);
+    expect(groups[0]).toBeGreaterThan(Math.min(width - 48, 1200));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+  });
+
+  test(`production video starts on scroll and pauses out of view at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await expect(page.getByText("Play the video when you are ready.")).toHaveCount(0);
+    const video = page.locator("video");
+    await expect
+      .poll(() => video.evaluate((element: HTMLVideoElement) => element.paused))
+      .toBe(true);
+    await video.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime), {
+        timeout: 15_000,
+      })
+      .toBeGreaterThan(0.2);
+    expect(
+      await video.evaluate((element: HTMLVideoElement) => element.muted && element.playsInline),
+    ).toBe(true);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    await expect
+      .poll(() => video.evaluate((element: HTMLVideoElement) => element.paused))
+      .toBe(true);
+  });
+}
