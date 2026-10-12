@@ -16,7 +16,8 @@
     "verify:content": "pnpm --filter @nestfoodsltd/web verify:content",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "format:changed": "node scripts/check-format.mjs"
+    "format:changed": "node scripts/check-format.mjs",
+    "test:e2e": "pnpm --filter @nestfoodsltd/web test:e2e"
   },
   "devDependencies": {
     "prettier": "^3.5.2"

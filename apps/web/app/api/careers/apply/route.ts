@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { captureCareerApplication } from "@/lib/careers/service";
+import { validateCareerFiles } from "@/lib/careers/upload-rules";
 import { sendCareerApplicationEmails } from "@/lib/email/notifications";
 import { type TransactionalEmailAttachment } from "@/lib/email/service";
 import {
@@ -12,10 +13,6 @@ import {
 import { isTrustedOrigin, resolveClientIp } from "@/lib/security/request";
 
 export const runtime = "nodejs";
-
-const MAX_FILE_SIZE_BYTES = 3 * 1024 * 1024;
-const MAX_TOTAL_FILE_SIZE_BYTES = 4 * 1024 * 1024;
-const MAX_FILES = 4;
 
 const careerApplicationSchema = z.object({
   fullName: z.string().trim().min(2).max(140),
@@ -41,25 +38,31 @@ function cleanFileName(fileName: string) {
 
 async function buildEmailAttachments(files: File[]) {
   const attachments: TransactionalEmailAttachment[] = [];
-  let totalSize = 0;
+  const validationError = validateCareerFiles(files);
+  if (validationError) return { error: validationError, attachments };
 
   for (const file of files) {
-    if (file.size > MAX_FILE_SIZE_BYTES) {
-      return {
-        error: `${file.name} is too large. Each file must be 3MB or less.`,
-        attachments: [],
-      };
-    }
-
-    totalSize += file.size;
-    if (totalSize > MAX_TOTAL_FILE_SIZE_BYTES) {
-      return {
-        error: "Selected files are too large together. Please keep total uploads under 4MB.",
-        attachments: [],
-      };
-    }
-
     const buffer = Buffer.from(await file.arrayBuffer());
+    const extension = file.name.split(".").pop()?.toLowerCase();
+    const signatureMatches =
+      extension === "pdf"
+        ? buffer.subarray(0, 5).toString() === "%PDF-"
+        : extension === "png"
+          ? buffer.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+          : extension === "jpg" || extension === "jpeg"
+            ? buffer.subarray(0, 3).equals(Buffer.from([255, 216, 255]))
+            : extension === "doc"
+              ? buffer.subarray(0, 8).equals(Buffer.from([208, 207, 17, 224, 161, 177, 26, 225]))
+              : extension === "docx"
+                ? buffer.subarray(0, 4).equals(Buffer.from([80, 75, 3, 4])) &&
+                  buffer.includes(Buffer.from("word/")) &&
+                  buffer.includes(Buffer.from("[Content_Types].xml"))
+                : false;
+    if (!signatureMatches)
+      return {
+        error: `${file.name} does not match its document format. Please export and attach a valid file.`,
+        attachments: [],
+      };
     attachments.push({
       filename: cleanFileName(file.name),
       content: buffer.toString("base64"),
@@ -91,7 +94,10 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData().catch(() => null);
   if (!formData) {
-    const response = NextResponse.json({ error: "Invalid career application payload." }, { status: 400 });
+    const response = NextResponse.json(
+      { error: "Invalid career application payload." },
+      { status: 400 },
+    );
     applyRateLimitHeaders(response, rateLimitResult);
     return response;
   }
@@ -117,8 +123,7 @@ export async function POST(request: NextRequest) {
   const files = formData
     .getAll("files")
     .filter(isUploadedFile)
-    .filter((file) => file.size > 0 && file.name.trim())
-    .slice(0, MAX_FILES);
+    .filter((file) => file.name.trim());
 
   const attachmentResult = await buildEmailAttachments(files);
   if (attachmentResult.error) {

@@ -1,16 +1,23 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { Dialog } from "@/components/ui/dialog";
 import { cn } from "@/lib/cn";
 import { type CatalogueProduct } from "@/lib/catalog/types";
 
 type ProductGalleryProps = {
   product: CatalogueProduct;
 };
+const subscribeToHydration = () => () => {};
 
 export function ProductGallery({ product }: ProductGalleryProps) {
+  const interactive = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
   const images = useMemo(() => {
     const galleryImages =
       product.galleryImages && product.galleryImages.length > 0
@@ -40,9 +47,6 @@ export function ProductGallery({ product }: ProductGalleryProps) {
     }
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setLightboxOpen(false);
-      }
       if (event.key === "ArrowRight") {
         setSelectedIndex((current) => (current + 1) % images.length);
       }
@@ -51,11 +55,9 @@ export function ProductGallery({ product }: ProductGalleryProps) {
       }
     };
 
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [images.length, lightboxOpen]);
@@ -72,6 +74,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
     <div className="space-y-4">
       <button
         type="button"
+        disabled={!interactive}
         onClick={() => setLightboxOpen(true)}
         className="group block w-full overflow-hidden rounded-[1.45rem] bg-[color:var(--brand-2)] text-left shadow-[0_22px_44px_rgba(46,18,69,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
       >
@@ -92,12 +95,11 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           <button
             key={`${image.url}-${index}`}
             type="button"
+            aria-pressed={selectedIndex === index}
             onClick={() => setSelectedIndex(index)}
             className={cn(
               "overflow-hidden rounded-[1rem] border bg-[color:var(--brand-2)] transition hover:border-[color:var(--brand-1)]",
-              selectedIndex === index
-                ? "border-[color:var(--brand-3)]"
-                : "border-white/10",
+              selectedIndex === index ? "border-[color:var(--brand-3)]" : "border-white/10",
             )}
           >
             <ImagePlaceholder
@@ -114,21 +116,17 @@ export function ProductGallery({ product }: ProductGalleryProps) {
       </div>
 
       {lightboxOpen ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${product.name} image gallery`}
-          className="fixed inset-0 z-[90] grid place-items-center bg-black/82 p-4"
-          onClick={() => setLightboxOpen(false)}
+        <Dialog
+          open={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          label={`${product.name} image gallery`}
+          className="max-w-5xl border-white/20 bg-black p-4 text-white"
         >
-          <div
-            className="relative w-full max-w-5xl"
-            onClick={(event) => event.stopPropagation()}
-          >
+          <div className="relative w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               onClick={() => setLightboxOpen(false)}
-              className="absolute right-0 top-0 z-10 rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[color:var(--brand-2)] shadow-lg"
+              className="absolute right-0 top-0 z-10 min-h-11 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[color:var(--brand-2)] shadow-lg"
             >
               Close
             </button>
@@ -151,24 +149,24 @@ export function ProductGallery({ product }: ProductGalleryProps) {
                 <button
                   type="button"
                   onClick={showPreviousImage}
-                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:bg-white/16"
+                  className="min-h-11 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/16"
                 >
                   Previous
                 </button>
-                <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-white/72">
+                <p role="status" className="text-center text-sm font-semibold text-white">
                   {selectedIndex + 1} / {images.length}
                 </p>
                 <button
                   type="button"
                   onClick={showNextImage}
-                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white transition hover:bg-white/16"
+                  className="min-h-11 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/16"
                 >
                   Next
                 </button>
               </div>
             ) : null}
           </div>
-        </div>
+        </Dialog>
       ) : null}
     </div>
   );

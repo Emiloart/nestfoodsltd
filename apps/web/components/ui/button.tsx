@@ -10,10 +10,10 @@ const variantStyles = {
 } as const;
 
 const sizeStyles = {
-  sm: "h-9 px-4 text-[0.68rem]",
-  md: "h-11 px-5 text-[0.72rem]",
-  lg: "h-12 px-6 text-[0.76rem]",
-  icon: "h-10 w-10 p-0",
+  sm: "min-h-11 px-4 text-xs",
+  md: "min-h-11 px-5 text-sm",
+  lg: "min-h-12 px-6 text-sm",
+  icon: "h-11 w-11 p-0",
 } as const;
 
 type ButtonVariant = keyof typeof variantStyles;

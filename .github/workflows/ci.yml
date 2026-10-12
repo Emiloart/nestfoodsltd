@@ -48,3 +48,9 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Install browser
+        run: pnpm --filter @nestfoodsltd/web exec playwright install --with-deps chromium
+
+      - name: Browser regression checks
+        run: pnpm test:e2e

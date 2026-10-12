@@ -1,0 +1,30 @@
+
+> nestfoodsltd-platform@0.1.0 test:e2e /home/emiloart/.cache/nestfoods-upgrade/check
+> pnpm --filter @nestfoodsltd/web test:e2e
+
+
+> @nestfoodsltd/web@0.1.0 test:e2e /home/emiloart/.cache/nestfoods-upgrade/check/apps/web
+> playwright test
+
+[WebServer] (node:8469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+(node:8524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [web-vitals] INP over budget value=408 route=/products ip=::ffff:127.0.0.1 ua=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36
+  ✓  1 tests/public-regression.spec.ts:18:5 › desktop navigation remains usable after scrolling (5.2s)
+[WebServer] [web-vitals] CLS over budget value=0.4218009478672986 route=/products ip=::ffff:127.0.0.1 ua=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36
+  ✓  2 tests/public-regression.spec.ts:32:5 › mobile navigation traps focus and restores its trigger (4.4s)
+  ✓  3 tests/public-regression.spec.ts:50:5 › mobile consent choices have clear space and closed contact links cannot receive focus (2.9s)
+  ✓  4 tests/public-regression.spec.ts:74:5 › privacy requests recover from a network failure without clearing the email (3.5s)
+[WebServer] [web-vitals] CLS over budget value=0.27525317382812503 route=/contact ip=::ffff:127.0.0.1 ua=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36
+  ✓  5 tests/public-regression.spec.ts:88:5 › a successful supply enquiry clears the form (4.7s)
+  ✓  6 tests/public-regression.spec.ts:102:5 › server validation points to the relevant enquiry field (4.4s)
+[WebServer] [web-vitals] CLS over budget value=0.27361111111111114 route=/contact ip=::ffff:127.0.0.1 ua=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36
+  ✓  7 tests/public-regression.spec.ts:119:5 › product gallery contains keyboard focus and returns it on close (5.5s)
+[WebServer] [web-vitals] CLS over budget value=0.26392517089843753 route=/products/de-nest-family-jumbo-bread ip=::ffff:127.0.0.1 ua=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36
+  ✓  8 tests/public-regression.spec.ts:136:5 › career uploads reject bad formats, extra files and excessive total size (2.3s)
+
+  8 passed (45.1s)

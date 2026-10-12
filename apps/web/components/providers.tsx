@@ -6,6 +6,7 @@ import { FloatingContactActions } from "@/components/contact/floating-contact-ac
 import { ClientErrorReporter } from "@/components/performance/client-error-reporter";
 import { WebVitalsReporter } from "@/components/performance/web-vitals-reporter";
 import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
+import { ConsentProvider } from "@/components/privacy/consent-context";
 import { type CompanyContent } from "@/lib/company/types";
 
 type ProvidersProps = {
@@ -15,7 +16,7 @@ type ProvidersProps = {
 
 export function Providers({ children, company }: ProvidersProps) {
   return (
-    <>
+    <ConsentProvider>
       {children}
       <ClientErrorReporter />
       <WebVitalsReporter />
@@ -24,6 +25,6 @@ export function Providers({ children, company }: ProvidersProps) {
         contactChannels={company.contactChannels}
         whatsappContacts={company.whatsappContacts}
       />
-    </>
+    </ConsentProvider>
   );
 }

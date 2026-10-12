@@ -10,6 +10,8 @@ import { cn } from "@/lib/cn";
 type ActiveForm = "supply" | "distributor";
 type SubmitState = "idle" | "submitting" | "success" | "error";
 type SubmitResponse = {
+  error?: string;
+  details?: { fieldErrors?: Record<string, string[]> };
   emailDelivery?: {
     confirmation?: {
       status?: string;
@@ -55,12 +57,16 @@ function stepIsComplete(step: number, form: DistributorFormState) {
   return Boolean(form.productInterest.trim() || form.message.trim());
 }
 
-export function EnquiryCaptureForms() {
+export function EnquiryCaptureForms({ initialProduct = "" }: { initialProduct?: string }) {
   const [activeForm, setActiveForm] = useState<ActiveForm>("supply");
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [distributorStep, setDistributorStep] = useState(0);
-  const [distributorForm, setDistributorForm] = useState(initialDistributorState);
+  const [distributorForm, setDistributorForm] = useState({
+    ...initialDistributorState,
+    productInterest: initialProduct,
+  });
   const inFlightSubmissionRef = useRef(false);
   const lastSubmittedSignatureRef = useRef<string | null>(null);
 
@@ -68,7 +74,11 @@ export function EnquiryCaptureForms() {
     setDistributorForm((current) => ({ ...current, ...partial }));
   }
 
-  async function submitPayload(endpoint: string, payload: Record<string, string>) {
+  async function submitPayload(
+    endpoint: string,
+    payload: Record<string, string>,
+    formElement: HTMLFormElement,
+  ) {
     if (inFlightSubmissionRef.current) {
       return false;
     }
@@ -83,6 +93,7 @@ export function EnquiryCaptureForms() {
     inFlightSubmissionRef.current = true;
     setState("submitting");
     setMessage("");
+    setFieldErrors({});
 
     try {
       const response = await fetch(endpoint, {
@@ -95,7 +106,28 @@ export function EnquiryCaptureForms() {
 
       if (!response.ok) {
         setState("error");
-        setMessage("Your enquiry could not be saved. Please use WhatsApp or try again.");
+        const errors = Object.fromEntries(
+          Object.entries(responsePayload?.details?.fieldErrors ?? {}).map(([key, values]) => [
+            key,
+            values[0] ?? "Check this field.",
+          ]),
+        );
+        setFieldErrors(errors);
+        setMessage(
+          Object.keys(errors).length
+            ? "Please correct the highlighted fields."
+            : (responsePayload?.error ??
+                "Your enquiry could not be saved. Please try again or use WhatsApp."),
+        );
+        if (activeForm === "distributor") {
+          if (errors.fullName || errors.phone || errors.email) setDistributorStep(0);
+          else if (errors.location || errors.businessType) setDistributorStep(1);
+        }
+        const field = Object.keys(errors)[0];
+        if (field)
+          requestAnimationFrame(() =>
+            formElement.querySelector<HTMLInputElement>(`[name="${CSS.escape(field)}"]`)?.focus(),
+          );
         return false;
       }
 
@@ -118,22 +150,27 @@ export function EnquiryCaptureForms() {
 
   async function submitSupplyForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const formData = new FormData(formElement);
 
-    const saved = await submitPayload("/api/enquiries/bulk", {
-      fullName: getFormValue(formData, "fullName"),
-      phone: getFormValue(formData, "phone"),
-      email: getFormValue(formData, "email"),
-      location: getFormValue(formData, "location"),
-      productInterest: getFormValue(formData, "productInterest"),
-      quantity: getFormValue(formData, "quantity"),
-      businessType: "",
-      capacity: "",
-      message: getFormValue(formData, "message"),
-    });
+    const saved = await submitPayload(
+      "/api/enquiries/bulk",
+      {
+        fullName: getFormValue(formData, "fullName"),
+        phone: getFormValue(formData, "phone"),
+        email: getFormValue(formData, "email"),
+        location: getFormValue(formData, "location"),
+        productInterest: getFormValue(formData, "productInterest"),
+        quantity: getFormValue(formData, "quantity"),
+        businessType: "",
+        capacity: "",
+        message: getFormValue(formData, "message"),
+      },
+      formElement,
+    );
 
     if (saved) {
-      event.currentTarget.reset();
+      formElement.reset();
     }
   }
 
@@ -153,9 +190,13 @@ export function EnquiryCaptureForms() {
       return;
     }
 
-    const saved = await submitPayload("/api/enquiries/distributor", distributorForm);
+    const saved = await submitPayload(
+      "/api/enquiries/distributor",
+      distributorForm,
+      event.currentTarget,
+    );
     if (saved) {
-      setDistributorForm(initialDistributorState);
+      setDistributorForm({ ...initialDistributorState, productInterest: initialProduct });
       setDistributorStep(0);
     }
   }
@@ -172,6 +213,7 @@ export function EnquiryCaptureForms() {
             type="button"
             onClick={() => {
               setActiveForm(item.id as ActiveForm);
+              setFieldErrors({});
               setMessage("");
               setState("idle");
             }}
@@ -190,18 +232,64 @@ export function EnquiryCaptureForms() {
       {activeForm === "supply" ? (
         <form onSubmit={(event) => void submitSupplyForm(event)} className="grid gap-3">
           <div className="grid gap-3 sm:grid-cols-2">
-            <Input name="fullName" placeholder="Full name" required />
-            <Input name="phone" placeholder="Phone or WhatsApp" required />
-            <Input name="email" type="email" placeholder="Email address" />
-            <Input name="location" placeholder="City / state" />
-            <Input name="productInterest" placeholder="Product of interest" />
-            <Input name="quantity" placeholder="Estimated quantity or supply need" />
+            <Input
+              label="Full name (required)"
+              error={fieldErrors.fullName}
+              minLength={2}
+              maxLength={140}
+              autoComplete="name"
+              name="fullName"
+              placeholder="Full name"
+              required
+            />
+            <Input
+              label="Phone or WhatsApp (required)"
+              error={fieldErrors.phone}
+              type="tel"
+              minLength={7}
+              maxLength={40}
+              autoComplete="tel"
+              name="phone"
+              placeholder="Phone or WhatsApp"
+              required
+            />
+            <Input
+              label="Email address (optional)"
+              error={fieldErrors.email}
+              maxLength={180}
+              autoComplete="email"
+              name="email"
+              type="email"
+              placeholder="Email address"
+            />
+            <Input
+              label="City / state"
+              error={fieldErrors.location}
+              name="location"
+              placeholder="City / state"
+            />
+            <Input
+              label="Product of interest (optional)"
+              error={fieldErrors.productInterest}
+              defaultValue={initialProduct}
+              name="productInterest"
+              placeholder="Product of interest"
+            />
+            <Input
+              label="Estimated quantity or supply need (optional)"
+              error={fieldErrors.quantity}
+              name="quantity"
+              placeholder="Estimated quantity or supply need"
+            />
           </div>
-          <textarea
-            name="message"
-            placeholder="Additional product or supply enquiry details"
-            className={textareaClassName}
-          />
+          <label className="grid gap-1.5 text-sm font-medium text-neutral-800">
+            <span>Additional details (optional)</span>
+            <textarea
+              name="message"
+              placeholder="Additional product or supply enquiry details"
+              className={textareaClassName}
+            />
+          </label>
           <Button type="submit" disabled={state === "submitting"}>
             {state === "submitting" ? "Submitting..." : "Send Supply Enquiry"}
           </Button>
@@ -227,23 +315,41 @@ export function EnquiryCaptureForms() {
           {distributorStep === 0 ? (
             <div className="grid gap-3 sm:grid-cols-2">
               <Input
+                label="Full name (required)"
+                error={fieldErrors.fullName}
+                name="fullName"
+                minLength={2}
+                maxLength={140}
+                autoComplete="name"
                 value={distributorForm.fullName}
                 onChange={(event) => updateDistributorForm({ fullName: event.target.value })}
                 placeholder="Full name"
                 required
               />
               <Input
+                label="Phone or WhatsApp (required)"
+                error={fieldErrors.phone}
+                name="phone"
+                type="tel"
+                minLength={7}
+                maxLength={40}
+                autoComplete="tel"
                 value={distributorForm.phone}
                 onChange={(event) => updateDistributorForm({ phone: event.target.value })}
                 placeholder="Phone or WhatsApp"
                 required
               />
               <Input
+                label="Email address (optional)"
+                error={fieldErrors.email}
+                name="email"
+                maxLength={180}
+                autoComplete="email"
                 value={distributorForm.email}
                 onChange={(event) => updateDistributorForm({ email: event.target.value })}
                 type="email"
                 placeholder="Email address"
-                className="sm:col-span-2"
+                wrapperClassName="sm:col-span-2"
               />
             </div>
           ) : null}
@@ -251,22 +357,31 @@ export function EnquiryCaptureForms() {
           {distributorStep === 1 ? (
             <div className="grid gap-3 sm:grid-cols-2">
               <Input
+                label="City / state"
+                error={fieldErrors.location}
+                name="location"
                 value={distributorForm.location}
                 onChange={(event) => updateDistributorForm({ location: event.target.value })}
                 placeholder="City / state"
                 required
               />
               <Input
+                label="Business type (required)"
+                error={fieldErrors.businessType}
+                name="businessType"
                 value={distributorForm.businessType}
                 onChange={(event) => updateDistributorForm({ businessType: event.target.value })}
                 placeholder="Business type"
                 required
               />
               <Input
+                label="Outlet profile (optional)"
+                error={fieldErrors.capacity}
+                name="capacity"
                 value={distributorForm.capacity}
                 onChange={(event) => updateDistributorForm({ capacity: event.target.value })}
                 placeholder="Current capacity or outlet profile"
-                className="sm:col-span-2"
+                wrapperClassName="sm:col-span-2"
               />
             </div>
           ) : null}
@@ -274,16 +389,23 @@ export function EnquiryCaptureForms() {
           {distributorStep === 2 ? (
             <div className="grid gap-3">
               <Input
+                label="Product of interest (optional)"
+                error={fieldErrors.productInterest}
+                name="productInterest"
                 value={distributorForm.productInterest}
                 onChange={(event) => updateDistributorForm({ productInterest: event.target.value })}
                 placeholder="Product of interest"
               />
-              <textarea
-                value={distributorForm.message}
-                onChange={(event) => updateDistributorForm({ message: event.target.value })}
-                placeholder="Tell us the nature of your interest"
-                className={textareaClassName}
-              />
+              <label className="grid gap-1.5 text-sm font-medium text-neutral-800">
+                <span>Business interest details (optional)</span>
+                <textarea
+                  name="message"
+                  value={distributorForm.message}
+                  onChange={(event) => updateDistributorForm({ message: event.target.value })}
+                  placeholder="Tell us the nature of your interest"
+                  className={textareaClassName}
+                />
+              </label>
             </div>
           ) : null}
 
@@ -312,6 +434,12 @@ export function EnquiryCaptureForms() {
         </form>
       )}
 
+      <p className="text-sm text-neutral-700">
+        We use these details to respond to your enquiry.{" "}
+        <a href="/privacy" className="font-semibold text-[color:var(--brand-1)] underline">
+          Privacy information
+        </a>
+      </p>
       <FormToast
         tone={state === "error" ? "error" : state === "success" ? "success" : "info"}
         message={message}

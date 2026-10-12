@@ -1,61 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
-type ConsentResponse = {
-  consent: {
-    categories: {
-      necessary: true;
-      analytics: boolean;
-      marketing: boolean;
-      personalization: boolean;
-    };
-    consentedAt: string;
-  } | null;
-};
-
-const LOCAL_CONSENT_KEY = "nest_privacy_consent_saved";
+import { rememberConsentTime, useConsentVisibility } from "./consent-context";
 
 export function PrivacyConsentBanner() {
-  const [visible, setVisible] = useState(false);
+  const { visible } = useConsentVisibility();
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    async function loadConsent() {
-      if (window.localStorage.getItem(LOCAL_CONSENT_KEY)) {
-        setVisible(false);
-        return;
-      }
-
-      const response = await fetch("/api/privacy/consent", { cache: "no-store" });
-      if (!response.ok) {
-        setVisible(true);
-        return;
-      }
-      const data = (await response.json()) as ConsentResponse;
-      if (data.consent) {
-        window.localStorage.setItem(LOCAL_CONSENT_KEY, data.consent.consentedAt);
-        setVisible(false);
-        return;
-      }
-      setVisible(true);
-    }
-
-    void loadConsent();
-  }, []);
-
-  async function submitConsent(input: {
-    analytics: boolean;
-    marketing: boolean;
-    personalization: boolean;
-  }) {
+  async function submitConsent(optional: boolean) {
+    if (saving) return;
     setSaving(true);
-    setStatus("Saving preferences...");
-
+    setStatus("Saving preferences…");
     try {
       const response = await fetch("/api/privacy/consent", {
         method: "POST",
@@ -63,66 +21,64 @@ export function PrivacyConsentBanner() {
         credentials: "same-origin",
         body: JSON.stringify({
           source: "banner",
-          locale: typeof navigator !== "undefined" ? navigator.language : undefined,
-          categories: input,
+          locale: navigator.language,
+          categories: { analytics: optional, marketing: optional, personalization: optional },
         }),
       });
-
-      if (!response.ok) {
-        const body = (await response.json().catch(() => null)) as { error?: string } | null;
-        setStatus(body?.error ?? "Unable to save consent.");
-        return;
-      }
-
-      const data = (await response.json()) as ConsentResponse;
-      window.localStorage.setItem(
-        LOCAL_CONSENT_KEY,
-        data.consent?.consentedAt ?? new Date().toISOString(),
+      const data = (await response.json()) as { error?: string; consent?: { consentedAt: string } };
+      if (!response.ok)
+        throw new Error(data.error ?? "Unable to save preferences. Please try again.");
+      rememberConsentTime(data.consent?.consentedAt ?? new Date().toISOString());
+      setStatus("");
+    } catch (error) {
+      setStatus(
+        error instanceof TypeError || error instanceof SyntaxError
+          ? "Please check your connection and try saving your preferences again."
+          : error instanceof Error
+            ? error.message
+            : "Unable to save preferences. Please try again.",
       );
-      setStatus("Consent saved.");
-      setVisible(false);
-    } catch {
-      setStatus("Unable to save consent right now.");
     } finally {
       setSaving(false);
     }
   }
-
-  if (!visible) {
-    return null;
-  }
-
+  if (!visible) return null;
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 mx-auto w-full max-w-5xl px-4">
+    <aside
+      aria-label="Privacy preferences"
+      className="fixed inset-x-0 bottom-[calc(1rem_+_env(safe-area-inset-bottom))] z-[80] mx-auto w-full max-w-5xl px-4"
+    >
       <Card className="space-y-3 border-neutral-300 shadow-xl">
-        <p className="text-sm font-semibold text-neutral-900">Privacy Preferences</p>
-        <p className="text-xs text-neutral-600">
-          We use essential cookies for platform operation and optional cookies for analytics,
-          personalization, and marketing. You can update this anytime on the privacy page.
+        <p className="text-base font-semibold text-neutral-900">Privacy preferences</p>
+        <p className="text-sm leading-6 text-neutral-700">
+          Essential cookies keep this website working. You can choose whether to allow optional
+          analytics, personalization and marketing cookies.
         </p>
         <div className="flex flex-wrap gap-2">
-          <Button
-            size="sm"
-            onClick={() =>
-              submitConsent({ analytics: true, marketing: true, personalization: true })
-            }
-            disabled={saving}
-          >
-            Accept All
+          <Button size="sm" disabled={saving} onClick={() => void submitConsent(true)}>
+            Accept all
           </Button>
           <Button
             size="sm"
             variant="secondary"
-            onClick={() =>
-              submitConsent({ analytics: false, marketing: false, personalization: false })
-            }
             disabled={saving}
+            onClick={() => void submitConsent(false)}
           >
-            Essential Only
+            Essential only
           </Button>
+          <Link
+            href="/privacy"
+            className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-[color:var(--brand-1)] underline underline-offset-4"
+          >
+            Manage preferences
+          </Link>
         </div>
-        {status ? <p className="text-xs text-neutral-500">{status}</p> : null}
+        {status ? (
+          <p role="status" className="text-sm text-neutral-700">
+            {status}
+          </p>
+        ) : null}
       </Card>
-    </div>
+    </aside>
   );
 }

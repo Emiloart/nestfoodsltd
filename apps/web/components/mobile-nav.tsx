@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { cn } from "@/lib/cn";
 
 const navItems = [
@@ -14,91 +15,70 @@ const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-type MobileNavProps = {
-  compact?: boolean;
-};
-
-export function MobileNav({ compact = false }: MobileNavProps) {
+export function MobileNav() {
   const [open, setOpen] = useState(false);
-  const panelId = "mobile-navigation-panel";
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
-
+  const pathname = usePathname();
   return (
     <div className="lg:hidden">
       <Button
-        variant="ghost"
+        variant="primary"
         size="icon"
-        className={cn(
-          "border-[color:var(--brand-2)] bg-[color:var(--brand-3)] text-[color:var(--brand-2)] transition-all hover:border-[color:var(--brand-2)] hover:bg-white",
-          compact ? "h-8 w-8" : "h-9 w-9",
-        )}
-        aria-label={open ? "Close navigation" : "Open navigation"}
+        className="h-11 w-11"
+        aria-label="Open navigation"
+        aria-haspopup="dialog"
         aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => setOpen(true)}
       >
-        <span className="inline-flex h-4 w-4 items-center justify-center">
-          {open ? (
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
-              <path
-                d="M6 6l12 12M18 6 6 18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          )}
-        </span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-5 w-5">
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
       </Button>
-
-      {open ? (
-        <div
-          id={panelId}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation"
-          className={cn(
-            "fixed inset-x-0 z-50 border-b border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-4 shadow-[0_14px_28px_rgba(46,18,69,0.12)] transition-all",
-            compact ? "top-[3.45rem]" : "top-[4.1rem]",
-          )}
-        >
-          <nav aria-label="Mobile navigation links" className="grid gap-2">
-            {navItems.map((item) => (
+      <Dialog open={open} onClose={() => setOpen(false)} label="Mobile navigation">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <p className="text-lg font-bold">Explore Nest Foods</p>
+          <Button
+            variant="secondary"
+            size="icon"
+            aria-label="Close navigation"
+            onClick={() => setOpen(false)}
+          >
+            ×
+          </Button>
+        </div>
+        <nav aria-label="Mobile navigation links" className="grid gap-2">
+          {navItems.map((item) => {
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            return (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-base text-neutral-800 transition hover:bg-[color:var(--surface-elevated)]"
+                aria-current={active ? "page" : undefined}
                 onClick={() => setOpen(false)}
+                className={cn(
+                  "flex min-h-11 items-center rounded-xl px-4 py-3 text-base font-semibold focus-visible:outline-2 focus-visible:outline-[color:var(--brand-1)]",
+                  active
+                    ? "bg-[color:var(--brand-1)] text-white"
+                    : "bg-[color:var(--surface-strong)] text-neutral-800 hover:bg-[color:var(--surface-accent)]",
+                )}
               >
                 {item.label}
               </Link>
-            ))}
-          </nav>
-        </div>
-      ) : null}
+            );
+          })}
+        </nav>
+        <Link
+          href="/products#catalogue-search"
+          onClick={() => setOpen(false)}
+          className="mt-4 flex min-h-11 items-center rounded-xl border border-[color:var(--border)] px-4 py-3 text-sm font-semibold text-[color:var(--brand-1)]"
+        >
+          Search the product catalogue →
+        </Link>
+      </Dialog>
     </div>
   );
 }

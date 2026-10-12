@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { WhatsAppIcon } from "@/components/social-icons";
+import { useConsentVisibility } from "@/components/privacy/consent-context";
 import { cn } from "@/lib/cn";
 import { type CompanyContactChannel, type CompanyWhatsAppContact } from "@/lib/company/types";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -64,12 +65,7 @@ function ChatIcon() {
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
-      <path
-        d="M9 8.5h6M9 11h4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+      <path d="M9 8.5h6M9 11h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
@@ -84,8 +80,21 @@ export function FloatingContactActions({
   whatsappContacts,
 }: FloatingContactActionsProps) {
   const pathname = usePathname();
+  const consent = useConsentVisibility();
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        document.getElementById("floating-contact-toggle")?.focus();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -101,7 +110,7 @@ export function FloatingContactActions({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin") || !consent.ready || consent.visible) {
     return null;
   }
 
@@ -140,6 +149,8 @@ export function FloatingContactActions({
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-[70] flex w-[min(92vw,20rem)] flex-col items-end gap-3 md:bottom-6">
       <div
+        id="floating-contact-options"
+        hidden={!open}
         className={cn(
           "pointer-events-auto w-full rounded-[1.3rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3 shadow-[0_18px_38px_rgba(46,18,69,0.16)] transition duration-200",
           open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 pointer-events-none",
@@ -170,8 +181,10 @@ export function FloatingContactActions({
       </div>
 
       <button
+        id="floating-contact-toggle"
         type="button"
         aria-expanded={open}
+        aria-controls="floating-contact-options"
         aria-label={open ? "Close contact options" : "Open contact options"}
         onClick={() => setOpen((current) => !current)}
         className={cn(
