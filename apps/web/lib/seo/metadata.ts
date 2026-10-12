@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 
-import { absoluteUrl } from "@/lib/seo/site";
+import { absoluteUrl, publicImageUrl } from "@/lib/seo/site";
 
 const DEFAULT_OG_IMAGE = "/media/hero/nestfoodsltd-desktop-hero-banner2.png";
 
@@ -43,13 +43,13 @@ export function buildPageMetadata(input: BuildPageMetadataInput): Metadata {
       description: input.description,
       url: absoluteUrl(canonicalPath),
       siteName: "De-Nest Bread",
-      images: [{ url: absoluteUrl(imageUrl) }],
+      images: [{ url: publicImageUrl(imageUrl) }],
     },
     twitter: {
       card: "summary_large_image",
       title: input.title,
       description: input.description,
-      images: [absoluteUrl(imageUrl)],
+      images: [publicImageUrl(imageUrl)],
     },
   };
 }

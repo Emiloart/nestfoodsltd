@@ -1,84 +1,61 @@
 import Link from "next/link";
-
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import { buttonClassName } from "@/components/ui/button";
+import { isProductComingSoon } from "@/lib/catalog/availability";
 import { type CatalogueProduct } from "@/lib/catalog/types";
 
-type ProductEditorialCardProps = {
+export function ProductEditorialCard({
+  product,
+  compact = false,
+}: {
   product: CatalogueProduct;
   compact?: boolean;
-};
-
-function joinLabels(values: string[], fallback = "See product details") {
-  return values.filter(Boolean).join(", ") || fallback;
-}
-
-export function ProductEditorialCard({ product, compact = false }: ProductEditorialCardProps) {
-  const packSizes = joinLabels(product.packFormats.map((format) => format.label));
-  const bestFor = joinLabels(product.bestFor.slice(0, 2));
-  const ingredients = joinLabels(product.ingredients);
-  const allergens = joinLabels(product.allergens);
-
-  const infoRows = [
-    { label: "Size", value: packSizes },
-    { label: "Best for", value: bestFor },
-    { label: "Ingredients", value: ingredients },
-    { label: "Allergens", value: allergens },
-  ];
-
+}) {
+  const comingSoon = isProductComingSoon(product);
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.45rem] border border-white/10 bg-[color:var(--brand-2)] text-white shadow-[0_22px_44px_rgba(46,18,69,0.24)]">
-      <Link href={`/products/${product.slug}`} className="block">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-[color:var(--brand-2)] text-white shadow-lg">
+      <Link
+        href={`/products/${product.slug}`}
+        aria-label={`View ${product.name}`}
+        className="block focus-visible:outline-2 focus-visible:outline-[color:var(--brand-3)]"
+      >
         <ImagePlaceholder
           src={product.imageUrl}
-          alt={`${product.name} product image`}
-          label="Product Image"
+          alt={product.name}
           decorated={false}
-          className="product-card-media aspect-[2/3] bg-[color:var(--brand-2)]"
-          sizes="(max-width: 640px) 92vw, (max-width: 1280px) 45vw, 24vw"
+          fit="contain"
+          className="product-card-media aspect-[4/3] bg-[color:var(--brand-2)]"
+          sizes="(max-width: 640px) 92vw, (max-width: 1280px) 45vw, 30vw"
         />
       </Link>
-
-      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5">
-        <div className="space-y-3">
-          <span className="inline-flex rounded-full border border-white/14 bg-white/12 px-3 py-1 text-[0.66rem] font-black uppercase tracking-[0.18em] text-[color:var(--brand-3)]">
-            {product.category}
-          </span>
-          <h3 className="display-heading text-[1.7rem] text-white sm:text-[1.95rem]">
-            {product.name}
-          </h3>
-          <p className="pretty-text line-clamp-3 text-sm leading-7 text-white/72">
-            {product.shortDescription}
-          </p>
+      <div className="flex flex-1 flex-col gap-4 p-5">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-white/85">
+          <span>{product.category}</span>
+          {comingSoon ? (
+            <span className="rounded-full bg-[color:var(--brand-3)] px-3 py-1 text-[color:var(--brand-2)]">
+              Coming soon
+            </span>
+          ) : null}
         </div>
-
-        {compact ? null : (
-          <div className="divide-y divide-white/10 border-y border-white/10">
-            {infoRows.map((row, index) => (
-              <div
-                key={row.label}
-                className={
-                  index % 2 === 0
-                    ? "grid gap-1 px-3 py-2.5"
-                    : "grid gap-1 bg-white/[0.055] px-3 py-2.5"
-                }
-              >
-                <span className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-white/44">
-                  {row.label}
-                </span>
-                <span className="line-clamp-2 text-xs leading-5 text-white/78">{row.value}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
+        <h3 className="text-xl font-bold leading-snug">{product.name}</h3>
+        <p className="line-clamp-2 text-sm leading-6 text-white/85">{product.shortDescription}</p>
+        {!compact ? (
+          <dl className="grid gap-3 border-t border-white/20 pt-3 text-sm">
+            <div>
+              <dt className="text-xs font-semibold text-white/80">Pack size</dt>
+              <dd className="mt-1">
+                {product.packFormats.map((format) => format.label).join(", ")}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold text-white/80">Best for</dt>
+              <dd className="mt-1 line-clamp-1">{product.bestFor.slice(0, 2).join(", ")}</dd>
+            </div>
+          </dl>
+        ) : null}
         <Link
           href={`/products/${product.slug}`}
-          className={buttonClassName({
-            variant: "primary",
-            size: "md",
-            className: "mt-auto w-full touch-manipulation",
-          })}
+          className={buttonClassName({ variant: "primary", className: "mt-auto w-full" })}
         >
           View Product
         </Link>

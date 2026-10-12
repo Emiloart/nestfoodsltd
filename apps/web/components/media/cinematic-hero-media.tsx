@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { getImageProps } from "next/image";
+import { Dialog } from "@/components/ui/dialog";
 
 import { buttonClassName } from "@/components/ui/button";
 import { type CmsPage } from "@/lib/cms/types";
@@ -76,14 +78,37 @@ function MediaImage({
   priority?: boolean;
 }) {
   const resolvedMobileSrc = mobileSrc?.trim() || desktopSrc;
+  const { props: desktopProps } = getImageProps({
+    src: desktopSrc,
+    alt,
+    width: 1536,
+    height: 785,
+    sizes: "100vw",
+    quality: 75,
+    unoptimized: !desktopSrc.startsWith("/"),
+  });
+  const { props: mobileProps } = getImageProps({
+    src: resolvedMobileSrc,
+    alt,
+    width: 1024,
+    height: 1536,
+    sizes: "100vw",
+    quality: 75,
+    unoptimized: !resolvedMobileSrc.startsWith("/"),
+  });
 
   return (
     <picture>
-      <source media="(orientation: portrait), (max-width: 767px)" srcSet={resolvedMobileSrc} />
+      <source
+        media="(max-width: 767px)"
+        srcSet={mobileProps.srcSet ?? mobileProps.src}
+        sizes="100vw"
+      />
       {/* Separate mobile art direction uses a native picture element. */}
       <img
-        src={desktopSrc}
+        {...desktopProps}
         alt={alt}
+        fetchPriority={priority ? "high" : "auto"}
         className="h-full w-full object-cover object-center md:absolute md:left-0 md:top-1/2 md:h-auto md:min-h-full md:w-full md:-translate-y-1/2"
         loading={priority ? "eager" : "lazy"}
       />
@@ -152,11 +177,11 @@ export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) 
       </button>
 
       {open ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Watch De-Nest Bread story video"
-          className="fixed inset-0 z-[90] grid place-items-center bg-black/78 p-4 backdrop-blur-sm"
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          label="Watch De-Nest Bread story video"
+          className="max-w-5xl bg-black p-0 text-white"
         >
           <div className="w-full max-w-5xl overflow-hidden rounded-[1.5rem] border border-white/14 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
@@ -166,7 +191,7 @@ export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) 
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-full border border-white/16 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/82 transition hover:bg-white/10"
+                className="min-h-11 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Close
               </button>
@@ -180,7 +205,7 @@ export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) 
               <source src={videoUrl} />
             </video>
           </div>
-        </div>
+        </Dialog>
       ) : null}
     </>
   );

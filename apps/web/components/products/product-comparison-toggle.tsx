@@ -18,7 +18,7 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
     <Card className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700">
             Compare Products
           </p>
           <p className="mt-1 text-sm text-neutral-600">
@@ -27,6 +27,8 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
         </div>
         <button
           type="button"
+          aria-expanded={open}
+          aria-controls="product-comparison"
           onClick={() => setOpen((current) => !current)}
           className={buttonClassName({ variant: "secondary", size: "sm" })}
         >
@@ -35,10 +37,15 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
       </div>
 
       {open ? (
-        <div className="overflow-x-auto">
+        <div
+          id="product-comparison"
+          className="overflow-x-auto"
+          tabIndex={0}
+          aria-label="Product comparison table"
+        >
           <table className="w-full min-w-[720px] border-separate border-spacing-y-2 text-left text-sm">
             <thead>
-              <tr className="text-xs uppercase tracking-[0.16em] text-neutral-500">
+              <tr className="text-xs uppercase tracking-[0.16em] text-neutral-700">
                 <th className="px-3 py-2">Product</th>
                 <th className="px-3 py-2">Size</th>
                 <th className="px-3 py-2">Best for</th>
@@ -49,7 +56,10 @@ export function ProductComparisonToggle({ products }: ProductComparisonTogglePro
               {products.map((entry) => (
                 <tr key={entry.id} className="bg-[color:var(--surface-strong)]">
                   <td className="rounded-l-[1rem] px-3 py-3 font-semibold text-neutral-900">
-                    <Link href={`/products/${entry.slug}`} className="hover:text-[color:var(--brand-1)]">
+                    <Link
+                      href={`/products/${entry.slug}`}
+                      className="hover:text-[color:var(--brand-1)]"
+                    >
                       {entry.name}
                     </Link>
                   </td>

@@ -1,47 +1,40 @@
 import type { MetadataRoute } from "next";
-
 import { listCatalogueProducts } from "@/lib/catalog/service";
+import { readCmsData } from "@/lib/cms/store";
 import { absoluteUrl } from "@/lib/seo/site";
 
-const staticRoutes = [
-  "",
-  "/about",
-  "/products",
-  "/contact",
-  "/careers",
-  "/privacy",
-  "/terms",
-];
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [products] = await Promise.all([listCatalogueProducts()]);
-  const now = new Date();
-
-  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
-    url: absoluteUrl(route || "/"),
-    lastModified: new Date(),
+  const [products, cms] = await Promise.all([listCatalogueProducts(), readCmsData()]);
+  const pageDates: Record<string, string | undefined> = {
+    "/": cms.pages.home.updatedAt,
+    "/about": cms.pages.about.updatedAt,
+    "/contact": cms.pages.contact.updatedAt,
+    "/careers": cms.pages.careers.updatedAt,
+  };
+  function validDate(value?: string) {
+    return value && !Number.isNaN(Date.parse(value)) ? new Date(value) : undefined;
+  }
+  const staticEntries: MetadataRoute.Sitemap = [
+    "/",
+    "/about",
+    "/products",
+    "/contact",
+    "/careers",
+    "/privacy",
+    "/terms",
+  ].map((route) => ({
+    url: absoluteUrl(route),
+    lastModified: validDate(pageDates[route]),
     changeFrequency: "weekly",
-    priority: route === "" ? 1 : 0.8,
+    priority: route === "/" ? 1 : 0.8,
   }));
-
-  const productEntries: MetadataRoute.Sitemap = products.map((product) => ({
-    url: absoluteUrl(`/products/${product.slug}`),
-    lastModified: new Date(product.updatedAt),
-    changeFrequency: "weekly",
-    priority: 0.85,
-  }));
-
-  return [...staticEntries, ...productEntries].map((entry) => {
-    const normalizedLastModified =
-      entry.lastModified instanceof Date
-        ? entry.lastModified
-        : entry.lastModified
-          ? new Date(entry.lastModified)
-          : now;
-
-    return {
-      ...entry,
-      lastModified: Number.isNaN(normalizedLastModified.getTime()) ? now : normalizedLastModified,
-    };
-  });
+  return [
+    ...staticEntries,
+    ...products.map((product) => ({
+      url: absoluteUrl(`/products/${product.slug}`),
+      lastModified: validDate(product.updatedAt),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
+  ];
 }

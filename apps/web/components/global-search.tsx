@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useDeferredValue, useEffect, useMemo, useState } from "react";
-
+import { type FormEvent, useDeferredValue, useEffect, useId, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/cn";
 
 type SearchSuggestion = {
   id: string;
@@ -14,127 +13,138 @@ type SearchSuggestion = {
   href: string;
 };
 
-type SearchResponse = {
-  suggestions: SearchSuggestion[];
-};
-
 export function GlobalSearch() {
   const router = useRouter();
-  const resultsId = "global-search-results";
+  const resultsId = useId();
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
+  const [active, setActive] = useState(-1);
   const deferredQuery = useDeferredValue(query.trim());
-
   useEffect(() => {
-    if (deferredQuery.length < 2) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const timeoutId = window.setTimeout(async () => {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(deferredQuery)}`);
-      if (cancelled) {
-        return;
+    if (deferredQuery.length < 2) return;
+    const controller = new AbortController();
+    const timer = window.setTimeout(async () => {
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(deferredQuery)}`, {
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Search unavailable");
+        const data = (await response.json()) as { suggestions: SearchSuggestion[] };
+        if (!controller.signal.aborted) {
+          setSuggestions(data.suggestions);
+          setError(false);
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setSuggestions([]);
+          setError(true);
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
       }
-      if (!response.ok) {
-        setSuggestions([]);
-        setLoading(false);
-        return;
-      }
-      const data = (await response.json()) as SearchResponse;
-      if (cancelled) {
-        return;
-      }
-      setSuggestions(data.suggestions);
-      setLoading(false);
     }, 200);
-
     return () => {
-      cancelled = true;
-      window.clearTimeout(timeoutId);
+      window.clearTimeout(timer);
+      controller.abort();
     };
   }, [deferredQuery]);
-
-  const showResults = useMemo(
-    () => focused && (loading || suggestions.length > 0),
-    [focused, loading, suggestions.length],
-  );
-
+  const showResults = focused && query.trim().length >= 2;
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const normalized = query.trim();
-    if (!normalized) {
-      return;
-    }
-    router.push(`/products?search=${encodeURIComponent(normalized)}`);
+    const suggestion = suggestions[active];
+    if (!query.trim()) return;
+    router.push(suggestion?.href ?? `/products?search=${encodeURIComponent(query.trim())}`);
     setFocused(false);
   }
-
   return (
-    <div className="relative hidden min-w-72 lg:block">
+    <div
+      className="relative hidden min-w-72 lg:block"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+      }}
+    >
       <form onSubmit={onSubmit}>
         <Input
           value={query}
           onChange={(event) => {
-            const nextQuery = event.target.value;
-            setQuery(nextQuery);
-            if (nextQuery.trim().length < 2) {
-              setSuggestions([]);
-              setLoading(false);
-              return;
-            }
-            setLoading(true);
+            setQuery(event.target.value);
+            setActive(-1);
+            setSuggestions([]);
+            setError(false);
+            setLoading(event.target.value.trim().length >= 2);
+            setFocused(true);
           }}
           onFocus={() => setFocused(true)}
-          onBlur={() => window.setTimeout(() => setFocused(false), 120)}
-          placeholder="Search bread products, ingredients, and sizes..."
-          className="header-search h-10 rounded-full pl-10"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setFocused(false);
+              setActive(-1);
+            } else if (
+              (event.key === "ArrowDown" || event.key === "ArrowUp") &&
+              suggestions.length
+            ) {
+              event.preventDefault();
+              setFocused(true);
+              setActive((current) =>
+                event.key === "ArrowDown"
+                  ? (current + 1) % suggestions.length
+                  : (current - 1 + suggestions.length) % suggestions.length,
+              );
+            }
+          }}
+          placeholder="Search products, ingredients or sizes"
+          className="header-search rounded-full"
           aria-label="Search De-Nest Bread products and product information"
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={showResults}
-          aria-controls={resultsId}
+          aria-controls={showResults ? resultsId : undefined}
+          aria-activedescendant={showResults && active >= 0 ? `${resultsId}-${active}` : undefined}
         />
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-white/72">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
-            <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.8" />
-            <path
-              d="M16 16l4.5 4.5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </svg>
-        </span>
       </form>
-
       {showResults ? (
-        <div id={resultsId} role="listbox" className="section-frame absolute z-50 mt-3 w-full p-2">
-          {loading ? (
-            <p role="status" className="px-2 py-2 text-xs text-neutral-500">
-              Searching...
-            </p>
-          ) : (
-            <div className="space-y-1">
-              {suggestions.map((entry) => (
-                <Link
+        <div className="section-frame absolute z-50 mt-3 w-full p-2">
+          <ul
+            id={resultsId}
+            role="listbox"
+            aria-label="Product search results"
+            className="space-y-1"
+          >
+            {!loading &&
+              suggestions.map((entry, index) => (
+                <li
                   key={entry.id}
-                  href={entry.href}
+                  id={`${resultsId}-${index}`}
                   role="option"
-                  aria-selected="false"
-                  className="block rounded-[1rem] px-3 py-2.5 transition hover:bg-[color:var(--surface-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+                  aria-selected={active === index}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onMouseMove={() => setActive(index)}
+                  onClick={() => {
+                    router.push(entry.href);
+                    setFocused(false);
+                  }}
+                  className={cn(
+                    "min-h-11 cursor-pointer rounded-xl px-3 py-3 text-neutral-900",
+                    active === index && "bg-[color:var(--surface-strong)]",
+                  )}
                 >
-                  <p className="text-sm text-neutral-900">{entry.title}</p>
-                  <p className="text-xs uppercase tracking-[0.12em] text-neutral-500">
-                    {entry.subtitle ?? entry.type}
-                  </p>
-                </Link>
+                  <p className="text-sm font-semibold">{entry.title}</p>
+                  <p className="mt-1 text-xs text-neutral-700">{entry.subtitle ?? entry.type}</p>
+                </li>
               ))}
-            </div>
-          )}
+          </ul>
+          {loading || error || !suggestions.length ? (
+            <p role="status" className="px-3 py-3 text-sm text-neutral-700">
+              {loading
+                ? "Searching…"
+                : error
+                  ? "Suggestions are unavailable. Press Enter to search the catalogue."
+                  : "No suggestions. Press Enter to search the catalogue."}
+            </p>
+          ) : null}
         </div>
       ) : null}
     </div>

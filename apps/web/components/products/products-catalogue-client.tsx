@@ -1,7 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useMemo } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 import { ProductEditorialCard } from "@/components/products/product-editorial-card";
 import { Input } from "@/components/ui/input";
@@ -16,8 +17,6 @@ type ProductsCatalogueClientProps = {
 
 type SortMode = "featured" | "name" | "size";
 
-const categoryOptions = ["All", "Family Bread", "Sliced Bread", "Mini Bread", "Midi Bread"];
-
 const sortOptions: { value: SortMode; label: string }[] = [
   { value: "featured", label: "Featured" },
   { value: "name", label: "Name A-Z" },
@@ -25,7 +24,10 @@ const sortOptions: { value: SortMode; label: string }[] = [
 ];
 
 function parsePackSize(product: CatalogueProduct) {
-  const text = product.packFormats.map((format) => format.label).join(" ").toLowerCase();
+  const text = product.packFormats
+    .map((format) => format.label)
+    .join(" ")
+    .toLowerCase();
   const match = text.match(/(\d+(?:\.\d+)?)\s*(kg|g)/);
   if (!match) {
     if (product.slug.includes("sliced") || product.slug.includes("family-loaf")) {
@@ -38,16 +40,28 @@ function parsePackSize(product: CatalogueProduct) {
   return match[2] === "kg" ? value * 1000 : value;
 }
 
-export function ProductsCatalogueClient({
-  products,
-  initialCategory,
-  initialSearch,
-}: ProductsCatalogueClientProps) {
-  const normalizedInitialCategory =
-    initialCategory && categoryOptions.includes(initialCategory) ? initialCategory : "All";
-  const [category, setCategory] = useState(normalizedInitialCategory);
-  const [sortMode, setSortMode] = useState<SortMode>("featured");
-  const [search, setSearch] = useState(initialSearch ?? "");
+export function ProductsCatalogueClient({ products }: ProductsCatalogueClientProps) {
+  const params = useSearchParams();
+  const pathname = usePathname();
+  const categoryOptions = ["All", ...new Set(products.map((product) => product.category))];
+  const requestedCategory = params.get("category");
+  const category =
+    requestedCategory && categoryOptions.includes(requestedCategory) ? requestedCategory : "All";
+  const requestedSort = params.get("sort");
+  const sortMode: SortMode =
+    requestedSort === "name" || requestedSort === "size" ? requestedSort : "featured";
+  const search = params.get("search") ?? "";
+  function updateFilter(key: string, value: string, push = false) {
+    const next = new URLSearchParams(params);
+    if (value && value !== "All" && value !== "featured") next.set(key, value);
+    else next.delete(key);
+    const url = `${pathname}${next.size ? `?${next}` : ""}${window.location.hash}`;
+    if (push) window.history.pushState(null, "", url);
+    else window.history.replaceState(null, "", url);
+  }
+  function clearFilters() {
+    window.history.pushState(null, "", `${pathname}${window.location.hash}`);
+  }
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
 
   const visibleProducts = useMemo(() => {
@@ -93,23 +107,28 @@ export function ProductsCatalogueClient({
       <div className="section-frame space-y-4 px-4 py-4 sm:px-5">
         <div className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <label className="block space-y-2">
-            <span className="text-xs font-black uppercase tracking-[0.16em] text-neutral-500">
-              Search catalogue
-            </span>
+            <span className="text-sm font-semibold text-neutral-700">Search catalogue</span>
             <Input
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              id="catalogue-search"
+              type="search"
+              className="scroll-mt-32"
+              onChange={(event) => updateFilter("search", event.target.value)}
               placeholder="Search products, ingredients, or pack sizes..."
             />
           </label>
 
-          <label className="block space-y-2">
-            <span className="text-xs font-black uppercase tracking-[0.16em] text-neutral-500">
+          <div className="block space-y-2">
+            <label
+              htmlFor="catalogue-sort"
+              className="block text-sm font-semibold text-neutral-700"
+            >
               Sort
-            </span>
+            </label>
             <select
+              id="catalogue-sort"
               value={sortMode}
-              onChange={(event) => setSortMode(event.target.value as SortMode)}
+              onChange={(event) => updateFilter("sort", event.target.value, true)}
               className="field-control h-11 min-w-44 px-3 text-sm"
             >
               {sortOptions.map((option) => (
@@ -118,17 +137,18 @@ export function ProductsCatalogueClient({
                 </option>
               ))}
             </select>
-          </label>
+          </div>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div aria-label="Product categories" className="flex flex-wrap gap-2">
           {categoryOptions.map((option) => (
             <button
               key={option}
               type="button"
-              onClick={() => setCategory(option)}
+              aria-pressed={category === option}
+              onClick={() => updateFilter("category", option, true)}
               className={cn(
-                "shrink-0 rounded-full border px-4 py-2 text-xs font-black uppercase tracking-[0.14em] transition",
+                "min-h-11 rounded-full border px-4 py-2 text-sm font-semibold transition",
                 category === option
                   ? "border-[color:var(--brand-1)] bg-[color:var(--brand-1)] text-white"
                   : "border-[color:var(--border)] bg-white text-neutral-600 hover:border-[color:var(--brand-1)] hover:text-[color:var(--brand-1)]",
@@ -140,27 +160,20 @@ export function ProductsCatalogueClient({
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
-        <span>{visibleProducts.length} products shown</span>
-        <span>{category}</span>
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-neutral-700">
+        <span role="status">{visibleProducts.length} products shown</span>
+        {category !== "All" || search || sortMode !== "featured" ? (
+          <Button variant="secondary" onClick={clearFilters}>
+            Clear filters
+          </Button>
+        ) : null}
       </div>
 
-      <motion.div layout className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {visibleProducts.map((product) => (
-            <motion.div
-              key={product.id}
-              layout
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 12 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-            >
-              <ProductEditorialCard product={product} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {visibleProducts.map((product) => (
+          <ProductEditorialCard key={product.id} product={product} />
+        ))}
+      </div>
 
       {visibleProducts.length === 0 ? (
         <div className="section-frame px-5 py-6">

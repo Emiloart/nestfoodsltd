@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
+import { getCatalogueProductBySlug } from "@/lib/catalog/service";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 function ContactSocialIcon({ id, label }: { id: string; label: string }) {
@@ -19,13 +20,20 @@ function ContactSocialIcon({ id, label }: { id: string; label: string }) {
   return <FacebookIcon />;
 }
 
-export default async function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ product?: string }>;
+}) {
+  const { product: productSlug } = await searchParams;
+  const selectedProduct = productSlug ? await getCatalogueProductBySlug(productSlug) : null;
   const [page, company] = await Promise.all([getCmsPage("contact"), getCompanyContent()]);
   const officialEmail = company.contactChannels.find((channel) =>
     channel.href.startsWith("mailto:"),
   );
   const primaryPhone = company.contactChannels.find((channel) => channel.href.startsWith("tel:"));
-  const generalWhatsApp = company.whatsappContacts.find((contact) => contact.id === "general") ??
+  const generalWhatsApp =
+    company.whatsappContacts.find((contact) => contact.id === "general") ??
     company.whatsappContacts[0];
   const generalWhatsAppUrl = generalWhatsApp
     ? buildWhatsAppUrl(generalWhatsApp.phone, generalWhatsApp.message)
@@ -45,7 +53,10 @@ export default async function ContactPage() {
           >
             Email Company
           </Link>
-          <Link href={primaryPhone?.href ?? "tel:+2347066898953"} className={buttonClassName({ variant: "secondary" })}>
+          <Link
+            href={primaryPhone?.href ?? "tel:+2347066898953"}
+            className={buttonClassName({ variant: "secondary" })}
+          >
             Call Primary Line
           </Link>
           <Link
@@ -60,6 +71,18 @@ export default async function ContactPage() {
         </div>
       </div>
 
+      <Card id="enquiry" className="scroll-mt-32 space-y-4">
+        <h2 className="text-xl font-bold text-neutral-900">Product enquiry</h2>
+        <p className="text-sm leading-6 text-neutral-700">
+          Ask about product supply or becoming a distributor. Our team will contact you to discuss
+          your needs.
+        </p>
+        <EnquiryCaptureForms
+          key={selectedProduct?.slug ?? "general"}
+          initialProduct={selectedProduct?.name ?? ""}
+        />
+      </Card>
+
       <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
         <Card className="space-y-4">
           <p className="section-kicker">Official Contacts</p>
@@ -70,7 +93,7 @@ export default async function ContactPage() {
                 href={channel.href}
                 className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 transition hover:border-[color:var(--border-strong)]"
               >
-                <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                <p className="text-xs uppercase tracking-[0.14em] text-neutral-700">
                   {channel.label}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-neutral-900">{channel.value}</p>
@@ -119,27 +142,27 @@ export default async function ContactPage() {
                 <p className="mt-2 text-sm leading-6 text-neutral-600">{location.address}</p>
               ) : null}
               {location.phone ? (
-                <p className="mt-3 text-xs font-semibold text-neutral-500">{location.phone}</p>
+                <Link
+                  href={`tel:${location.phone.replace(/[^+\d]/g, "")}`}
+                  className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[color:var(--brand-1)]"
+                >
+                  Call {location.phone}
+                </Link>
               ) : null}
               {location.hours ? (
-                <p className="mt-2 text-xs leading-5 text-neutral-500">{location.hours}</p>
+                <p className="mt-2 text-xs leading-5 text-neutral-700">{location.hours}</p>
               ) : null}
               <Link
                 href={location.mapUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-3 inline-flex text-xs font-semibold text-[color:var(--brand-1)] transition hover:text-[color:var(--brand-2)]"
+                className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[color:var(--brand-1)] transition hover:text-[color:var(--brand-2)]"
               >
                 Open map
               </Link>
             </div>
           ))}
         </div>
-      </Card>
-
-      <Card className="space-y-4">
-        <p className="section-kicker">Product Enquiry</p>
-        <EnquiryCaptureForms />
       </Card>
 
       <Card className="space-y-4">

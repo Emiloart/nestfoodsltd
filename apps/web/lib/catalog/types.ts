@@ -20,6 +20,7 @@ export type CatalogueProduct = {
   id: string;
   slug: string;
   status: CatalogueProductStatus;
+  availability?: "available" | "coming-soon";
   name: string;
   category: string;
   shortDescription: string;

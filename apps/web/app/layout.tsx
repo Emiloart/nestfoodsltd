@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={bodyFont.variable}>
       <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
-        <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
+        <JsonLd id="organization-ld" data={buildOrganizationStructuredData(company)} />
         <a
           href="#main-content"
           className="sr-only absolute left-4 top-4 z-[100] rounded-full border border-[color:var(--border-strong)] bg-[color:var(--action-1)] px-4 py-2 text-sm font-semibold text-[color:var(--action-text)] shadow-[0_10px_22px_rgba(238,186,11,0.2)] focus:not-sr-only"

@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { isProductComingSoon } from "@/lib/catalog/availability";
 import {
   type CatalogueGalleryImage,
   type CatalogueNutritionNote,
@@ -31,6 +32,7 @@ type CatalogProductResponse = {
 };
 
 type CatalogFormState = {
+  availability: "available" | "coming-soon";
   slug: string;
   status: CatalogueProductStatus;
   name: string;
@@ -50,6 +52,7 @@ type CatalogFormState = {
 };
 
 const emptyFormState: CatalogFormState = {
+  availability: "available",
   slug: "",
   status: "draft",
   name: "",
@@ -147,6 +150,7 @@ function parsePackFormats(text: string): CataloguePackFormat[] {
 
 function toFormState(product: CatalogueProduct): CatalogFormState {
   return {
+    availability: isProductComingSoon(product) ? "coming-soon" : "available",
     slug: product.slug,
     status: product.status,
     name: product.name,
@@ -174,6 +178,7 @@ function toFormState(product: CatalogueProduct): CatalogFormState {
 
 function buildProductPayload(form: CatalogFormState) {
   return {
+    availability: form.availability,
     slug: form.slug.trim(),
     status: form.status,
     name: form.name.trim(),
@@ -511,6 +516,21 @@ export function CatalogManagerClient() {
               <option value="draft">draft</option>
               <option value="published">published</option>
             </select>
+            <label className="grid gap-2 text-sm text-neutral-700">
+              Availability
+              <select
+                value={form.availability}
+                onChange={(event) =>
+                  updateForm({
+                    availability: event.target.value as CatalogFormState["availability"],
+                  })
+                }
+                className="field-control min-h-11 px-3"
+              >
+                <option value="available">Available for enquiries</option>
+                <option value="coming-soon">Coming soon</option>
+              </select>
+            </label>
             <Input
               value={form.name}
               onChange={(event) => updateForm({ name: event.target.value })}

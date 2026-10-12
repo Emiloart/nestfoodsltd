@@ -24,6 +24,7 @@ export const packFormatSchema = z.object({
 const baseProductSchema = z.object({
   slug: z.string().trim().min(3).max(160),
   status: z.enum(["draft", "published"]),
+  availability: z.enum(["available", "coming-soon"]).optional(),
   name: z.string().trim().min(2).max(180),
   category: z.string().trim().min(2).max(120),
   shortDescription: z.string().trim().min(8).max(280),
@@ -45,9 +46,8 @@ export const createProductSchema = baseProductSchema.extend({
   id: z.string().trim().max(160).optional(),
 });
 
-export const updateProductSchema = baseProductSchema.partial().refine(
-  (value) => Object.keys(value).length > 0,
-  {
+export const updateProductSchema = baseProductSchema
+  .partial()
+  .refine((value) => Object.keys(value).length > 0, {
     message: "At least one field is required.",
-  },
-);
+  });

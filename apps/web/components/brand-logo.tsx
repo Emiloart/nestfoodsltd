@@ -25,21 +25,25 @@ export function BrandLogo({
         width={compact ? 64 : 84}
         height={compact ? 64 : 84}
         priority
-        className={cn(
-          "h-16 w-auto object-contain object-center",
-          compact && "h-12",
-        )}
+        className={cn("h-16 w-auto object-contain object-center", compact && "h-12")}
       />
       <span className={cn("flex flex-col", compact && "hidden sm:flex")}>
         <span
           className={cn(
-            inverse ? "display-heading text-lg text-white" : "display-heading text-lg text-neutral-900",
+            inverse
+              ? "display-heading text-lg text-white"
+              : "display-heading text-lg text-neutral-900",
             compact && "text-base",
           )}
         >
           Nest Foods Limited
         </span>
-        <span className={cn("section-kicker text-[0.58rem]", inverse && "text-[color:var(--brand-3)]")}>
+        <span
+          className={cn(
+            "text-xs font-semibold uppercase tracking-[0.14em]",
+            inverse ? "text-[color:var(--brand-3)]" : "text-[color:var(--brand-1)]",
+          )}
+        >
           De-Nest Bread
         </span>
       </span>

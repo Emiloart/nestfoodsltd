@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { getCompanyContent } from "@/lib/company/service";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -29,7 +31,7 @@ const policies = [
     title: "Delivery Policy",
     paragraphs: [
       "We operate shop-to-shop delivery of our products to support timely and efficient movement of fresh products. Delivery timelines may vary based on location and volume.",
-      "Most wholesalers also pick up directly from the company or arrange suitable logistics with the company through 08061542462 or sales@nestfoodsltd@gmail.com.",
+      "Most wholesalers also pick up directly from the company or arrange suitable logistics with the company. Contact our team using the official channels below.",
       "Nest Foods Limited has trusted distribution channels to ensure that products reach customers fresh and in optimal condition.",
     ],
   },
@@ -47,7 +49,8 @@ const policies = [
   },
 ];
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const company = await getCompanyContent();
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="section-frame px-5 py-7 sm:px-6 sm:py-8">
@@ -80,6 +83,24 @@ export default function TermsPage() {
           </Card>
         ))}
       </div>
+      <Card className="space-y-4">
+        <h2 className="text-xl font-bold text-neutral-900">Contact our team</h2>
+        <div className="flex flex-wrap gap-3">
+          {company.contactChannels
+            .filter(
+              (channel) => channel.href.startsWith("mailto:") || channel.href.startsWith("tel:"),
+            )
+            .map((channel) => (
+              <Link
+                key={channel.id}
+                href={channel.href}
+                className="inline-flex min-h-11 items-center rounded-full border border-[color:var(--border)] px-4 text-sm font-semibold text-[color:var(--brand-1)]"
+              >
+                {channel.label}: {channel.value}
+              </Link>
+            ))}
+        </div>
+      </Card>
     </section>
   );
 }

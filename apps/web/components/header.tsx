@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import { BrandLogo } from "./brand-logo";
 import { GlobalSearch } from "./global-search";
@@ -19,17 +18,6 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname();
-  const [compact, setCompact] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setCompact(window.scrollY > 32);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <header className="sticky top-0 z-50">
@@ -37,11 +25,11 @@ export function Header() {
         <div
           className={cn(
             "flex items-center justify-between gap-3 px-4 transition-all duration-300 md:px-6",
-            compact ? "min-h-[3.05rem] py-1" : "min-h-[3.85rem] py-2",
+            "min-h-20 py-2",
           )}
         >
           <div className="flex min-w-0 items-center gap-3">
-            <BrandLogo className="min-w-0" tone="inverse" compact={compact} />
+            <BrandLogo className="min-w-0" tone="inverse" />
           </div>
 
           <div className="flex items-center gap-2">

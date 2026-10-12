@@ -8,7 +8,7 @@ import { ProductGallery } from "@/components/products/product-gallery";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { isProductComingSoon } from "@/lib/catalog/availability";
 import { getCatalogueProductBySlug, listCatalogueProducts } from "@/lib/catalog/service";
 import { getCompanyContent } from "@/lib/company/service";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -53,12 +53,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     return null;
   }
 
+  const comingSoon = isProductComingSoon(product);
+  const enquiryUrl = `/contact?product=${encodeURIComponent(product.slug)}#enquiry`;
   const productStructuredData = buildProductStructuredData(product);
   const packSizes = product.packFormats
     .map((format) => format.label)
     .filter(Boolean)
     .join(", ");
-  const salesWhatsApp = company.whatsappContacts.find((contact) => contact.id === "sales") ??
+  const salesWhatsApp =
+    company.whatsappContacts.find((contact) => contact.id === "sales") ??
     company.whatsappContacts[0];
   const whatsappUrl = buildWhatsAppUrl(
     salesWhatsApp?.phone ?? "08064107897",
@@ -68,71 +71,53 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
       <JsonLd id={`product-${product.slug}-ld`} data={productStructuredData} />
-      <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <ProductGallery product={product} />
-
-        <div className="space-y-6">
-          <div className="space-y-3">
-            <Badge>{product.category}</Badge>
-            <h1 className="display-heading text-4xl text-neutral-900 sm:text-[3.15rem]">
-              {product.name}
-            </h1>
-            <p className="text-sm text-neutral-600">{product.longDescription}</p>
-            <p className="text-xs text-neutral-500">
-              Size: {packSizes || "See product details"}
+      <nav
+        aria-label="Breadcrumb"
+        className="flex flex-wrap items-center gap-2 text-sm text-neutral-700"
+      >
+        <Link href="/products" className="min-h-11 py-3 underline underline-offset-4">
+          Products
+        </Link>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{product.name}</span>
+      </nav>
+      <div className="grid items-start gap-8 lg:grid-cols-2">
+        <div className="space-y-5 lg:order-last">
+          <Badge>{product.category}</Badge>
+          <h1 className="display-heading text-3xl text-neutral-900 sm:text-5xl">{product.name}</h1>
+          {comingSoon ? (
+            <p className="rounded-xl bg-[color:var(--brand-3)] px-4 py-3 text-sm font-semibold text-[color:var(--brand-2)]">
+              Coming soon — contact our team for availability updates.
             </p>
+          ) : null}
+          <p className="text-base leading-7 text-neutral-700">{product.shortDescription}</p>
+          <dl className="space-y-3 rounded-2xl border border-[color:var(--border)] bg-white p-5 text-sm text-neutral-700">
+            <div>
+              <dt className="font-semibold text-neutral-900">Pack size</dt>
+              <dd className="mt-1">{packSizes || "Ask our team for current pack sizes"}</dd>
+            </div>
             {product.shelfLife ? (
-              <p className="text-xs text-neutral-500">Freshness: {product.shelfLife}</p>
+              <div>
+                <dt className="font-semibold text-neutral-900">Freshness and storage</dt>
+                <dd className="mt-1">{product.shelfLife}</dd>
+              </div>
             ) : null}
-            <div className="flex flex-wrap gap-2">
-              <Link href="/contact" className={buttonClassName({ variant: "primary", size: "sm" })}>
-                Make Enquiry
-              </Link>
-              <Link
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={buttonClassName({ variant: "brand", size: "sm" })}
-              >
-                Chat on WhatsApp
-              </Link>
-            </div>
-          </div>
-
-          <Card className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-              9-10 Day Freshness
-            </p>
-            <div className="grid grid-cols-10 gap-1.5">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <div
-                  key={index}
-                  className={
-                    index < 9
-                      ? "h-3 rounded-full bg-[color:var(--brand-3)]"
-                      : "h-3 rounded-full bg-[color:var(--action-2)]"
-                  }
-                />
-              ))}
-            </div>
-            <p className="text-sm leading-7 text-neutral-600">
-              {product.shelfLife ??
-                "Follow the storage notes for best freshness."}
-            </p>
-          </Card>
-
-          <div className="grid gap-4">
-            <Card className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                Product specifications
-              </p>
-              <p className="text-sm text-neutral-700">Category: {product.category}</p>
-              <p className="text-sm text-neutral-700">
-                Size: {packSizes || "See product details"}
-              </p>
-            </Card>
+          </dl>
+          <div className="flex flex-wrap gap-3">
+            <Link href={enquiryUrl} className={buttonClassName({ variant: "primary" })}>
+              {comingSoon ? "Ask about availability" : "Make Enquiry"}
+            </Link>
+            <Link
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonClassName({ variant: "secondary" })}
+            >
+              WhatsApp Sales
+            </Link>
           </div>
         </div>
+        <ProductGallery product={product} />
       </div>
 
       <ProductDetailTabs product={product} />

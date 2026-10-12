@@ -83,7 +83,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           alt={selectedImage?.altText ?? `${product.name} product image`}
           label={selectedImage?.label}
           decorated={false}
-          className="product-card-media aspect-[2/3] bg-[color:var(--brand-2)] transition duration-500 group-hover:scale-[1.025]"
+          fit="contain"
+          className="product-card-media aspect-square bg-[color:var(--brand-2)] transition duration-500 group-hover:scale-[1.025]"
           priority
           sizes="(max-width: 1024px) 100vw, 46vw"
         />
@@ -107,7 +108,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               alt={image.altText}
               label={image.label}
               decorated={false}
-              className="product-card-media aspect-[2/3] bg-[color:var(--brand-2)]"
+              fit="contain"
+              className="product-card-media aspect-square bg-[color:var(--brand-2)]"
               sizes="(max-width: 768px) 32vw, 12vw"
             />
             <span className="sr-only">{image.label ?? `View ${index + 1}`}</span>

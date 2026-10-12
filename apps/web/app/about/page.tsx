@@ -1,5 +1,5 @@
 import { CompanyFaqSection } from "@/components/company/company-faq-section";
-import { CompanyStoryCarousel } from "@/components/company/company-story-carousel";
+import { CompanyStory } from "@/components/company/company-story";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { getCompanyContent } from "@/lib/company/service";
@@ -18,7 +18,7 @@ export default async function AboutPage() {
         </h1>
       </div>
 
-      <CompanyStoryCarousel company={company} showAboutLink={false} />
+      <CompanyStory company={company} />
 
       <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
         <Card className="space-y-3">

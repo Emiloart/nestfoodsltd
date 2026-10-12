@@ -25,9 +25,9 @@ export default async function HomePage() {
   return (
     <div className="grain-background pb-10">
       <HomeHeroSection page={homePage} />
+      <HomeProductRangeSection products={products} />
       <HomeBannerSection banners={banners} />
       <HomeProductionVideoSection />
-      <HomeProductRangeSection products={products} />
       <HomeProductionStandardsSection trustCertifications={company.trustCertifications} />
       <HomeStorySection company={company} />
       <HomeContactSection contactPage={contactPage} company={company} />

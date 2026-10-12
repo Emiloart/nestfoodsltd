@@ -201,3 +201,118 @@ test("career uploads reject bad formats, extra files and excessive total size", 
   expect((await valid.json()).emailDelivery.internal.status).toBe("skipped");
   expect((await request.get("/products")).status()).toBe(200);
 });
+
+test("catalogue filters survive refresh, browser back and clearing", async ({ page }) => {
+  await page.goto("/products");
+  await page.getByRole("button", { name: /^Essential only$/i }).click();
+  await page.getByRole("button", { name: "Mini Bread", exact: true }).click();
+  await expect(page).toHaveURL(/category=Mini/);
+  await expect(page.locator("article")).toHaveCount(1);
+  await page.getByLabel("Sort", { exact: true }).selectOption("name");
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Mini Bread", exact: true })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await expect(page.getByLabel("Sort", { exact: true })).toHaveValue("name");
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  await expect(page.locator("article")).toHaveCount(5);
+  await page.goBack();
+  await expect(page.locator("article")).toHaveCount(1);
+  await page.getByRole("button", { name: /^Clear filters$/i }).click();
+  await expect(page.locator("article")).toHaveCount(5);
+  await page.getByLabel("Search catalogue", { exact: true }).fill("no-product-with-this-name");
+  await expect(page.getByText("No products matched", { exact: false })).toBeVisible();
+  await page.reload();
+  await expect(page.getByLabel("Search catalogue", { exact: true })).toHaveValue(
+    "no-product-with-this-name",
+  );
+  await page.getByRole("button", { name: /^Clear filters$/i }).click();
+  await expect(page.getByLabel("Search catalogue", { exact: true })).toHaveValue("");
+});
+
+test("product enquiry retains the chosen product on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/products/de-nest-family-jumbo-bread");
+  await page.getByRole("button", { name: /^Essential only$/i }).click();
+  await page.getByRole("link", { name: /^Make Enquiry$/i }).click();
+  await expect(page).toHaveURL(/contact\?product=de-nest-family-jumbo-bread#enquiry$/);
+  await expect(page.getByLabel("Product of interest (optional)", { exact: true })).toHaveValue(
+    "De-Nest Family Jumbo Bread",
+  );
+});
+
+test("product details support arrow keys and announced panels", async ({ page }) => {
+  await page.goto("/products/de-nest-family-jumbo-bread");
+  const description = page.getByRole("tab", { name: "Description", exact: true });
+  await description.focus();
+  await page.keyboard.press("ArrowRight");
+  const ingredients = page.getByRole("tab", { name: "Ingredients", exact: true });
+  await expect(ingredients).toBeFocused();
+  await expect(ingredients).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("tabpanel", { name: "Ingredients", exact: true })).toBeVisible();
+  await page.keyboard.press("End");
+  await expect(page.getByRole("tab", { name: "Storage", exact: true })).toBeFocused();
+  await page.keyboard.press("Home");
+  await expect(description).toBeFocused();
+});
+
+test("global search supports keyboard selection and recovers from network failure", async ({
+  page,
+}) => {
+  await page.goto("/products");
+  const search = page.getByRole("combobox", {
+    name: "Search De-Nest Bread products and product information",
+  });
+  await search.fill("jumbo");
+  await expect(page.getByRole("option", { name: /Jumbo/ })).toBeVisible();
+  await page.keyboard.press("ArrowDown");
+  await expect(search).toHaveAttribute("aria-activedescendant", /.+-0$/);
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/products\/de-nest-family-jumbo-bread$/);
+  await page.route("**/api/search?**", (route) => route.abort());
+  await search.fill("sliced");
+  await expect(page.getByText("Suggestions are unavailable", { exact: false })).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/products\?search=sliced$/);
+});
+
+test("coming-soon products explain availability and career areas prefill applications", async ({
+  page,
+}) => {
+  await page.goto("/products/de-nest-mini-bread");
+  await expect(page.getByText("Coming soon — contact our team", { exact: false })).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Ask about availability$/i })).toHaveAttribute(
+    "href",
+    /contact\?product=de-nest-mini-bread/,
+  );
+  await page.goto("/careers?role=Driver#application");
+  // The current roles are supplied by company content, so select a listed area.
+  const roleLink = page.locator('a[href^="/careers?role="]').first();
+  const role = await roleLink.textContent();
+  await roleLink.click();
+  await expect(page.getByLabel("Position applying for (required)", { exact: true })).toHaveValue(
+    role!.trim(),
+  );
+});
+
+test("canonical URLs, public contact data and sitemap timestamps are consistent", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/products/de-nest-family-jumbo-bread");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://www.nestfoodsltd.com/products/de-nest-family-jumbo-bread",
+  );
+  const organization = await page.locator("#organization-ld").textContent();
+  const data = JSON.parse(organization!);
+  expect(data.contactPoint.some((entry: { telephone?: string }) => entry.telephone)).toBe(true);
+  expect(data.sameAs.length).toBeGreaterThan(0);
+  const first = await (await request.get("/sitemap.xml")).text();
+  const second = await (await request.get("/sitemap.xml")).text();
+  expect(second).toBe(first);
+  expect(first).toContain("https://www.nestfoodsltd.com/products");
+  await page.goto("/terms");
+  await expect(page.getByText("sales@nestfoodsltd@gmail.com", { exact: false })).toHaveCount(0);
+});

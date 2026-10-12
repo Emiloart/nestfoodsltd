@@ -258,6 +258,7 @@ export async function createAdminCatalogueProduct(input: AdminCreateProductInput
     id: productId,
     slug,
     status: normalizeProductStatus(input.status),
+    availability: input.availability,
     name: input.name,
     category: input.category,
     shortDescription: input.shortDescription,

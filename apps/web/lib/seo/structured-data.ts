@@ -1,5 +1,6 @@
 import { type CatalogueProduct } from "@/lib/catalog/types";
-import { absoluteUrl } from "@/lib/seo/site";
+import { absoluteUrl, publicImageUrl } from "@/lib/seo/site";
+import type { CompanyContent } from "@/lib/company/types";
 
 type ArticleStructuredDataInput = {
   headline: string;
@@ -17,10 +18,10 @@ type FaqEntry = {
 };
 
 function resolveImageUrl(imageUrl?: string) {
-  return absoluteUrl(imageUrl ?? "/media/hero/nestfoodsltd-desktop-hero-banner2.png");
+  return publicImageUrl(imageUrl);
 }
 
-export function buildOrganizationStructuredData() {
+export function buildOrganizationStructuredData(company: CompanyContent) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -28,24 +29,27 @@ export function buildOrganizationStructuredData() {
     alternateName: "De-Nest Bread",
     url: absoluteUrl("/"),
     logo: absoluteUrl("/brand/logos/logo-primary.png"),
-    sameAs: [],
-    contactPoint: [
-      {
+    sameAs: company.socialChannels
+      .map((channel) => channel.href)
+      .filter((href) => /^https?:\/\//.test(href)),
+    contactPoint: company.contactChannels
+      .filter((channel) => channel.href.startsWith("tel:") || channel.href.startsWith("mailto:"))
+      .map((channel) => ({
         "@type": "ContactPoint",
-        contactType: "general enquiries",
+        contactType: channel.label,
+        ...(channel.href.startsWith("tel:")
+          ? { telephone: channel.href.slice(4) }
+          : { email: channel.href.slice(7) }),
         areaServed: "NG",
         availableLanguage: ["English"],
-      },
-    ],
+      })),
   };
 }
 
 export function buildProductStructuredData(product: CatalogueProduct) {
   const nutritionSource =
     product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
-  const nutrition = nutritionSource.filter(
-    (entry) => !/to be confirmed/i.test(entry.value),
-  );
+  const nutrition = nutritionSource.filter((entry) => !/to be confirmed/i.test(entry.value));
   const productProperties = [
     ...nutrition,
     ...(product.shelfLife ? [{ label: "Freshness", value: product.shelfLife }] : []),

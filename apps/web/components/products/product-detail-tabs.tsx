@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/cn";
@@ -20,12 +20,11 @@ const baseTabs = [
 type TabId = (typeof baseTabs)[number]["id"];
 
 export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
+  const id = useId();
   const [activeTab, setActiveTab] = useState<TabId>("description");
   const nutritionSource =
     product.nutrition && product.nutrition.length > 0 ? product.nutrition : product.nutritionNotes;
-  const nutrition = nutritionSource.filter(
-    (entry) => !/to be confirmed/i.test(entry.value),
-  );
+  const nutrition = nutritionSource.filter((entry) => !/to be confirmed/i.test(entry.value));
   const tabs = baseTabs.filter((tab) => tab.id !== "nutrition" || nutrition.length > 0);
 
   return (
@@ -35,15 +34,30 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
         aria-label={`${product.name} product details`}
         className="flex gap-2 overflow-x-auto rounded-full border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-1"
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <button
             key={tab.id}
             type="button"
             role="tab"
+            id={`${id}-${tab.id}`}
+            aria-controls={`${id}-panel`}
+            tabIndex={activeTab === tab.id ? 0 : -1}
             aria-selected={activeTab === tab.id}
             onClick={() => setActiveTab(tab.id)}
+            onKeyDown={(event) => {
+              let next = index;
+              if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+              else if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+              else if (event.key === "Home") next = 0;
+              else if (event.key === "End") next = tabs.length - 1;
+              else return;
+              event.preventDefault();
+              const nextTab = tabs[next]!;
+              setActiveTab(nextTab.id);
+              document.getElementById(`${id}-${nextTab.id}`)?.focus();
+            }}
             className={cn(
-              "whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] transition",
+              "min-h-11 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition",
               activeTab === tab.id
                 ? "bg-[color:var(--brand-1)] text-white"
                 : "text-neutral-600 hover:bg-[color:var(--surface-accent)]",
@@ -54,13 +68,15 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
         ))}
       </div>
 
-      <div>
+      <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-${activeTab}`} tabIndex={0}>
         {activeTab === "description" ? (
           <div className="space-y-3">
-            <p className="pretty-text text-sm leading-7 text-neutral-700">{product.longDescription}</p>
+            <p className="pretty-text text-sm leading-7 text-neutral-700">
+              {product.longDescription}
+            </p>
             {product.bestFor.length > 0 ? (
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700">
                   Who is this for?
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -81,7 +97,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
         {activeTab === "ingredients" ? (
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700">
                 Ingredients
               </p>
               <ul className="mt-3 space-y-2 text-sm text-neutral-700">
@@ -91,7 +107,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
               </ul>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700">
                 Allergens
               </p>
               <ul className="mt-3 space-y-2 text-sm text-neutral-700">
@@ -110,7 +126,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                 key={entry.label}
                 className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-3"
               >
-                <p className="text-xs text-neutral-500">{entry.label}</p>
+                <p className="text-xs text-neutral-700">{entry.label}</p>
                 <p className="text-sm font-semibold text-neutral-900">{entry.value}</p>
               </div>
             ))}
@@ -121,7 +137,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
           <div className="space-y-4">
             {product.shelfLife ? (
               <div className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--bg-accent-gold)] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700">
                   Freshness
                 </p>
                 <p className="mt-2 text-lg font-semibold text-neutral-900">{product.shelfLife}</p>

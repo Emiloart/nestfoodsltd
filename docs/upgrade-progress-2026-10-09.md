@@ -39,3 +39,15 @@ Remaining: intermittent production incident diagnosis and the visitor-interactio
 Deployment status: GitHub CI passed for milestone 1 (`572a7cb`). Its production workflow passed verification and build, then stopped at **Validate deploy secrets**. Configure `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` in the repository's production environment before rerunning deployment. No live release is confirmed.
 
 Validation: production build, TypeScript, lint with no warnings and corporate-content checks passed. All eight browser regressions passed with zero page exceptions. Durable CV retention is part of milestone 4; this milestone verifies upload rejection and request handling.
+
+### Milestone 3 — product discovery and UI (12 October 2026)
+
+- Shorter catalogue cards use readable copy and show pack size and best uses. Full ingredients and allergen information remain on product details. Category, search and sort choices are saved in the URL, with browser-back and clear-filter support.
+- Product names and enquiry actions appear before the gallery on mobile. Product links prefill the supply enquiry. The Contact form appears before maps and branch listings; branch telephone numbers are clickable.
+- Coming-soon availability is clearly labelled and editable in the catalogue manager. Saved product images are preserved when reading the catalogue.
+- Product tabs support arrow, Home and End keys with linked panels. Header suggestions support keyboard selection and recover from failed requests. Mobile navigation links to the catalogue search.
+- About uses normal page scrolling. Home shows products earlier and a shorter story summary. The header maintains its height during scrolling; mobile contact controls take less space and are omitted from Contact and Careers.
+- Hero pictures use responsive image optimization. Canonicals and sitemap use the production `www` host; external image URLs remain valid, embedded images use a public sharing fallback, and sitemap dates come from content rather than request time. Organization data includes published contacts and social links.
+- General career areas prefill applications without presenting unverified vacancies. Terms contact links use maintained company settings.
+
+Validation: the production build, TypeScript, lint with no warnings and corporate-content checks passed. All fourteen production browser regressions passed with zero page exceptions. Automated WCAG A/AA checks found zero violations, page exceptions or horizontal overflow across Home, Products, Jumbo details, Contact and About at 390 px and 1440 px. Browser-visible mobile catalogue height was 4,188 px in the isolated fixture. Deployment still requires the Vercel environment secrets documented above.

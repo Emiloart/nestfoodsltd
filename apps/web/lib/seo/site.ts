@@ -1,9 +1,5 @@
-const PRODUCTION_SITE_URL = "https://nestfoodsltd.com";
-const NON_CANONICAL_SITE_HOSTS = new Set(["nestfoodsltd-web.vercel.app", "www.nestfoodsltd.com"]);
-
-function ensureLeadingSlash(path: string) {
-  return path.startsWith("/") ? path : `/${path}`;
-}
+const PRODUCTION_SITE_URL = "https://www.nestfoodsltd.com";
+const NON_CANONICAL_SITE_HOSTS = new Set(["nestfoodsltd-web.vercel.app", "nestfoodsltd.com"]);
 
 export function resolveSiteUrl() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -23,5 +19,13 @@ export function resolveSiteUrl() {
 }
 
 export function absoluteUrl(path = "/") {
-  return new URL(ensureLeadingSlash(path), resolveSiteUrl()).toString();
+  return new URL(path || "/", resolveSiteUrl()).toString();
+}
+
+export function publicImageUrl(source?: string) {
+  return absoluteUrl(
+    source && /^(\/|https?:\/\/)/i.test(source)
+      ? source
+      : "/media/hero/nestfoodsltd-desktop-hero-banner2.png",
+  );
 }

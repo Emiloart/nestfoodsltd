@@ -8,9 +8,15 @@ import { getCompanyContent } from "@/lib/company/service";
 import { cmsPageMetadata } from "@/lib/cms/metadata";
 import { getCmsPage } from "@/lib/cms/service";
 
-export default async function CareersPage() {
+export default async function CareersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ role?: string }>;
+}) {
+  const { role: requestedRole } = await searchParams;
   const [page, company] = await Promise.all([getCmsPage("careers"), getCompanyContent()]);
   const careers = company.careers;
+  const selectedRole = careers.roles.includes(requestedRole ?? "") ? requestedRole! : "";
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:px-6">
@@ -40,15 +46,19 @@ export default async function CareersPage() {
 
       <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
         <Card className="space-y-3">
-          <p className="section-kicker">Roles</p>
+          <p className="section-kicker">General applications</p>
+          <p className="text-sm leading-6 text-neutral-700">
+            Choose an area to introduce yourself. Contact HR to ask about current vacancies.
+          </p>
           <div className="grid gap-2 sm:grid-cols-2">
             {careers.roles.map((role) => (
-              <div
+              <Link
                 key={role}
-                className="rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700"
+                href={`/careers?role=${encodeURIComponent(role)}#application`}
+                className="min-h-11 rounded-[1.1rem] border border-[color:var(--border)] bg-[color:var(--surface-strong)] px-4 py-3 text-sm text-neutral-700"
               >
                 {role}
-              </div>
+              </Link>
             ))}
           </div>
         </Card>
@@ -79,14 +89,14 @@ export default async function CareersPage() {
         </Card>
       </div>
 
-      <Card className="space-y-4">
-        <p className="section-kicker">Online Application</p>
+      <Card id="application" className="scroll-mt-32 space-y-4">
+        <h2 className="text-xl font-bold text-neutral-900">Send a general application</h2>
         <p className="text-sm leading-7 text-neutral-700">
           Applicants outside Anambra State can send their details to HR from this form. Attach your
           CV and application letter before sending. Drivers should also attach a driver&apos;s
           license or cover letter where applicable.
         </p>
-        <CareerApplicationForm />
+        <CareerApplicationForm key={selectedRole} initialPosition={selectedRole} />
       </Card>
     </section>
   );
