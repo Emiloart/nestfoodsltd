@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 import { buttonClassName } from "@/components/ui/button";
 import { type CmsPage } from "@/lib/cms/types";
@@ -39,6 +39,23 @@ function shouldPreferStaticMedia() {
   return reduceMotion || compactViewport || saveData || slowConnection;
 }
 
+function subscribeMediaPreference(callback: () => void) {
+  const queries = [
+    window.matchMedia("(prefers-reduced-motion: reduce)"),
+    window.matchMedia("(max-width: 767px)"),
+  ];
+  const connection = (navigator as NavigatorWithConnection).connection as EventTarget | undefined;
+  queries.forEach((query) => query.addEventListener("change", callback));
+  connection?.addEventListener("change", callback);
+  return () => {
+    queries.forEach((query) => query.removeEventListener("change", callback));
+    connection?.removeEventListener("change", callback);
+  };
+}
+
+const canUseVideo = () => !shouldPreferStaticMedia();
+const staticOnServer = () => false;
+
 function normalizeHeroSource(source: string | undefined, fallback: string) {
   const trimmed = source?.trim();
   if (!trimmed || trimmed.includes("/placeholders/")) {
@@ -61,9 +78,9 @@ function MediaImage({
   const resolvedMobileSrc = mobileSrc?.trim() || desktopSrc;
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <picture>
       <source media="(orientation: portrait), (max-width: 767px)" srcSet={resolvedMobileSrc} />
+      {/* Separate mobile art direction uses a native picture element. */}
       <img
         src={desktopSrc}
         alt={alt}
@@ -78,20 +95,14 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
   const wantsVideo =
     (page.heroMediaKind ?? (page.heroVideoUrl ? "video" : "image")) === "video" &&
     Boolean(page.heroVideoUrl);
-  const [canPlayVideo, setCanPlayVideo] = useState(false);
-
-  useEffect(() => {
-    if (!wantsVideo) {
-      setCanPlayVideo(false);
-      return;
-    }
-
-    setCanPlayVideo(!shouldPreferStaticMedia());
-  }, [wantsVideo]);
+  const canPlayVideo = useSyncExternalStore(subscribeMediaPreference, canUseVideo, staticOnServer);
 
   const desktopImage = normalizeHeroSource(page.heroImageUrl, defaultHeroDesktopImage);
   const mobileImage = normalizeHeroSource(page.heroImageMobileUrl, defaultHeroMobileImage);
-  const posterImage = normalizeHeroSource(page.heroVideoPosterUrl ?? page.heroImageUrl, desktopImage);
+  const posterImage = normalizeHeroSource(
+    page.heroVideoPosterUrl ?? page.heroImageUrl,
+    desktopImage,
+  );
   const staticImage = wantsVideo ? posterImage : desktopImage;
 
   return (
@@ -118,7 +129,10 @@ export function CinematicHeroMedia({ page }: CinematicHeroMediaProps) {
 export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) {
   const [open, setOpen] = useState(false);
   const videoUrl = page.heroVideoUrl;
-  const posterImage = normalizeHeroSource(page.heroVideoPosterUrl ?? page.heroImageUrl, defaultHeroPoster);
+  const posterImage = normalizeHeroSource(
+    page.heroVideoPosterUrl ?? page.heroImageUrl,
+    defaultHeroPoster,
+  );
 
   if (!videoUrl) {
     return null;
@@ -157,7 +171,12 @@ export function HeroStoryLightboxButton({ page }: HeroStoryLightboxButtonProps) 
                 Close
               </button>
             </div>
-            <video controls playsInline poster={posterImage} className="aspect-video w-full bg-black">
+            <video
+              controls
+              playsInline
+              poster={posterImage}
+              className="aspect-video w-full bg-black"
+            >
               <source src={videoUrl} />
             </video>
           </div>

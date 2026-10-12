@@ -1,77 +1,60 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-const productionVideoSrc = "/media/videos/nestfoodsltd-production-video2.webm";
+import Image from "next/image";
+import { useState } from "react";
 
 export function HomeProductionVideoSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [inViewport, setInViewport] = useState(false);
-  const [hovering, setHovering] = useState(false);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section || typeof IntersectionObserver === "undefined") {
-      setShouldLoad(true);
-      setInViewport(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const nearViewport = Boolean(entry?.isIntersecting);
-        if (nearViewport) {
-          setShouldLoad(true);
-        }
-        setInViewport(nearViewport);
-      },
-      {
-        rootMargin: "420px 0px",
-        threshold: 0.18,
-      },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !shouldLoad) {
-      return;
-    }
-
-    if (inViewport || hovering) {
-      void video.play().catch(() => undefined);
-      return;
-    }
-
-    video.pause();
-  }, [hovering, inViewport, shouldLoad]);
+  const [requested, setRequested] = useState(false);
 
   return (
     <section
-      ref={sectionRef}
       aria-label="De-Nest Bread production video"
-      className="w-full py-6 md:py-8 lg:py-9"
-      onPointerEnter={() => setHovering(true)}
-      onPointerLeave={() => setHovering(false)}
-      onFocus={() => setHovering(true)}
-      onBlur={() => setHovering(false)}
+      className="mx-auto w-full max-w-7xl px-4 py-8 md:px-6"
     >
-      <video
-        ref={videoRef}
-        className="block aspect-video w-full bg-[color:var(--brand-2)] object-cover"
-        muted
-        loop
-        playsInline
-        preload="none"
-        aria-label="Production process video"
-      >
-        {shouldLoad ? <source src={productionVideoSrc} type="video/webm" /> : null}
-      </video>
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="section-kicker">Inside the bakery</p>
+          <h2 className="display-heading mt-2 text-2xl sm:text-3xl">
+            See how De-Nest Bread is made.
+          </h2>
+        </div>
+        <p className="text-sm text-neutral-700">Play the video when you are ready.</p>
+      </div>
+      <div className="overflow-hidden rounded-2xl bg-[color:var(--brand-2)]">
+        {requested ? (
+          <video
+            className="block aspect-video w-full"
+            controls
+            autoPlay
+            playsInline
+            preload="none"
+            aria-label="De-Nest Bread production process"
+          >
+            <source src="/media/videos/nestfoodsltd-production-video2.webm" type="video/webm" />
+            Your browser cannot play this video.
+          </video>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setRequested(true)}
+            aria-label="Play De-Nest Bread production video"
+            className="relative block aspect-video w-full focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-yellow-300"
+          >
+            <Image
+              src="/media/hero/nestfoodsltd-desktop-hero-banner.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover opacity-60"
+            />
+            <span className="absolute inset-0 grid place-items-center">
+              <span className="rounded-full bg-[color:var(--brand-3)] px-6 py-4 text-base font-bold text-[color:var(--brand-2)]">
+                ▶ Watch production video
+              </span>
+            </span>
+          </button>
+        )}
+      </div>
     </section>
   );
 }

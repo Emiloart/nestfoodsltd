@@ -1,0 +1,168 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:40 GMT",
+    "url": "https://www.nestfoodsltd.com/",
+    "bytes": 885063,
+    "h1": [
+      "Every loaf is a testament to our commitment to quality"
+    ],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "Premium bread products, production standards, and company information from Nest Foods Limited."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com"
+    ],
+    "embedded_image_occurrences": 4
+  },
+  {
+    "path": "/products",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:40 GMT",
+    "url": "https://www.nestfoodsltd.com/products",
+    "bytes": 84490,
+    "h1": [
+      "De-Nest Bread Product Catalogue"
+    ],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "Browse De-Nest Bread products with ingredients, allergens, sizes, and enquiry-ready product information."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com/products"
+    ],
+    "embedded_image_occurrences": 0
+  },
+  {
+    "path": "/about",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:40 GMT",
+    "url": "https://www.nestfoodsltd.com/about",
+    "bytes": 92627,
+    "h1": [
+      "A Nigerian bakery built on quality, consistency, and trust."
+    ],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "Learn about Nest Foods Limited, the company behind De-Nest Bread."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com/about"
+    ],
+    "embedded_image_occurrences": 0
+  },
+  {
+    "path": "/careers",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:46 GMT",
+    "url": "https://www.nestfoodsltd.com/careers",
+    "bytes": 63028,
+    "h1": [
+      "Join the team behind De-Nest Bread."
+    ],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "Career opportunities and HR contacts for Nest Foods Limited."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com/careers"
+    ],
+    "embedded_image_occurrences": 0
+  },
+  {
+    "path": "/contact",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:46 GMT",
+    "url": "https://www.nestfoodsltd.com/contact",
+    "bytes": 86783,
+    "h1": [
+      "Speak with the Nest Foods Limited team."
+    ],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "Reach Nest Foods Limited for De-Nest Bread product and company enquiries."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com/contact"
+    ],
+    "embedded_image_occurrences": 0
+  },
+  {
+    "path": "/api/health",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:48 GMT",
+    "url": "https://www.nestfoodsltd.com/api/health",
+    "bytes": 634,
+    "h1": [],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [],
+    "canonical": [],
+    "embedded_image_occurrences": 0,
+    "health": {
+      "status": "ok",
+      "service": "nestfoodsltd-web",
+      "timestamp": "2026-10-09T10:37:47.995Z",
+      "environment": "production",
+      "uptimeSeconds": 0,
+      "checks": {
+        "api": "ok",
+        "email": {
+          "provider": "resend",
+          "enabled": true,
+          "fromConfigured": true,
+          "replyToConfigured": true,
+          "fromDomain": "nestfoodsltd.com",
+          "usingDefaultFrom": false,
+          "resendApiKeyConfigured": true,
+          "notificationRecipientsConfigured": {
+            "sales": true,
+            "hr": true,
+            "admin": true
+          }
+        },
+        "storageDrivers": {
+          "adminUsers": "postgres",
+          "cms": "postgres",
+          "catalog": "postgres",
+          "careers": "postgres",
+          "chat": "postgres",
+          "company": "json",
+          "enquiries": "postgres",
+          "newsletter": "postgres",
+          "observability": "postgres",
+          "privacy": "postgres"
+        }
+      }
+    }
+  },
+  {
+    "path": "/products/does-not-exist",
+    "status": 200,
+    "response_date": "Fri, 09 Oct 2026 10:37:47 GMT",
+    "url": "https://www.nestfoodsltd.com/products/does-not-exist",
+    "bytes": 47104,
+    "h1": [],
+    "error_digests": [],
+    "error_screen": false,
+    "meta_description": [
+      "The requested product could not be found."
+    ],
+    "canonical": [
+      "https://nestfoodsltd.com/products/does-not-exist"
+    ],
+    "embedded_image_occurrences": 0
+  },
+  {
+    "path": "apex domain",
+    "status": 307,
+    "location": "https://www.nestfoodsltd.com/"
+  }
+]

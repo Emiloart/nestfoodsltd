@@ -29,7 +29,10 @@ export default async function CareersPage() {
           >
             Email HR
           </Link>
-          <Link href={`tel:${careers.hrPhone}`} className={buttonClassName({ variant: "secondary" })}>
+          <Link
+            href={`tel:${careers.hrPhone}`}
+            className={buttonClassName({ variant: "secondary" })}
+          >
             Call HR
           </Link>
         </div>
@@ -80,8 +83,8 @@ export default async function CareersPage() {
         <p className="section-kicker">Online Application</p>
         <p className="text-sm leading-7 text-neutral-700">
           Applicants outside Anambra State can send their details to HR from this form. Attach your
-          CV and application letter before sending. Drivers should also attach a driver's license
-          or cover letter where applicable.
+          CV and application letter before sending. Drivers should also attach a driver&apos;s
+          license or cover letter where applicable.
         </p>
         <CareerApplicationForm />
       </Card>

@@ -1,0 +1,199 @@
+[
+  {
+    "name": "bulk invalid",
+    "status": 400,
+    "body": {
+      "error": "Invalid supply enquiry payload.",
+      "details": {
+        "formErrors": [],
+        "fieldErrors": {
+          "fullName": [
+            "String must contain at least 2 character(s)"
+          ],
+          "phone": [
+            "String must contain at least 7 character(s)"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "bulk valid",
+    "status": 201,
+    "body": {
+      "lead": {
+        "id": "80e50899-338a-451e-9918-bc36a76950f9",
+        "type": "bulk"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "bulk duplicate",
+    "status": 201,
+    "body": {
+      "lead": {
+        "id": "da4f428a-770e-4499-9d13-7f2995122ddd",
+        "type": "bulk"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "newsletter missing consent",
+    "status": 201,
+    "body": {
+      "subscriber": {
+        "id": "77263b98-e97d-4a86-8a0a-cd35413df9b5",
+        "email": "audit@example.invalid",
+        "created": true
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "newsletter valid",
+    "status": 200,
+    "body": {
+      "subscriber": {
+        "id": "77263b98-e97d-4a86-8a0a-cd35413df9b5",
+        "email": "audit@example.invalid",
+        "created": false
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "distributor valid",
+    "status": 201,
+    "body": {
+      "lead": {
+        "id": "69c973a2-988f-435a-bab0-5dec144715c6",
+        "type": "distributor"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "consent save and read",
+    "post": 200,
+    "get": 200,
+    "saved": true
+  },
+  {
+    "name": "career no attachments",
+    "status": 201,
+    "body": {
+      "application": {
+        "id": "f047ee02-7e09-4382-87d2-8bf56542d4a0",
+        "position": "Audit Role"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "career unsupported file",
+    "status": 201,
+    "body": {
+      "application": {
+        "id": "861348d0-7cd1-4861-b27b-ce92ac323da6",
+        "position": "Audit Role"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  },
+  {
+    "name": "career five attachments",
+    "status": 201,
+    "body": {
+      "application": {
+        "id": "c22396d4-7b18-43fd-83da-64f4943c1d4e",
+        "position": "Audit Role"
+      },
+      "emailDelivery": {
+        "confirmation": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        },
+        "internal": {
+          "status": "skipped",
+          "provider": "disabled",
+          "reason": "Transactional email is disabled. Set EMAIL_PROVIDER=resend and RESEND_API_KEY."
+        }
+      }
+    }
+  }
+]

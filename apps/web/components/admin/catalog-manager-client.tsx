@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
+
+import { useInitialJsonRequest } from "@/hooks/use-initial-json-request";
+
+import Image from "next/image";
+
+import { useMemo, useState, type ChangeEvent } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -189,6 +195,7 @@ function buildProductPayload(form: CatalogFormState) {
 }
 
 export function CatalogManagerClient() {
+  const router = useRouter();
   const [role, setRole] = useState("Unknown");
   const [products, setProducts] = useState<CatalogueProduct[]>([]);
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -202,15 +209,7 @@ export function CatalogManagerClient() {
   );
   const canWrite = role === "SUPER_ADMIN" || role === "CONTENT_EDITOR" || role === "SALES_MANAGER";
 
-  const reloadProducts = useCallback(async (preferredProductId?: string) => {
-    const response = await fetch("/api/admin/catalog/products", { cache: "no-store" });
-    if (!response.ok) {
-      const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setStatus(body?.error ?? "Failed to load catalogue products.");
-      return;
-    }
-
-    const data = (await response.json()) as CatalogProductsResponse;
+  function applyProducts(data: CatalogProductsResponse, preferredProductId?: string) {
     setRole(data.role);
     setProducts(data.products);
 
@@ -227,11 +226,25 @@ export function CatalogManagerClient() {
     }
 
     setStatus("Catalogue manager ready.");
-  }, []);
+  }
 
-  useEffect(() => {
-    void reloadProducts();
-  }, [reloadProducts]);
+  async function reloadProducts(preferredProductId?: string) {
+    const response = await fetch("/api/admin/catalog/products", { cache: "no-store" });
+    if (!response.ok) {
+      const body = (await response.json().catch(() => null)) as { error?: string } | null;
+      setStatus(body?.error ?? "Failed to load catalogue products.");
+      return;
+    }
+
+    const data = (await response.json()) as CatalogProductsResponse;
+    applyProducts(data, preferredProductId);
+  }
+
+  useInitialJsonRequest<CatalogProductsResponse>(
+    "/api/admin/catalog/products",
+    applyProducts,
+    setStatus,
+  );
 
   function updateForm(partial: Partial<CatalogFormState>) {
     setForm((current) => ({ ...current, ...partial }));
@@ -416,7 +429,8 @@ export function CatalogManagerClient() {
 
   async function signOut() {
     await fetch("/api/admin/session", { method: "DELETE" });
-    window.location.assign("/admin/login");
+    router.replace("/admin/login");
+    router.refresh();
   }
 
   return (
@@ -515,7 +529,10 @@ export function CatalogManagerClient() {
           </div>
 
           <div className="grid gap-3 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] p-4 md:grid-cols-[10rem_1fr] md:items-center">
-            <img
+            <Image
+              width={960}
+              height={640}
+              unoptimized
               src={form.imageUrl}
               alt={form.name || "Product preview"}
               className="h-36 w-full rounded-xl bg-white object-contain"
@@ -523,8 +540,8 @@ export function CatalogManagerClient() {
             <div className="space-y-3">
               <p className="text-sm font-semibold text-neutral-900">Product photos</p>
               <p className="text-xs leading-5 text-neutral-500">
-                Upload compressed product images. The primary image appears on product cards; gallery
-                images appear on the product detail page.
+                Upload compressed product images. The primary image appears on product cards;
+                gallery images appear on the product detail page.
               </p>
               <div className="flex flex-wrap gap-2">
                 <label className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full border border-[color:var(--border)] bg-white px-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-neutral-800 transition hover:border-[color:var(--border-strong)]">

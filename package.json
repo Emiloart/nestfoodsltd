@@ -15,9 +15,18 @@
     "typecheck": "pnpm --filter @nestfoodsltd/web typecheck",
     "verify:content": "pnpm --filter @nestfoodsltd/web verify:content",
     "format": "prettier --check .",
-    "format:write": "prettier --write ."
+    "format:write": "prettier --write .",
+    "format:changed": "node scripts/check-format.mjs"
   },
   "devDependencies": {
     "prettier": "^3.5.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/core": "^7.29.6",
+      "browserslist": "^4.28.7",
+      "baseline-browser-mapping": "^2.11.0",
+      "source-map-js": "^1.2.2"
+    }
   }
 }

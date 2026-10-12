@@ -38,9 +38,7 @@ export function HomeProductionStandardsSection({
 }: {
   trustCertifications: CompanyTrustCertification[];
 }) {
-  const cards = trustCertifications.map((item) => (
-    <CertificationCard key={item.label} {...item} />
-  ));
+  const cards = trustCertifications.map((item) => <CertificationCard key={item.label} {...item} />);
   const desktopCards = [...trustCertifications, ...trustCertifications];
 
   return (
@@ -50,12 +48,7 @@ export function HomeProductionStandardsSection({
     >
       <SectionHeading eyebrow="Standards" title="Production Credentials" description="" />
 
-      <MobileAutoCarousel
-        ariaLabel="Production credentials"
-        className="mt-4"
-        intervalMs={2400}
-        items={cards}
-      />
+      <MobileAutoCarousel ariaLabel="Production credentials" className="mt-4" items={cards} />
 
       <div className="group mt-4 hidden overflow-hidden md:block">
         <div className="certification-carousel-track flex w-max items-stretch gap-4 group-hover:[animation-play-state:paused]">

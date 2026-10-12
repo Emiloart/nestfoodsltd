@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -72,6 +73,7 @@ function toDateTimeInputValue(value?: string) {
 }
 
 export default function AdminContentPage() {
+  const router = useRouter();
   const [pages, setPages] = useState<CmsPage[]>([]);
   const [selectedSlug, setSelectedSlug] = useState<CmsPageSlug | null>(null);
   const [form, setForm] = useState(emptyFormState);
@@ -100,7 +102,7 @@ export default function AdminContentPage() {
         const pagesData = (await pagesResponse.json()) as CmsPagesResponse;
         const publicPages = pagesData.pages.filter((page) => page.slug !== "vision");
         setPages(publicPages);
-        setSelectedSlug(publicPages[0]?.slug ?? null);
+        if (publicPages[0]) selectPage(publicPages[0]);
         setStatus("Website content loaded.");
       } catch {
         setStatus("Unable to load CMS pages.");
@@ -110,16 +112,8 @@ export default function AdminContentPage() {
     void load();
   }, []);
 
-  const selectedPage = useMemo(
-    () => pages.find((page) => page.slug === selectedSlug) ?? null,
-    [pages, selectedSlug],
-  );
-
-  useEffect(() => {
-    if (!selectedPage) {
-      return;
-    }
-
+  function selectPage(selectedPage: CmsPage) {
+    setSelectedSlug(selectedPage.slug);
     setForm({
       title: selectedPage.title,
       headline: selectedPage.headline,
@@ -140,7 +134,7 @@ export default function AdminContentPage() {
       seoDescription: selectedPage.seo.description ?? "",
       seoOgImageUrl: selectedPage.seo.ogImageUrl ?? "",
     });
-  }, [selectedPage]);
+  }
 
   async function savePage() {
     if (!selectedSlug) {
@@ -170,6 +164,7 @@ export default function AdminContentPage() {
       setPages((current) =>
         current.map((page) => (page.slug === payload.page.slug ? payload.page : page)),
       );
+      selectPage(payload.page);
       const liveStateMessage =
         payload.page.status === "published"
           ? "Live page refreshed."
@@ -186,7 +181,8 @@ export default function AdminContentPage() {
 
   async function signOut() {
     await fetch("/api/admin/session", { method: "DELETE" });
-    window.location.assign("/admin/login");
+    router.replace("/admin/login");
+    router.refresh();
   }
 
   return (
@@ -209,7 +205,10 @@ export default function AdminContentPage() {
             <select
               className="h-11 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-neutral-900"
               value={selectedSlug ?? ""}
-              onChange={(event) => setSelectedSlug(event.target.value as CmsPageSlug)}
+              onChange={(event) => {
+                const page = pages.find((entry) => entry.slug === event.target.value);
+                if (page) selectPage(page);
+              }}
             >
               {pages.map((page) => (
                 <option key={page.slug} value={page.slug}>

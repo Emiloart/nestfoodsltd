@@ -85,6 +85,12 @@ Transactional email is sent server-side when configured. Set `EMAIL_PROVIDER=res
 ## Verification
 
 ```bash
+pnpm lint
 pnpm --filter @nestfoodsltd/web typecheck
+pnpm verify:content
 pnpm --filter @nestfoodsltd/web build
 ```
+
+CI runs these checks on pushes to `main` and pull requests. Fonts are bundled locally so builds do not require a Google Fonts request. Production video is loaded only when a visitor chooses to play it.
+
+For isolated local API/browser checks, set `NESTFOODS_DATA_DIR` to a temporary directory containing copies of `apps/web/data/*.json`, use JSON storage drivers, and set `EMAIL_PROVIDER=disabled`. This keeps synthetic submissions out of working content and prevents test emails.

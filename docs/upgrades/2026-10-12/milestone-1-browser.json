@@ -1,0 +1,77 @@
+[
+  {
+    "route": "/",
+    "width": 1440,
+    "status": 200,
+    "heading": "Every loaf is a testament to our commitment to quality",
+    "errors": []
+  },
+  {
+    "route": "/products",
+    "width": 1440,
+    "status": 200,
+    "heading": "De-Nest Bread Product Catalogue",
+    "errors": []
+  },
+  {
+    "route": "/about",
+    "width": 1440,
+    "status": 200,
+    "heading": "A Nigerian bakery built on quality, consistency, and trust.",
+    "errors": []
+  },
+  {
+    "route": "/careers",
+    "width": 1440,
+    "status": 200,
+    "heading": "Join the team behind De-Nest Bread.",
+    "errors": []
+  },
+  {
+    "route": "/contact",
+    "width": 1440,
+    "status": 200,
+    "heading": "Speak with the Nest Foods Limited team.",
+    "errors": []
+  },
+  {
+    "route": "/",
+    "width": 390,
+    "status": 200,
+    "heading": "Every loaf is a testament to our commitment to quality",
+    "errors": []
+  },
+  {
+    "route": "/products",
+    "width": 390,
+    "status": 200,
+    "heading": "De-Nest Bread Product Catalogue",
+    "errors": []
+  },
+  {
+    "route": "/about",
+    "width": 390,
+    "status": 200,
+    "heading": "A Nigerian bakery built on quality, consistency, and trust.",
+    "errors": []
+  },
+  {
+    "route": "/careers",
+    "width": 390,
+    "status": 200,
+    "heading": "Join the team behind De-Nest Bread.",
+    "errors": []
+  },
+  {
+    "route": "/contact",
+    "width": 390,
+    "status": 200,
+    "heading": "Speak with the Nest Foods Limited team.",
+    "errors": []
+  },
+  {
+    "name": "video only loads after Play",
+    "passed": true,
+    "requestsAfterPlay": 1
+  }
+]

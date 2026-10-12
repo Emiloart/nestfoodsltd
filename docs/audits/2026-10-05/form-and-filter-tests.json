@@ -1,0 +1,38 @@
+[
+  {
+    "name": "supply enquiry reset after success",
+    "errors": [
+      "Cannot read properties of null (reading 'reset')"
+    ],
+    "nameAfter": "Audit Synthetic",
+    "success": 1
+  },
+  {
+    "name": "privacy network failure recovers",
+    "errors": [
+      "Failed to fetch"
+    ],
+    "submitting": 1,
+    "disabled": true
+  },
+  {
+    "name": "catalogue selection survives refresh",
+    "before": [
+      "1 PRODUCTS SHOWN"
+    ],
+    "url": "http://localhost:3100/products",
+    "after": [
+      "5 PRODUCTS SHOWN"
+    ]
+  },
+  {
+    "name": "search keyboard and error states",
+    "error": "Error: locator.waitFor: Error: strict mode violation: getByRole('option') resolved to 3 elements:\n    1) <option selected value=\"featured\">Featured</option> aka getByLabel('SortFeaturedName A-ZSize')\n    2) <option value=\"name\">Name A-Z</option> aka getByLabel('SortFeaturedName A-ZSize')\n    3) <option value=\"size\">Size</option> aka getByLabel('SortFeaturedName A-ZSize')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option') to be visible\u001b[22m\n"
+  },
+  {
+    "name": "invalid name and phone get useful form errors",
+    "status": 400,
+    "errorText": 1,
+    "invalidFields": 0
+  }
+]

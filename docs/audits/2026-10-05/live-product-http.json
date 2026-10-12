@@ -1,0 +1,57 @@
+[
+  {
+    "url": "https://www.nestfoodsltd.com/products/de-nest-family-jumbo-bread",
+    "status": 200,
+    "title": [],
+    "has_error_digest": true,
+    "sample": ""
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/products/de-nest-family-loaf-bread",
+    "status": 200,
+    "title": [
+      "De-Nest Family Loaf Bread | Nest Foods Ltd | De-Nest Bread"
+    ],
+    "has_error_digest": false,
+    "sample": ""
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/products/de-nest-sliced-bread",
+    "status": 200,
+    "title": [],
+    "has_error_digest": true,
+    "sample": ""
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/products/de-nest-mini-bread",
+    "status": 200,
+    "title": [
+      "De-Nest Mini Bread | Nest Foods Ltd | De-Nest Bread"
+    ],
+    "has_error_digest": false,
+    "sample": ""
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/products/de-nest-midi-bread",
+    "status": 200,
+    "title": [
+      "De-Nest Midi Bread | Nest Foods Ltd | De-Nest Bread"
+    ],
+    "has_error_digest": false,
+    "sample": ""
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/api/privacy/consent",
+    "status": 200,
+    "title": [],
+    "has_error_digest": false,
+    "sample": "{\"consent\":null}"
+  },
+  {
+    "url": "https://www.nestfoodsltd.com/api/admin/company",
+    "status": 401,
+    "title": [],
+    "has_error_digest": false,
+    "sample": "{\"error\":\"Unauthorized\"}"
+  }
+]

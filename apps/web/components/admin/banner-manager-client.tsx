@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -357,14 +359,20 @@ export function BannerManagerClient() {
           </p>
           <div className="grid gap-3 md:grid-cols-[1fr_0.45fr]">
             <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
-              <img
+              <Image
+                width={960}
+                height={640}
+                unoptimized
                 src={form.desktopImageUrl}
                 alt={form.label || "Desktop banner preview"}
                 className="aspect-[1881/836] w-full object-contain"
               />
             </div>
             <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-neutral-100">
-              <img
+              <Image
+                width={960}
+                height={640}
+                unoptimized
                 src={form.mobileImageUrl || form.desktopImageUrl}
                 alt={form.label || "Mobile banner preview"}
                 className="aspect-[4/5] w-full object-contain"

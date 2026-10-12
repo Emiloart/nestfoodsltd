@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useInitialJsonRequest } from "@/hooks/use-initial-json-request";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ function formatMetricValue(metricName: "LCP" | "INP" | "CLS", value: number) {
 export function OpsOverviewClient() {
   const [windowHours, setWindowHours] = useState(24);
   const [summary, setSummary] = useState<OpsSummaryResponse | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("Loading observability summary...");
 
   async function loadSummary(nextWindowHours = windowHours) {
@@ -46,6 +47,10 @@ export function OpsOverviewClient() {
     }
 
     const data = (await response.json()) as OpsSummaryResponse;
+    applySummary(data);
+  }
+
+  function applySummary(data: OpsSummaryResponse) {
     setSummary(data);
     setStatus(
       `Loaded ${data.summary.webVitals.total} web-vitals and ${data.summary.errors.total} errors for ${data.summary.windowHours}h.`,
@@ -53,10 +58,14 @@ export function OpsOverviewClient() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    void loadSummary();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useInitialJsonRequest<OpsSummaryResponse>(
+    "/api/admin/ops/summary?windowHours=24",
+    applySummary,
+    (message) => {
+      setStatus(message);
+      setLoading(false);
+    },
+  );
 
   const vitalRows = summary?.summary.webVitals.recent ?? [];
   const errorRows = summary?.summary.errors.recent ?? [];

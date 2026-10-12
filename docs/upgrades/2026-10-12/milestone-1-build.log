@@ -1,0 +1,83 @@
+
+> nestfoodsltd-platform@0.1.0 build /home/emiloart/.cache/nestfoods-upgrade/check
+> pnpm --filter @nestfoodsltd/web build
+
+
+> @nestfoodsltd/web@0.1.0 build /home/emiloart/.cache/nestfoods-upgrade/check/apps/web
+> next build
+
+▲ Next.js 16.4.0 (Turbopack)
+✓ Running next.config.ts took 165ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.7s
+  Running TypeScript ...
+  Finished TypeScript in 32.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/47) ...
+  Generating static pages using 3 workers (11/47)
+  Generating static pages using 3 workers (23/47)
+  Generating static pages using 3 workers (35/47)
+✓ Generating static pages using 3 workers (47/47) in 4.2s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /about
+├ ƒ /admin
+├ ƒ /admin/audit
+├ ƒ /admin/banners
+├ ƒ /admin/catalog
+├ ƒ /admin/company
+├ ƒ /admin/content
+├ ○ /admin/login
+├ ƒ /admin/media
+├ ƒ /admin/ops
+├ ƒ /admin/users
+├ ƒ /api/admin/audit/events
+├ ƒ /api/admin/catalog/products
+├ ƒ /api/admin/catalog/products/[id]
+├ ƒ /api/admin/cms/banners
+├ ƒ /api/admin/cms/banners/[id]
+├ ƒ /api/admin/cms/media
+├ ƒ /api/admin/cms/media/[id]
+├ ƒ /api/admin/company
+├ ƒ /api/admin/ops/summary
+├ ƒ /api/admin/session
+├ ƒ /api/admin/users
+├ ƒ /api/admin/users/[id]
+├ ƒ /api/admin/users/invites
+├ ƒ /api/admin/users/invites/[id]
+├ ƒ /api/admin/users/invites/activate
+├ ƒ /api/admin/users/tokens
+├ ƒ /api/careers/apply
+├ ƒ /api/chat/ask
+├ ƒ /api/chat/leads
+├ ƒ /api/cms/pages
+├ ƒ /api/cms/pages/[slug]
+├ ƒ /api/enquiries/bulk
+├ ƒ /api/enquiries/distributor
+├ ƒ /api/health
+├ ƒ /api/newsletter/subscribe
+├ ƒ /api/privacy/consent
+├ ƒ /api/privacy/data-requests
+├ ƒ /api/search
+├ ƒ /api/telemetry/errors
+├ ƒ /api/telemetry/web-vitals
+├ ○ /apple-icon.png
+├ ƒ /careers
+├ ƒ /contact
+├ ○ /icon.png
+├ ○ /privacy
+├ ƒ /products
+├ ƒ /products/[slug]
+├ ○ /robots.txt
+├ ƒ /sitemap.xml
+└ ○ /terms
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

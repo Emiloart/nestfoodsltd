@@ -33,7 +33,6 @@ export function HomeProductRangeSection({ products }: HomeProductRangeSectionPro
       <MobileAutoCarousel
         ariaLabel="Bread product previews"
         className="mt-5"
-        intervalMs={2000}
         items={featuredProducts.map((product) => (
           <ProductEditorialCard key={product.id} product={product} compact />
         ))}

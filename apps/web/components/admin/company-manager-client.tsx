@@ -1,6 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { useInitialJsonRequest } from "@/hooks/use-initial-json-request";
+
+import { useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -110,7 +114,9 @@ function parseFaqs(text: string): CompanyFaq[] {
 }
 
 function trustToText(items: CompanyTrustCertification[]) {
-  return items.map((item) => `${item.label} | ${item.title} | ${item.body} | ${item.logoUrl}`).join("\n");
+  return items
+    .map((item) => `${item.label} | ${item.title} | ${item.body} | ${item.logoUrl}`)
+    .join("\n");
 }
 
 function parseTrust(text: string): CompanyTrustCertification[] {
@@ -300,6 +306,7 @@ function AdminTextarea({
 }
 
 export function CompanyManagerClient() {
+  const router = useRouter();
   const [role, setRole] = useState("Unknown");
   const [company, setCompany] = useState<CompanyContent | null>(null);
   const [form, setForm] = useState<CompanyFormState | null>(null);
@@ -313,23 +320,24 @@ export function CompanyManagerClient() {
     [activeSection],
   );
 
-  const reloadCompany = useCallback(async () => {
-    const response = await fetch("/api/admin/company", { cache: "no-store" });
-    if (!response.ok) {
-      const body = (await response.json().catch(() => null)) as { error?: string } | null;
-      setStatus(body?.error ?? "Failed to load company controls.");
-      return;
-    }
-    const data = (await response.json()) as CompanyResponse;
+  function applyCompany(data: CompanyResponse) {
     setRole(data.role);
     setCompany(data.company);
     setForm(toForm(data.company));
     setStatus("Company controls ready.");
-  }, []);
+  }
 
-  useEffect(() => {
-    void reloadCompany();
-  }, [reloadCompany]);
+  async function reloadCompany() {
+    try {
+      const response = await fetch("/api/admin/company", { cache: "no-store" });
+      if (!response.ok) throw new Error("Failed to refresh company controls.");
+      applyCompany((await response.json()) as CompanyResponse);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Unable to refresh company controls.");
+    }
+  }
+
+  useInitialJsonRequest<CompanyResponse>("/api/admin/company", applyCompany, setStatus);
 
   function updateForm(partial: Partial<CompanyFormState>) {
     setForm((current) => (current ? { ...current, ...partial } : current));
@@ -377,7 +385,8 @@ export function CompanyManagerClient() {
 
   async function signOut() {
     await fetch("/api/admin/session", { method: "DELETE" });
-    window.location.assign("/admin/login");
+    router.replace("/admin/login");
+    router.refresh();
   }
 
   if (!form) {
@@ -422,7 +431,9 @@ export function CompanyManagerClient() {
                 }`}
               >
                 <span className="block text-sm font-semibold">{section.label}</span>
-                <span className="mt-1 block text-xs leading-5 opacity-80">{section.description}</span>
+                <span className="mt-1 block text-xs leading-5 opacity-80">
+                  {section.description}
+                </span>
               </button>
             ))}
           </div>
@@ -516,7 +527,9 @@ export function CompanyManagerClient() {
                   onChange={(value) => updateForm({ storyText: value })}
                   minHeight="min-h-56"
                 />
-                <span className="text-xs text-neutral-500">Separate paragraphs with a blank line.</span>
+                <span className="text-xs text-neutral-500">
+                  Separate paragraphs with a blank line.
+                </span>
               </label>
               <label className="block space-y-2">
                 <FieldLabel>Vision</FieldLabel>

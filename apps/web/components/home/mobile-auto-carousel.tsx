@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { useEffect, useEffectEvent, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
@@ -10,177 +10,106 @@ type MobileAutoCarouselProps = {
   ariaLabel: string;
   className?: string;
   slideClassName?: string;
-  transitionMs?: number;
-  intervalMs?: number;
 };
 
+// Keep the existing component name for callers; slides now advance only on request.
 export function MobileAutoCarousel({
   items,
   ariaLabel,
   className,
   slideClassName,
-  transitionMs = 550,
-  intervalMs = 2000,
 }: MobileAutoCarouselProps) {
-  return (
-    <MobileAutoCarouselInner
-      key={`${items.length}-${transitionMs}-${intervalMs}`}
-      items={items}
-      ariaLabel={ariaLabel}
-      className={className}
-      slideClassName={slideClassName}
-      transitionMs={transitionMs}
-      intervalMs={intervalMs}
-    />
-  );
-}
-
-function MobileAutoCarouselInner({
-  items,
-  ariaLabel,
-  className,
-  slideClassName,
-  transitionMs = 550,
-  intervalMs = 2000,
-}: MobileAutoCarouselProps) {
-  const viewportRef = useRef<HTMLDivElement | null>(null);
-  const resumeTimeoutRef = useRef<number | null>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
-  const hasLoop = items.length > 1;
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
 
-  const clearResumeTimeout = useEffectEvent(() => {
-    if (resumeTimeoutRef.current) {
-      window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = null;
-    }
-  });
-
-  const pauseCarousel = useEffectEvent(() => {
-    clearResumeTimeout();
-    setPaused(true);
-  });
-
-  const resumeCarouselSoon = useEffectEvent(() => {
-    clearResumeTimeout();
-    resumeTimeoutRef.current = window.setTimeout(() => {
-      setPaused(false);
-      resumeTimeoutRef.current = null;
-    }, 1800);
-  });
-
-  const scrollToSlide = useEffectEvent((index: number) => {
+  function scrollToSlide(index: number) {
     const viewport = viewportRef.current;
-    if (!viewport) {
-      return;
-    }
-
+    if (!viewport) return;
+    const boundedIndex = Math.min(Math.max(index, 0), items.length - 1);
     viewport.scrollTo({
-      left: index * viewport.clientWidth,
-      behavior: reduceMotion ? "auto" : "smooth",
+      left: boundedIndex * viewport.clientWidth,
+      behavior: reduceMotion ? "instant" : "smooth",
     });
-    setActiveIndex(index);
-  });
-
-  const goToNextSlide = useEffectEvent(() => {
-    if (!hasLoop || paused) {
-      return;
-    }
-    scrollToSlide((activeIndex + 1) % items.length);
-  });
-
-  const handleScroll = useEffectEvent(() => {
-    const viewport = viewportRef.current;
-    if (!viewport || viewport.clientWidth === 0) {
-      return;
-    }
-
-    const nextIndex = Math.round(viewport.scrollLeft / viewport.clientWidth);
-    setActiveIndex(Math.min(Math.max(nextIndex, 0), items.length - 1));
-  });
-
-  useEffect(() => {
-    if (!hasLoop || reduceMotion || paused) {
-      return;
-    }
-
-    const intervalId = window.setInterval(() => {
-      goToNextSlide();
-    }, intervalMs);
-
-    return () => window.clearInterval(intervalId);
-  }, [hasLoop, intervalMs, paused, reduceMotion]);
-
-  useEffect(() => {
-    return () => {
-      if (resumeTimeoutRef.current) {
-        window.clearTimeout(resumeTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  if (items.length === 0) {
-    return null;
+    setActiveIndex(boundedIndex);
   }
 
+  if (items.length === 0) return null;
+
   return (
-    <div
+    <section
       className={cn("md:hidden", className)}
       aria-label={ariaLabel}
-      onPointerEnter={() => pauseCarousel()}
-      onPointerLeave={() => resumeCarouselSoon()}
-      onPointerDown={() => pauseCarousel()}
-      onPointerUp={() => resumeCarouselSoon()}
-      onPointerCancel={() => resumeCarouselSoon()}
-      onTouchStart={() => pauseCarousel()}
-      onTouchEnd={() => resumeCarouselSoon()}
-      onFocus={() => pauseCarousel()}
-      onBlur={() => resumeCarouselSoon()}
+      aria-roledescription="carousel"
     >
       <div
         ref={viewportRef}
-        onScroll={() => handleScroll()}
-        className="overflow-x-auto overscroll-x-contain scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        tabIndex={0}
+        aria-label={`${ariaLabel} slides`}
+        onScroll={() => {
+          const viewport = viewportRef.current;
+          if (viewport?.clientWidth)
+            setActiveIndex(
+              Math.min(Math.round(viewport.scrollLeft / viewport.clientWidth), items.length - 1),
+            );
+        }}
       >
-        <div
-          className={cn("flex snap-x snap-mandatory items-stretch", reduceMotion && "scroll-auto")}
-          style={{ transitionDuration: `${transitionMs}ms` }}
-        >
+        <div className="flex items-stretch">
           {items.map((item, index) => (
-            <div key={index} className={cn("min-w-full snap-start px-0.5", slideClassName)}>
+            <div
+              key={index}
+              className={cn("min-w-full px-0.5", slideClassName)}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${items.length}`}
+            >
               {item}
             </div>
           ))}
         </div>
       </div>
-
-      {hasLoop ? (
-        <div className="mt-3 flex items-center justify-center gap-2">
-          {items.map((_, index) => {
-            const active = index === activeIndex;
-            return (
+      {items.length > 1 ? (
+        <div className="mt-3 flex items-center justify-between gap-1">
+          <button
+            type="button"
+            aria-label="Previous slide"
+            disabled={activeIndex === 0}
+            onClick={() => scrollToSlide(activeIndex - 1)}
+            className="min-h-11 min-w-11 rounded-full border border-[color:var(--border)] px-3 text-sm font-semibold disabled:opacity-40"
+          >
+            ←
+          </button>
+          <div className="flex flex-wrap justify-center">
+            {items.map((_, index) => (
               <button
                 key={index}
                 type="button"
                 aria-label={`Show slide ${index + 1}`}
-                aria-pressed={active}
-                onClick={() => {
-                  pauseCarousel();
-                  scrollToSlide(index);
-                  resumeCarouselSoon();
-                }}
-                className={cn(
-                  "rounded-full transition-all duration-300",
-                  active
-                    ? "h-1.5 w-7 bg-[color:var(--brand-1)]"
-                    : "h-1.5 w-2.5 bg-[color:var(--border-strong)]",
-                )}
-              />
-            );
-          })}
+                aria-pressed={index === activeIndex}
+                onClick={() => scrollToSlide(index)}
+                className="grid h-11 w-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-[color:var(--brand-1)]"
+              >
+                <span
+                  className={cn(
+                    "h-2 rounded-full",
+                    index === activeIndex ? "w-6 bg-[color:var(--brand-1)]" : "w-2 bg-neutral-500",
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next slide"
+            disabled={activeIndex === items.length - 1}
+            onClick={() => scrollToSlide(activeIndex + 1)}
+            className="min-h-11 min-w-11 rounded-full border border-[color:var(--border)] px-3 text-sm font-semibold disabled:opacity-40"
+          >
+            →
+          </button>
         </div>
       ) : null}
-    </div>
+    </section>
   );
 }

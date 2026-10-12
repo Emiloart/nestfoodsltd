@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useInitialJsonRequest } from "@/hooks/use-initial-json-request";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ export function AuditEventsClient() {
   const [search, setSearch] = useState("");
   const [outcome, setOutcome] = useState<"" | "success" | "failure" | "blocked">("");
   const [status, setStatus] = useState("Loading audit events...");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function loadEvents(nextSearch = search, nextOutcome = outcome) {
     setLoading(true);
@@ -41,15 +42,23 @@ export function AuditEventsClient() {
     }
 
     const data = (await response.json()) as AuditResponse;
+    applyEvents(data);
+  }
+
+  function applyEvents(data: AuditResponse) {
     setEvents(data.events);
     setStatus(`Loaded ${data.events.length} audit events.`);
     setLoading(false);
   }
 
-  useEffect(() => {
-    void loadEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useInitialJsonRequest<AuditResponse>(
+    "/api/admin/audit/events?limit=200",
+    applyEvents,
+    (message) => {
+      setStatus(message);
+      setLoading(false);
+    },
+  );
 
   const criticalCount = useMemo(
     () => events.filter((entry) => entry.severity === "critical").length,
@@ -64,9 +73,7 @@ export function AuditEventsClient() {
     <section className="mx-auto w-full max-w-7xl space-y-6 px-4 py-16 md:px-6">
       <div className="space-y-2">
         <Badge>Security Audit</Badge>
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">
-          Audit Events
-        </h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Audit Events</h1>
         <p className="text-sm text-neutral-600">
           Review admin-sensitive operations, blocked requests, and abuse signals.
         </p>
@@ -75,21 +82,15 @@ export function AuditEventsClient() {
       <div className="grid gap-3 md:grid-cols-3">
         <Card className="space-y-1">
           <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Events</p>
-          <p className="text-2xl font-semibold text-neutral-900">
-            {events.length}
-          </p>
+          <p className="text-2xl font-semibold text-neutral-900">{events.length}</p>
         </Card>
         <Card className="space-y-1">
           <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Blocked</p>
-          <p className="text-2xl font-semibold text-neutral-900">
-            {blockedCount}
-          </p>
+          <p className="text-2xl font-semibold text-neutral-900">{blockedCount}</p>
         </Card>
         <Card className="space-y-1">
           <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">Critical</p>
-          <p className="text-2xl font-semibold text-neutral-900">
-            {criticalCount}
-          </p>
+          <p className="text-2xl font-semibold text-neutral-900">{criticalCount}</p>
         </Card>
       </div>
 
@@ -119,19 +120,12 @@ export function AuditEventsClient() {
 
         <div className="space-y-2">
           {events.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              No events found for current filters.
-            </p>
+            <p className="text-sm text-neutral-600">No events found for current filters.</p>
           ) : (
             events.map((entry) => (
-              <div
-                key={entry.id}
-                className="rounded-xl border border-neutral-200 p-3"
-              >
+              <div key={entry.id} className="rounded-xl border border-neutral-200 p-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-neutral-900">
-                    {entry.action}
-                  </p>
+                  <p className="text-sm font-semibold text-neutral-900">{entry.action}</p>
                   <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
                     {entry.severity} · {entry.outcome}
                   </p>

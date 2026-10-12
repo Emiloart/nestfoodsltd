@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import { type ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
@@ -12,17 +12,10 @@ import { buildOrganizationStructuredData } from "@/lib/seo/structured-data";
 
 import "./globals.css";
 
-const bodyFont = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+const bodyFont = localFont({
+  src: "./fonts/montserrat-latin.woff2",
+  weight: "400 900",
   variable: "--font-body",
-  display: "swap",
-});
-
-const displayFont = Montserrat({
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-  variable: "--font-display",
   display: "swap",
 });
 
@@ -53,7 +46,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const company = await getCompanyContent();
 
   return (
-    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
+    <html lang="en" className={bodyFont.variable}>
       <body className="min-h-screen bg-[color:var(--surface)] text-[color:var(--foreground)] antialiased">
         <JsonLd id="organization-ld" data={buildOrganizationStructuredData()} />
         <a
