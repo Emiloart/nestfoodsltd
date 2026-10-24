@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { revalidateTag, unstable_cache } from "next/cache";
+
 import { readPostgresJsonStore, writePostgresJsonStore } from "@/lib/storage/postgres-json";
 import { resolveJsonDataFilePath } from "@/lib/storage/json-file";
 
@@ -15,6 +17,11 @@ const postgresModuleKey = "cms";
 const legacyDefaultBannerImageUrl = "/media/products/nestfoodsltd-family-loaf-texture.png";
 const currentDefaultDesktopBannerImageUrl = "/media/banners/de-nest-bread-desktop-banner.jpg";
 const homePageTitle = "Nest Foods Ltd | De-Nest Bread";
+
+// Shared cache tag for all public CMS reads. writeCmsData() revalidates this
+// tag on every write so edits are reflected immediately without waiting for
+// the revalidate window below to expire.
+const CMS_CACHE_TAG = "cms";
 
 function normalizeCmsBanners(input: Partial<CmsData> | null | undefined) {
   if (!input?.banners) {
@@ -83,6 +90,11 @@ function mergeCmsData(input: Partial<CmsData> | null | undefined): CmsData {
   };
 }
 
+/**
+ * Always-fresh read. Use this for write flows (read-modify-write) and for
+ * admin/preview views that must see unpublished changes immediately. Do NOT
+ * use this directly from public page renders — use getCachedCmsData() there.
+ */
 export async function readCmsData(): Promise<CmsData> {
   if (storageDriver === "postgres") {
     const payload = await readPostgresJsonStore<Partial<CmsData>>(postgresModuleKey, CMS_SEED_DATA);
@@ -102,16 +114,27 @@ export async function readCmsData(): Promise<CmsData> {
   }
 }
 
+/**
+ * Cached read for public-facing pages (home, product pages, banners, etc).
+ * Tagged "cms" so writeCmsData() can invalidate it immediately on publish,
+ * with a 60s revalidate window as a safety net. This is what stops every
+ * pageview from hitting Postgres directly.
+ */
+export const getCachedCmsData = unstable_cache(
+  async (): Promise<CmsData> => readCmsData(),
+  ["cms-data"],
+  { revalidate: 60, tags: [CMS_CACHE_TAG] },
+);
+
 export async function writeCmsData(data: CmsData) {
   if (storageDriver === "postgres") {
     await writePostgresJsonStore(postgresModuleKey, data);
-    return;
-  }
-
-  if (storageDriver !== "json") {
+  } else if (storageDriver === "json") {
+    await mkdir(path.dirname(dataFilePath), { recursive: true });
+    await writeFile(dataFilePath, JSON.stringify(data, null, 2), "utf8");
+  } else {
     throw new Error("CMS_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
 
-  await mkdir(path.dirname(dataFilePath), { recursive: true });
-  await writeFile(dataFilePath, JSON.stringify(data, null, 2), "utf8");
+  revalidateTag(CMS_CACHE_TAG);
 }

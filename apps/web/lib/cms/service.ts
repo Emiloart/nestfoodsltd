@@ -3,7 +3,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { type AdminRole } from "@/lib/admin/auth";
 
 import { CMS_SEED_DATA } from "./seed";
-import { readCmsData, writeCmsData } from "./store";
+import { getCachedCmsData, readCmsData, writeCmsData } from "./store";
 import {
   CMS_PAGE_SLUGS,
   type CmsBanner,
@@ -138,9 +138,12 @@ function collectMediaUsageReferences(
   return refs.sort((left, right) => left.localeCompare(right));
 }
 
+// Public reads: preview mode (admin draft view) always goes straight to
+// Postgres so editors see unpublished changes immediately. Everything else
+// goes through the tagged cache in store.ts, which is what was missing
+// before and causing a fresh DB round-trip on every single pageview.
 export async function getCmsPages(options?: { preview?: boolean }) {
-  noStore();
-  const data = await readCmsData();
+  const data = options?.preview ? await (noStore(), readCmsData()) : await getCachedCmsData();
   return CMS_PAGE_SLUGS.map((slug) => {
     const page = data.pages[slug];
     if (options?.preview || isLivePage(page)) {
@@ -156,8 +159,7 @@ export async function getCmsPages(options?: { preview?: boolean }) {
 }
 
 export async function getCmsPage(slug: CmsPageSlug, options?: { preview?: boolean }) {
-  noStore();
-  const data = await readCmsData();
+  const data = options?.preview ? await (noStore(), readCmsData()) : await getCachedCmsData();
   const page = data.pages[slug];
 
   if (options?.preview || isLivePage(page)) {
@@ -204,8 +206,7 @@ export async function updateCmsPage(
 }
 
 export async function getCmsBanners(options?: { preview?: boolean }) {
-  noStore();
-  const data = await readCmsData();
+  const data = options?.preview ? await (noStore(), readCmsData()) : await getCachedCmsData();
   const ordered = [...data.banners].sort((left, right) => left.order - right.order);
   if (options?.preview) {
     return ordered;
