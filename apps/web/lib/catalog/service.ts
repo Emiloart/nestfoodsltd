@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 
-import { readCatalogueData, writeCatalogueData } from "./store";
+import { getCachedCatalogueData, readCatalogueData, writeCatalogueData } from "./store";
 import {
   type CatalogueGalleryImage,
   type CatalogueNutritionNote,
@@ -164,9 +164,13 @@ function normalizeCatalogueProduct(product: CatalogueProduct): CatalogueProduct 
   };
 }
 
+// Public (non-draft) reads go through the tagged cache in store.ts so a
+// storefront visit no longer triggers a fresh Postgres round-trip. Any call
+// that asks for drafts (admin) bypasses the cache and reads fresh.
 export async function listCatalogueProducts(filters?: ProductFilters) {
-  noStore();
-  const data = await readCatalogueData();
+  const data = filters?.includeDraft
+    ? await (noStore(), readCatalogueData())
+    : await getCachedCatalogueData();
   let products = data.products
     .map((product) => normalizeCatalogueProduct(product))
     .filter((product) => filters?.includeDraft || product.status === "published");
@@ -206,7 +210,6 @@ export async function listCatalogueProducts(filters?: ProductFilters) {
 }
 
 export async function listCatalogueFacets() {
-  noStore();
   const products = await listCatalogueProducts();
   const categories = [...new Set(products.map((product) => product.category))];
   const allergens = [...new Set(products.flatMap((product) => product.allergens))];
@@ -215,8 +218,7 @@ export async function listCatalogueFacets() {
 }
 
 export async function getCatalogueProductBySlug(slug: string) {
-  noStore();
-  const data = await readCatalogueData();
+  const data = await getCachedCatalogueData();
   const normalizedSlug = normalizeSlug(slug);
   const product = data.products.find(
     (entry) => entry.slug === normalizedSlug && entry.status === "published",
