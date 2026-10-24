@@ -10,6 +10,23 @@ function getGlobalCache() {
   return globalObject;
 }
 
+/**
+ * pg-connection-string currently treats prefer, require, and verify-ca as
+ * verify-full aliases, but warns that a future major version will change
+ * those semantics. Normalize the legacy aliases explicitly so upgrades
+ * preserve the current certificate and hostname verification guarantees.
+ */
+function normalizePostgresConnectionString(connectionString: string): string {
+  const parsed = new URL(connectionString);
+  const sslMode = parsed.searchParams.get("sslmode")?.toLowerCase();
+
+  if (sslMode === "prefer" || sslMode === "require" || sslMode === "verify-ca") {
+    parsed.searchParams.set("sslmode", "verify-full");
+  }
+
+  return parsed.toString();
+}
+
 async function getPool(): Promise<PgPool> {
   const cache = getGlobalCache();
   if (cache.__nestfoodsltdPgPool) {
@@ -21,8 +38,9 @@ async function getPool(): Promise<PgPool> {
     throw new Error("DATABASE_URL is required when using postgres storage drivers.");
   }
 
+  const normalizedConnectionString = normalizePostgresConnectionString(connectionString);
   const { Pool } = await import("pg");
-  cache.__nestfoodsltdPgPool = new Pool({ connectionString });
+  cache.__nestfoodsltdPgPool = new Pool({ connectionString: normalizedConnectionString });
   return cache.__nestfoodsltdPgPool;
 }
 
