@@ -1,4 +1,4 @@
-import { readCompanyContent, writeCompanyContent } from "./store";
+import { getCachedCompanyContent, readCompanyContent, writeCompanyContent } from "./store";
 import {
   type CompanyBranchLocation,
   type CompanyCareersContent,
@@ -117,8 +117,11 @@ function normalizeCareers(input: CompanyCareersContent, fallback: CompanyCareers
   };
 }
 
+// Public read, used broadly (header/footer/contact info) -- goes through
+// the tagged cache in store.ts so it isn't a fresh Postgres read on every
+// page render.
 export async function getCompanyContent() {
-  return readCompanyContent();
+  return getCachedCompanyContent();
 }
 
 export async function updateCompanyContent(input: CompanyContent) {
