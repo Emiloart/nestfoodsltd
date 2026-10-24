@@ -95,7 +95,7 @@ function mergeCompanyContent(input: Partial<CompanyContent> | null | undefined):
 /**
  * Always-fresh read. Use for write flows (read-modify-write). Page renders
  * should use getCachedCompanyContent() instead to avoid a DB round-trip on
- * every request -- this data is effectively global (header/footer/contact)
+ * every request — this data is effectively global (header/footer/contact)
  * so it was previously fetched fresh on every single pageview.
  */
 export async function readCompanyContent(): Promise<CompanyContent> {
@@ -141,5 +141,5 @@ export async function writeCompanyContent(data: CompanyContent) {
     throw new Error("COMPANY_STORAGE_DRIVER is not implemented. Use json or postgres.");
   }
 
-  revalidateTag(COMPANY_CACHE_TAG);
+  revalidateTag(COMPANY_CACHE_TAG, { expire: 0 });
 }

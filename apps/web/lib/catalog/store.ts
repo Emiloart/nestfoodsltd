@@ -77,5 +77,5 @@ export async function writeCatalogueData(data: CatalogueData) {
     throw new Error("CATALOG_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
 
-  revalidateTag(CATALOG_CACHE_TAG);
+  revalidateTag(CATALOG_CACHE_TAG, { expire: 0 });
 }

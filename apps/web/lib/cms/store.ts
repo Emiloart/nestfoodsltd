@@ -136,5 +136,5 @@ export async function writeCmsData(data: CmsData) {
     throw new Error("CMS_STORAGE_DRIVER is not implemented for runtime yet. Use json for now.");
   }
 
-  revalidateTag(CMS_CACHE_TAG);
+  revalidateTag(CMS_CACHE_TAG, { expire: 0 });
 }
