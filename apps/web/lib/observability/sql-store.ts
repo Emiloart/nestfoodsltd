@@ -189,7 +189,7 @@ export async function queryObservabilitySummary(windowHours: number): Promise<Ob
          GROUP BY metric_name`,
         [windowHours],
       ),
-      pool.query(
+      pool.query<Record<string, unknown>>(
         `SELECT * FROM ${WEB_VITALS_TABLE} WHERE observed_at >= NOW() - ($1 || ' hours')::interval
          ORDER BY observed_at DESC LIMIT ${MAX_RECENT_ENTRIES}`,
         [windowHours],
@@ -204,7 +204,7 @@ export async function queryObservabilitySummary(windowHours: number): Promise<Ob
          WHERE occurred_at >= NOW() - ($1 || ' hours')::interval GROUP BY source`,
         [windowHours],
       ),
-      pool.query(
+      pool.query<Record<string, unknown>>(
         `SELECT * FROM ${ERRORS_TABLE} WHERE occurred_at >= NOW() - ($1 || ' hours')::interval
          ORDER BY occurred_at DESC LIMIT ${MAX_RECENT_ENTRIES}`,
         [windowHours],
