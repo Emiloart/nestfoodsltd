@@ -27,7 +27,12 @@ function normalizePostgresConnectionString(connectionString: string): string {
   return parsed.toString();
 }
 
-async function getPool(): Promise<PgPool> {
+/**
+ * Shared pg Pool, reused by any module that needs direct SQL access (not
+ * just the generic JSON blob store below). Modules like observability use
+ * this directly for append-only inserts instead of the blob helpers.
+ */
+export async function getPool(): Promise<PgPool> {
   const cache = getGlobalCache();
   if (cache.__nestfoodsltdPgPool) {
     return cache.__nestfoodsltdPgPool;
@@ -68,6 +73,13 @@ function cloneValue<T>(value: T): T {
   return structuredClone(value);
 }
 
+/**
+ * Generic JSON-blob key/value store. Good for small, infrequently-written
+ * documents (site content, settings). NOT appropriate for high-frequency
+ * event logs (web vitals, error events, audit trails) -- those should use
+ * a dedicated append-only table (see lib/observability/sql-store.ts for an
+ * example), since this helper always reads and rewrites the entire blob.
+ */
 export async function readPostgresJsonStore<T>(moduleKey: string, fallback: T): Promise<T> {
   await ensureStorageTable();
   const pool = await getPool();

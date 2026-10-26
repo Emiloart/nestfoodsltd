@@ -12,6 +12,10 @@ const dataFilePath = resolveJsonDataFilePath(relativeDataFilePath);
 const storageDriver = process.env.OBSERVABILITY_STORAGE_DRIVER ?? "json";
 const postgresModuleKey = "observability";
 
+export function getObservabilityStorageDriver() {
+  return storageDriver;
+}
+
 function mergeObservabilityData(
   input: Partial<ObservabilityData> | null | undefined,
 ): ObservabilityData {
@@ -21,6 +25,13 @@ function mergeObservabilityData(
   };
 }
 
+/**
+ * NOTE: On the "postgres" driver, recordWebVitalEvent/recordErrorEvent in
+ * service.ts no longer call this -- they write directly to the dedicated
+ * observability_web_vitals / observability_errors tables (sql-store.ts) to
+ * avoid reading and rewriting the entire event history on every beacon.
+ * This JSON-blob path remains only for the local "json" file driver.
+ */
 export async function readObservabilityData(): Promise<ObservabilityData> {
   if (storageDriver === "postgres") {
     const payload = await readPostgresJsonStore<Partial<ObservabilityData>>(postgresModuleKey, {

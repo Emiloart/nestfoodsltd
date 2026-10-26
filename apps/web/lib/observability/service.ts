@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 
-import { readObservabilityData, writeObservabilityData } from "./store";
+import { readObservabilityData, writeObservabilityData, getObservabilityStorageDriver } from "./store";
+import { insertErrorEvent, insertWebVitalEvent, queryObservabilitySummary } from "./sql-store";
 import {
   type ObservabilityErrorEvent,
   type ObservabilitySummary,
@@ -9,7 +10,6 @@ import {
 
 const MAX_WEB_VITAL_EVENTS = 5000;
 const MAX_ERROR_EVENTS = 3000;
-const MAX_RECENT_ENTRIES = 100;
 
 function normalizeString(input?: string | null) {
   const value = input?.trim();
@@ -40,15 +40,13 @@ function normalizeStatus(
   return "untracked";
 }
 
-function withinTimeWindow(isoDate: string, windowHours: number) {
-  const timestamp = new Date(isoDate).getTime();
-  if (!Number.isFinite(timestamp)) {
-    return false;
-  }
-  const lowerBound = Date.now() - windowHours * 60 * 60 * 1000;
-  return timestamp >= lowerBound;
-}
-
+// NOTE on storage: web vitals and errors are high-frequency, append-only
+// event logs (multiple beacons per pageview). On the "postgres" driver they
+// go straight to dedicated tables (sql-store.ts) via single-row INSERTs.
+// Previously this read + rewrote the ENTIRE event history as one JSON blob
+// on every single beacon, which was the main driver of this project's Neon
+// egress overage -- do not revert to readObservabilityData/writeObservabilityData
+// for these two functions on the postgres driver.
 export async function recordWebVitalEvent(input: {
   metricId: string;
   metricName: "LCP" | "INP" | "CLS";
@@ -61,7 +59,6 @@ export async function recordWebVitalEvent(input: {
   userAgent?: string;
   observedAt?: string;
 }) {
-  const data = await readObservabilityData();
   const event: ObservabilityWebVitalEvent = {
     id: crypto.randomUUID(),
     metricId: input.metricId,
@@ -76,6 +73,12 @@ export async function recordWebVitalEvent(input: {
     observedAt: input.observedAt ?? new Date().toISOString(),
   };
 
+  if (getObservabilityStorageDriver() === "postgres") {
+    await insertWebVitalEvent(event);
+    return event;
+  }
+
+  const data = await readObservabilityData();
   data.webVitals.unshift(event);
   if (data.webVitals.length > MAX_WEB_VITAL_EVENTS) {
     data.webVitals = data.webVitals.slice(0, MAX_WEB_VITAL_EVENTS);
@@ -95,7 +98,6 @@ export async function recordErrorEvent(input: {
   userAgent?: string;
   occurredAt?: string;
 }) {
-  const data = await readObservabilityData();
   const event: ObservabilityErrorEvent = {
     id: crypto.randomUUID(),
     source: input.source,
@@ -109,6 +111,12 @@ export async function recordErrorEvent(input: {
     occurredAt: input.occurredAt ?? new Date().toISOString(),
   };
 
+  if (getObservabilityStorageDriver() === "postgres") {
+    await insertErrorEvent(event);
+    return event;
+  }
+
+  const data = await readObservabilityData();
   data.errors.unshift(event);
   if (data.errors.length > MAX_ERROR_EVENTS) {
     data.errors = data.errors.slice(0, MAX_ERROR_EVENTS);
@@ -117,19 +125,30 @@ export async function recordErrorEvent(input: {
   return event;
 }
 
-export async function getObservabilitySummary(options?: { windowHours?: number }) {
+export async function getObservabilitySummary(options?: {
+  windowHours?: number;
+}): Promise<ObservabilitySummary> {
   noStore();
   const windowHours = Math.min(Math.max(options?.windowHours ?? 24, 1), 24 * 30);
+
+  if (getObservabilityStorageDriver() === "postgres") {
+    return queryObservabilitySummary(windowHours);
+  }
+
+  function withinTimeWindow(isoDate: string, hours: number) {
+    const timestamp = new Date(isoDate).getTime();
+    if (!Number.isFinite(timestamp)) {
+      return false;
+    }
+    return timestamp >= Date.now() - hours * 60 * 60 * 1000;
+  }
+
   const data = await readObservabilityData();
+  const scopedWebVitals = data.webVitals.filter((entry) => withinTimeWindow(entry.observedAt, windowHours));
+  const scopedErrors = data.errors.filter((entry) => withinTimeWindow(entry.occurredAt, windowHours));
+  const MAX_RECENT_ENTRIES = 100;
 
-  const scopedWebVitals = data.webVitals.filter((entry) =>
-    withinTimeWindow(entry.observedAt, windowHours),
-  );
-  const scopedErrors = data.errors.filter((entry) =>
-    withinTimeWindow(entry.occurredAt, windowHours),
-  );
-
-  const summary: ObservabilitySummary = {
+  return {
     generatedAt: new Date().toISOString(),
     windowHours,
     webVitals: {
@@ -167,6 +186,4 @@ export async function getObservabilitySummary(options?: { windowHours?: number }
       recent: scopedErrors.slice(0, MAX_RECENT_ENTRIES),
     },
   };
-
-  return summary;
 }
